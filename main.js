@@ -16,4 +16,14 @@ function init() {
     // set the width and height of the canvas
     canvas.width = gameW;
     canvas.height = gameH;
+
+    //  // instantiate a heroObject
+    // hero = new heroObject();
+    // // set its image to the proper src URL
+    // hero.image.src = "images/Mage_Sprite.png";
+    // // once the image has completed loading, render it to the screen
+    // hero.image.onload = function()
+    // {
+    //     hero.render();
+    // };
 }
