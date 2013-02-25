@@ -1,0 +1,10 @@
+/**
+ * @author LOL
+ * This class is used to declare methods that are generic and used throughout the project
+ * Rule: Do not use specific methods that pertain to a certain class, try to generalize them
+ * for the greater good of team
+ */
+
+function clearArray(thisArray){
+	thisArray.splice(0, thisArray.length);
+}
