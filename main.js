@@ -9,15 +9,26 @@ var gameW = 800;
 var gameH = 600;
 var hero = null;
 
+// Variable to hold XML data
+var savedData = null;
+
 // Variable to hold the time stamp for the last game loop call
 var lastUpdate = null;
 
 function init() {
-    initCanvas();
-    initHero();
+  xmlhttp=new XMLHttpRequest();
 
-    lastUpdate = Date.now();
-    setInterval(gameLoop, screenUpdateTime);
+  xmlhttp.open("GET","/Users/salmangadit/spanish-pervert/data/data.xml",false);
+  xmlhttp.send();
+  xmlDoc=xmlhttp.responseXML;
+
+  savedData = xmlDoc;
+
+  initCanvas();
+  initHero();
+
+  lastUpdate = Date.now();
+  setInterval(gameLoop, screenUpdateTime);
 }
 
 function initCanvas()
