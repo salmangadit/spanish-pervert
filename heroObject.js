@@ -1,25 +1,9 @@
-/***************** This is sal's implmentation ****************************
-function heroObject()
-{
-    this.width = 32;
-    this.height = 32;
-    this.x = this.width * Math.floor(Math.random() * (gameW / this.width));
-    this.y = this.height * Math.floor(Math.random() * (gameH / this.height));
-    this.keys = new Array();
-    this.lastRender = Date.now();
-    this.animSpeed = 250;
-    this.image = new Image();
-    this.whichSprite = 0;
+/**
+ * This js file realises the object creation of different heroObjects and implements their 
+ * methods
+ */
 
-    this.render = function()
-    {
-        context.drawImage(this.image, this.whichSprite, 0, 
-            this.width, this.height, this.x, this.y, this.width, this.height);
-    };
-}
-***************** End of sal's implementation ********************************/
-
-function heroObject(thisType){
+function heroObject(){
 	
     this.width = 32;
     this.height = 32;
@@ -42,37 +26,6 @@ function heroObject(thisType){
      	//left as an abstract function to be implemented by the child
      };
      */
-    
-    //We need to realise the kind of hero being created & the values for now have been arbritrarily assigned
-    /*
-     //0 -> Main playing character
-     //1 -> Bad NPC
-     //2 -> Good NPC
-     switch(thisType){
-     	
-     	case 0:		this.punch = function(){
-     		
-     				};	//not sure here must be comma or semi-colon within a switch case
-     				this.kick = function(){
-     					
-     				};
-     				break;
-     	
-     	case 1:		this.pullSkirt = function(){
-     		
-     				};
-     				this.defend = function(){
-     					
-     				};
-     				break;
-     	
-     	case 2:		this.strikeWithUmbrella = function(){
-     		
-     				};
-     				break;
-     
-     }//switch case statement
-     */
 }
 
 /**
@@ -82,4 +35,79 @@ function heroObject(thisType){
  * -> Main playing character: the punch action, the kick action
  * -> Bad NPC a.k.a Monkeys: able to pull the skirts (pulling action) & fight back the main character
  * -> Good NPC a.k.a Ladies: the ability to strike the monkey using umbrella
+ */
+
+/*
+ * -------------------------------------------------------------------------------------
+ * I thought of a way to do the different object creation based on single function call
+ * 
+ * 
+ 
+ //------------------------ mainCharacter implementation -------------------------
+ 
+ var mainCharacter = function(){
+
+	this.punch = function() {
+
+	};
+	
+	this.kick = function() {
+
+	};	
+	
+ }//end of mainCharacter constructor
+ mainCharacter.prototype = new heroObject();	//Inherit heroObject properties...
+ 
+ //------------------------ end of mainCharacter implementation ------------------
+ 
+ 
+ 
+ //------------------------ badNPC implementation --------------------------------
+ 
+ var badNPC = function(){
+ 	
+ 	this.pullSkirt = function(){
+     		
+    };
+    
+    this.defend = function(){
+     					
+    };
+    
+ }//end of badNPC constructor
+ badNPC.prototype = new heroObject();
+ 
+ //----------------------- End of badNPC implementation --------------------------
+ 
+ 
+ 
+ //----------------------- goodNPC implementation --------------------------------
+ 
+ var goodNPC = function(){
+	
+	this.strikeWithUmbrella = function(){
+     		
+    };
+    
+ }//end of goodNPC constructor
+ goodNPC.prototype = new heroObject();
+ 
+ //----------------------- end of goodNPC implementation -------------------------
+ 
+ var thisObject;
+ function createHeroObject(thisType){
+ 	
+ 	switch(thisType){
+ 		case 0:		thisObject  = new mainCharacter();
+ 					break;
+ 		
+ 		case 1:		thisObject  = new badNPC();
+ 					break;
+ 		
+ 		case 2:		thisObject = new goodNPC();
+ 					break;	
+ 	}
+ 	return thisObject;
+ }
+ 
  */

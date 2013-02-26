@@ -7,7 +7,7 @@
  */
 var indexZero = 0;
 function helperClass(){
-	console.log('The helper class has been constructed');
+	
 }
 
 helperClass.clearArray = function(thisArray){
