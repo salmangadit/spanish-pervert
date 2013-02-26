@@ -18,7 +18,7 @@ var lastUpdate = null;
 function init() {
   xmlhttp=new XMLHttpRequest();
 
-  xmlhttp.open("GET","/Users/salmangadit/spanish-pervert/data/data.xml",false);
+  xmlhttp.open("GET","http://www.salmangadit.me/spanish-pervert/data/data.xml",false);
   xmlhttp.send();
   xmlDoc=xmlhttp.responseXML;
 
@@ -75,7 +75,7 @@ function gameLoop()
     canvas.height = gameH;
 
     // draw the player to the screen again
-    hero.render();
+    //hero.render();
 
     // update the lastUpdate variable
     lastUpdate = now;
