@@ -1,7 +1,7 @@
 <GameData>
   <Objects>
     <Object id="0" type="nothing" src="" width="" height=""></Object>
-    <Object id="P" type="player" src="/images/barrel.png" width="32" height="32"></Object>
+    <Object id="P" type="player" src="/spanish-pervert/images/barrel.png" width="32" height="32"></Object>
   </Objects>
   <Grid tileSize="32" width="20" height="12" baseColor="#FFFFFF">
     <GridRow>00000000000000000000</GridRow>

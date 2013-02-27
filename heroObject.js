@@ -14,6 +14,8 @@ function heroObject(){
     this.animSpeed = 250;
     this.image = new Image();
     this.whichSprite = 0;
+    // How many pixels do we want to move the hero each loop
+    this.moveSpeed = 4;
 
 	//salman i edited the this.x to Math.floor(this.x) and same for the this.y..the reason being is that I read from a book that described
 	//that the sprites might have fractional values and if we render with those values, we may see glitches on the canvas..sprites should be
@@ -23,12 +25,56 @@ function heroObject(){
             			  this.width, this.height, Math.floor(this.x), 
             			  Math.floor(this.y), this.width, this.height);	
     };
+
+    this.update = function(elapsed)
+    {
+        // move the hero left on the screen
+        if (this.keys.indexOf(37) > -1)
+        {
+            this.x -= this.moveSpeed * elapsed;
+        }
+        // move the hero up on the screen
+        else if (this.keys.indexOf(38) > -1)
+        {
+            this.y -= this.moveSpeed * elapsed;
+        }
+        // move the hero right on the screen
+        else if (this.keys.indexOf(39) > -1)
+        {
+            this.x += this.moveSpeed * elapsed;
+        }
+        // move the hero down on the screen
+        else if (this.keys.indexOf(40) > -1)
+        {
+            this.y += this.moveSpeed * elapsed;
+        }
+
+        // This code handles wrapping the hero from the edge of the canvas
+        if (this.x < 0)
+        {
+            this.x = 0;
+        }
+        if (this.x >= gameW-this.width)
+        {
+            this.x = gameW-this.width;
+        }
+        if (this.y < 0)
+        {
+            this.y = 0;
+        }
+        if (this.y >= gameH-this.height)
+        {
+            this.y = gameH-this.height;
+        }
+    };
     
     /*
      this.move = function(){
      	//left as an abstract function to be implemented by the child
      };
      */
+
+
 }
 
 /**
