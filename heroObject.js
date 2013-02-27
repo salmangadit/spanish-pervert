@@ -15,10 +15,13 @@ function heroObject(){
     this.image = new Image();
     this.whichSprite = 0;
 
+	//salman i edited the this.x to Math.floor(this.x) and same for the this.y..the reason being is that I read from a book that described
+	//that the sprites might have fractional values and if we render with those values, we may see glitches on the canvas..sprites should be
+	//drawn at integer positions only...also it is important when we use start using the physics formulas...
     this.render = function(){
         context.drawImage(this.image, this.whichSprite, 0, 
-            			  this.width, this.height, this.x, 
-            			  this.y, this.width, this.height);
+            			  this.width, this.height, Math.floor(this.x), 
+            			  Math.floor(this.y), this.width, this.height);	
     };
     
     /*
