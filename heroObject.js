@@ -7,10 +7,14 @@ function heroObject(){
 	
     this.width = 32;
     this.height = 32;
-    this.x = this.width * Math.floor(Math.random() * (gameW / this.width));
-    this.y = this.height * Math.floor(Math.random() * (gameH / this.height));
+
+    this.x;// = this.width * Math.floor(Math.random() * (gameW / this.width));
+    this.y;// = this.height * Math.floor(Math.random() * (gameH / this.height));
     this.centerX = this.x + (this.width / 2);
     this.centerY = this.y + (this.height / 2);
+    this.gridX = parseInt(this.x/this.width);
+    this.gridY = parseInt(this.y/this.height);
+
     this.keys = new Array();
     this.lastRender = Date.now();
     this.animSpeed = 250;
@@ -58,6 +62,7 @@ function heroObject(){
             case 37:
                 // move the hero left on the screen
                 this.x -= this.moveSpeed * elapsed;
+                this.gridX = parseInt(this.x/this.width);
                 // Check if the animation timer has elapsed or if we aren't using one of the
                 // two valid sprites for this direction
                 if (delta > this.animSpeed 
@@ -83,6 +88,7 @@ function heroObject(){
             case 38:
                 // move the hero up on the screen
                 this.y -= this.moveSpeed * elapsed;
+                this.gridY = parseInt(this.y/this.height);
                 // Check if the animation timer has elapsed or if we aren't using one of the
                 // two valid sprites for this direction
                 if (delta > this.animSpeed 
@@ -106,6 +112,7 @@ function heroObject(){
             case 39:
                 // move the hero right on the screen
                 this.x += this.moveSpeed * elapsed;
+                this.gridX = parseInt(this.x/this.width);
                 // Check if the animation timer has elapsed or if we aren't using one of the
                 // two valid sprites for this direction
                 if (delta > this.animSpeed 
@@ -129,6 +136,7 @@ function heroObject(){
             case 40:
                 // move the hero down on the screen
                 this.y += this.moveSpeed * elapsed;
+                this.gridY = parseInt(this.y/this.height);
                 // Check if the animation timer has elapsed or if we aren't using one of the
                 // two valid sprites for this direction
                 if (delta > this.animSpeed 
@@ -155,18 +163,22 @@ function heroObject(){
         if (this.x < 0)
         {
             this.x = 0;
+            this.gridX = parseInt(this.x/this.width);
         }
         if (this.x >= gameW-this.width)
         {
             this.x = gameW-this.width;
+            this.gridX = parseInt(this.x/this.width);
         }
         if (this.y < 0)
         {
             this.y = 0;
+            this.gridY = parseInt(this.y/this.height);
         }
         if (this.y >= gameH-this.height)
         {
             this.y = gameH-this.height;
+            this.gridY = parseInt(this.y/this.height);
         }
 
         // loop through all of the rocks in the array
