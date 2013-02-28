@@ -34,8 +34,8 @@ helperClass.checkIfTwoRectanglesIntersect = function(xCoordOfRect1, yCoordOfRect
     if (xCoordOfRect2 > widthOfRect1 || xCoordOfRect1 > widthOfRect2) 
     	return false;
     
-    heightOfRect1 += yCoordOfRect1;
     heightOfRect2 += yCoordOfRect2;
+    heightOfRect1 += yCoordOfRect1;
     if (yCoordOfRect2 > heightOfRect1 || yCoordOfRect1 > heightOfRect2) 
     	return false;
   	

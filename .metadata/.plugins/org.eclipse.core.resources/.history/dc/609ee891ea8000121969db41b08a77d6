@@ -29,15 +29,13 @@ helperClass.sortStringDataType = function(thisType){
 helperClass.checkIfTwoRectanglesIntersect = function(xCoordOfRect1, yCoordOfRect1, widthOfRect1, heightOfRect1, 
 													 xCoordOfRect2, yCoordOfRect2, widthOfRect2, heightOfRect2) {
     
-    widthOfRect1 += xCoordOfRect1;
-    widthOfRect2 += xCoordOfRect2;
-    if (xCoordOfRect2 > widthOfRect1 || xCoordOfRect1 > widthOfRect2) 
-    	return false;
+    w2 += x2;
+    w1 += x1;
+    if (x2 > w1 || x1 > w2) return false;
     
-    heightOfRect1 += yCoordOfRect1;
-    heightOfRect2 += yCoordOfRect2;
-    if (yCoordOfRect2 > heightOfRect1 || yCoordOfRect1 > heightOfRect2) 
-    	return false;
+    h2 += y2;
+    h1 += y1;
+    if (y2 > h1 || y1 > h2) return false;
   	
   	return true;
 	

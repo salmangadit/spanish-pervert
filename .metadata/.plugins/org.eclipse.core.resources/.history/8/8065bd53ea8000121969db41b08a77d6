@@ -26,19 +26,3 @@ helperClass.sortStringDataType = function(thisType){
 	thisType.sort();
 }
 
-helperClass.checkIfTwoRectanglesIntersect = function(xCoordOfRect1, yCoordOfRect1, widthOfRect1, heightOfRect1, 
-													 xCoordOfRect2, yCoordOfRect2, widthOfRect2, heightOfRect2) {
-    
-    widthOfRect1 += xCoordOfRect1;
-    widthOfRect2 += xCoordOfRect2;
-    if (xCoordOfRect2 > widthOfRect1 || xCoordOfRect1 > widthOfRect2) 
-    	return false;
-    
-    heightOfRect1 += yCoordOfRect1;
-    heightOfRect2 += yCoordOfRect2;
-    if (yCoordOfRect2 > heightOfRect1 || yCoordOfRect1 > heightOfRect2) 
-    	return false;
-  	
-  	return true;
-	
-}
