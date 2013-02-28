@@ -9,16 +9,21 @@ function heroObject(){
     this.height = 32;
     this.x = this.width * Math.floor(Math.random() * (gameW / this.width));
     this.y = this.height * Math.floor(Math.random() * (gameH / this.height));
+    this.centerX = this.x + (this.width / 2);
+    this.centerY = this.y + (this.height / 2);
     this.keys = new Array();
     this.lastRender = Date.now();
     this.animSpeed = 250;
     this.image = new Image();
+	
 	//Specifies the type of character
     this.whichSprite = 0;	
     // How many pixels do we want to move the hero each loop
     this.moveSpeed = 4;
-    this.currentSpriteImageIndex = 0;	//Can use this and * by number of pixels an image is to get the current sprite image
-    this.vectorX = 0;					//Set these during collision detections
+    //Can use this and * by number of pixels an image is to get the current sprite image
+    this.currentSpriteImageIndex = 0;
+    //Set these during collision detections
+    this.vectorX = 0;				
     this.vectorY = 0;
 
     // Do we have a collision event?
@@ -228,31 +233,65 @@ function heroObject(){
  	health: maximumHealthLife
  };
  
+ var innerHealthMeter = function(){
+ 	this.sourceWidth = 32;
+ 	this.sourceHeight = 32;
+ 	this.width = 32;
+ 	this.height = 32;
+ 	//We need to place the inner health meter above the its parent sprite image
+ 	this.x = heroObject.x - 16;
+ 	this.y = heroObject.y - 16; 
+ }
+ 
+ var outerHealthMeter = function(){
+ 	this.sourceWidth = 32;
+ 	this.sourceHeight = 32;
+ 	this.width = 32;
+ 	this.height = 32;
+ 	//We need to place the outer health meter at the exact position where the inner health meter is...
+ 	this.x = heroObject.x - 16;
+ 	this.y = heroObject.y - 16;
+ }
+ 
  //------------------------ mainCharacter implementation -------------------------
  
  var mainCharacter = function(){
 
 	//Attributes associated with the main character specifically
 	this.arrayOfLastTenMoves = new Array();		//to be used for probability distribution or if same as the keys array then, this can be deemed redundant
-	
+	this.gameExp = 0;
 	
 	//Any action done by the sprite be it punch or kick has to be in the standing state facing us
 	this.punch = function() {
+		console.log('the hero is gonna punch);
 		goToStandingStillSprite();
 		//Set the locations of where the new sprite image is to be drawn
 		//Then render
 		this.render();
-		
+		//If the hero managed to punch successfully, update gameExp
+		if(the punch was successful)
+			this.gameExp++;
 	};
 	
 	this.kick = function() {
+		console.log('the hero is gonna kick');
 		goToStandingStillSprite();
+		//Set the locations of where the new sprite image is to be drawn
+		//Then render
+		this.render();
+		//If the hero managed to kick successfully, update gameExp
+		if(the kick was successfull)
+			this.gameExp += 2;
 	};	
+	
+	this.defend(){
+		console.log('the hero is defending');
+	};
 	
 	this.goToStandingStillSprite = function() {
 		//this.currentSpriteImage = whatever the array containing the sprite is and whichever index/offset the standing still sprite is located
 		this.render();
-	}
+	};
 	
 
  }//end of mainCharacter constructor
@@ -271,15 +310,17 @@ function heroObject(){
  var badNPC = function(){
  	
  	this.pullSkirt = function(){
+ 		console.log('badNPC is pulling the skirts);
      		
     };
     
     this.defend = function(){
-     					
+     	console.log('the badNPC is defending');
     };
     
  }//end of badNPC constructor
  badNPC.prototype = new heroObject();
+ badNPC.prototype = new genericAttributes();
  
  //----------------------- End of badNPC implementation --------------------------
  
