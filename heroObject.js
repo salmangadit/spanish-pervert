@@ -21,11 +21,12 @@ function heroObject(){
     this.vectorX = 0;					//Set these during collision detections
     this.vectorY = 0;
 
-	 /*
-	 * salman i edited the this.x to Math.floor(this.x) and same for the this.y..the reason being is that I read from a book which described
-	 * that the sprites might have fractional values and if we render with those values, we may see glitches on the canvas..sprites should be
-	 * drawn at integer positions only...also it will be important when we use start using the physics formulas...
-	 */
+    // Do we have a collision event?
+    this.collision = false;
+
+	//salman i edited the this.x to Math.floor(this.x) and same for the this.y..the reason being is that I read from a book that described
+	//that the sprites might have fractional values and if we render with those values, we may see glitches on the canvas..sprites should be
+	//drawn at integer positions only...also it is important when we use start using the physics formulas...
     this.render = function(){
         context.drawImage(this.image, this.whichSprite, 0, 
             			  this.width, this.height, Math.floor(this.x), 
@@ -34,25 +35,115 @@ function heroObject(){
 
     this.update = function(elapsed)
     {
-        // move the hero left on the screen
-        if (this.keys.indexOf(37) > -1)
+        // store out the current x and y coordinates
+        var prevX = this.x;
+        var prevY = this.y;
+        // reset the collision property
+        this.collision = false;
+
+       var now = Date.now();
+        // How long has it been since we last updated the sprite
+        var delta = now - this.lastRender;
+
+        // perform a switch statement on the last key pushed into the array
+        // this allows us to always move the direction of the most recently pressed
+        // key
+        switch (this.keys[this.keys.length - 1])
         {
-            this.x -= this.moveSpeed * elapsed;
-        }
-        // move the hero up on the screen
-        else if (this.keys.indexOf(38) > -1)
-        {
-            this.y -= this.moveSpeed * elapsed;
-        }
-        // move the hero right on the screen
-        else if (this.keys.indexOf(39) > -1)
-        {
-            this.x += this.moveSpeed * elapsed;
-        }
-        // move the hero down on the screen
-        else if (this.keys.indexOf(40) > -1)
-        {
-            this.y += this.moveSpeed * elapsed;
+            case 37:
+                // move the hero left on the screen
+                this.x -= this.moveSpeed * elapsed;
+                // Check if the animation timer has elapsed or if we aren't using one of the
+                // two valid sprites for this direction
+                if (delta > this.animSpeed 
+                    || (this.whichSprite != this.width * 4 && this.whichSprite != this.width * 5 
+                        && this.whichSprite != this.width * 6 && this.whichSprite != this.width * 7))
+                {
+                    // The sprites for moving left are the 4th - 7th sprites in the image (0 based index)
+                    //this.whichSprite = this.whichSprite == this.width * 2 ? this.width * 3 : this.width * 2;
+                    if (this.whichSprite == this.width * 4)
+                    {
+                        this.whichSprite = this.width * 5;
+                    } else if (this.whichSprite == this.width * 5) {
+                        this.whichSprite = this.width * 6;
+                    } else if (this.whichSprite == this.width * 6) {
+                        this.whichSprite = this.width * 7;
+                    } else {
+                        this.whichSprite = this.width * 4;
+                    }
+
+                    this.lastRender = now;
+                }
+                break;
+            case 38:
+                // move the hero up on the screen
+                this.y -= this.moveSpeed * elapsed;
+                // Check if the animation timer has elapsed or if we aren't using one of the
+                // two valid sprites for this direction
+                if (delta > this.animSpeed 
+                    || (this.whichSprite != this.width * 12 && this.whichSprite != this.width * 13 
+                        && this.whichSprite != this.width * 14 && this.whichSprite != this.width * 15-1))
+                {
+                    if (this.whichSprite == this.width * 12)
+                    {
+                        this.whichSprite = this.width * 13;
+                    } else if (this.whichSprite == this.width * 13) {
+                        this.whichSprite = this.width * 14;
+                    } else if (this.whichSprite == this.width * 14) {
+                        this.whichSprite = this.width * 15 - 1;
+                    } else {
+                        this.whichSprite = this.width * 12;
+                    }
+
+                    this.lastRender = now;
+                }
+                break;
+            case 39:
+                // move the hero right on the screen
+                this.x += this.moveSpeed * elapsed;
+                // Check if the animation timer has elapsed or if we aren't using one of the
+                // two valid sprites for this direction
+                if (delta > this.animSpeed 
+                    || (this.whichSprite != this.width * 8 && this.whichSprite != this.width * 9 
+                        && this.whichSprite != this.width * 10 && this.whichSprite != this.width * 11))
+                {
+                    if (this.whichSprite == this.width * 8)
+                    {
+                        this.whichSprite = this.width * 9;
+                    } else if (this.whichSprite == this.width * 9) {
+                        this.whichSprite = this.width * 10;
+                    } else if (this.whichSprite == this.width * 10) {
+                        this.whichSprite = this.width * 11;
+                    } else {
+                        this.whichSprite = this.width * 8;
+                    }
+
+                    this.lastRender = now;
+                }
+                break;
+            case 40:
+                // move the hero down on the screen
+                this.y += this.moveSpeed * elapsed;
+                // Check if the animation timer has elapsed or if we aren't using one of the
+                // two valid sprites for this direction
+                if (delta > this.animSpeed 
+                    || (this.whichSprite != this.width * 0 && this.whichSprite != this.width * 1 
+                        && this.whichSprite != this.width * 2 && this.whichSprite != this.width * 3))
+                {
+                    if (this.whichSprite == this.width * 0)
+                    {
+                        this.whichSprite = this.width * 1;
+                    } else if (this.whichSprite == this.width * 1) {
+                        this.whichSprite = this.width * 2;
+                    } else if (this.whichSprite == this.width * 2) {
+                        this.whichSprite = this.width * 3;
+                    } else {
+                        this.whichSprite = this.width * 0;
+                    }
+
+                    this.lastRender = now;
+                }
+                break;
         }
 
         // This code handles wrapping the hero from the edge of the canvas
@@ -72,15 +163,49 @@ function heroObject(){
         {
             this.y = gameH-this.height;
         }
+
+        // loop through all of the rocks in the array
+        // we use an for-in loop to go through the rocks in case
+        // we later add some logic that can destroy static objects
+        // a regular for loop could break with null values if that happens
+        for (iter in collidables)
+        {
+            // if we already have a collision there's no need to continue
+            // checking the other rocks
+            if (this.collision)
+            {
+                break;
+            }
+            else
+            {
+                // check to see if we have a collision event with the
+                // current rock
+                if (this.checkCollision(collidables[iter]))
+                {
+                    // reset our x and y coordinates and set our collision property to true
+                    this.x = prevX;
+                    this.y = prevY;
+                    this.collision = true;
+                }
+            }
+        }
     };
     
+    this.checkCollision = function(obj)
+    {
+        // check to see if our x coordinate is inside the object and
+        // our y coordinate is also inside the object
+        if ((this.x < (obj.x + obj.width) && Math.floor(this.x + this.width) > obj.x)
+            && (this.y < (obj.y + obj.height) && Math.floor(this.y + this.height) > obj.y))
+        {
+            return true;
+        }
+    };
     /*
      this.move = function(){
      	//left as an abstract function to be implemented by the child
      };
      */
-
-
 }
 
 /**

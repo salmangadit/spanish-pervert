@@ -179,10 +179,10 @@ function initGameTiles(){
                 // we are storing out the index of this object, to make sure we can 
                 // render it once it has loaded
                 collidables[collidableCount].image.index = collidableCount;
-                $(collidables[collidableCount].image).load(function ()
+                collidables[collidableCount].image.onload = function ()
                 {
                     collidables[this.index].render();
-                });
+                };
                 collidableCount++;
             }
             else if (gameObjects[objIndex].type == "scenery")
@@ -267,6 +267,10 @@ function initCanvas()
   // set the width and height of the baseCanvas
   baseCanvas.width = gameW;
   baseCanvas.height = gameH;
+
+  baseContext.fillStyle = baseColor;
+  // fill the entire baseContext with the color
+  baseContext.fillRect(0, 0, gameW, gameH);
 }
 
 function gameLoop()
