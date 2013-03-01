@@ -42,6 +42,8 @@ function heroObject(){
             			  Math.floor(this.y), this.width, this.height);	
     };
 
+	//helperClass.sortStringDataType(this.keys);	//for testing only..
+
     this.update = function(elapsed)
     {
         // store out the current x and y coordinates

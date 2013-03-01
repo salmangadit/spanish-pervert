@@ -35,8 +35,10 @@ var enemies = new Array();
 
 var grid = new Array();
 
+
 var rows = 0;
 var columns = 0;
+
 
 function init() {
 	xmlhttp=new XMLHttpRequest();
