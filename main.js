@@ -209,12 +209,15 @@ function initGameTiles() {
 			} else if (gameObjects[objIndex].type == "player") {
 				//0 is for mainCharacter
 				hero = new heroObject(0);
-				//Test the functions
-				hero.HeroType.punch();
 				hero.width = gameObjects[objIndex].width;
 				hero.height = gameObjects[objIndex].height;
 				hero.x = j * tileSize;
 				hero.y = i * tileSize;
+				//Initialise the health meters also
+				hero.innerHealthMeterX = hero.x - 16;
+				hero.innerHealthMeterY = hero.y - 16;
+				hero.outerHealthMeterX = hero.innerHealthMeterX;
+				hero.outerHealthMeterY = hero.innerHealthMeterY;
 				hero.gridX = hero.x / hero.width;
 				hero.gridY = hero.y / hero.height;
 				hero.image = new Image();
@@ -225,6 +228,9 @@ function initGameTiles() {
 					hero.render();
 					//hero.render();
 				};
+				
+				//Testing stuff
+				hero.HeroType.punch();
 			} else if (gameObjects[objIndex].type == "enemy") {
 				//1 is for badNPC & 2 is for goodNPC
 				enemies[enemyCount] = new heroObject(1);
@@ -278,6 +284,7 @@ function initCanvas() {
 }
 
 
+
 function gameLoop() {
 	var now = Date.now();
 	// calculate how long as passed since our last iteration
@@ -294,45 +301,39 @@ function gameLoop() {
 	// draw the player to the screen again
 	hero.render();
 
-//for testing purposes, let's make the enemies swarm towards the heroes
-flocker(hero, enemies);
+	//for testing purposes, let's make the enemies swarm towards the heroes
+	flocker(hero, enemies);
 
-var index = 0;
-// do a foreach type loop through the enemies
-for (curEnemy in enemies)
-{
-	if (enemies[curEnemy].destroyed)
-	{
-		enemies.splice(curEnemy, 1);
-	}
-	else
-	{
-		/*path[index] = a_star(new Array(enemies[curEnemy].gridX, enemies[curEnemy].gridY), 
-			new Array(hero.gridX, hero.gridY), grid, columns, rows, false);*/
-		//testing out of the targetGrid system
-		path[index] = a_star(new Array(enemies[curEnemy].gridX, enemies[curEnemy].gridY), 
-			targetGrid, grid, columns, rows, false);
-
-		var nextPoint = path[index][1];
-
-		// check if the enemy collided with a collidable, if it did turn it a random direction
-		if (enemies[curEnemy].collision)
-		{
-			if (enemies[curEnemy].keys[0] == 37){
-				enemies[curEnemy].keys[0] = 38;
-				enemies[curEnemy].lastKeyChange = Date.now();
-			} else if (enemies[curEnemy].keys[0] == 38) {
-				enemies[curEnemy].keys[0] = 39;
-				enemies[curEnemy].lastKeyChange = Date.now();
-			} else if (enemies[curEnemy].keys[0] == 39) {
-				enemies[curEnemy].keys[0] = 40;
-				enemies[curEnemy].lastKeyChange = Date.now();
-			} else if (enemies[curEnemy].keys[0] == 40) {
-				enemies[curEnemy].keys[0] = 37;
-				enemies[curEnemy].lastKeyChange = Date.now();
-			}
-		
+	var index = 0;
+	// do a foreach type loop through the enemies
+	for (curEnemy in enemies) {
+		if (enemies[curEnemy].destroyed) {
+			enemies.splice(curEnemy, 1);
 		} else {
+			/*path[index] = a_star(new Array(enemies[curEnemy].gridX, enemies[curEnemy].gridY),
+			new Array(hero.gridX, hero.gridY), grid, columns, rows, false);*/
+			//testing out of the targetGrid system
+			path[index] = a_star(new Array(enemies[curEnemy].gridX, enemies[curEnemy].gridY), enemies[curEnemy].targetGrid, grid, columns, rows, false);
+
+			var nextPoint = path[index][1];
+
+			// check if the enemy collided with a collidable, if it did turn it a random direction
+			if (enemies[curEnemy].collision) {
+				if (enemies[curEnemy].keys[0] == 37) {
+					enemies[curEnemy].keys[0] = 38;
+					enemies[curEnemy].lastKeyChange = Date.now();
+				} else if (enemies[curEnemy].keys[0] == 38) {
+					enemies[curEnemy].keys[0] = 39;
+					enemies[curEnemy].lastKeyChange = Date.now();
+				} else if (enemies[curEnemy].keys[0] == 39) {
+					enemies[curEnemy].keys[0] = 40;
+					enemies[curEnemy].lastKeyChange = Date.now();
+				} else if (enemies[curEnemy].keys[0] == 40) {
+					enemies[curEnemy].keys[0] = 37;
+					enemies[curEnemy].lastKeyChange = Date.now();
+				}
+
+			} else {
 
 				if (nextPoint) {
 					if (nextPoint.x > enemies[curEnemy].gridX) {

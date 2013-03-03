@@ -144,9 +144,7 @@
     //Maximum health life is 100
     this.health = maximumHealthLife;
 
-	//salman i edited the this.x to Math.floor(this.x) and same for the this.y..the reason being is that I read from a book that described
-	//that the sprites might have fractional values and if we render with those values, we may see glitches on the canvas..sprites should be
-	//drawn at integer positions only...also it is important when we use start using the physics formulas...
+
     this.render = function(){
         context.drawImage(this.image, this.whichSprite, 0, 
             			  this.width, this.height, Math.floor(this.x), 
@@ -320,6 +318,7 @@
         }
     };
     
+    
     this.checkCollision = function(obj)
     {
         // check to see if our x coordinate is inside the object and
@@ -330,28 +329,18 @@
             return true;
         }
     };
+
+	//To display the players health properties
+	this.innerHealthMeterX = 0;
+	this.innerHealthMeterY = 0;
+	this.outerHealthMeterX = 0;
+	this.outerHealthMeterY = 0;
+	this.innerHealthMeterImage  = new Image();
+	this.outerHealthMeterImage  = new Image();
+
+	//For the grid thing
+	this.targetGrid = new Array();
 	
-	this.innerHealthMeter = function() {
-		this.sourceWidth = 32;
-		this.sourceHeight = 32;
-		this.width = 32;
-		this.height = 32;
-		//We need to place the inner health meter above the its parent sprite image
-		this.x = heroObject.x - 16;
-		this.y = heroObject.y - 16;
-	};
-
-	this.outerHealthMeter = function() {
-		this.sourceWidth = 32;
-		this.sourceHeight = 32;
-		this.width = 32;
-		this.height = 32;
-		//We need to place the outer health meter at the exact position where the inner health meter is...
-		this.x = heroObject.x - 16;
-		this.y = heroObject.y - 16;
-	}; 
-
-
 	//Pass a reference of the parent to the child..
 	this.HeroType = null;
 	switch(thisType){
