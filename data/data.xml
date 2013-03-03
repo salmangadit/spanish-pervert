@@ -1,9 +1,9 @@
 <GameData>
   <Objects>
     <Object id="0" type="nothing" src="" width="" height=""></Object>
-    <Object id="B" type="collidable" src="/spanish-pervert/images/barrel.png" width="28" height="28"></Object>
-    <Object id="P" type="player" src="/spanish-pervert/images/sg_sprite_head_32x32.png" width="32" height="32"></Object>
-    <Object id="E" type="enemy" src="/spanish-pervert/images/sg_sprite_head_32x32.png" width="32" height="32"></Object>
+    <Object id="B" type="collidable" src="/Users/TheGreatOne/Desktop/Sem_6/EE4702/Project/Project_2/spanish-pervert/images/barrel.png" width="28" height="28"></Object>
+    <Object id="P" type="player" src="/Users/TheGreatOne/Desktop/Sem_6/EE4702/Project/Project_2/spanish-pervert/images/sg_sprite_head_32x32.png" width="32" height="32"></Object>
+    <Object id="E" type="enemy" src="/Users/TheGreatOne/Desktop/Sem_6/EE4702/Project/Project_2/spanish-pervert/images/sg_sprite_head_32x32.png" width="32" height="32"></Object>
   </Objects>
   <Grid tileSize="32" width="20" height="12" baseColor="#FFFFFF">
     <GridRow>E000000B000000000000</GridRow>

@@ -1,9 +1,116 @@
+// This js file realises the object creation of different heroObjects and implements their methods
+
 /**
- * This js file realises the object creation of different heroObjects and implements their 
- * methods
+ * The general idea in implementing attacking mechanism of a 
+ * heroObject: the move action
+ * hero specific mechansim:
+ * -> Main playing character: the punch action, the kick action
+ * -> Bad NPC a.k.a Monkeys: able to pull the skirts (pulling action) & fight back the main character
+ * -> Good NPC a.k.a Ladies: the ability to strike the monkey using umbrella
  */
 
-function heroObject(){
+
+ var maximumHealthLife = 100;
+  
+ //------------------------ mainCharacter implementation -------------------------
+ 
+ var mainCharacter = function(thisReference){
+
+	this.parentRef = thisReference;
+	console.log(this.parentRef);
+	//Attributes associated with the main character specifically
+	this.arrayOfLastTenMoves = new Array();		//to be used for probability distribution or if same as the keys array then, this can be deemed redundant
+	this.gameExp = 0;
+	
+	//Any action done by the sprite be it punch or kick has to be in the standing state facing us
+	this.punch = function() {
+		console.log('the hero is gonna punch');
+		console.log(this.parentRef.whichSprite);
+		//Make the sprite stand stil
+		this.parentRef.whichSprite = this.parentRef.width * 2;//I need to know which is the number exactly to stand still
+		this.parentRef.render();
+		//Now attack your opponent
+		this.parentRef.whichSprite = this.parentRef.width * 3; //suppose 3 is the attacking image
+		//Set the locations of where the new sprite image is to be drawn
+		//The hero will be moved back by one tile for now...and assuming the hero is on our right
+		this.parentRef.x = this.parentRef.x + 32;
+		//Then render
+		this.parentRef.render();
+		//If the hero managed to punch successfully, update gameExp
+		//if(the punch was successful)
+			//this.gameExp++;
+	};
+	
+	this.kick = function() {
+		console.log('the hero is gonna kick');
+		//this.goToStandingStillSprite();
+		
+		this.parentRef.whichSprite = this.parentRef.width * 2;
+		this.parentRef.render();
+		this.parentRef.whichSprite = this.parentRef.width * 3;
+		//Set the locations of where the new sprite image is to be drawn
+		this.parentRef.x = this.x + 32;
+		//Then render
+		this.parentRef.render();
+		//If the hero managed to kick successfully, update gameExp
+		//if(the kick was successfull)
+			//this.gameExp += 2;
+	};	
+	
+	this.defend = function(){
+		console.log('the hero is defending');
+	};
+	
+	
+ }//end of mainCharacter constructor
+ 
+ mainCharacter.prototype = new heroObject();	
+ 
+ 
+ //------------------------ end of mainCharacter implementation ------------------
+ 
+ 
+ 
+ //------------------------ badNPC implementation --------------------------------
+ 
+ var badNPC = function(thisReference){
+ 	
+ 	this.parentThis = thisReference;
+ 	this.pullSkirt = function(){
+ 		console.log('badNPC is pulling the skirts');
+     		
+    };
+    
+    this.defend = function(){
+     	console.log('the badNPC is defending');
+    };
+    
+ }//end of badNPC constructor
+ 
+ badNPC.prototype = new heroObject();
+ 
+
+ //----------------------- End of badNPC implementation --------------------------
+ 
+ 
+ 
+ //----------------------- goodNPC implementation --------------------------------
+ 
+ var goodNPC = function(thisReference){
+	
+	this.parentThis = thisReference;
+	this.strikeWithUmbrella = function(){
+     		
+    };
+    
+ }//end of goodNPC constructor
+ 
+ goodNPC.prototype = new heroObject();
+
+ //----------------------- end of goodNPC implementation -------------------------
+ 
+
+ function heroObject(thisType){
 	
     this.width = 32;
     this.height = 32;
@@ -33,6 +140,9 @@ function heroObject(){
 
     // Do we have a collision event?
     this.collision = false;
+    
+    //Maximum health life is 100
+    this.health = maximumHealthLife;
 
 	//salman i edited the this.x to Math.floor(this.x) and same for the this.y..the reason being is that I read from a book that described
 	//that the sprites might have fractional values and if we render with those values, we may see glitches on the canvas..sprites should be
@@ -43,7 +153,6 @@ function heroObject(){
             			  Math.floor(this.y), this.width, this.height);	
     };
 
-	//helperClass.sortStringDataType(this.keys);	//for testing only..
 
     this.update = function(elapsed)
     {
@@ -221,153 +330,40 @@ function heroObject(){
             return true;
         }
     };
-    /*
-     this.move = function(){
-     	//left as an abstract function to be implemented by the child
-     };
-     */
-}
-
-/**
- * The general idea in implementing attacking mechanism of a 
- * heroObject: the move action
- * hero specific mechansim:
- * -> Main playing character: the punch action, the kick action
- * -> Bad NPC a.k.a Monkeys: able to pull the skirts (pulling action) & fight back the main character
- * -> Good NPC a.k.a Ladies: the ability to strike the monkey using umbrella
- */
-
-/*
- * -------------------------------------------------------------------------------------
- * I thought of a way to do the different object creation based on single function call
- * 
- * 
- 
- var maximumHealthLife = 100;
- var genericAttributes = {
- 	health: maximumHealthLife
- };
- 
- var innerHealthMeter = function(){
- 	this.sourceWidth = 32;
- 	this.sourceHeight = 32;
- 	this.width = 32;
- 	this.height = 32;
- 	//We need to place the inner health meter above the its parent sprite image
- 	this.x = heroObject.x - 16;
- 	this.y = heroObject.y - 16; 
- }
- 
- var outerHealthMeter = function(){
- 	this.sourceWidth = 32;
- 	this.sourceHeight = 32;
- 	this.width = 32;
- 	this.height = 32;
- 	//We need to place the outer health meter at the exact position where the inner health meter is...
- 	this.x = heroObject.x - 16;
- 	this.y = heroObject.y - 16;
- }
- 
- //------------------------ mainCharacter implementation -------------------------
- 
- var mainCharacter = function(){
-
-	//Attributes associated with the main character specifically
-	this.arrayOfLastTenMoves = new Array();		//to be used for probability distribution or if same as the keys array then, this can be deemed redundant
-	this.gameExp = 0;
 	
-	//Any action done by the sprite be it punch or kick has to be in the standing state facing us
-	this.punch = function() {
-		console.log('the hero is gonna punch);
-		goToStandingStillSprite();
-		//Set the locations of where the new sprite image is to be drawn
-		//Then render
-		this.render();
-		//If the hero managed to punch successfully, update gameExp
-		if(the punch was successful)
-			this.gameExp++;
+	this.innerHealthMeter = function() {
+		this.sourceWidth = 32;
+		this.sourceHeight = 32;
+		this.width = 32;
+		this.height = 32;
+		//We need to place the inner health meter above the its parent sprite image
+		this.x = heroObject.x - 16;
+		this.y = heroObject.y - 16;
 	};
-	
-	this.kick = function() {
-		console.log('the hero is gonna kick');
-		goToStandingStillSprite();
-		//Set the locations of where the new sprite image is to be drawn
-		//Then render
-		this.render();
-		//If the hero managed to kick successfully, update gameExp
-		if(the kick was successfull)
-			this.gameExp += 2;
-	};	
-	
-	this.defend(){
-		console.log('the hero is defending');
-	};
-	
-	this.goToStandingStillSprite = function() {
-		//this.currentSpriteImage = whatever the array containing the sprite is and whichever index/offset the standing still sprite is located
-		this.render();
-	};
-	
 
- }//end of mainCharacter constructor
- 
- //Inherit heroObject properties...
- mainCharacter.prototype = new heroObject();	
- //add the generic properties..the reason it is done this way, lady sprites i believe do not need health?..thus dont put in the main construtctor
- mainCharacter.prototype = new genericAttributes();
- 
- //------------------------ end of mainCharacter implementation ------------------
- 
- 
- 
- //------------------------ badNPC implementation --------------------------------
- 
- var badNPC = function(){
- 	
- 	this.pullSkirt = function(){
- 		console.log('badNPC is pulling the skirts);
-     		
-    };
-    
-    this.defend = function(){
-     	console.log('the badNPC is defending');
-    };
-    
- }//end of badNPC constructor
- badNPC.prototype = new heroObject();
- badNPC.prototype = new genericAttributes();
- 
- //----------------------- End of badNPC implementation --------------------------
- 
- 
- 
- //----------------------- goodNPC implementation --------------------------------
- 
- var goodNPC = function(){
-	
-	this.strikeWithUmbrella = function(){
-     		
-    };
-    
- }//end of goodNPC constructor
- goodNPC.prototype = new heroObject();
- 
- //----------------------- end of goodNPC implementation -------------------------
- 
- var thisObject;
- function createHeroObject(thisType){
- 	
- 	switch(thisType){
- 		case 0:		thisObject  = new mainCharacter();
+	this.outerHealthMeter = function() {
+		this.sourceWidth = 32;
+		this.sourceHeight = 32;
+		this.width = 32;
+		this.height = 32;
+		//We need to place the outer health meter at the exact position where the inner health meter is...
+		this.x = heroObject.x - 16;
+		this.y = heroObject.y - 16;
+	}; 
+
+
+	//Pass a reference of the parent to the child..
+	this.HeroType = null;
+	switch(thisType){
+ 		case 0:		this.HeroType = new mainCharacter(this);
  					break;
  		
- 		case 1:		thisObject  = new badNPC();
+ 		case 1:		this.HeroType = new badNPC(this);
  					break;
  		
- 		case 2:		thisObject = new goodNPC();
+ 		case 2:		this.HeroType = new goodNPC(this);
  					break;	
  	}
- 	return thisObject;
- }
+  
+}//heroObject constructor
  
- */
