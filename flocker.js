@@ -1,4 +1,4 @@
-var FT = 5;	//Number of flocker bots surrounding target type in order to activate flocking
+var FT = 3;	//Number of flocker bots surrounding target type in order to activate flocking
 var GT = 3;	//Threshold for grids around target bots so as to be considered for flocking
 
 //for virtual grid, 1 represents flocker
@@ -37,7 +37,8 @@ function flocker(target, flocker){
 			//set the flockers to move towards target, based on a_path algorithm
 			for(curFlocker in flockers){
 				flockers[curFlocker].targetGrid 
-					= new Array(target[curTarget].gridX ,target[curTarget].gridY);
+					= //new Array(target[curTarget].gridX ,target[curTarget].gridY);
+						new Array(0,0);
 			}
 		}
 		else{
