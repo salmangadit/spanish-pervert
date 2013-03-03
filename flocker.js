@@ -37,8 +37,7 @@ function flocker(target, flocker){
 			//set the flockers to move towards target, based on a_path algorithm
 			for(curFlocker in flockers){
 				flockers[curFlocker].targetGrid 
-					= //new Array(target[curTarget].gridX ,target[curTarget].gridY);
-						new Array(0,0);
+					= new Array(target[curTarget].gridX ,target[curTarget].gridY);
 			}
 		}
 		else{
