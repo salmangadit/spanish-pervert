@@ -330,7 +330,7 @@ for (curEnemy in enemies)
 			new Array(hero.gridX, hero.gridY), grid, columns, rows, false);*/
 		//testing out of the targetGrid system
 		path[index] = a_star(new Array(enemies[curEnemy].gridX, enemies[curEnemy].gridY), 
-			new Array(0,0), grid, columns, rows, false);
+			targetGrid, grid, columns, rows, false);
 
 		var nextPoint = path[index][1];
 
