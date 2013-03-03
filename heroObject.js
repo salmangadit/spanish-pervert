@@ -14,6 +14,7 @@ function heroObject(){
     this.centerY = this.y + (this.height / 2);
     this.gridX = parseInt(this.x/this.width);
     this.gridY = parseInt(this.y/this.height);
+	this.targetGrid;
 
     this.keys = new Array();
     this.lastRender = Date.now();

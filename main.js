@@ -313,6 +313,9 @@ hero.update(elapsed / screenUpdateTime);
 // draw the player to the screen again
 hero.render();
 
+//for testing purposes, let's make the enemies swarm towards the heroes
+flocker(hero, enemies);
+
 var index = 0;
 // do a foreach type loop through the enemies
 for (curEnemy in enemies)
@@ -323,8 +326,11 @@ for (curEnemy in enemies)
 	}
 	else
 	{
+		/*path[index] = a_star(new Array(enemies[curEnemy].gridX, enemies[curEnemy].gridY), 
+			new Array(hero.gridX, hero.gridY), grid, columns, rows, false);*/
+		//testing out of the targetGrid system
 		path[index] = a_star(new Array(enemies[curEnemy].gridX, enemies[curEnemy].gridY), 
-			new Array(hero.gridX, hero.gridY), grid, columns, rows, false);
+			targetGrid, grid, columns, rows, false);
 
 		var nextPoint = path[index][1];
 
