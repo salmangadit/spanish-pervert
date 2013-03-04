@@ -49,7 +49,7 @@
 		this.parentRef.render();
 		this.parentRef.whichSprite = this.parentRef.width * 3;
 		//Set the locations of where the new sprite image is to be drawn
-		this.parentRef.x = this.x + 32;
+		this.parentRef.x = this.parentRef.x + 32;
 		//Then render
 		this.parentRef.render();
 		//If the hero managed to kick successfully, update gameExp
@@ -160,7 +160,7 @@
         // reset the collision property
         this.collision = false;
 
-       var now = Date.now();
+        var now = Date.now();
         // How long has it been since we last updated the sprite
         var delta = now - this.lastRender;
 
