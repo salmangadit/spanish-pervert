@@ -121,7 +121,14 @@
     this.centerY = this.y + (this.height / 2);
     this.gridX = parseInt(this.x/this.width);
     this.gridY = parseInt(this.y/this.height);
-	this.targetGrid;
+	//--------------Max code-----------------------------
+	this.targetGrid = new Array(5,5);
+	//action type will describe what kind of action the object will take
+	//for enemies, 0 = movement, 1 = attack lady, 2 = attack player
+	//for player, 0 = no use punching, 1 = if player punch, it hits
+	this.actionType = 0; 
+	this.selfType = thisType;
+	//--------------End of Max code----------------------
 
     this.keys = new Array();
     this.lastRender = Date.now();
@@ -337,9 +344,6 @@
 	this.outerHealthMeterY = 0;
 	this.innerHealthMeterImage  = new Image();
 	this.outerHealthMeterImage  = new Image();
-
-	//For the grid thing
-	this.targetGrid = new Array();
 	
 	//Pass a reference of the parent to the child..
 	this.HeroType = null;

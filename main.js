@@ -8,6 +8,7 @@ var baseContext;
 var gameW = 800;
 var gameH = 600;
 var hero = null;
+var virtualGrid = null;
 
 // Variable to hold XML data
 var savedData = null;
@@ -44,7 +45,7 @@ function init() {
 	xmlhttp = new XMLHttpRequest();
 	//http://www.salmangadit.me/spanish-pervert/data/data.xmlC:/Users/Salman/Documents/GitHub/spanish-pervert/data/data.xml
 	// /Users/TheGreatOne/Desktop/Sem_6/EE4702/Project/Project_2/spanish-pervert/data/data.xml
-	xmlhttp.open("GET", "/Users/TheGreatOne/Desktop/Sem_6/EE4702/Project/Project_2/spanish-pervert/data/data.xml", false);
+	xmlhttp.open("GET", "C:/Users/YuanIng/Desktop/Local/spanish-pervert/data/data.xml", false);
 	xmlhttp.send();
 	xmlDoc = xmlhttp.responseXML;
 
@@ -300,10 +301,19 @@ function gameLoop() {
 
 	// draw the player to the screen again
 	hero.render();
-
+	
+	//-----------------------Max code----------------------------------------
 	//for testing purposes, let's make the enemies swarm towards the heroes
 	flocker(hero, enemies);
-
+	
+	//setting the grid
+	virtualGrid = setGrid(hero, enemies);
+	
+	//collision checking
+	collisionChecker(VG);
+	console.log(enemies[0].actionType);
+	//------------------------End of Max code------------------------------------
+	
 	var index = 0;
 	// do a foreach type loop through the enemies
 	for (curEnemy in enemies) {
