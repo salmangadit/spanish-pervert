@@ -45,7 +45,7 @@ function init() {
 	xmlhttp = new XMLHttpRequest();
 	//http://www.salmangadit.me/spanish-pervert/data/data.xmlC:/Users/Salman/Documents/GitHub/spanish-pervert/data/data.xml
 	// /Users/TheGreatOne/Desktop/Sem_6/EE4702/Project/Project_2/spanish-pervert/data/data.xml
-	xmlhttp.open("GET", "/Users/TheGreatOne/Desktop/Sem_6/EE4702/Project/Project_2/spanish-pervert/data/data.xml", false);
+	xmlhttp.open("GET", "C:/Users/Salman/Documents/GitHub/spanish-pervert/data/data.xml", false);
 	xmlhttp.send();
 	xmlDoc = xmlhttp.responseXML;
 
@@ -322,19 +322,27 @@ function gameLoop() {
 		if (enemies[curEnemy].destroyed) {
 			enemies.splice(curEnemy, 1);
 		} else {
-			/*path[index] = a_star(new Array(enemies[curEnemy].gridX, enemies[curEnemy].gridY),
-			new Array(hero.gridX, hero.gridY), grid, columns, rows, false);*/
+			
 			//testing out of the targetGrid system
-            var tempGrid = grid;
+            var tempGrid = new Array();
+
+            for (var x = 0; x < rows; x++){
+            	tempGrid[x] = new Array();
+            	for (var y = 0; y < columns; y++ ){
+            		tempGrid[x][y] = grid[x][y];
+            	}
+            }
+
             for (var i =0; i<enemies.length; i++){
                 if (enemies[curEnemy] != enemies[i]){
                     tempGrid[enemies[i].gridY][enemies[i].gridX] = 1;
                 }
             }
-            tempGrid[hero.gridY][hero.gridX] = 1;
+            //tempGrid[hero.gridY][hero.gridX] = 1;
+            path[index] = a_star(new Array(enemies[curEnemy].gridX, enemies[curEnemy].gridY),
+			new Array(hero.gridX, hero.gridY), tempGrid, columns, rows, false);
 
-
-			path[index] = a_star(new Array(enemies[curEnemy].gridX, enemies[curEnemy].gridY), enemies[curEnemy].targetGrid, tempGrid, columns, rows, false);
+			//path[index] = a_star(new Array(enemies[curEnemy].gridX, enemies[curEnemy].gridY), enemies[curEnemy].targetGrid, tempGrid, columns, rows, false);
 
 			var nextPoint = path[index][1];
 
@@ -371,6 +379,10 @@ function gameLoop() {
 						enemies[curEnemy].lastKeyChange = Date.now();
 					}
 				}
+			}
+
+			if (path[index].length == 2){
+				enemies[curEnemy].keys.splice(0, 1);
 			}
 
 			// Update the enemy based upon how long it took for the game loop
