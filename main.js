@@ -326,10 +326,10 @@ function gameLoop() {
             var tempGrid = grid;
             for (var i =0; i<enemies.length; i++){
                 if (enemies[curEnemy] != enemies[i]){
-                    tempGrid[enemies[i].gridX][enemies[i].gridY] = 1;
+                    tempGrid[enemies[i].gridY][enemies[i].gridX] = 1;
                 }
             }
-            tempGrid[hero.gridX][hero.gridY] = 1;
+            tempGrid[hero.gridY][hero.gridX] = 1;
 
 
 			path[index] = a_star(new Array(enemies[curEnemy].gridX, enemies[curEnemy].gridY), enemies[curEnemy].targetGrid, tempGrid, columns, rows, false);
