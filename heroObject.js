@@ -49,7 +49,7 @@
 					this.parentRef.x = this.parentRef.x - 4;
 					this.parentRef.whichSprite = this.parentRef.width * 23;
 				} else {
-					alert('hero is not facing us');
+					//alert('hero is not facing us');
 				}
 			
 			//The hero has already made some moves
@@ -63,7 +63,7 @@
 						this.parentRef.x = this.parentRef.x - 4;
 						this.parentRef.whichSprite = this.parentRef.width * 23;
 					} else {
-						alert('hero is not facing us');
+						//alert('hero is not facing us');
 					}
 				
 				//So if the last move was a punch, it implies that he intends to punch again - keep the same spriteimage
@@ -73,7 +73,7 @@
 					} else if(this.parentRef.facingWhichDirection == "right") {
 						this.parentRef.whichSprite = this.parentRef.width * 23;
 					} else {
-						alert('hero is not facing us');
+						//alert('hero is not facing us');
 					}
 				}							
 			}//outer most if-else statement
