@@ -59,8 +59,8 @@ function init() {
 	setInterval(gameLoop, screenUpdateTime);
 
 	document.addEventListener('keydown', function(event) {
-		// check if the key being pressed is one of the arrow keys
-		if (event.keyCode < 41 && event.keyCode > 36) {
+		// check if the key being pressed is one of the arrow keys -- 80 is the p key (punch) , 75 is k (kick)
+		if ((event.keyCode < 41 && event.keyCode > 36) || event.keyCode == 80 || event.keyCode == 75) {
 			// block the default browser action for the arrow keys
 			event.preventDefault();
 
@@ -73,8 +73,8 @@ function init() {
 	});
 
 	document.addEventListener('keyup', function(event) {
-		if (event.keyCode < 41 && event.keyCode > 36) {
-			// block the default browser action for the arrow keys
+		// check if the key being pressed is one of the arrow keys -- 80 is the p key (punch) , 75 is k (kick)
+		if ((event.keyCode < 41 && event.keyCode > 36) || event.keyCode == 80 || event.keyCode == 75) {
 			event.preventDefault();
 
 			// check to see if this key is already in the array

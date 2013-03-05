@@ -96,7 +96,7 @@
 				} else if (this.parentRef.facingWhichDirection == "right"){
 					this.parentRef.whichSprite = this.parentRef.width * 22;
 				} else {
-					alert('error');
+					//alert('error');
 				}				
 				this.parentRef.render();				
 			}
