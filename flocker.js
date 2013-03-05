@@ -1,6 +1,6 @@
-var FT = 4;
+var FT = 3;
 //Number of flocker bots surrounding target type in order to activate flocking
-var GT = 3;
+var GT = 5;
 //Threshold for grids around target bots so as to be considered for flocking
 
 function flocker(target, flocker){
@@ -10,6 +10,7 @@ function flocker(target, flocker){
 	//loop through all flockers, and check if they are in the same vicinity as target
 	for (iter in flocker){
 		//sets the default targetGrid
+		flocker[iter].targetGrid = new Array(9,5);
 		if (flocker[iter].gridX <= target.gridX + GT && 
 			flocker[iter].gridX >= target.gridX - GT &&
 			flocker[iter].gridY <= target.gridY + GT &&

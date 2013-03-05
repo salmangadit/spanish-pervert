@@ -45,7 +45,7 @@ function init() {
 	xmlhttp = new XMLHttpRequest();
 	//http://www.salmangadit.me/spanish-pervert/data/data.xmlC:/Users/Salman/Documents/GitHub/spanish-pervert/data/data.xml
 	// /Users/TheGreatOne/Desktop/Sem_6/EE4702/Project/Project_2/spanish-pervert/data/data.xml
-	xmlhttp.open("GET", "C:/Users/Salman/Documents/GitHub/spanish-pervert/data/data.xml", false);
+	xmlhttp.open("GET", "C:/Users/YuanIng/Desktop/Latest Local/spanish-pervert/data/data.xml", false);
 	xmlhttp.send();
 	xmlDoc = xmlhttp.responseXML;
 
@@ -318,6 +318,7 @@ function gameLoop() {
 	
 	var index = 0;
 	// do a foreach type loop through the enemies
+	
 	for (curEnemy in enemies) {
 		if (enemies[curEnemy].destroyed) {
 			enemies.splice(curEnemy, 1);
@@ -340,7 +341,7 @@ function gameLoop() {
             }
             //tempGrid[hero.gridY][hero.gridX] = 1;
             path[index] = a_star(new Array(enemies[curEnemy].gridX, enemies[curEnemy].gridY),
-			new Array(hero.gridX, hero.gridY), tempGrid, columns, rows, false);
+			enemies[curEnemy].targetGrid, tempGrid, columns, rows, false);
 
 			//path[index] = a_star(new Array(enemies[curEnemy].gridX, enemies[curEnemy].gridY), enemies[curEnemy].targetGrid, tempGrid, columns, rows, false);
 
