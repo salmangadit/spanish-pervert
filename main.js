@@ -323,7 +323,16 @@ function gameLoop() {
 			/*path[index] = a_star(new Array(enemies[curEnemy].gridX, enemies[curEnemy].gridY),
 			new Array(hero.gridX, hero.gridY), grid, columns, rows, false);*/
 			//testing out of the targetGrid system
-			path[index] = a_star(new Array(enemies[curEnemy].gridX, enemies[curEnemy].gridY), enemies[curEnemy].targetGrid, grid, columns, rows, false);
+            var tempGrid = grid;
+            for (var i =0; i<enemies.length; i++){
+                if (enemies[curEnemy] != enemies[i]){
+                    tempGrid[enemies[i].gridX][enemies[i].gridY] = 1;
+                }
+            }
+            tempGrid[hero.gridX][hero.gridY] = 1;
+
+
+			path[index] = a_star(new Array(enemies[curEnemy].gridX, enemies[curEnemy].gridY), enemies[curEnemy].targetGrid, tempGrid, columns, rows, false);
 
 			var nextPoint = path[index][1];
 
