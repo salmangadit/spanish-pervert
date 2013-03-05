@@ -17,44 +17,169 @@
  var mainCharacter = function(thisReference){
 
 	this.parentRef = thisReference;
-	console.log(this.parentRef);
+	//console.log(this.parentRef);
 	//Attributes associated with the main character specifically
-	this.arrayOfLastTenMoves = new Array();		//to be used for probability distribution or if same as the keys array then, this can be deemed redundant
+	this.arrayOfLastMoves = new Array();		//to be used for probability distribution or if same as the keys array then, this can be deemed redundant
 	this.gameExp = 0;
 	
+	//I need to render the 2 sprites sequentially, so I use this render stuff
+	this.now;// = Date.now();
+	this.delta;// = this.now - this.parentRef.lastRender;
+	
 	//Any action done by the sprite be it punch or kick has to be in the standing state facing us
+	
+	/* Punch sprite indicators:
+	 * 21 -> punch left
+	 * 22 -> retreat left punch
+	 * 24 -> punch right
+	 * 25 -> retreat right punch
+	 */
 	this.punch = function() {
-		console.log('the hero is gonna punch');
-		console.log(this.parentRef.whichSprite);
-		//Make the sprite stand stil
-		this.parentRef.whichSprite = this.parentRef.width * 2;//I need to know which is the number exactly to stand still
-		this.parentRef.render();
-		//Now attack your opponent
-		this.parentRef.whichSprite = this.parentRef.width * 3; //suppose 3 is the attacking image
-		//Set the locations of where the new sprite image is to be drawn
-		//The hero will be moved back by one tile for now...and assuming the hero is on our right
-		this.parentRef.x = this.parentRef.x + 32;
-		//Then render
-		this.parentRef.render();
-		//If the hero managed to punch successfully, update gameExp
-		//if(the punch was successful)
-			//this.gameExp++;
+	
+		console.log('punch status is: ' + this.parentRef.actionType);
+		//if (this.parentRef.actionType == 1) {
+			console.log('the hero is gonna punch');
+			
+			//Set the locations of where the new sprite image is to be drawn			
+			if (this.arrayOfLastMoves == 0){
+				if(this.parentRef.facingWhichDirection == "left"){
+					this.parentRef.x = this.parentRef.x + 4;
+					this.parentRef.whichSprite = this.parentRef.width * 24;
+				} else if(this.parentRef.facingWhichDirection == "right"){
+					this.parentRef.x = this.parentRef.x - 4;
+					this.parentRef.whichSprite = this.parentRef.width * 23;
+				} else {
+					alert('hero is not facing us');
+				}
+			
+			//The hero has already made some moves
+			} else {
+				
+				if(this.arrayOfLastMoves[this.arrayOfLastMoves.length - 1] != "punch"){
+					if(this.parentRef.facingWhichDirection == "left"){
+						this.parentRef.x = this.parentRef.x + 4;
+						this.parentRef.whichSprite = this.parentRef.width * 24;
+					} else if(this.parentRef.facingWhichDirection == "right"){
+						this.parentRef.x = this.parentRef.x - 4;
+						this.parentRef.whichSprite = this.parentRef.width * 23;
+					} else {
+						alert('hero is not facing us');
+					}
+				
+				//So if the last move was a punch, it implies that he intends to punch again - keep the same spriteimage
+				} else if(this.arrayOfLastMoves[this.arrayOfLastMoves.length - 1] == "punch") {
+					if(this.parentRef.facingWhichDirection == "left"){
+						this.parentRef.whichSprite = this.parentRef.width * 24;
+					} else if(this.parentRef.facingWhichDirection == "right") {
+						this.parentRef.whichSprite = this.parentRef.width * 23;
+					} else {
+						alert('hero is not facing us');
+					}
+				}							
+			}//outer most if-else statement
+			
+			
+			//Now attack your opponent
+			//this.parentRef.whichSprite = this.parentRef.width * 24;
+			this.parentRef.render();
+						
+			//Then update attributes
+			this.arrayOfLastMoves.push("punch");
+			this.gameExp++;
+			
+			//Move the hand back
+			this.now = Date.now();
+			this.delta = this.now - this.parentRef.lastRender;
+			if(this.delta > this.parentRef.animSpeed){
+				if(this.parentRef.facingWhichDirection == "left"){
+					this.parentRef.whichSprite = this.parentRef.width * 25;
+				} else if (this.parentRef.facingWhichDirection == "right"){
+					this.parentRef.whichSprite = this.parentRef.width * 22;
+				} else {
+					alert('error');
+				}				
+				this.parentRef.render();				
+			}
+		//}//if statement
+		
 	};
 	
+	/* Kick sprite indicators:
+	 * 13 -> kick left
+	 * 12 -> retreat left kick
+	 * 6 -> kick right
+	 * 7 -> retreat right kick
+	 */
 	this.kick = function() {
-		console.log('the hero is gonna kick');
-		//this.goToStandingStillSprite();
-		
-		this.parentRef.whichSprite = this.parentRef.width * 2;
-		this.parentRef.render();
-		this.parentRef.whichSprite = this.parentRef.width * 3;
-		//Set the locations of where the new sprite image is to be drawn
-		this.parentRef.x = this.parentRef.x + 32;
-		//Then render
-		this.parentRef.render();
-		//If the hero managed to kick successfully, update gameExp
-		//if(the kick was successfull)
-			//this.gameExp += 2;
+				
+		console.log('kick status is: ' + this.parentRef.actionType);
+		//if (this.parentRef.actionType == 1) {
+			console.log('the hero is gonna kick');
+
+			//Set the locations of where the new sprite image is to be drawn
+			if (this.arrayOfLastMoves == 0) {
+				if (this.parentRef.facingWhichDirection == "left") {
+					this.parentRef.x = this.parentRef.x + 4;
+					this.parentRef.whichSprite = this.parentRef.width * 4;
+				} else if (this.parentRef.facingWhichDirection == "right") {
+					this.parentRef.x = this.parentRef.x - 4;
+					this.parentRef.whichSprite = this.parentRef.width * 11;
+				} else {
+					//alert('hero is not facing us');
+				}
+
+				//The hero has already made some moves
+			} else {
+
+				if (this.arrayOfLastMoves[this.arrayOfLastMoves.length - 1] != "kick") {
+					if (this.parentRef.facingWhichDirection == "left") {
+						this.parentRef.x = this.parentRef.x + 4;
+						this.parentRef.whichSprite = this.parentRef.width * 4;
+					} else if (this.parentRef.facingWhichDirection == "right") {
+						this.parentRef.x = this.parentRef.x - 4;
+						this.parentRef.whichSprite = this.parentRef.width * 11;
+					} else {
+						//alert('hero is not facing us');
+					}
+
+					//So if the last move was a punch, it implies that he intends to punch again - keep the same spriteimage
+				} else if (this.arrayOfLastMoves[this.arrayOfLastMoves.length - 1] == "kick") {
+					if (this.parentRef.facingWhichDirection == "left") {
+						this.parentRef.whichSprite = this.parentRef.width * 4;
+					} else if (this.parentRef.facingWhichDirection == "right") {
+						this.parentRef.whichSprite = this.parentRef.width * 11;
+					} else {
+						//alert('hero is not facing us');
+					}
+				}
+			}//outer most if-else statement
+
+			//Now attack your opponent
+			//this.parentRef.whichSprite = this.parentRef.width * 24;
+			this.parentRef.render();
+
+			//Then update attributes
+			this.arrayOfLastMoves.push("kick");
+			this.gameExp++;
+
+			//Move the hand back
+			this.now = Date.now();
+			this.delta = this.now - this.parentRef.lastRender;
+			if (this.delta > this.parentRef.animSpeed) {
+				if (this.parentRef.facingWhichDirection == "left") {
+					this.parentRef.whichSprite = this.parentRef.width * 5;
+				} else if (this.parentRef.facingWhichDirection == "right") {
+					this.parentRef.whichSprite = this.parentRef.width * 10;
+				} else {
+					//alert('error');
+				}
+				this.parentRef.render();
+			}
+		//}//if statement
+
+
+
+
 	};	
 	
 	this.defend = function(){
@@ -151,6 +276,25 @@
     //Maximum health life is 100
     this.health = maximumHealthLife;
 
+	//For the grid thing
+	this.targetGrid = new Array();
+	
+	//The direction he is travelling
+	this.facingWhichDirection = null;
+	
+	//Pass a reference of the parent to the child..
+	this.HeroType = null;
+	switch(thisType){
+ 		case 0:		this.HeroType = new mainCharacter(this);
+ 					break;
+ 		
+ 		case 1:		this.HeroType = new badNPC(this);
+ 					break;
+ 		
+ 		case 2:		this.HeroType = new goodNPC(this);
+ 					break;	
+ 	}
+  
 
     this.render = function(){
         context.drawImage(this.image, this.whichSprite, 0, 
@@ -200,6 +344,7 @@
                     }
 
                     this.lastRender = now;
+                    this.facingWhichDirection = "left";
                 }
                 break;
             case 38:
@@ -224,6 +369,7 @@
                     }
 
                     this.lastRender = now;
+                    this.facingWhichDirection = "up";
                 }
                 break;
             case 39:
@@ -248,6 +394,7 @@
                     }
 
                     this.lastRender = now;
+                    this.facingWhichDirection = "right";
                 }
                 break;
             case 40:
@@ -272,8 +419,25 @@
                     }
 
                     this.lastRender = now;
+                    this.facingWhichDirection = "down";
                 }
                 break;
+                
+            case 75:
+            	//Make the hero kick
+            	this.HeroType.kick();
+            	if(delta > this.animSpeed){
+            		this.lastRender = now;	
+            	}
+            	break;    
+            	
+        	case 80:
+        		//Make the hero punch
+        		this.HeroType.punch();
+        		if(delta > this.animSpeed){
+        			this.lastRender = now;	
+        		}
+        		break;
         }
 
         // This code handles wrapping the hero from the edge of the canvas

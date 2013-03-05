@@ -28,7 +28,7 @@ helperClass.sortStringDataType = function(thisType){
 
 helperClass.checkIfTwoRectanglesIntersect = function(xCoordOfRect1, yCoordOfRect1, widthOfRect1, heightOfRect1, 
 													 xCoordOfRect2, yCoordOfRect2, widthOfRect2, heightOfRect2) {
-    
+													 	
     widthOfRect1 += xCoordOfRect1;
     widthOfRect2 += xCoordOfRect2;
     if (xCoordOfRect2 > widthOfRect1 || xCoordOfRect1 > widthOfRect2) 
@@ -42,3 +42,9 @@ helperClass.checkIfTwoRectanglesIntersect = function(xCoordOfRect1, yCoordOfRect
   	return true;
 	
 }
+
+/*Array.prototype.last = function(){
+	console.log('array.last() was invoked');
+	return this[this.length -1];
+}
+*/
