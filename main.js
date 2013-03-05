@@ -230,8 +230,6 @@ function initGameTiles() {
 					//hero.render();
 				};
 				
-				//Testing stuff
-				hero.HeroType.punch();
 			} else if (gameObjects[objIndex].type == "enemy") {
 				//1 is for badNPC & 2 is for goodNPC
 				enemies[enemyCount] = new heroObject(1);
@@ -285,7 +283,6 @@ function initCanvas() {
 }
 
 
-
 function gameLoop() {
 	var now = Date.now();
 	// calculate how long as passed since our last iteration
@@ -312,10 +309,10 @@ function gameLoop() {
 	//collision checking
 	collisionChecker(VG);
 	if(hero.actionType == 1){
-	console.log("Able to punch");
+	//console.log("Able to punch");
 	}
 	else if(hero.actionType == 0){
-	console.log("Unable to punch");
+	//console.log("Unable to punch");
 	}
 	//------------------------End of Max code------------------------------------
 	

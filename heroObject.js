@@ -86,6 +86,7 @@
 			//Then update attributes
 			this.arrayOfLastMoves.push("punch");
 			this.gameExp++;
+			document.getElementById("Score").innerHTML = "Score: " + this.gameExp;
 			
 			//Move the hand back
 			this.now = Date.now();
@@ -160,7 +161,8 @@
 
 			//Then update attributes
 			this.arrayOfLastMoves.push("kick");
-			this.gameExp++;
+			this.gameExp+=2;
+			document.getElementById("Score").innerHTML = "Score: " + this.gameExp;
 
 			//Move the hand back
 			this.now = Date.now();
@@ -184,6 +186,7 @@
 	
 	this.defend = function(){
 		console.log('the hero is defending');
+		
 	};
 	
 	
@@ -203,7 +206,7 @@
  	this.parentThis = thisReference;
  	this.pullSkirt = function(){
  		console.log('badNPC is pulling the skirts');
-     		
+     	
     };
     
     this.defend = function(){
