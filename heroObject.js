@@ -25,17 +25,19 @@
 	//Any action done by the sprite be it punch or kick has to be in the standing state facing us
 	this.punch = function() {
 		console.log('the hero is gonna punch');
-		console.log(this.parentRef.whichSprite);
+		//console.log(this.parentRef.whichSprite);
 		//Make the sprite stand stil
 		this.parentRef.whichSprite = this.parentRef.width * 2;//I need to know which is the number exactly to stand still
 		this.parentRef.render();
 		//Now attack your opponent
-		this.parentRef.whichSprite = this.parentRef.width * 3; //suppose 3 is the attacking image
+		this.parentRef.whichSprite = this.parentRef.width * 24; //suppose 3 is the attacking image
 		//Set the locations of where the new sprite image is to be drawn
 		//The hero will be moved back by one tile for now...and assuming the hero is on our right
-		this.parentRef.x = this.parentRef.x + 32;
+		if(this.arrayOfLastTenMoves(this.arrayOfLastTenMoves.length - 1) != "punch")
+			this.parentRef.x = this.parentRef.x + 4;
 		//Then render
 		this.parentRef.render();
+		this.arrayOfLastTenMoves.push("punch");
 		//If the hero managed to punch successfully, update gameExp
 		//if(the punch was successful)
 			//this.gameExp++;
@@ -47,11 +49,14 @@
 		
 		this.parentRef.whichSprite = this.parentRef.width * 2;
 		this.parentRef.render();
-		this.parentRef.whichSprite = this.parentRef.width * 3;
+		//There is one more checking that needs to be done - must see if the hero is on the right or left
+		this.parentRef.whichSprite = this.parentRef.width * 7;
 		//Set the locations of where the new sprite image is to be drawn
-		this.parentRef.x = this.parentRef.x + 32;
+		if(this.arrayOfLastTenMoves(this.arrayOfLastTenMoves.length - 1) != "kick")
+			this.parentRef.x = this.parentRef.x + 4;
 		//Then render
 		this.parentRef.render();
+		this.arrayOfLastTenMoves.push("kick");
 		//If the hero managed to kick successfully, update gameExp
 		//if(the kick was successfull)
 			//this.gameExp += 2;
@@ -150,7 +155,31 @@
     
     //Maximum health life is 100
     this.health = maximumHealthLife;
+	
+	//To display the players health properties
+	this.innerHealthMeterX = 0;
+	this.innerHealthMeterY = 0;
+	this.outerHealthMeterX = 0;
+	this.outerHealthMeterY = 0;
+	this.innerHealthMeterImage  = new Image();
+	this.outerHealthMeterImage  = new Image();
 
+	//For the grid thing
+	this.targetGrid = new Array();
+	
+	//Pass a reference of the parent to the child..
+	this.HeroType = null;
+	switch(thisType){
+ 		case 0:		this.HeroType = new mainCharacter(this);
+ 					break;
+ 		
+ 		case 1:		this.HeroType = new badNPC(this);
+ 					break;
+ 		
+ 		case 2:		this.HeroType = new goodNPC(this);
+ 					break;	
+ 	}
+  
 
     this.render = function(){
         context.drawImage(this.image, this.whichSprite, 0, 
@@ -274,6 +303,18 @@
                     this.lastRender = now;
                 }
                 break;
+                
+            case 75:
+            	//Make the hero kick
+            	this.HeroType.kick();
+            	this.lastRender = now;
+            	break;    
+            	
+        	case 80:
+        		//Make the hero punch
+        		this.HeroType.punch();
+        		this.lastRender = now;
+        		break;
         }
 
         // This code handles wrapping the hero from the edge of the canvas
@@ -344,19 +385,7 @@
 	this.outerHealthMeterY = 0;
 	this.innerHealthMeterImage  = new Image();
 	this.outerHealthMeterImage  = new Image();
+
 	
-	//Pass a reference of the parent to the child..
-	this.HeroType = null;
-	switch(thisType){
- 		case 0:		this.HeroType = new mainCharacter(this);
- 					break;
- 		
- 		case 1:		this.HeroType = new badNPC(this);
- 					break;
- 		
- 		case 2:		this.HeroType = new goodNPC(this);
- 					break;	
- 	}
-  
 }//heroObject constructor
  
