@@ -26,6 +26,8 @@
 	this.now;// = Date.now();
 	this.delta;// = this.now - this.parentRef.lastRender;
 	
+	this.damageDelivered = 0;
+	
 	//Any action done by the sprite be it punch or kick has to be in the standing state facing us
 	
 	/* Punch sprite indicators:
@@ -78,15 +80,17 @@
 				}							
 			}//outer most if-else statement
 			
+			//to test the health meter
+			this.parentRef.updateHealth(1);
 			
-			//Now attack your opponent
-			//this.parentRef.whichSprite = this.parentRef.width * 24;
+			
 			this.parentRef.render();
 						
 			//Then update attributes
 			this.arrayOfLastMoves.push("punch");
-			this.gameExp++;
-			document.getElementById("Score").innerHTML = "Score: " + this.gameExp;
+			this.damageDelivered = 1;
+			//this.gameExp++;
+			//document.getElementById("Score").innerHTML = "Score: " + this.gameExp;
 			
 			//Move the hand back
 			this.now = Date.now();
@@ -143,7 +147,7 @@
 						//alert('hero is not facing us');
 					}
 
-					//So if the last move was a punch, it implies that he intends to punch again - keep the same spriteimage
+					//So if the last move was a kick, it implies that he intends to kick again - keep the same spriteimage
 				} else if (this.arrayOfLastMoves[this.arrayOfLastMoves.length - 1] == "kick") {
 					if (this.parentRef.facingWhichDirection == "left") {
 						this.parentRef.whichSprite = this.parentRef.width * 4;
@@ -155,14 +159,17 @@
 				}
 			}//outer most if-else statement
 
-			//Now attack your opponent
-			//this.parentRef.whichSprite = this.parentRef.width * 24;
+			//to test the health meter
+			this.parentRef.updateHealth(-1);
+			
+			
 			this.parentRef.render();
 
 			//Then update attributes
 			this.arrayOfLastMoves.push("kick");
-			this.gameExp+=2;
-			document.getElementById("Score").innerHTML = "Score: " + this.gameExp;
+			this.damageDelivered = 2;
+			//this.gameExp+=2;
+			//document.getElementById("Score").innerHTML = "Score: " + this.gameExp;
 
 			//Move the hand back
 			this.now = Date.now();
@@ -179,15 +186,14 @@
 			}
 		//}//if statement
 
-
-
-
 	};	
 	
-	this.defend = function(){
+	//No defending as of now..
+	/*this.defend = function(){
 		console.log('the hero is defending');
 		
 	};
+	*/
 	
 	
  }//end of mainCharacter constructor
@@ -285,6 +291,25 @@
 	//The direction he is travelling
 	this.facingWhichDirection = null;
 	
+	//To display the players health properties
+	this.innerHealthMeterX = 0;
+	this.innerHealthMeterY = 0;
+	this.innerHealthMeterWidth  = 30;
+	this.innerHealthMeterHeight = 6;
+	//this.innerHealthMeterImage  = document.getElementById("innerHealthMeterImage");
+	this.innerHealthMeterImage = new Image();
+	this.innerHealthMeterImage.src = "/Users/TheGreatOne/Desktop/Sem_6/EE4702/Project/Project_2/spanish-pervert/images/innerHealthMeter.png";
+	
+	this.outerHealthMeterX = 0;
+	this.outerHealthMeterY = 0;
+	this.outerHealthMeterWidth  = 32;
+	this.outerHealthMeterHeight = 8;
+	this.outerHealthMeterImage  = new Image();
+	this.outerHealthMeterImage.src = "/Users/TheGreatOne/Desktop/Sem_6/EE4702/Project/Project_2/spanish-pervert/images/outerHealthMeter.png";
+	
+	this.coordinateToClearX = 0;
+	this.coordinateToClearY = 0;
+	
 	//Pass a reference of the parent to the child..
 	this.HeroType = null;
 	switch(thisType){
@@ -303,6 +328,20 @@
         context.drawImage(this.image, this.whichSprite, 0, 
             			  this.width, this.height, Math.floor(this.x), 
             			  Math.floor(this.y), this.width, this.height);	
+        
+        //Clear the canvas that the innerHealthMeter is drawn, then render
+        //iHMCanvasContext.clearRect(this.coordinateToClearX, this.coordinateToClearY, this.innerHealthMeterWidth, this.innerHealthMeterHeight);
+        iHMCanvasContext.clearRect(this.coordinateToClearX, this.coordinateToClearY, 64, 64);					   
+        iHMCanvasContext.drawImage(this.innerHealthMeterImage, this.innerHealthMeterX, this.innerHealthMeterY,
+        						   this.innerHealthMeterWidth, this.innerHealthMeterHeight);
+        //iHMCanvasContext.restore();
+        
+        //The outer health meter is drawn on the same canvas
+        context.drawImage(this.outerHealthMeterImage,            			    
+            			  Math.floor(this.outerHealthMeterX), 
+            			  Math.floor(this.outerHealthMeterY),
+            			  this.outerHealthMeterWidth, 
+            			  this.outerHealthMeterHeight);	
     };
 
 
@@ -440,7 +479,7 @@
         		if(delta > this.animSpeed){
         			this.lastRender = now;	
         		}
-        		break;
+        		break;        		
         }
 
         // This code handles wrapping the hero from the edge of the canvas
@@ -464,7 +503,17 @@
             this.y = gameH-this.height;
             this.gridY = parseInt(this.y/this.height);
         }
+		
+		//Get the current location of the health meter to clear
+		this.coordinateToClearX = this.innerHealthMeterX;
+		this.coordinateToClearY = this.innerHealthMeterY;
 
+		//Update the new health and locations
+		this.innerHealthMeterX = this.x;
+		this.innerHealthMeterY = this.y - 10;
+		this.outerHealthMeterX = this.innerHealthMeterX - 1;
+		this.outerHealthMeterY = this.innerHealthMeterY - 1; 
+		
         // loop through all of the rocks in the array
         // we use an for-in loop to go through the rocks in case
         // we later add some logic that can destroy static objects
@@ -491,7 +540,21 @@
             }
         }
     };
-    
+
+	this.updateHealth = function(thisHealth){
+		
+		this.innerHealthMeterWidth += thisHealth;
+		console.log('the health meter is: ' + this.innerHealthMeterWidth);
+		// 30 is the maximum width of the innerHealthMeter
+		if(this.innerHealthMeterWidth > 30){
+			this.innerHealthMeterWidth = 30;	
+		
+		} else if(this.innerHealthMeterWidth < 0) {
+			this.innerHealthMeterWidth = 0;
+			//The hero is dead..update the necessary parameters
+		}
+
+	}   
     
     this.checkCollision = function(obj)
     {
@@ -504,26 +567,6 @@
         }
     };
 
-	//To display the players health properties
-	this.innerHealthMeterX = 0;
-	this.innerHealthMeterY = 0;
-	this.outerHealthMeterX = 0;
-	this.outerHealthMeterY = 0;
-	this.innerHealthMeterImage  = new Image();
-	this.outerHealthMeterImage  = new Image();
-	
-	//Pass a reference of the parent to the child..
-	this.HeroType = null;
-	switch(thisType){
- 		case 0:		this.HeroType = new mainCharacter(this);
- 					break;
- 		
- 		case 1:		this.HeroType = new badNPC(this);
- 					break;
- 		
- 		case 2:		this.HeroType = new goodNPC(this);
- 					break;	
- 	}
   
 }//heroObject constructor
  

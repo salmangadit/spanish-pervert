@@ -135,6 +135,7 @@ function initGameBoard() {
 	gameW = parseInt(curItem.attributes.getNamedItem("width").value) * tileSize;
 	gameH = parseInt(curItem.attributes.getNamedItem("height").value) * tileSize;
 	baseColor = curItem.attributes.getNamedItem("baseColor").value;
+	
 }
 
 
@@ -269,6 +270,12 @@ function initCanvas() {
 	// create a context object from our baseCanvas
 	baseContext = baseCanvas.getContext("2d");
 
+	 
+	// retrieve a reference to the innerHealthMeter canvas
+	iHMCanvas = document.getElementById("innerHealthMeter");
+	// create a context object form the innerHealthMeter canvas
+	iHMCanvasContext = iHMCanvas.getContext("2d");
+	
 	// set the width and height of the canvas
 	canvas.width = gameW;
 	canvas.height = gameH;
@@ -276,10 +283,19 @@ function initCanvas() {
 	// set the width and height of the baseCanvas
 	baseCanvas.width = gameW;
 	baseCanvas.height = gameH;
-
+	
+	//Set the width and height of the innerHealthMeter canvas
+	iHMCanvas.width = gameW;
+	iHMCanvas.height = gameH;
+	
 	baseContext.fillStyle = baseColor;
 	// fill the entire baseContext with the color
 	baseContext.fillRect(0, 0, gameW, gameH);
+	
+	/* If i include this piece of code, the whole screen is empty with only the health meter images..
+	iHMCanvasContext.fillStyle = baseColor;
+	iHMCanvasContext.fillRect(0, 0, gameW, gameH);
+	*/
 }
 
 

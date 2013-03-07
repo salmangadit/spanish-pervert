@@ -40,6 +40,11 @@
 	{
 		z-index:2;
 	}
+	#innerHealthMeter
+	{
+		z-index:3;
+	}
+	
 	#logger
 	{
 		position:absolute;
@@ -52,12 +57,15 @@
 	.logger { border: 1px solid black; }
 	</style>
 	
-	<div id="Score" style="color:#0000FF;margin-left:600px"> Score: 0 </div>
+	<!-- <div id="Score" style="color:#0000FF;margin-left:600px"> Score: 0 </div> -->
+	<!-- <img id="innerHealthMeterImage" src="/Users/TheGreatOne/Desktop/Sem_6/EE4702/Project/Project_2/spanish-pervert/images/innerHealthMeter.png" width="0" height="0" >
+	-->
 </head>
 <BODY onload="javascript:if (typeof(init) != 'undefined') init();">
 	<div id="canvasWrapper">
 		<canvas id="baseCanvas">Your browser does not support HTML5</canvas>
 		<canvas id="mainCanvas">Your browser does not support HTML5</canvas>
+		<canvas id="innerHealthMeter">Your browser does not support HTML5 </canvas>
 	</div> 
 	<br />
 	<!-- <input type='button' onclick='clearLog()' value="Clear"/>

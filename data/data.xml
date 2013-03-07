@@ -6,8 +6,8 @@
     <Object id="E" type="enemy" src="images/sg_sprite_head_32x32.png" width="32" height="32"></Object>
   </Objects>
   <Grid tileSize="32" width="20" height="12" baseColor="#FFFFFF">
-    <GridRow>E000000B000000000000</GridRow>
     <GridRow>0000000B000000000000</GridRow>
+    <GridRow>00E0000B000000000000</GridRow>
     <GridRow>000000000000000B0000</GridRow>
     <GridRow>00B00000000000000000</GridRow>
     <GridRow>00000B0000000000B000</GridRow>
