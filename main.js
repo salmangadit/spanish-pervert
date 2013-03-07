@@ -215,11 +215,6 @@ function initGameTiles() {
 				hero.height = gameObjects[objIndex].height;
 				hero.x = j * tileSize;
 				hero.y = i * tileSize;
-				//Initialise the health meters also
-				hero.innerHealthMeterX = hero.x - 16;
-				hero.innerHealthMeterY = hero.y - 16;
-				hero.outerHealthMeterX = hero.innerHealthMeterX;
-				hero.outerHealthMeterY = hero.innerHealthMeterY;
 				hero.gridX = hero.x / hero.width;
 				hero.gridY = hero.y / hero.height;
 				hero.image = new Image();
