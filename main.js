@@ -226,8 +226,9 @@ function initGameTiles() {
 					//hero.render();
 				};
 				
-			} else if (gameObjects[objIndex].type == "enemy") {
-				//1 is for badNPC & 2 is for goodNPC
+			} else if (gameObjects[objIndex].type == "monkey") {
+				// 1 is for monkey_badNPC & 2 is for gorilla_badNPC
+				// 3 is for thin_goodNPC  & 4 is for fiesty_goodNPC 
 				enemies[enemyCount] = new heroObject(1);
 				enemies[enemyCount].width = gameObjects[objIndex].width;
 				enemies[enemyCount].height = gameObjects[objIndex].height;

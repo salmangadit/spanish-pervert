@@ -244,14 +244,85 @@
  
  var badNPC = function(thisReference){
  	
- 	this.parentThis = thisReference;
+ 	this.parentRef = thisReference;
+ 	
+ 	this.attackPower = null;
+ 	if(this.parentRef.badNPC_Type == "monkey"){
+ 		this.attackPower = 3;
+ 	}else if(this.parentRef.badNPC_Type == "gorilla"){
+ 		this.attackPower = 5;
+ 	}
+ 	
  	this.pullSkirt = function(){
  		console.log('badNPC is pulling the skirts');
-     	
-    };
+ 		// I need to know the number of the sprite to change to... waiting for max..
+    	switch(this.parentRef.facingWhichDirection) {
+    		
+    		case 'up': 	  if(this.parentRef.badNPC_Type == "monkey"){
+    					  	this.parentRef.whichSprite = this.parentRef.width * 14;	
+    					  } else {
+    						this.parentRef.whichSprite = this.parentRef.width * 14;
+    					  }
+    					  break;
+    		
+    		case 'down':  if(this.parentRef.badNPC_Type == "monkey"){
+    						this.parentRef.whichSprite = this.parentRef.width * 14;
+    					  } else {
+    						this.parentRef.whichSprite = this.parentRef.width * 14;
+    					  }
+    					  break;
+    		
+    		case 'right': if(this.parentRef.badNPC_Type == "monkey"){
+    						this.parentRef.whichSprite = this.parentRef.width * 14;
+    					  } else {
+    						this.parentRef.whichSprite = this.parentRef.width * 14;
+    					  }
+    					  break;
+    		
+    		case 'left':  if(this.parentRef.badNPC_Type == "monkey"){
+    						this.parentRef.whichSprite = this.parentRef.width * 14;
+    					  } else {
+    						this.parentRef.whichSprite = this.parentRef.width * 14;
+    					  }
+    					  break;
+    		
+    	}//switch case
+    	
+    };//end of pullskirt function
     
-    this.defend = function(){
-     	console.log('the badNPC is defending');
+    this.attackPlayer = function(){
+     	console.log('the badNPC is attacking the Hero');
+     	switch(this.parentRef.facingWhichDirection) {
+    		
+    		case 'up': 	  if(this.parentRef.badNPC_Type == "monkey"){
+    					  	this.parentRef.whichSprite = this.parentRef.width * 14;	
+    					  } else {
+    						this.parentRef.whichSprite = this.parentRef.width * 14;
+    					  }
+    					  break;
+    		
+    		case 'down':  if(this.parentRef.badNPC_Type == "monkey"){
+    						this.parentRef.whichSprite = this.parentRef.width * 14;
+    					  } else {
+    						this.parentRef.whichSprite = this.parentRef.width * 14;
+    					  }
+    					  break;
+    		
+    		case 'right': if(this.parentRef.badNPC_Type == "monkey"){
+    						this.parentRef.whichSprite = this.parentRef.width * 14;
+    					  } else {
+    						this.parentRef.whichSprite = this.parentRef.width * 14;
+    					  }
+    					  break;
+    		
+    		case 'left':  if(this.parentRef.badNPC_Type == "monkey"){
+    						this.parentRef.whichSprite = this.parentRef.width * 14;
+    					  } else {
+    						this.parentRef.whichSprite = this.parentRef.width * 14;
+    					  }
+    					  break;
+    		
+    	}//switch case
     };
     
  }//end of badNPC constructor
@@ -347,17 +418,27 @@
 	
 	//Pass a reference of the parent to the child..
 	this.HeroType = null;
-	this.badNPCType = null;
-	this.goodNPCType = null;
+	this.badNPC_Type = null;
+	this.goodNPC_Type = null;
 	switch(thisType){
  		case 0:		this.HeroType = new mainCharacter(this);
  					break;
  		
  		case 1:		this.HeroType = new badNPC(this);
+ 					this.badNPC_Type = "monkey";			
  					break;
  		
- 		case 2:		this.HeroType = new goodNPC(this);
+ 		case 2:		this.HeroType = new badNPC(this);
+ 					this.badNPC_Type = "gorilla";
+ 					break;
+ 		
+ 		case 3:		this.HeroType = new goodNPC(this);
+ 					this.goodNPC_Type = "thin";
  					break;	
+ 		
+ 		case 4:		this.HeroType = new goodNPC(this);
+ 					this.goodNPC_Type = "fiesty";
+ 					break;		
  	}
   
 
