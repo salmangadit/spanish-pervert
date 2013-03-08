@@ -36,6 +36,10 @@ var enemies = new Array();
 
 var grid = new Array();
 
+var currentPhase = "A";
+var currentWave = "1";
+
+var AI = new AIController();
 
 var rows = 0;
 var columns = 0;
@@ -45,7 +49,7 @@ function init() {
 	xmlhttp = new XMLHttpRequest();
 	//http://www.salmangadit.me/spanish-pervert/data/data.xmlC:/Users/Salman/Documents/GitHub/spanish-pervert/data/data.xml
 	// /Users/TheGreatOne/Desktop/Sem_6/EE4702/Project/Project_2/spanish-pervert/data/data.xml
-	xmlhttp.open("GET", "/Users/TheGreatOne/Desktop/Sem_6/EE4702/Project/Project_2/spanish-pervert/data/data.xml", false);
+	xmlhttp.open("GET", "C:/Users/Salman/Documents/GitHub/spanish-pervert/data/data.xml", false);
 	xmlhttp.send();
 	xmlDoc = xmlhttp.responseXML;
 
@@ -410,4 +414,8 @@ function gameLoop() {
 
 	// update the lastUpdate variable
 	lastUpdate = now;
+
+
+	//temporarily putting basic AI calls here till controller is up
+	AI.executePhase();
 }

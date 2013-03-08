@@ -404,14 +404,14 @@
 	this.innerHealthMeterHeight = 6;
 	//this.innerHealthMeterImage  = document.getElementById("innerHealthMeterImage");
 	this.innerHealthMeterImage = new Image();
-	this.innerHealthMeterImage.src = "/Users/TheGreatOne/Desktop/Sem_6/EE4702/Project/Project_2/spanish-pervert/images/innerHealthMeter.png";
+	this.innerHealthMeterImage.src = "images/innerHealthMeter.png";
 	
 	this.outerHealthMeterX = 0;
 	this.outerHealthMeterY = 0;
 	this.outerHealthMeterWidth  = 32;
 	this.outerHealthMeterHeight = 8;
 	this.outerHealthMeterImage  = new Image();
-	this.outerHealthMeterImage.src = "/Users/TheGreatOne/Desktop/Sem_6/EE4702/Project/Project_2/spanish-pervert/images/outerHealthMeter.png";
+	this.outerHealthMeterImage.src = "images/outerHealthMeter.png";
 	
 	this.coordinateToClearX = 0;
 	this.coordinateToClearY = 0;
