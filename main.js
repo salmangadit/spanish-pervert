@@ -49,7 +49,7 @@ function init() {
 	xmlhttp = new XMLHttpRequest();
 	//http://www.salmangadit.me/spanish-pervert/data/data.xmlC:/Users/Salman/Documents/GitHub/spanish-pervert/data/data.xml
 	// /Users/TheGreatOne/Desktop/Sem_6/EE4702/Project/Project_2/spanish-pervert/data/data.xml
-	xmlhttp.open("GET", "C:/Users/Salman/Documents/GitHub/spanish-pervert/data/data.xml", false);
+	xmlhttp.open("GET", "C:/Users/YuanIng/Desktop/Game_2/v3/spanish-pervert/data/data.xml", false);
 	xmlhttp.send();
 	xmlDoc = xmlhttp.responseXML;
 
@@ -320,16 +320,13 @@ function gameLoop() {
 	flocker(hero, enemies);
 	
 	//setting the grid
-	virtualGrid = setGrid(hero, enemies);
+	VG = setGrid(hero, enemies);
 	
 	//collision checking
-	collisionChecker(VG);
-	if(hero.actionType == 1){
-	//console.log("Able to punch");
-	}
-	else if(hero.actionType == 0){
-	//console.log("Unable to punch");
-	}
+	//collisionChecker(VG);
+	
+	Controller(VG, hero,enemies);
+	
 	//------------------------End of Max code------------------------------------
 	
 	var index = 0;

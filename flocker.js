@@ -27,21 +27,21 @@ function flocker(target, flocker){
 }	
 
 //puts all the gameObjects into a virtual grid for collision checking
-//The grid is basically a 25x19 grid, with each grid being size 32
+//The grid is basically a 32x32 grid, with each grid being size 32
 function setGrid(hero, enemies /*, girls*/){
 	VG = new Array();
-	for (var i = 0; i < 20; i++){
+	for (var i = 0; i < 32; i++){
 		VG[i] = new Array();
-		for (var j = 0; j < 12; j++){
+		for (var j = 0; j < 32; j++){
 			VG[i][j] = new Array();
 			//VG[i][j][0] = 0;
 		}
 	}
-	VG[hero.gridX][hero.gridY][VG[hero.gridX][hero.gridY].length] = hero;
+	VG[hero.gridX][hero.gridY] = hero;
 	hero.actionType = 0;	//resets actionType
 	for (iter in enemies){
 		//slots the gameObject into its grid
-		VG[enemies[iter].gridX][enemies[iter].gridY][VG[enemies[iter].gridX][enemies[iter].gridY].length] = enemies[iter];
+		VG[enemies[iter].gridX][enemies[iter].gridY] = enemies[iter];
 		enemies[iter].actionType = 0;	//resets actionType
 	}
 	
@@ -52,9 +52,10 @@ function setGrid(hero, enemies /*, girls*/){
 function separation(){
 }
 
+//takes in 2 parameters, bot referring to self, and VG which is the virtual grid
 function collisionChecker(VG){
-	for (var i = 0; i < 20; i++){
-		for (var j = 0; j < 12; j++){
+	for (var i = 0; i < 32; i++){
+		for (var j = 0; j < 32; j++){
 			if (VG[i][j].length >= 2){
 				//check thru array
 				ArrayChecker(VG[i][j]);
