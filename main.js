@@ -230,10 +230,15 @@ function initGameTiles() {
 					//hero.render();
 				};
 				
-			} else if (gameObjects[objIndex].type == "monkey") {
+			} else if (gameObjects[objIndex].type == "monkey" || gameObjects[objIndex].type == "gorilla") {
 				// 1 is for monkey_badNPC & 2 is for gorilla_badNPC
 				// 3 is for thin_goodNPC  & 4 is for fiesty_goodNPC 
-				enemies[enemyCount] = new heroObject(1);
+				if(gameObjects[objIndex].type == "monkey"){
+					enemies[enemyCount] = new heroObject(1);
+				} else {
+					enemies[enemyCount] = new heroObject(2);
+				}
+				
 				enemies[enemyCount].width = gameObjects[objIndex].width;
 				enemies[enemyCount].height = gameObjects[objIndex].height;
 				enemies[enemyCount].x = j * tileSize;

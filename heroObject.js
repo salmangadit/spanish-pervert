@@ -41,7 +41,7 @@
 	this.punch = function() {
 	
 		console.log('punch status is: ' + this.parentRef.actionType);
-		//if (this.parentRef.actionType == 1) {
+		// if (this.parentRef.actionType == 1) {
 			console.log('the hero is gonna punch');
 			
 			//Set the locations of where the new sprite image is to be drawn			
@@ -309,16 +309,16 @@
     					  break;
     		
     		case 'right': if(this.parentRef.badNPC_Type == "monkey"){
-    						this.parentRef.whichSprite = this.parentRef.width * 14;
+    						this.parentRef.whichSprite = this.parentRef.width * 17;
     					  } else {
-    						this.parentRef.whichSprite = this.parentRef.width * 14;
+    						this.parentRef.whichSprite = this.parentRef.width * 17;
     					  }
     					  break;
     		
     		case 'left':  if(this.parentRef.badNPC_Type == "monkey"){
-    						this.parentRef.whichSprite = this.parentRef.width * 14;
+    						this.parentRef.whichSprite = this.parentRef.width * 19;
     					  } else {
-    						this.parentRef.whichSprite = this.parentRef.width * 14;
+    						this.parentRef.whichSprite = this.parentRef.width * 19;
     					  }
     					  break;
     		
@@ -400,7 +400,7 @@
 	//To display the players health properties
 	this.innerHealthMeterX = 0;
 	this.innerHealthMeterY = 0;
-	this.innerHealthMeterWidth  = 30;
+	this.innerHealthMeterWidth  = 32;
 	this.innerHealthMeterHeight = 6;
 	//this.innerHealthMeterImage  = document.getElementById("innerHealthMeterImage");
 	this.innerHealthMeterImage = new Image();
@@ -629,8 +629,8 @@
 		//Update the new health and locations
 		this.innerHealthMeterX = this.x;
 		this.innerHealthMeterY = this.y - 10;
-		this.outerHealthMeterX = this.innerHealthMeterX - 1;
-		this.outerHealthMeterY = this.innerHealthMeterY - 1; 
+		this.outerHealthMeterX = this.innerHealthMeterX;
+		this.outerHealthMeterY = this.innerHealthMeterY -1 ; 
 		
         // loop through all of the rocks in the array
         // we use an for-in loop to go through the rocks in case

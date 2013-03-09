@@ -1,14 +1,12 @@
 <GameData>
   <Objects>
-    <Object id="0" type="nothing" src="" width="" height=""></Object>
-    <Object id="B" type="collidable" src="images/barrel.png" width="28" height="28"></Object>
-    <Object id="P" type="player" src="images/bm_attk_32x32.png" width="32" height="32"></Object>
-    <Object id="M" type="monkey" src="images/sg_sprite_head_32x32.png" width="32" height="32"></Object>
-    	
-    	<!-- Awaiting the sprites to be incorporated so that i can add in the src url -->
-    <Object id="G" type="gorilla" src="" width="32" height="32"></Object>
-    <Object id="T" type="thin" src="" width="32" height="32"></Object>
-    <Object id="F" type="fiesty" src="" width="32" height="32"></Object>
+    <Object id="0" type="nothing"    src="" width="" height=""></Object>
+    <Object id="B" type="collidable" src="images/barrel_t.png" 		width="28" height="28"></Object>
+    <Object id="P" type="player"     src="images/bm_attk_32x32.png" width="32" height="32"></Object>
+    <Object id="M" type="monkey"     src="images/monkey_32x32.png"  width="32" height="32"></Object>
+    <Object id="G" type="gorilla"    src="images/gorilla-move.png" 	width="32" height="32"></Object>
+    <Object id="T" type="thin"       src="images/shy_32x32.png"     width="32" height="32"></Object>
+    <Object id="F" type="fiesty"     src="images/fiesty-move.png" 	width="32" height="32"></Object>
   </Objects>
   <Grid tileSize="32" width="20" height="12" baseColor="#FFFFFF">
     <GridRow>00000000000000000000000B00000000</GridRow>
