@@ -623,14 +623,14 @@
         }
 		
 		//Get the current location of the health meter to clear
-		this.coordinateToClearX = this.innerHealthMeterX;
-		this.coordinateToClearY = this.innerHealthMeterY;
+		this.coordinateToClearX = this.innerHealthMeterX - 10;
+		this.coordinateToClearY = this.innerHealthMeterY - 10;
 
 		//Update the new health and locations
 		this.innerHealthMeterX = this.x;
 		this.innerHealthMeterY = this.y - 10;
 		this.outerHealthMeterX = this.innerHealthMeterX;
-		this.outerHealthMeterY = this.innerHealthMeterY -1 ; 
+		this.outerHealthMeterY = this.innerHealthMeterY; 
 		
         // loop through all of the rocks in the array
         // we use an for-in loop to go through the rocks in case

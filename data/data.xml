@@ -1,6 +1,6 @@
 <GameData>
   <Objects>
-    <Object id="0" type="nothing"    src="" width="" height=""></Object>
+    <Object id="-" type="nothing"    src="" width="" height=""></Object>
     <Object id="B" type="collidable" src="images/barrel_t.png" 		width="28" height="28"></Object>
     <Object id="P" type="player"     src="images/bm_attk_32x32.png" width="32" height="32"></Object>
     <Object id="M" type="monkey"     src="images/monkey_32x32.png"  width="32" height="32"></Object>
@@ -8,39 +8,37 @@
     <Object id="T" type="thin"       src="images/shy_32x32.png"     width="32" height="32"></Object>
     <Object id="F" type="fiesty"     src="images/fiesty-move.png" 	width="32" height="32"></Object>
   </Objects>
-  <Grid tileSize="32" width="20" height="12" baseColor="#FFFFFF">
-    <GridRow>00000000000000000000000B00000000</GridRow>
-    <GridRow>00000000000000000000000000000000</GridRow>
-    <GridRow>000000000000B0000000000000000000</GridRow>
-    <GridRow>0000000000000000000B0000000B00B0</GridRow>
-    <GridRow>00000000000000000000000000000000</GridRow>
-    <GridRow>00BBBB00000000000000000000000B00</GridRow>
-    <GridRow>00000000BBBBBB0000BBBBBBB0000000</GridRow>
-    <GridRow>00000000B000000000000B00B0000000</GridRow>
-    <GridRow>00000000B000000000000B00B0000000</GridRow>
-    <GridRow>00000000B000000000000B00B0000000</GridRow>
-    <GridRow>000000000000000000000B00BBB0BBB0</GridRow>
-    <GridRow>00000000B000000000000B00000000B0</GridRow>
-    <GridRow>00BBBB00B00000BBB0000B00000000B0</GridRow>
-    <GridRow>00000000B00000BBB0000000000B00B0</GridRow>
-    <GridRow>00000000000000BBB0000000000000B0</GridRow>
-    <GridRow>00000000000000BBB0000000000000B0</GridRow>
-    <GridRow>00000000B000000000000000BBBBBBB0</GridRow>
-    <GridRow>00000000B00000000000B000B000B000</GridRow>
-    <GridRow>00000000B00000000000B000B000B000</GridRow>
-    <GridRow>00BBBB00B00000000000B000B000B000</GridRow>
-    <GridRow>00000000B00000000000B000B000B000</GridRow>
-    <GridRow>00000000BBBB0BBBBBBBBBBBB000B000</GridRow>
-    <GridRow>000000000000000000B0000000000000</GridRow>
-    <GridRow>000000000000000000B0000000000000</GridRow>
-    <GridRow>000000000000000000B0000000000000</GridRow>
-    <GridRow>000000000000000000B000B000000000</GridRow>
-    <GridRow>0000000000000BB000B0000000BBBBBB</GridRow>
-    <GridRow>0P00000000000BB00000000000000000</GridRow>
-    <GridRow>00000000B00000000000000000000000</GridRow>
-    <GridRow>00000000B0000000000000B000000000</GridRow>
-    <GridRow>00000000B0000000000000B000000000</GridRow>
-    <GridRow>00000000B0000000000000B000000000</GridRow>
+  <Grid tileSize="32" width="33" height="28" baseColor="#FFFFFF">
+    <GridRow>-----------------------B--------</GridRow>
+    <GridRow>--------------------------------</GridRow>
+    <GridRow>------------B-------------------</GridRow>
+    <GridRow>-------------------B-------B--B-</GridRow>
+    <GridRow>--------------------------------</GridRow>
+    <GridRow>--BBBB-----------------------B--</GridRow>
+    <GridRow>--------BBBBBB----BBBBBBB-------</GridRow>
+    <GridRow>--------B------------B--B-------</GridRow>
+    <GridRow>--------B------------B--B-------</GridRow>
+    <GridRow>--------B------------B--B-------</GridRow>
+    <GridRow>---------------------B--BBB-BBB-</GridRow>
+    <GridRow>--------B------------B--------B-</GridRow>
+    <GridRow>--BBBB--B-----BBB----B--------B-</GridRow>
+    <GridRow>--------B-----BBB----------B--B-</GridRow>
+    <GridRow>--------------BBB-------------B-</GridRow>
+    <GridRow>--------------BBB-------------B-</GridRow>
+    <GridRow>--------B---------------BBBBBBB-</GridRow>
+    <GridRow>--------B-----------B---B---B---</GridRow>
+    <GridRow>--------B-----------B---B---B---</GridRow>
+    <GridRow>--BBBB--B-----------B---B---B---</GridRow>
+    <GridRow>--------B-----------B---B---B---</GridRow>
+    <GridRow>--------BBBB-BBBBBBBBBBBB---B---</GridRow>
+    <GridRow>----M-------------B-------------</GridRow>
+    <GridRow>----G-------------B-------------</GridRow>
+    <GridRow>------------------B-------------</GridRow>
+    <GridRow>------------------B---B---------</GridRow>
+    <GridRow>-------------BB---B-------BBBBBB</GridRow>
+    <GridRow>-P-----------BB-----------------</GridRow>
+
+
   </Grid>
 </GameData>
 
