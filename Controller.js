@@ -3,29 +3,33 @@ function Controller(VG, hero, enemies){
 		awareness(enemies[iter],VG);
 		//can put the enemies punching inside here, based on the actionType
 	}
+	hero.targetBot = null;
+	hero.actionType = 0;
 	if(hero.facingWhichDirection == "up"){
-		if(VG[hero.gridX][hero.gridY-1] != null && VG[hero.gridX][hero.gridY-1].selfType <= 2){
+		if(VG[hero.gridX][hero.gridY-1] != null && (VG[hero.gridX][hero.gridY-1].selfType == 1 || VG[hero.gridX][hero.gridY-1].selfType == 2) ){
 			hero.targetBot = VG[hero.gridX][hero.gridY-1];
+			hero.actionType = 1;
 		}
 	}
 	if(hero.facingWhichDirection == "down"){
-		if(VG[hero.gridX][hero.gridY+1] != null && VG[hero.gridX][hero.gridY+1].selfType <= 2){
+		if(VG[hero.gridX][hero.gridY+1] != null && (VG[hero.gridX][hero.gridY+1].selfType == 1 || VG[hero.gridX][hero.gridY+1].selfType == 2)){
 			hero.targetBot = VG[hero.gridX][hero.gridY+1];
+			hero.actionType = 1;
 		}
 	}
 	if(hero.facingWhichDirection == "left"){
-		if(VG[hero.gridX-1][hero.gridY] != null && VG[hero.gridX-1][hero.gridY].selfType <= 2){
+		if(VG[hero.gridX-1][hero.gridY] != null && (VG[hero.gridX-1][hero.gridY].selfType == 1 || VG[hero.gridX-1][hero.gridY].selfType == 2)){
 			hero.targetBot = VG[hero.gridX-1][hero.gridY];
+			hero.actionType = 1;
 		}
 	}
 	if(hero.facingWhichDirection == "up"){
-		if(VG[hero.gridX+1][hero.gridY] != null && VG[hero.gridX+1][hero.gridY].selfType <= 2){
+		if(VG[hero.gridX+1][hero.gridY] != null && (VG[hero.gridX+1][hero.gridY].selfType == 1 || VG[hero.gridX+1][hero.gridY].selfType == 2)){
 			hero.targetBot = VG[hero.gridX+1][hero.gridY];
+			hero.actionType = 1;
 		}
 	}
-	if(hero.targetBot!=null){
-		console.log(hero.targetBot.selfType);
-	}
+	console.log(hero.actionType);
 	//or can set a loop to iterate through all gameObjects to get them doing their specific actions
 }
 
@@ -39,8 +43,6 @@ function setGrid(hero, enemies /*, girls*/){
 		}
 	}
 	VG[hero.gridX][hero.gridY] = hero;
-	hero.actionType = 0;	//resets actionType
-	hero.targetBot = null; 	//resets targetBot
 	for (iter in enemies){
 		//slots the gameObject into its grid
 		VG[enemies[iter].gridX][enemies[iter].gridY] = enemies[iter];
