@@ -445,7 +445,7 @@ function gameLoop() {
 	}
 	
 	//Do a for each loop for the ladies as well
-	/*
+	
 	var ladyIndex = 0;
 	for (curLady in ladies) {
 		if (ladies[curLady].destroyed) {
@@ -522,7 +522,7 @@ function gameLoop() {
 
 		ladyIndex++;
 	}
-	*/
+	
 
 	
 	// update the lastUpdate variable
