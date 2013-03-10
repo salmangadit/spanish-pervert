@@ -10,9 +10,9 @@
   </Objects>
   <Grid tileSize="32" width="33" height="28" baseColor="#FFFFFF">
     <GridRow>-----------------------B--------</GridRow>
-    <GridRow>--------------------------------</GridRow>
+    <GridRow>-------T------------------------</GridRow>
     <GridRow>------------B-------------------</GridRow>
-    <GridRow>-------------------B-------B--B-</GridRow>
+    <GridRow>--------F----------B-------B--B-</GridRow>
     <GridRow>--------------------------------</GridRow>
     <GridRow>--BBBB-----------------------B--</GridRow>
     <GridRow>--------BBBBBB----BBBBBBB-------</GridRow>

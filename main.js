@@ -34,6 +34,9 @@ var scenery = new Array();
 // array to hold all of the enemy objects we have
 var enemies = new Array();
 
+// array to hold the good npc's
+var ladies = new Array();
+
 var grid = new Array();
 
 var currentPhase = "A";
@@ -155,7 +158,11 @@ function initGameTiles() {
 	var collidableCount = 0;
 	var enemyCount = 0;
 	var sceneryCount = 0;
-
+	
+	
+	//Added in by beeb
+	var ladiesCount = 0;
+	
 	for (var i = 0, curItem = (iter.length != null ? iter[i] : iter.iterateNext()); curItem; i++, curItem = (iter.length != null ? iter[i] : iter.iterateNext())) {
 		var curRow = curItem.textContent;
 		if (curRow === undefined)
@@ -256,6 +263,29 @@ function initGameTiles() {
 					enemies[this.index].render();
 				};
 				enemyCount++;
+			
+			} else if (gameObjects[objIndex].type == "thin" || gameObjects[objIndex].type == "fiesty") {
+				
+				if(gameObjects[objIndex].type == "thin"){
+					ladies[ladiesCount] = new heroObject(3);	
+				} else {
+					ladies[ladiesCount] = new heroObject(4);
+				}
+				
+				ladies[ladiesCount].width = gameObjects[objIndex].width;
+				ladies[ladiesCount].height = gameObjects[objIndex].height;
+				ladies[ladiesCount].x = j * tileSize;
+				ladies[ladiesCount].y = i * tileSize;
+				ladies[ladiesCount].gridX = ladies[ladiesCount].x / ladies[ladiesCount].width;
+				ladies[ladiesCount].gridY = ladies[ladiesCount].y / ladies[ladiesCount].height;
+				
+				ladies[ladiesCount].image = new Image();
+				ladies[ladiesCount].image.src = gameObjects[objIndex].imageSrc;
+				ladies[ladiesCount].image.index = ladiesCount;
+				ladies[ladiesCount].image.onload = function(){
+					ladies[this.index].render();
+				}
+				ladiesCount++; 
 			}
 		}
 	}
@@ -413,7 +443,88 @@ function gameLoop() {
 
 		index++;
 	}
+	
+	//Do a for each loop for the ladies as well
+	/*
+	var ladyIndex = 0;
+	for (curLady in ladies) {
+		if (ladies[curLady].destroyed) {
+			ladies.splice(curLady, 1);
+		} else {
 
+			//testing out of the targetGrid system
+			var tempGrid = new Array();
+
+			for (var x = 0; x < rows; x++) {
+				tempGrid[x] = new Array();
+				for (var y = 0; y < columns; y++) {
+					tempGrid[x][y] = grid[x][y];
+				}
+			}
+
+			for (var i = 0; i < ladies.length; i++) {
+				if (ladies[curLady] != ladies[i]) {
+					tempGrid[ladies[i].gridY][ladies[i].gridX] = 1;
+				}
+			}
+			//tempGrid[hero.gridY][hero.gridX] = 1;
+			path[ladyIndex] = a_star(new Array(ladies[curLady].gridX, ladies[curLady].gridY), ladies[curLady].targetGrid, tempGrid, columns, rows, false);
+
+			//path[ladyIndex] = a_star(new Array(ladies[curLady].gridX, ladies[curLady].gridY), ladies[curLady].targetGrid, tempGrid, columns, rows, false);
+
+			var nextPoint = path[ladyIndex][1];
+
+			// check if the lady collided with a collidable, if it did turn it a random direction
+			if (ladies[curLady].collision) {
+				if (ladies[curLady].keys[0] == 37) {
+					ladies[curLady].keys[0] = 38;
+					ladies[curLady].lastKeyChange = Date.now();
+				} else if (ladies[curLady].keys[0] == 38) {
+					ladies[curLady].keys[0] = 39;
+					ladies[curLady].lastKeyChange = Date.now();
+				} else if (ladies[curLady].keys[0] == 39) {
+					ladies[curLady].keys[0] = 40;
+					ladies[curLady].lastKeyChange = Date.now();
+				} else if (ladies[curLady].keys[0] == 40) {
+					ladies[curLady].keys[0] = 37;
+					ladies[curLady].lastKeyChange = Date.now();
+				}
+
+			} else {
+
+				if (nextPoint) {
+					if (nextPoint.x > ladies[curLady].gridX) {
+						ladies[curLady].keys[0] = 39;
+						ladies[curLady].lastKeyChange = Date.now();
+					} else if (nextPoint.x < ladies[curLady].gridX) {
+						ladies[curLady].keys[0] = 37;
+						ladies[curLady].lastKeyChange = Date.now();
+					} else if (nextPoint.y > ladies[curLady].gridY) {
+						ladies[curLady].keys[0] = 40;
+						ladies[curLady].lastKeyChange = Date.now();
+					} else if (nextPoint.y < ladies[curLady].gridY) {
+						ladies[curLady].keys[0] = 38;
+						ladies[curLady].lastKeyChange = Date.now();
+					}
+				}
+			}
+
+			if (path[ladyIndex].length == 2) {
+				ladies[curLady].keys.splice(0, 1);
+			}
+
+			// Update the lady based upon how long it took for the game loop
+			ladies[curLady].update(elapsed / screenUpdateTime);
+
+			// draw the lady to the screen again
+			ladies[curLady].render();
+		}
+
+		ladyIndex++;
+	}
+	*/
+
+	
 	// update the lastUpdate variable
 	lastUpdate = now;
 

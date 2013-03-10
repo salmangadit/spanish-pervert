@@ -88,6 +88,7 @@
 			}//outer most if-else statement
 			
 			// Update the targets health
+			//console.log('targetReference is of type: ' + targetReference.selfType);
 			targetReference.updateHealth(this.damageDelivered);
 			
 			
@@ -257,7 +258,7 @@
  	this.pullSkirt = function(targetReference){
  		console.log('badNPC is pulling the skirts');
  		// I need to know the number of the sprite to change to... waiting for max..
- 		
+
 		if (this.parentRef.actionType == 1) {
 			switch(this.parentRef.facingWhichDirection) {
 
@@ -296,13 +297,16 @@
 			}//switch case
 		}//actionType if statement
 		targetReference.updateHealth(this.attackPower);
+		this.parentRef.render();
     	
     };//end of pullskirt function
     
     this.attackPlayer = function(targetReference){
      	console.log('the badNPC is attacking the Hero');
-
+		
+		
 		if (this.parentRef.actionType == 2) {
+			console.log('the ' + this.parentRef.badNPC_Type + ' is gonna attack');
 			switch(this.parentRef.facingWhichDirection) {
 
 				case 'up':
@@ -323,23 +327,24 @@
 
 				case 'right':
 					if (this.parentRef.badNPC_Type == "monkey") {
-						this.parentRef.whichSprite = this.parentRef.width * 17;
+						this.parentRef.whichSprite = this.parentRef.width * 19;
 					} else {
-						this.parentRef.whichSprite = this.parentRef.width * 17;
+						this.parentRef.whichSprite = this.parentRef.width * 19;
 					}
 					break;
 
 				case 'left':
 					if (this.parentRef.badNPC_Type == "monkey") {
-						this.parentRef.whichSprite = this.parentRef.width * 19;
+						this.parentRef.whichSprite = this.parentRef.width * 17;
 					} else {
-						this.parentRef.whichSprite = this.parentRef.width * 19;
+						this.parentRef.whichSprite = this.parentRef.width * 17;
 					}
 					break;
 
 			}//switch case
 		}//actionType if statement
     	targetReference.updateHealth(this.attackPower);
+    	this.parentRef.render();
 
     };
     
@@ -604,7 +609,7 @@
                 
             case 75:
             	//Make the hero kick
-            	this.HeroType.kick();
+            	this.HeroType.kick(this.targetBot);
             	if(delta > this.animSpeed){
             		this.lastRender = now;	
             	}
@@ -612,7 +617,7 @@
             	
         	case 80:
         		//Make the hero punch
-        		this.HeroType.punch();
+        		this.HeroType.punch(this.targetBot);
         		if(delta > this.animSpeed){
         			this.lastRender = now;	
         		}
@@ -681,7 +686,6 @@
 	this.updateHealth = function(thisHealth){
 		
 		this.innerHealthMeterWidth += thisHealth;
-		console.log('the health meter is: ' + this.innerHealthMeterWidth);
 		// 30 is the maximum width of the innerHealthMeter
 		if(this.innerHealthMeterWidth > 30){
 			this.innerHealthMeterWidth = 30;	
@@ -690,6 +694,7 @@
 			this.innerHealthMeterWidth = 0;
 			// If the hero is dead..update the necessary parameters
 		}
+		console.log('the health meter is: ' + this.innerHealthMeterWidth);
 
 	}   
     

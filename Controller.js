@@ -27,6 +27,7 @@ function Controller(VG, hero, enemies){
 				hero.actionType = 1;
 			}
 		}
+
 		if(hero.facingWhichDirection == "right"){
 			if(VG[hero.gridX+1][hero.gridY] != null && (VG[hero.gridX+1][hero.gridY].selfType == 1 || VG[hero.gridX+1][hero.gridY].selfType == 2)){
 				hero.targetBot = VG[hero.gridX+1][hero.gridY];
@@ -36,6 +37,21 @@ function Controller(VG, hero, enemies){
 	}
 	//console.log(hero.gridX + "," + hero.gridY);
 	//or can set a loop to iterate through all gameObjects to get them doing their specific actions
+	
+	//Iterate through the loop to see if any of the enemies actionType has changed, 
+	//and if did do the necessary attack
+	for(iter in enemies){
+		
+		switch(enemies[iter].actionType){
+			case 1:	enemies[iter].HeroType.pullSkirt(enemies[iter].targetBot);
+					break;
+			case 2: enemies[iter].HeroType.attackPlayer(enemies[iter].targetBot);
+					break;
+			default: 
+					break;
+		}
+	
+	}//for-each loop
 }
 
 //33X28 grid
