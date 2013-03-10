@@ -10,7 +10,7 @@ function flocker(target, flocker){
 	//loop through all flockers, and check if they are in the same vicinity as target
 	for (iter in flocker){
 		//sets the default targetGrid
-		flocker[iter].targetGrid = new Array(9,5);
+		flocker[iter].targetGrid = new Array(5,20);
 		if (flocker[iter].gridX <= target.gridX + GT && 
 			flocker[iter].gridX >= target.gridX - GT &&
 			flocker[iter].gridY <= target.gridY + GT &&
@@ -25,32 +25,6 @@ function flocker(target, flocker){
 		}
 	}
 }	
-
-//puts all the gameObjects into a virtual grid for collision checking
-//The grid is basically a 32x32 grid, with each grid being size 32
-function setGrid(hero, enemies /*, girls*/){
-	VG = new Array();
-	for (var i = 0; i < 32; i++){
-		VG[i] = new Array();
-		for (var j = 0; j < 32; j++){
-			VG[i][j] = new Array();
-			//VG[i][j][0] = 0;
-		}
-	}
-	VG[hero.gridX][hero.gridY] = hero;
-	hero.actionType = 0;	//resets actionType
-	for (iter in enemies){
-		//slots the gameObject into its grid
-		VG[enemies[iter].gridX][enemies[iter].gridY] = enemies[iter];
-		enemies[iter].actionType = 0;	//resets actionType
-	}
-	
-	//console.log(VG[19][11].length);
-	return VG;
-}
-
-function separation(){
-}
 
 //takes in 2 parameters, bot referring to self, and VG which is the virtual grid
 function collisionChecker(VG){
