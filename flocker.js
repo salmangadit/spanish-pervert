@@ -1,4 +1,4 @@
-var FT = 3;
+var FT = 2;
 //Number of flocker bots surrounding target type in order to activate flocking
 var GT = 5;
 //Threshold for grids around target bots so as to be considered for flocking

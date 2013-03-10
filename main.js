@@ -52,7 +52,7 @@ function init() {
 	xmlhttp = new XMLHttpRequest();
 	//http://www.salmangadit.me/spanish-pervert/data/data.xmlC:/Users/Salman/Documents/GitHub/spanish-pervert/data/data.xml
 	// /Users/TheGreatOne/Desktop/Sem_6/EE4702/Project/Project_2/spanish-pervert/data/data.xml
-	xmlhttp.open("GET", "/Users/TheGreatOne/Desktop/Sem_6/EE4702/Project/Project_2/spanish-pervert/data/data.xml", false);
+	xmlhttp.open("GET", "C:/Users/YuanIng/Desktop/Game_2/v5/spanish-pervert/data/data.xml", false);
 	xmlhttp.send();
 	xmlDoc = xmlhttp.responseXML;
 
@@ -352,15 +352,15 @@ function gameLoop() {
 	
 	//-----------------------Max code----------------------------------------
 	//for testing purposes, let's make the enemies swarm towards the heroes
-	flocker(hero, enemies);
+	flocker(ladies[0], enemies);
 	
 	//setting the grid
-	VG = setGrid(hero, enemies);
+	VG = setGrid(hero, enemies, ladies);
 	
 	//collision checking
 	//collisionChecker(VG);
 	
-	Controller(VG, hero,enemies);
+	Controller(VG, hero,enemies,ladies);
 	
 	//------------------------End of Max code------------------------------------
 	
@@ -523,7 +523,6 @@ function gameLoop() {
 		ladyIndex++;
 	}
 	
-
 	
 	// update the lastUpdate variable
 	lastUpdate = now;

@@ -1,7 +1,10 @@
-function Controller(VG, hero, enemies){
+function Controller(VG, hero, enemies,ladies){
 	for(iter in enemies){
 		awareness(enemies[iter],VG);
 		//can put the enemies punching inside here, based on the actionType
+	}
+	for(iter1 in ladies){
+		ladies[iter1].targetGrid = new Array(5,18);
 	}
 	hero.targetBot = null;
 	hero.actionType = 0;
@@ -55,7 +58,7 @@ function Controller(VG, hero, enemies){
 }
 
 //33X28 grid
-function setGrid(hero, enemies /*, girls*/){
+function setGrid(hero, enemies ,ladies){
 	VG = new Array();
 	for (var i = 0; i < 33; i++){
 		VG[i] = new Array();
@@ -70,6 +73,12 @@ function setGrid(hero, enemies /*, girls*/){
 		VG[enemies[iter].gridX][enemies[iter].gridY] = enemies[iter];
 		enemies[iter].actionType = 0;	//resets actionType
 		enemies[iter].targetBot = null;	//resets targetBot
+	}
+	
+	for(iter1 in ladies){
+		VG[ladies[iter1].gridX][ladies[iter1].gridY] = ladies[iter1];
+		ladies[iter1].actionType = 0;	//resets actionType
+		ladies[iter1].targetBot = null;	//resets targetBot
 	}
 	
 	//console.log(VG[19][11].length);
