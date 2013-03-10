@@ -10,7 +10,7 @@ function flocker(target, flocker){
 	//loop through all flockers, and check if they are in the same vicinity as target
 	for (iter in flocker){
 		//sets the default targetGrid
-		flocker[iter].targetGrid = new Array(5,20);
+		flocker[iter].targetGrid = new Array(4,19);
 		if (flocker[iter].gridX <= target.gridX + GT && 
 			flocker[iter].gridX >= target.gridX - GT &&
 			flocker[iter].gridY <= target.gridY + GT &&

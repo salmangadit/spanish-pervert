@@ -361,10 +361,43 @@
  
  var goodNPC = function(thisReference){
 	
-	this.parentThis = thisReference;
-	this.strikeWithUmbrella = function(){
-     		
-    };
+	this.parentRef = thisReference;
+	
+	//Only the fiesty lady can attack
+	if (this.parentRef.goodNPC_Type == "fiesty")	this.attackPower = -5;
+ 	
+ 		
+	this.strikeWithUmbrella = function(targetReference){
+    	
+    	if (this.parentRef.actionType == 1) {
+    		switch(this.parentRef.facingWhichDirection) {
+
+				case 'up':
+					this.parentRef.whichSprite = this.parentRef.width * 14;
+					break;
+
+				case 'down':
+					this.parentRef.whichSprite = this.parentRef.width * 14;
+					break;
+
+				case 'right':
+					this.parentRef.whichSprite = this.parentRef.width * 19;
+					break;
+
+				case 'left':
+					this.parentRef.whichSprite = this.parentRef.width * 17;
+					break;
+
+			}//switch case statement
+    	
+    	}//actionType if statement	
+    	
+    	//Update the target's health
+    	targetReference.updateHealth(this.attackPower);	
+    	this.parentRef.render();
+    	
+    };//strike with umbrella function
+    
     
  }//end of goodNPC constructor
  

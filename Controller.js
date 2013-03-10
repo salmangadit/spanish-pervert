@@ -4,7 +4,7 @@ function Controller(VG, hero, enemies,ladies){
 		//can put the enemies punching inside here, based on the actionType
 	}
 	for(iter1 in ladies){
-		ladies[iter1].targetGrid = new Array(5,18);
+		ladies[iter1].targetGrid = new Array(3,16);
 	}
 	hero.targetBot = null;
 	hero.actionType = 0;
@@ -43,7 +43,7 @@ function Controller(VG, hero, enemies,ladies){
 	
 	//Iterate through the loop to see if any of the enemies actionType has changed, 
 	//and if did do the necessary attack
-	/*for(iter in enemies){
+	for(iter in enemies){
 		
 		switch(enemies[iter].actionType){
 			case 1:	enemies[iter].HeroType.pullSkirt(enemies[iter].targetBot);
@@ -54,7 +54,7 @@ function Controller(VG, hero, enemies,ladies){
 					break;
 		}
 	
-	}//for-each loop*/
+	}//for-each loop
 }
 
 //33X28 grid
