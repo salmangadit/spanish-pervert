@@ -55,6 +55,15 @@ function Controller(VG, hero, enemies,ladies){
 		}
 	
 	}//for-each loop
+	
+	for(iter in ladies){
+		if(ladies[iter].selfType == 4 && ladies[iter].actionType == 1){
+			ladies[iter].HeroType.strikeWithUmbrella(ladies[iter].targetBot);
+		}
+	}
+	// console.log(enemies[0].targetBot.selfType);
+	// if(enemies[0].targetBot!=null)
+		
 }
 
 //33X28 grid
@@ -94,70 +103,86 @@ function awareness(bot, VG){
 		&& bot.gridY - 1 >= 0){
 		//above	
 		if(VG[bot.gridX][bot.gridY-1] != null){
-			bot.facingWhichDirection = "up";
-			
 			if(VG[bot.gridX][bot.gridY-1].selfType == 0){		
+				bot.facingWhichDirection = "up";
 				bot.actionType = 2;
 				bot.targetBot = VG[bot.gridX][bot.gridY-1];
 				//console.log("hero up");
-				return;
 			}
-			if(VG[bot.gridX][bot.gridY-1].selfType == 3){
-				bot.actionType = 1;
-				bot.targetBot = VG[bot.gridX][bot.gridY-1];
+			if(	VG[bot.gridX][bot.gridY-1].selfType == 3 || 
+				VG[bot.gridX][bot.gridY-1].selfType == 4){
+				if((bot.targetBot != null && bot.targetBot.selfType!=0) ||
+					bot.targetBot == null){
+					bot.facingWhichDirection = "up";
+					bot.actionType = 1;					
+					bot.targetBot = VG[bot.gridX][bot.gridY-1];
+				}
 				VG[bot.gridX][bot.gridY-1].actionType = 1;
 				VG[bot.gridX][bot.gridY-1].facingWhichDirection = "down";
+				VG[bot.gridX][bot.gridY-1].targetBot = bot;
 			}			
 		}
 		//below
 		if(VG[bot.gridX][bot.gridY+1] != null){
-			bot.facingWhichDirection = "down";
-			
 			if(VG[bot.gridX][bot.gridY+1].selfType == 0){			
+				bot.facingWhichDirection = "down";
 				bot.actionType = 2;	
 				bot.targetBot = VG[bot.gridX][bot.gridY+1];				
 				//console.log("hero down");
-				return;
 			}
-			if(VG[bot.gridX][bot.gridY+1].selfType == 3){
-				bot.actionType = 1;
-				bot.targetBot = VG[bot.gridX][bot.gridY+1];
+			if(	VG[bot.gridX][bot.gridY+1].selfType == 3 ||
+				VG[bot.gridX][bot.gridY+1].selfType == 4){				
+				if((bot.targetBot != null && bot.targetBot.selfType!=0) ||
+					bot.targetBot == null){
+					bot.facingWhichDirection = "down";
+					bot.actionType = 1;
+					bot.targetBot = VG[bot.gridX][bot.gridY+1];
+				}
 				VG[bot.gridX][bot.gridY+1].actionType = 1;
 				VG[bot.gridX][bot.gridY+1].facingWhichDirection = "up";
+				VG[bot.gridX][bot.gridY-1].targetBot = bot;
 			}
 		}	
 		//left
-		if(VG[bot.gridX-1][bot.gridY] != null){
-			bot.facingWhichDirection = "left";
-			
+		if(VG[bot.gridX-1][bot.gridY] != null){			
 			if(VG[bot.gridX-1][bot.gridY].selfType == 0){			
+				bot.facingWhichDirection = "left";
 				bot.actionType = 2;
 				bot.targetBot = VG[bot.gridX-1][bot.gridY];
 				//console.log("hero left");
-				return;
 			}
-			if(VG[bot.gridX-1][bot.gridY].selfType == 3){
-				bot.actionType = 1;
-				bot.targetBot = VG[bot.gridX-1][bot.gridY];
+			if(	VG[bot.gridX-1][bot.gridY].selfType == 3 ||
+				VG[bot.gridX-1][bot.gridY].selfType == 4){
+				if((bot.targetBot != null && bot.targetBot.selfType!=0) ||
+					bot.targetBot == null){
+					bot.facingWhichDirection = "left";
+					bot.actionType = 1;
+					bot.targetBot = VG[bot.gridX-1][bot.gridY];
+				}
 				VG[bot.gridX-1][bot.gridY].actionType = 1;
 				VG[bot.gridX-1][bot.gridY].facingWhichDirection = "right";
+				VG[bot.gridX][bot.gridY-1].targetBot = bot;
 			}
 		}	
 		//right
-		if(VG[bot.gridX+1][bot.gridY] != null){
-			bot.facingWhichDirection = "right";
-			
+		if(VG[bot.gridX+1][bot.gridY] != null){			
 			if(VG[bot.gridX+1][bot.gridY].selfType == 0){	
+				bot.facingWhichDirection = "right";
 				bot.actionType = 2;
 				bot.targetBot = VG[bot.gridX+1][bot.gridY];
 				//console.log("hero right");
-				return;
 			}
-			if(VG[bot.gridX+1][bot.gridY].selfType == 3){
-				bot.actionType = 1;
-				bot.targetBot = VG[bot.gridX+1][bot.gridY];
+			if(	VG[bot.gridX+1][bot.gridY].selfType == 3 ||
+				VG[bot.gridX+1][bot.gridY].selfType == 4){				
+				if((bot.targetBot != null && bot.targetBot.selfType!=0) ||
+					bot.targetBot == null){
+					bot.facingWhichDirection = "right";
+					bot.actionType = 1;
+					bot.targetBot = VG[bot.gridX+1][bot.gridY];
+				}
 				VG[bot.gridX+1][bot.gridY].actionType = 1;
 				VG[bot.gridX+1][bot.gridY].facingWhichDirection = "left";
+				VG[bot.gridX][bot.gridY-1].targetBot = bot;
 			}
 			
 		}
