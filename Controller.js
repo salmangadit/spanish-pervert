@@ -6,39 +6,10 @@ function Controller(VG, hero, enemies,ladies){
 	for(iter1 in ladies){
 		ladies[iter1].targetGrid = new Array(3,16);
 	}
-	hero.targetBot = null;
-	hero.actionType = 0;
-	if(	hero.gridX + 1 <= 32 && 
-		hero.gridX - 1 >=0 && 
-		hero.gridY + 1 <= 27 
-		&& hero.gridY - 1 >= 0){
-		if(hero.facingWhichDirection == "up"){
-			if(VG[hero.gridX][hero.gridY-1] != null && (VG[hero.gridX][hero.gridY-1].selfType == 1 || VG[hero.gridX][hero.gridY-1].selfType == 2) ){
-				hero.targetBot = VG[hero.gridX][hero.gridY-1];
-				hero.actionType = 1;
-			}
-		}
-		if(hero.facingWhichDirection == "down"){
-			if(VG[hero.gridX][hero.gridY+1] != null && (VG[hero.gridX][hero.gridY+1].selfType == 1 || VG[hero.gridX][hero.gridY+1].selfType == 2)){
-				hero.targetBot = VG[hero.gridX][hero.gridY+1];
-				hero.actionType = 1;
-			}
-		}
-		if(hero.facingWhichDirection == "left"){
-			if(VG[hero.gridX-1][hero.gridY] != null && (VG[hero.gridX-1][hero.gridY].selfType == 1 || VG[hero.gridX-1][hero.gridY].selfType == 2)){
-				hero.targetBot = VG[hero.gridX-1][hero.gridY];
-				hero.actionType = 1;
-			}
-		}
-
-		if(hero.facingWhichDirection == "right"){
-			if(VG[hero.gridX+1][hero.gridY] != null && (VG[hero.gridX+1][hero.gridY].selfType == 1 || VG[hero.gridX+1][hero.gridY].selfType == 2)){
-				hero.targetBot = VG[hero.gridX+1][hero.gridY];
-				hero.actionType = 1;
-			}
-		}
-	}
-	//console.log(hero.gridX + "," + hero.gridY);
+	
+	heroBehaviour(hero,VG);
+	
+	//console.log(hero.actionType);
 	//or can set a loop to iterate through all gameObjects to get them doing their specific actions
 	
 	//Iterate through the loop to see if any of the enemies actionType has changed, 
@@ -66,6 +37,68 @@ function Controller(VG, hero, enemies,ladies){
 		
 }
 
+
+function heroBehaviour(hero, VG){
+hero.targetBot = null;
+	hero.actionType = 0;
+	if(	hero.gridX + 1 <= 32 && 
+		hero.gridX - 1 >=0 && 
+		hero.gridY + 1 <= 27 
+		&& hero.gridY - 1 >= 0){
+		if(hero.facingWhichDirection == "up"){
+			if(VG[hero.gridX][hero.gridY-1] != null){
+				hero.targetBot = VG[hero.gridX][hero.gridY-1];
+				if(	VG[hero.gridX][hero.gridY-1].selfType == 1 || 
+					VG[hero.gridX][hero.gridY-1].selfType == 2){
+						hero.actionType = 1;
+				}
+				if( VG[hero.gridX][hero.gridY-1].selfType == 3 || 
+					VG[hero.gridX][hero.gridY-1].selfType == 4){
+						hero.actionType = 3;
+				}
+			}
+		}
+		if(hero.facingWhichDirection == "down"){
+			if(VG[hero.gridX][hero.gridY+1] != null){
+				hero.targetBot = VG[hero.gridX][hero.gridY+1];
+				if( VG[hero.gridX][hero.gridY+1].selfType == 1 || 
+					VG[hero.gridX][hero.gridY+1].selfType == 2){				
+						hero.actionType = 1;
+				}
+				if( VG[hero.gridX][hero.gridY+1].selfType == 3 || 
+					VG[hero.gridX][hero.gridY+1].selfType == 4){				
+						hero.actionType = 3;
+				}
+			}
+		}
+		if(hero.facingWhichDirection == "left"){
+			if(VG[hero.gridX-1][hero.gridY] != null){
+				hero.targetBot = VG[hero.gridX-1][hero.gridY];
+				if(	VG[hero.gridX-1][hero.gridY].selfType == 1 || 
+					VG[hero.gridX-1][hero.gridY].selfType == 2){				
+						hero.actionType = 1;
+				}
+				if(	VG[hero.gridX-1][hero.gridY].selfType == 3 || 
+					VG[hero.gridX-1][hero.gridY].selfType == 4){				
+						hero.actionType = 3;
+				}					
+			}
+		}
+		if(hero.facingWhichDirection == "right"){
+			if(VG[hero.gridX+1][hero.gridY] != null){
+				hero.targetBot = VG[hero.gridX+1][hero.gridY];
+				if( VG[hero.gridX+1][hero.gridY].selfType == 1 || 
+					VG[hero.gridX+1][hero.gridY].selfType == 2){				
+						hero.actionType = 1;
+				}
+				if( VG[hero.gridX+1][hero.gridY].selfType == 3 || 
+					VG[hero.gridX+1][hero.gridY].selfType == 4){				
+						hero.actionType = 3;
+				}
+			}
+		}
+	}
+}
 //33X28 grid
 function setGrid(hero, enemies ,ladies){
 	VG = new Array();
