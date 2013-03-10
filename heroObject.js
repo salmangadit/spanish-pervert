@@ -26,7 +26,7 @@
 	this.now;// = Date.now();
 	this.delta;// = this.now - this.parentRef.lastRender;
 	
-	this.damageDelivered = 0;
+	this.damageDelivered = -2;
 	
 	/* Punch sprite indicators:
 	 * 18 -> retreat punch down
@@ -38,10 +38,10 @@
 	 * 28 -> retreat punch up
 	 * 29 -> punch up
 	 */
-	this.punch = function() {
+	this.punch = function(targetReference) {
 	
 		console.log('punch status is: ' + this.parentRef.actionType);
-		// if (this.parentRef.actionType == 1) {
+		 if (this.parentRef.actionType == 1) {
 			console.log('the hero is gonna punch');
 			
 			//Set the locations of where the new sprite image is to be drawn			
@@ -65,7 +65,7 @@
 				} else {
 					alert("this is a weird direction");
 				}
-			
+				
 			//The hero could have been punching
 			} else {
 				if(this.arrayOfLastMoves[this.arrayOfLastMoves.length - 1] == "punch") {
@@ -87,15 +87,15 @@
 				}							
 			}//outer most if-else statement
 			
-			//to test the health meter
-			this.parentRef.updateHealth(1);
+			// Update the targets health
+			targetReference.updateHealth(this.damageDelivered);
 			
 			
 			this.parentRef.render();
 						
 			//Then update attributes
 			this.arrayOfLastMoves.push("punch");
-			this.damageDelivered = 1;
+			//this.damageDelivered = 1;
 			//this.gameExp++;
 			//document.getElementById("Score").innerHTML = "Score: " + this.gameExp;
 			
@@ -121,7 +121,7 @@
 				this.parentRef.render();				
 			}
 			
-		//}//actionType if statement
+		}//actionType if statement
 		
 	};
 	
@@ -135,10 +135,10 @@
 	 * 13 -> kick up
 	 * 14 -> retreat up kick
 	 */
-	this.kick = function() {
+	this.kick = function(targetReference) {
 				
 		console.log('kick status is: ' + this.parentRef.actionType);
-		//if (this.parentRef.actionType == 1) {
+		if (this.parentRef.actionType == 1) {
 			console.log('the hero is gonna kick');
 
 			//Set the locations of where the new sprite image is to be drawn
@@ -185,8 +185,8 @@
 				}
 			}//outer most if-else statement
 
-			//to test the health meter
-			this.parentRef.updateHealth(-1);
+			// Update the targets health
+			targetReference.updateHealth(this.damageDelivered);
 			
 			
 			this.parentRef.render();
@@ -219,9 +219,10 @@
 				this.parentRef.render();
 			}
 		
-		//}//actionType if statement
+		}//actionType if statement
 
 	};	
+	
 	
 	//No defending as of now..
 	/*this.defend = function(){
@@ -248,81 +249,98 @@
  	
  	this.attackPower = null;
  	if(this.parentRef.badNPC_Type == "monkey"){
- 		this.attackPower = 3;
+ 		this.attackPower = -3;
  	}else if(this.parentRef.badNPC_Type == "gorilla"){
- 		this.attackPower = 5;
+ 		this.attackPower = -5;
  	}
  	
- 	this.pullSkirt = function(){
+ 	this.pullSkirt = function(targetReference){
  		console.log('badNPC is pulling the skirts');
  		// I need to know the number of the sprite to change to... waiting for max..
-    	switch(this.parentRef.facingWhichDirection) {
-    		
-    		case 'up': 	  if(this.parentRef.badNPC_Type == "monkey"){
-    					  	this.parentRef.whichSprite = this.parentRef.width * 14;	
-    					  } else {
-    						this.parentRef.whichSprite = this.parentRef.width * 14;
-    					  }
-    					  break;
-    		
-    		case 'down':  if(this.parentRef.badNPC_Type == "monkey"){
-    						this.parentRef.whichSprite = this.parentRef.width * 14;
-    					  } else {
-    						this.parentRef.whichSprite = this.parentRef.width * 14;
-    					  }
-    					  break;
-    		
-    		case 'right': if(this.parentRef.badNPC_Type == "monkey"){
-    						this.parentRef.whichSprite = this.parentRef.width * 14;
-    					  } else {
-    						this.parentRef.whichSprite = this.parentRef.width * 14;
-    					  }
-    					  break;
-    		
-    		case 'left':  if(this.parentRef.badNPC_Type == "monkey"){
-    						this.parentRef.whichSprite = this.parentRef.width * 14;
-    					  } else {
-    						this.parentRef.whichSprite = this.parentRef.width * 14;
-    					  }
-    					  break;
-    		
-    	}//switch case
+ 		
+		if (this.parentRef.actionType == 1) {
+			switch(this.parentRef.facingWhichDirection) {
+
+				case 'up':
+					if (this.parentRef.badNPC_Type == "monkey") {
+						this.parentRef.whichSprite = this.parentRef.width * 14;
+					} else {
+						this.parentRef.whichSprite = this.parentRef.width * 14;
+					}
+					break;
+
+				case 'down':
+					if (this.parentRef.badNPC_Type == "monkey") {
+						this.parentRef.whichSprite = this.parentRef.width * 14;
+					} else {
+						this.parentRef.whichSprite = this.parentRef.width * 14;
+					}
+					break;
+
+				case 'right':
+					if (this.parentRef.badNPC_Type == "monkey") {
+						this.parentRef.whichSprite = this.parentRef.width * 14;
+					} else {
+						this.parentRef.whichSprite = this.parentRef.width * 14;
+					}
+					break;
+
+				case 'left':
+					if (this.parentRef.badNPC_Type == "monkey") {
+						this.parentRef.whichSprite = this.parentRef.width * 14;
+					} else {
+						this.parentRef.whichSprite = this.parentRef.width * 14;
+					}
+					break;
+
+			}//switch case
+		}//actionType if statement
+		targetReference.updateHealth(this.attackPower);
     	
     };//end of pullskirt function
     
-    this.attackPlayer = function(){
+    this.attackPlayer = function(targetReference){
      	console.log('the badNPC is attacking the Hero');
-     	switch(this.parentRef.facingWhichDirection) {
-    		
-    		case 'up': 	  if(this.parentRef.badNPC_Type == "monkey"){
-    					  	this.parentRef.whichSprite = this.parentRef.width * 14;	
-    					  } else {
-    						this.parentRef.whichSprite = this.parentRef.width * 14;
-    					  }
-    					  break;
-    		
-    		case 'down':  if(this.parentRef.badNPC_Type == "monkey"){
-    						this.parentRef.whichSprite = this.parentRef.width * 14;
-    					  } else {
-    						this.parentRef.whichSprite = this.parentRef.width * 14;
-    					  }
-    					  break;
-    		
-    		case 'right': if(this.parentRef.badNPC_Type == "monkey"){
-    						this.parentRef.whichSprite = this.parentRef.width * 17;
-    					  } else {
-    						this.parentRef.whichSprite = this.parentRef.width * 17;
-    					  }
-    					  break;
-    		
-    		case 'left':  if(this.parentRef.badNPC_Type == "monkey"){
-    						this.parentRef.whichSprite = this.parentRef.width * 19;
-    					  } else {
-    						this.parentRef.whichSprite = this.parentRef.width * 19;
-    					  }
-    					  break;
-    		
-    	}//switch case
+
+		if (this.parentRef.actionType == 2) {
+			switch(this.parentRef.facingWhichDirection) {
+
+				case 'up':
+					if (this.parentRef.badNPC_Type == "monkey") {
+						this.parentRef.whichSprite = this.parentRef.width * 14;
+					} else {
+						this.parentRef.whichSprite = this.parentRef.width * 14;
+					}
+					break;
+
+				case 'down':
+					if (this.parentRef.badNPC_Type == "monkey") {
+						this.parentRef.whichSprite = this.parentRef.width * 14;
+					} else {
+						this.parentRef.whichSprite = this.parentRef.width * 14;
+					}
+					break;
+
+				case 'right':
+					if (this.parentRef.badNPC_Type == "monkey") {
+						this.parentRef.whichSprite = this.parentRef.width * 17;
+					} else {
+						this.parentRef.whichSprite = this.parentRef.width * 17;
+					}
+					break;
+
+				case 'left':
+					if (this.parentRef.badNPC_Type == "monkey") {
+						this.parentRef.whichSprite = this.parentRef.width * 19;
+					} else {
+						this.parentRef.whichSprite = this.parentRef.width * 19;
+					}
+					break;
+
+			}//switch case
+		}//actionType if statement
+    	targetReference.updateHealth(this.attackPower);
+
     };
     
  }//end of badNPC constructor
