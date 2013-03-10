@@ -28,7 +28,7 @@ function AIController(){
 		5. Put a checker for end of phase? This should (probably) run on its own thread
 		*/
 
-		console.log("Found current phase details");
+		//console.log("Found current phase details");
 	}
 
 	this.checkEndOfPhase = function(){

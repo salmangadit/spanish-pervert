@@ -368,6 +368,7 @@
 	//for player, 0 = no use punching, 1 = if player punch, it hits
 	this.actionType = 0; 
 	this.selfType = thisType;
+	this.targetBot;
 	//--------------End of Max code----------------------
 
     this.keys = new Array();
