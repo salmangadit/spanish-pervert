@@ -224,7 +224,14 @@
 
 	};	
 	
-	
+	//Added new mechanism
+	this.rescue = function(targetReference){
+		if(this.parentRef.actionType == 3){
+			console.log('the hero is rescuing a lady');
+			// Require a sprite image here....will inform kendrick
+			targetReference.targetGrid = new Array(this.parentRef.gridX, this.parentRef.gridY);
+		}
+	}
 	//No defending as of now..
 	/*this.defend = function(){
 		console.log('the hero is defending');
@@ -256,10 +263,10 @@
  	}
  	
  	this.pullSkirt = function(targetReference){
- 		console.log('badNPC is pulling the skirts');
  		// I need to know the number of the sprite to change to... waiting for max..
  		
 		if (this.parentRef.actionType == 1) {
+			//console.log('badNPC is pulling the skirts');
 			switch(this.parentRef.facingWhichDirection) {
 
 				case 'up':
@@ -302,11 +309,10 @@
     };//end of pullskirt function
     
     this.attackPlayer = function(targetReference){
-     	console.log('the badNPC is attacking the Hero');
-		
-		
+    	
 		if (this.parentRef.actionType == 2) {
-			console.log('the ' + this.parentRef.badNPC_Type + ' is gonna attack');
+			//console.log('the badNPC is attacking the Hero');
+			//console.log('the ' + this.parentRef.badNPC_Type + ' is gonna attack');
 			switch(this.parentRef.facingWhichDirection) {
 
 				case 'up':
@@ -365,8 +371,7 @@
 	
 	//Only the fiesty lady can attack
 	if (this.parentRef.goodNPC_Type == "fiesty")	this.attackPower = -5;
- 	
- 		
+ 	 		
 	this.strikeWithUmbrella = function(targetReference){
     	
     	if (this.parentRef.actionType == 1) {
@@ -437,7 +442,7 @@
     // How many pixels do we want to move the hero each loop
     this.moveSpeed = 4;
     //Can use this and * by number of pixels an image is to get the current sprite image
-    this.currentSpriteImageIndex = 0;
+    //this.currentSpriteImageIndex = 0;
     //Set these during collision detections
     this.vectorX = 0;				
     this.vectorY = 0;
@@ -447,7 +452,7 @@
     
     //Maximum health life is 100
     this.health = maximumHealthLife;
-
+	this.destroyed = false;
 	//For the grid thing
 	this.targetGrid = new Array();
 	
@@ -518,7 +523,6 @@
             			  this.outerHealthMeterWidth, 
             			  this.outerHealthMeterHeight);	
     };
-
 
     this.update = function(elapsed)
     {
@@ -654,7 +658,16 @@
         		if(delta > this.animSpeed){
         			this.lastRender = now;	
         		}
-        		break;        		
+        		break;     
+        	
+        	case 82:
+        		//Make the hero rescue the lady
+        		console.log('the r key was pressed');
+        		this.HeroType.rescue(this.targetBot);
+        		if(delta > this.animSpeed){
+        			this.lastRender = now;
+        		}   
+        		break;		
         }
 
         // This code handles wrapping the hero from the edge of the canvas
@@ -726,8 +739,9 @@
 		} else if(this.innerHealthMeterWidth < 0) {
 			this.innerHealthMeterWidth = 0;
 			// If the hero is dead..update the necessary parameters
+			this.destroyed = true;
 		}
-		console.log('the health meter is: ' + this.innerHealthMeterWidth);
+		//console.log('the health meter is: ' + this.innerHealthMeterWidth);
 
 	}   
     

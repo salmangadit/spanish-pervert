@@ -66,8 +66,9 @@ function init() {
 	setInterval(gameLoop, screenUpdateTime);
 
 	document.addEventListener('keydown', function(event) {
-		// check if the key being pressed is one of the arrow keys -- 80 is the p key (punch) , 75 is k (kick)
-		if ((event.keyCode < 41 && event.keyCode > 36) || event.keyCode == 80 || event.keyCode == 75) {
+		// check if the key being pressed is one of the arrow keys -- 
+		// 80 is the p key (punch), 75 is k (kick), 82 is r (rescue)
+		if ((event.keyCode < 41 && event.keyCode > 36) || event.keyCode == 80 || event.keyCode == 75 || event.keyCode == 82) {
 			// block the default browser action for the arrow keys
 			event.preventDefault();
 
@@ -80,8 +81,9 @@ function init() {
 	});
 
 	document.addEventListener('keyup', function(event) {
-		// check if the key being pressed is one of the arrow keys -- 80 is the p key (punch) , 75 is k (kick)
-		if ((event.keyCode < 41 && event.keyCode > 36) || event.keyCode == 80 || event.keyCode == 75) {
+		// check if the key being pressed is one of the arrow keys -- 
+		// 80 is the p key (punch), 75 is k (kick), 82 is r (rescue)
+		if ((event.keyCode < 41 && event.keyCode > 36) || event.keyCode == 80 || event.keyCode == 75 || event.keyCode == 82) {
 			event.preventDefault();
 
 			// check to see if this key is already in the array
@@ -364,9 +366,8 @@ function gameLoop() {
 	
 	//------------------------End of Max code------------------------------------
 	
-	var index = 0;
 	// do a foreach type loop through the enemies
-	
+	var index = 0;	
 	for (curEnemy in enemies) {
 		if (enemies[curEnemy].destroyed) {
 			enemies.splice(curEnemy, 1);
@@ -445,7 +446,6 @@ function gameLoop() {
 	}
 	
 	//Do a for each loop for the ladies as well
-	
 	var ladyIndex = 0;
 	for (curLady in ladies) {
 		if (ladies[curLady].destroyed) {
