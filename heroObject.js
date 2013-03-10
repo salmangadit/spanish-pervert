@@ -258,7 +258,7 @@
  	this.pullSkirt = function(targetReference){
  		console.log('badNPC is pulling the skirts');
  		// I need to know the number of the sprite to change to... waiting for max..
-
+ 		
 		if (this.parentRef.actionType == 1) {
 			switch(this.parentRef.facingWhichDirection) {
 
