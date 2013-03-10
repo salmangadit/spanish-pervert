@@ -6,7 +6,6 @@ function AIController(){
 
 	this.executePhase = function(){
 		//Update JSON objects for current phase
-		
 		currPhase.phaseName = this.phases[this.currentPhaseIndex].phaseName;
 		currPhase.wave = this.phases[this.currentPhaseIndex].wave;
 		currPhase.scenarioRatio = this.phases[this.currentPhaseIndex].scenario;

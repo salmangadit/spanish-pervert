@@ -36,7 +36,7 @@
     <GridRow>------------------B-------------</GridRow>
     <GridRow>------------------B---B---------</GridRow>
     <GridRow>-------------BB---B-------BBBBBB</GridRow>
-    <GridRow>-P-----------BB-----------------</GridRow>
+    <GridRow>-P-----------BB-------B---------</GridRow>
   </Grid>
 </GameData>
 
