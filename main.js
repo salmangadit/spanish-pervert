@@ -54,7 +54,7 @@ function init() {
 	xmlhttp = new XMLHttpRequest();
 	//http://www.salmangadit.me/spanish-pervert/data/data.xmlC:/Users/Salman/Documents/GitHub/spanish-pervert/data/data.xml
 	// /Users/TheGreatOne/Desktop/Sem_6/EE4702/Project/Project_2/spanish-pervert/data/data.xml
-	xmlhttp.open("GET", "C:/Users/Salman/Documents/GitHub/spanish-pervert/data/data.xml", false);
+	xmlhttp.open("GET", "/Users/TheGreatOne/Desktop/Sem_6/EE4702/Project/Project_2/spanish-pervert/data/data.xml", false);
 	xmlhttp.send();
 	xmlDoc = xmlhttp.responseXML;
 
@@ -259,7 +259,7 @@ function initGameTiles() {
 				// 3 is for thin_goodNPC  & 4 is for fiesty_goodNPC 
 				if(gameObjects[objIndex].type == "monkey"){
 					enemies[enemyCount] = new heroObject(1);
-				} else {
+				} else if(gameObjects[objIndex].type == "gorilla"){
 					enemies[enemyCount] = new heroObject(2);
 				}
 				
@@ -464,6 +464,7 @@ function gameLoop() {
 	var ladyIndex = 0;
 	for (curLady in ladies) {
 		if (ladies[curLady].destroyed) {
+			console.log('this lady ' + ladies[curLady].selfType + ' is dead');
 			ladies.splice(curLady, 1);
 		} else {
 

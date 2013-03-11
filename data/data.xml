@@ -29,14 +29,14 @@
     <GridRow>--------B-----------B---B---B---</GridRow>
     <GridRow>--------B-----------B---B---B---</GridRow>
     <GridRow>--BBBB--B-----------B---B---B---</GridRow>
-    <GridRow>--------B-----------B---B---B---</GridRow>
+    <GridRow>------P-B-----------B---B---B---</GridRow>
     <GridRow>--------BBBB-BBBBBBBBBBBB---B---</GridRow>
-    <GridRow>------------------B-------------</GridRow>
-    <GridRow>------------------B-------------</GridRow>
-    <GridRow>------------------B-------------</GridRow>
-    <GridRow>------------------B---B---------</GridRow>
+    <GridRow>----M-------------B-------------</GridRow>
+    <GridRow>----G-------------B-------------</GridRow>
+    <GridRow>-------M----------B-------------</GridRow>
+    <GridRow>-------G----------B---B---------</GridRow>
     <GridRow>-------------BB---B-------BBBBBB</GridRow>
-    <GridRow>-P-----------BB-------B---------</GridRow>
+    <GridRow>-------------BB-------B---------</GridRow>
   </Grid>
 </GameData>
 

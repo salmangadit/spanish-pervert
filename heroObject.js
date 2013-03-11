@@ -254,7 +254,6 @@
  var badNPC = function(thisReference){
  	
  	this.parentRef = thisReference;
- 	
  	this.attackPower = null;
  	if(this.parentRef.badNPC_Type == "monkey"){
  		this.attackPower = -3;
@@ -368,12 +367,14 @@
  var goodNPC = function(thisReference){
 	
 	this.parentRef = thisReference;
-	
 	//Only the fiesty lady can attack
-	if (this.parentRef.goodNPC_Type == "fiesty")	this.attackPower = -5;
+	if (this.parentRef.goodNPC_Type == "fiesty"){		
+		this.attackPower = -5;		
+	}
  	 		
 	this.strikeWithUmbrella = function(targetReference){
     	
+    	console.log('lady target reference is: ' + targetReference);
     	if (this.parentRef.actionType == 1) {
     		switch(this.parentRef.facingWhichDirection) {
 
@@ -482,24 +483,25 @@
 	this.HeroType = null;
 	this.badNPC_Type = null;
 	this.goodNPC_Type = null;
+	console.log('the heroObject type to be created is: ' + thisType);
 	switch(thisType){
  		case 0:		this.HeroType = new mainCharacter(this);
  					break;
  		
- 		case 1:		this.HeroType = new badNPC(this);
- 					this.badNPC_Type = "monkey";			
+ 		case 1:		this.badNPC_Type = "monkey";
+ 					this.HeroType = new badNPC(this);
  					break;
  		
- 		case 2:		this.HeroType = new badNPC(this);
- 					this.badNPC_Type = "gorilla";
+ 		case 2:		this.badNPC_Type = "gorilla";
+ 					this.HeroType = new badNPC(this);
  					break;
  		
- 		case 3:		this.HeroType = new goodNPC(this);
- 					this.goodNPC_Type = "thin";
+ 		case 3:		this.goodNPC_Type = "thin";
+ 					this.HeroType = new goodNPC(this);
  					break;	
  		
- 		case 4:		this.HeroType = new goodNPC(this);
- 					this.goodNPC_Type = "fiesty";
+ 		case 4:		this.goodNPC_Type = "fiesty";
+ 					this.HeroType = new goodNPC(this);
  					break;		
  	}
   
@@ -731,7 +733,7 @@
 
 	this.updateHealth = function(thisHealth){
 		
-		this.innerHealthMeterWidth += thisHealth;
+		this.innerHealthMeterWidth += (thisHealth*0.3);
 		// 30 is the maximum width of the innerHealthMeter
 		if(this.innerHealthMeterWidth > 30){
 			this.innerHealthMeterWidth = 30;	
@@ -740,8 +742,9 @@
 			this.innerHealthMeterWidth = 0;
 			// If the hero is dead..update the necessary parameters
 			this.destroyed = true;
+			console.log(this.selfType + ' is dead');
 		}
-		//console.log('the health meter is: ' + this.innerHealthMeterWidth);
+		//console.log('the ' + this.selfType + ' health meter is: ' + this.innerHealthMeterWidth);
 
 	}   
     
