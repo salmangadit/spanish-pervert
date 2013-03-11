@@ -54,7 +54,7 @@ function init() {
 	xmlhttp = new XMLHttpRequest();
 	//http://www.salmangadit.me/spanish-pervert/data/data.xmlC:/Users/Salman/Documents/GitHub/spanish-pervert/data/data.xml
 	// /Users/TheGreatOne/Desktop/Sem_6/EE4702/Project/Project_2/spanish-pervert/data/data.xml
-	xmlhttp.open("GET", "C:/Users/Salman/Documents/GitHub/spanish-pervert/data/data.xml", false);
+	xmlhttp.open("GET", "C:/Users/YuanIng/Desktop/Game_2/v8/spanish-pervert/data/data.xml", false);
 	xmlhttp.send();
 	xmlDoc = xmlhttp.responseXML;
 
@@ -269,7 +269,7 @@ function initGameTiles() {
 				enemies[enemyCount].y = i * tileSize;
 				enemies[enemyCount].gridX = enemies[enemyCount].x / enemies[enemyCount].width;
 				enemies[enemyCount].gridY = enemies[enemyCount].y / enemies[enemyCount].height;
-
+								
 				// set the enemy to be moving a random direction at the start
 				//enemies[enemyCount].keys[0] = Math.floor(Math.random() * 4) + 37;
 
@@ -295,7 +295,7 @@ function initGameTiles() {
 				ladies[ladiesCount].y = i * tileSize;
 				ladies[ladiesCount].gridX = ladies[ladiesCount].x / ladies[ladiesCount].width;
 				ladies[ladiesCount].gridY = ladies[ladiesCount].y / ladies[ladiesCount].height;
-				
+								
 				ladies[ladiesCount].image = new Image();
 				ladies[ladiesCount].image.src = gameObjects[objIndex].imageSrc;
 				ladies[ladiesCount].image.index = ladiesCount;
@@ -369,7 +369,7 @@ function gameLoop() {
 	
 	//-----------------------Max code----------------------------------------
 	//for testing purposes, let's make the enemies swarm towards the heroes
-	flocker(ladies[0], enemies);
+	//flocker(ladies[0], enemies, 3, 5);
 	
 	//setting the grid
 	VG = setGrid(hero, enemies, ladies);

@@ -1,16 +1,19 @@
 function Controller(VG, hero, enemies,ladies){
 	for(iter in enemies){
 		awareness(enemies[iter],VG);
+		enemies[iter].targetGrid = new Array(enemies[iter].gridX, enemies[iter].gridY);
 		//can put the enemies punching inside here, based on the actionType
 	}
-	for(iter1 in ladies){
-		ladies[iter1].targetGrid = new Array(3,16);
+	for(iter in ladies){
+		ladies[iter].targetGrid = new Array(ladies[iter].gridX, ladies[iter].gridY);
+		//ladies[iter1].loiter();
 	}
 	
 	heroBehaviour(hero,VG);
-	
-	//console.log(hero.actionType);
-	//or can set a loop to iterate through all gameObjects to get them doing their specific actions
+	if(enemies[0]!=null){
+	enemies[0].homing(ladies[0]);
+	}
+	console.log(ladies[0].targetGrid[0], ladies[0].targetGrid[1]);
 	
 	//Iterate through the loop to see if any of the enemies actionType has changed, 
 	//and if did do the necessary attack
@@ -30,6 +33,9 @@ function Controller(VG, hero, enemies,ladies){
 	for(iter in ladies){
 		if(ladies[iter].selfType == 4 && ladies[iter].actionType == 1){
 			ladies[iter].HeroType.strikeWithUmbrella(ladies[iter].targetBot);
+		}
+		if(ladies[iter].actionType == 3){
+			ladies[iter].targetGrid = new Array(hero.gridX,hero.gridY);			
 		}
 	}
 	// console.log(enemies[0].targetBot.selfType);
@@ -55,6 +61,8 @@ hero.targetBot = null;
 				if( VG[hero.gridX][hero.gridY-1].selfType == 3 || 
 					VG[hero.gridX][hero.gridY-1].selfType == 4){
 						hero.actionType = 3;
+						hero.targetBot = VG[hero.gridX][hero.gridY-1];
+						
 				}
 			}
 		}
@@ -68,6 +76,7 @@ hero.targetBot = null;
 				if( VG[hero.gridX][hero.gridY+1].selfType == 3 || 
 					VG[hero.gridX][hero.gridY+1].selfType == 4){				
 						hero.actionType = 3;
+						hero.targetBot = VG[hero.gridX][hero.gridY+1];
 				}
 			}
 		}
@@ -119,7 +128,9 @@ function setGrid(hero, enemies ,ladies){
 	
 	for(iter1 in ladies){
 		VG[ladies[iter1].gridX][ladies[iter1].gridY] = ladies[iter1];
-		ladies[iter1].actionType = 0;	//resets actionType
+		if(ladies[iter1].actionType != 3){
+			ladies[iter1].actionType = 0;	//resets actionType
+		}
 		ladies[iter1].targetBot = null;	//resets targetBot
 	}
 	
@@ -173,7 +184,7 @@ function awareness(bot, VG){
 				}
 				VG[bot.gridX][bot.gridY+1].actionType = 1;
 				VG[bot.gridX][bot.gridY+1].facingWhichDirection = "up";
-				VG[bot.gridX][bot.gridY-1].targetBot = bot;
+				VG[bot.gridX][bot.gridY+1].targetBot = bot;
 			}
 		}	
 		//left
@@ -194,7 +205,7 @@ function awareness(bot, VG){
 				}
 				VG[bot.gridX-1][bot.gridY].actionType = 1;
 				VG[bot.gridX-1][bot.gridY].facingWhichDirection = "right";
-				VG[bot.gridX][bot.gridY-1].targetBot = bot;
+				VG[bot.gridX-1][bot.gridY].targetBot = bot;
 			}
 		}	
 		//right
@@ -215,7 +226,7 @@ function awareness(bot, VG){
 				}
 				VG[bot.gridX+1][bot.gridY].actionType = 1;
 				VG[bot.gridX+1][bot.gridY].facingWhichDirection = "left";
-				VG[bot.gridX][bot.gridY-1].targetBot = bot;
+				VG[bot.gridX+1][bot.gridY].targetBot = bot;
 			}
 			
 		}

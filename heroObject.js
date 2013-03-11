@@ -229,7 +229,7 @@
 		if(this.parentRef.actionType == 3){
 			console.log('the hero is rescuing a lady');
 			// Require a sprite image here....will inform kendrick
-			targetReference.targetGrid = new Array(this.parentRef.gridX, this.parentRef.gridY);
+			targetReference.actionType = 3;
 		}
 	}
 	//No defending as of now..
@@ -256,9 +256,9 @@
  	this.parentRef = thisReference;
  	this.attackPower = null;
  	if(this.parentRef.badNPC_Type == "monkey"){
- 		this.attackPower = -3;
+ 		this.attackPower = -0.000003;
  	}else if(this.parentRef.badNPC_Type == "gorilla"){
- 		this.attackPower = -5;
+ 		this.attackPower = -0.000005;
  	}
  	
  	this.pullSkirt = function(targetReference){
@@ -424,7 +424,7 @@
     this.gridX = parseInt(this.x/this.width);
     this.gridY = parseInt(this.y/this.height);
 	//--------------Max code-----------------------------
-	this.targetGrid = new Array(5,5);
+	this.targetGrid = new Array(this.gridX,this.gridY);
 	//action type will describe what kind of action the object will take
 	//for enemies, 0 = movement, 1 = attack lady, 2 = attack player
 	//for player, 0 = no use punching, 1 = if player punch, it hits
@@ -505,7 +505,27 @@
  					break;		
  	}
   
-
+	//this function allows the setting of a specific point for any heroObject to move towards
+	this.setTarget = function(targetX, targetY){
+		this.targetGrid = new Array(targetX, targetY);
+	}
+	
+	//this function makes the heroObject head towards a specific hero
+	this.homing = function(specHero){
+		this.targetGrid = new Array(specHero.gridX, specHero.gridY);
+	}
+	
+	//this function makes a heroObject loiter to random spots
+	this.loiter = function(){
+		//alert("a");
+		if(this.targetGrid[0] == this.gridX && this.targetGrid[1] == this.gridY){
+			//alert("a");
+			xcoor = Math.floor(Math.random() * 33);
+			ycoor = Math.floor(Math.random() * 28);
+			this.targetGrid = new Array(xcoor,ycoor);
+		}
+	}
+	
     this.render = function(){
         context.drawImage(this.image, this.whichSprite, 0, 
             			  this.width, this.height, Math.floor(this.x), 

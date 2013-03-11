@@ -10,14 +10,14 @@
   </Objects>
   <Grid tileSize="32" width="33" height="28" baseColor="#FFFFFF">
     <GridRow>-----------------------B--------</GridRow>
-    <GridRow>-------T------------------------</GridRow>
-    <GridRow>------------B-------------------</GridRow>
+    <GridRow>--------------------------------</GridRow>
+    <GridRow>-----M------B-------------------</GridRow>
     <GridRow>-------------------B-------B--B-</GridRow>
     <GridRow>--------------------------------</GridRow>
     <GridRow>--BBBB-----------------------B--</GridRow>
     <GridRow>--------BBBBBB----BBBBBBB-------</GridRow>
     <GridRow>--------B------------B--B-------</GridRow>
-    <GridRow>--------B-----T------B--B-------</GridRow>
+    <GridRow>--------B------------B--B-------</GridRow>
     <GridRow>--------B------------B--B-------</GridRow>
     <GridRow>---------------------B--BBB-BBB-</GridRow>
     <GridRow>--------B------------B--------B-</GridRow>
@@ -26,7 +26,7 @@
     <GridRow>--------------BBB-------------B-</GridRow>
     <GridRow>--------------BBB-------------B-</GridRow>
     <GridRow>--------B---------------BBBBBBB-</GridRow>
-    <GridRow>--------B--------T--B---B---B---</GridRow>
+    <GridRow>------T-B-----------B---B---B---</GridRow>
     <GridRow>--------B-----------B---B---B---</GridRow>
     <GridRow>--BBBB--B-----------B---B---B---</GridRow>
     <GridRow>------P-B-----------B---B---B---</GridRow>

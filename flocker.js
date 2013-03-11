@@ -1,9 +1,7 @@
-var FT = 2;
 //Number of flocker bots surrounding target type in order to activate flocking
-var GT = 5;
 //Threshold for grids around target bots so as to be considered for flocking
 
-function flocker(target, flocker){
+function flocker(target, flocker, FT, GT){
 	var flockers = new Array();
 	var index = 0;
 	
@@ -24,7 +22,7 @@ function flocker(target, flocker){
 			flockers[curFlocker].targetGrid = new Array(target.gridX, target.gridY);
 		}
 	}
-}	
+}
 
 //takes in 2 parameters, bot referring to self, and VG which is the virtual grid
 function collisionChecker(VG){
