@@ -6,9 +6,9 @@ function Spawner(){
 	var NPC_BAD_WEAK_SRC = "images/monkey_32x32.png";
 	var NPC_BAD_STRONG_SRC = "images/gorilla-move.png";
 	
-	//spawnSingleAt is used to spawn 1 enemy
+	//spawnAt is used to spawn 1 enemy
 	//NPCType should be "monkey", "gorilla", "thin", "feisty"
-	this.spawnSingleAt = function(NPCType, locationX, locationY){
+	this.spawnAt = function(NPCType, locationX, locationY){
 		if (NPCType == "monkey" || NPCType == "gorilla"){
 			if (NPCType == "monkey"){
 				enemies[enemies.length] = new heroObject(1);
@@ -31,6 +31,8 @@ function Spawner(){
 			enemies[enemies.length-1].image.onload = function() {
 				enemies[this.index].render();
 			};
+
+			return enemies[enemies.length-1];
 		}
 		else if (NPCType == "thin" || NPCType == "feisty"){
 			if (NPCType == "thin"){
@@ -54,12 +56,8 @@ function Spawner(){
 			ladies[ladies.length-1].image.onload = function() {
 				ladies[this.index].render();
 			};
-		}
-	}
 
-	this.spawnAt = function(NPCType, locationX, locationY, numberOfNPCs){
-		for (var i =0; i < numberOfNPCs; i++){
-			this.spawnSingleAt(NPCType, locationX, locationY);
+			return ladies[ladies.length-1];
 		}
 	}
 }

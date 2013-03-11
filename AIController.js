@@ -35,23 +35,52 @@ function AIController(){
 					var coords = spawnLocation.split(",");
 
 					//Type of NPC to spawn
-				  	if (this.currPhase.attackStrategy.medium.hasOwnProperty(key)) {
+					if (this.currPhase.attackStrategy.medium.hasOwnProperty(key)) {
 	    				//Spawn different levels of attackers for that location
+	    				var references = new Array();
+
 	    				for (var i=0; i<this.currPhase.attackStrategy.medium[key].length; i++){
 	    					if (this.currPhase.attackStrategy.medium[key][i] == "w"){
 	    						//console.log('Spawn a weak one here');
-	    						Spawner.spawnAt("monkey", parseInt(coords[0]), parseInt(coords[1]),1);
+	    						references.push(Spawner.spawnAt("monkey", parseInt(coords[0]), parseInt(coords[1])));
 	    						console.log("Spawned monkey at " + coords[0] + "," + coords[1]);
+
 	    					} else {
 	    						//console.log('Spawn a strong one here');
-	    						Spawner.spawnAt("gorilla", parseInt(coords[0]), parseInt(coords[1]),1);
+	    						references.push(Spawner.spawnAt("gorilla", parseInt(coords[0]), parseInt(coords[1])));
 	    						console.log("Spawned gorilla at " + coords[0] + "," + coords[1]);
 	    					}
 	    				}
-	    				console.log(key + " -> " + this.currPhase.attackStrategy.medium[key]);
-	  				}
+	    				//Now set target for this 
+	    				var targetStrategy = this.currPhase.defenseStrategy.medium[key];
+	    				var found = false;
+
+						//find appropriate lady, else send to other options
+						for (var k=0; k<ladies.length; k++){
+							if ((targetStrategy == "s" && ladies[k].goodNPC_Type == "feisty")||
+								(targetStrategy == "w" && ladies[k].goodNPC_Type == "thin")){
+								for (var m=0; m<references.length; m++){}
+									references.targetGrid = ladies[k].targetGrid;
+								found = true;
+								break;
+							}
+
+							if (found){
+								break;
+							}
+						}
+					}
+
+					if (!found && ladies.length > 0){
+						for (var m=0; m<references.length; m++){
+							references.targetGrid = ladies[0].targetGrid;
+						}
+					}
+
+					console.log(key + " -> " + this.currPhase.attackStrategy.medium[key]);
 				}
-			} else if (playerLevel == "hard"){
+			}
+			else if (playerLevel == "hard"){
 				//Spawn enemy
 				for (var key in this.currPhase.attackStrategy.hard) {
 					// Where to spawn le NPC, choose random location as per strategy
@@ -60,9 +89,10 @@ function AIController(){
 					var coords = spawnLocation.split(",");
 
 					//Type of NPC to spawn
-				  	if (this.currPhase.attackStrategy.hard.hasOwnProperty(key)) {
+					if (this.currPhase.attackStrategy.hard.hasOwnProperty(key)) {
 	    				//Spawn different levels of attackers for that location
 	    				for (var i=0; i<this.currPhase.attackStrategy.hard[key].length; i++){
+	    					var references = new Array();
 	    					if (this.currPhase.attackStrategy.hard[key][i] == "w"){
 	    						//console.log('Spawn a weak one here');
 	    						Spawner.spawnAt("monkey", parseInt(coords[0]), parseInt(coords[1]),1);
@@ -72,11 +102,37 @@ function AIController(){
 	    						Spawner.spawnAt("gorilla", parseInt(coords[0]), parseInt(coords[1]),1);
 	    						console.log("Spawned gorilla at " + coords[0] + "," + coords[1]);
 	    					}
-	    				}
-	    				console.log(key + " -> " + this.currPhase.attackStrategy.hard[key]);
-	  				}
+
+	    					//Now set target for this 
+	    					var targetStrategy = this.currPhase.defenseStrategy.medium[key];
+	    					var found = false;
+
+							//find appropriate lady, else send to other options
+							for (var k=0; k<ladies.length; k++){
+								if ((targetStrategy == "s" && ladies[k].goodNPC_Type == "feisty")||
+									(targetStrategy == "w" && ladies[k].goodNPC_Type == "thin")){
+									for (var m=0; m<references.length; m++){}
+										references.targetGrid = ladies[k].targetGrid;
+									found = true;
+									break;
+								}
+
+								if (found){
+									break;
+								}
+							}
+						}
+
+						if (!found && ladies.length > 0){
+							for (var m=0; m<references.length; m++){
+								references.targetGrid = ladies[0].targetGrid;
+							}
+						}
+					}
+					console.log(key + " -> " + this.currPhase.attackStrategy.hard[key]);
 				}
-			} else if (playerLevel == "easy"){
+			}
+			else if (playerLevel == "easy"){
 				//Spawn enemy
 				for (var key in this.currPhase.attackStrategy.easy) {
 					// Where to spawn le NPC, choose random location as per strategy
@@ -85,9 +141,10 @@ function AIController(){
 					var coords = spawnLocation.split(",");
 
 					//Type of NPC to spawn
-				  	if (this.currPhase.attackStrategy.easy.hasOwnProperty(key)) {
+					if (this.currPhase.attackStrategy.easy.hasOwnProperty(key)) {
 	    				//Spawn different levels of attackers for that location
 	    				for (var i=0; i<this.currPhase.attackStrategy.easy[key].length; i++){
+	    					var references = new Array();
 	    					if (this.currPhase.attackStrategy.easy[key][i] == "w"){
 	    						//console.log('Spawn a weak one here');
 	    						Spawner.spawnAt("monkey", parseInt(coords[0]), parseInt(coords[1]),1);
@@ -97,9 +154,34 @@ function AIController(){
 	    						Spawner.spawnAt("gorilla", parseInt(coords[0]), parseInt(coords[1]),1);
 	    						console.log("Spawned gorilla at " + coords[0] + "," + coords[1]);
 	    					}
-	    				}
-	    				console.log(key + " -> " + this.currPhase.attackStrategy.easy[key]);
-	  				}
+
+	    					//Now set target for this 
+	    					var targetStrategy = this.currPhase.defenseStrategy.medium[key];
+	    					var found = false;
+
+							//find appropriate lady, else send to other options
+							for (var k=0; k<ladies.length; k++){
+								if ((targetStrategy == "s" && ladies[k].goodNPC_Type == "feisty")||
+									(targetStrategy == "w" && ladies[k].goodNPC_Type == "thin")){
+									for (var m=0; m<references.length; m++){}
+										references.targetGrid = ladies[k].targetGrid;
+									found = true;
+									break;
+								}
+
+								if (found){
+									break;
+								}
+							}
+						}
+
+						if (!found && ladies.length > 0){
+							for (var m=0; m<references.length; m++){
+								references.targetGrid = ladies[0].targetGrid;
+							}
+						}
+					}
+					console.log(key + " -> " + this.currPhase.attackStrategy.easy[key]);
 				}
 			}
 		}
