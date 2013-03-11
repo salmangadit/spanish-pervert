@@ -6,7 +6,7 @@ function Spawner(){
 	var NPC_BAD_WEAK_SRC = "images/monkey_32x32.png";
 	var NPC_BAD_STRONG_SRC = "images/gorilla-move.png";
 	
-	//spawnAt is used to spawn 1 enemy
+	//spawnSingleAt is used to spawn 1 enemy
 	//NPCType should be "monkey", "gorilla", "thin", "feisty"
 	this.spawnSingleAt = function(NPCType, locationX, locationY){
 		if (NPCType == "monkey" || NPCType == "gorilla"){

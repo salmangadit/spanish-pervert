@@ -47,6 +47,7 @@ var AI = new AIController();
 
 var rows = 0;
 var columns = 0;
+var savedLadiesCount = 0;
 
 
 function init() {
@@ -66,6 +67,11 @@ function init() {
 	lastUpdate = Date.now();
 	setInterval(gameLoop, screenUpdateTime);
 
+	setInterval(function(){AI.checkEndOfPhase();}, screenUpdateTime);
+
+	//temporarily putting basic AI calls here till controller is up
+	AI.executePhase();
+
 	document.addEventListener('keydown', function(event) {
 		// check if the key being pressed is one of the arrow keys -- 
 		// 80 is the p key (punch), 75 is k (kick), 82 is r (rescue)
@@ -78,6 +84,14 @@ function init() {
 			//curKey = $.inArray(event.keyCode, hero.keys);
 			if (hero.keys.indexOf(event.keyCode) == -1)
 				hero.keys.push(event.keyCode);
+
+			// if (event.keyCode == 40){
+			// 	if (AI.currPhase.phaseType == "attack"){
+			// 		enemies = [];
+			// 	} else {
+			// 		savedLadiesCount = AI.currPhase.scenarioRatio;
+			// 	}	
+			// }
 		}
 	});
 
@@ -529,6 +543,5 @@ function gameLoop() {
 	lastUpdate = now;
 
 
-	//temporarily putting basic AI calls here till controller is up
-	AI.executePhase();
+	
 }

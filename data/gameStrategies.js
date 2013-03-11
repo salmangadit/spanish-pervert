@@ -4,19 +4,19 @@ var gameStrategies =
         "wave": "1",
         "attack": 
             {
-                "best": 
+                "hard": 
                     {
                         "1": "w",
                         "2": "w",
                         "3": "w"
                     },
-                "average": 
+                "medium": 
                     {
                         "1": "w",
                         "2": "w",
                         "3": "w"
                     },
-                "bad": 
+                "easy": 
                     {
                         "1": "w",
                         "2": "w",
@@ -26,19 +26,19 @@ var gameStrategies =
         ,
         "target":
             {
-                "best":
+                "hard":
                     {
                         "1": "s",
                         "2": "s",
                         "3": "w"
                     },
-                "average":
+                "medium":
                     {
                         "1": "s",
                         "2": "s",
                         "3": "w"
                     },
-                "bad":
+                "easy":
                     {
                         "1": "s",
                         "2": "s",
@@ -50,17 +50,17 @@ var gameStrategies =
         "wave": "2",
         "attack":
             {
-                "best":
+                "hard":
                     {
                         "1": "sw",
                         "2": "s"
                     },
-                "average":
+                "medium":
                     {
                         "1": "ww",
                         "2": "s"
                     },
-                "bad":
+                "easy":
                     {
                         "1": "ww",
                         "2": "w"
@@ -68,17 +68,17 @@ var gameStrategies =
             },
         "target":
             {
-                "best":
+                "hard":
                     {
                         "1": "s",
                         "2": "w"
                     },
-                "average":
+                "medium":
                     {
                         "1": "s",
                         "2": "s"
                     },
-                "bad":
+                "easy":
                     {
                         "1": "s",
                         "2": "s"
@@ -89,19 +89,19 @@ var gameStrategies =
         "wave": "3",
         "attack":
             {
-                "best":
+                "hard":
                     {
                         "1": "swww",
                         "2": "sw",
                         "3": "s"
                     },
-                "average":
+                "medium":
                     {
                         "1": "wwww",
                         "2": "sw",
                         "3": "s"
                     },
-                "bad":
+                "easy":
                     {
                         "1": "wwww",
                         "2": "ww",
@@ -110,19 +110,19 @@ var gameStrategies =
             },
         "target":
             {
-                "best":
+                "hard":
                     {
                         "1": "s",
                         "2": "w",
                         "3": "w"
                     },
-                "average": 
+                "medium": 
                     {
                         "1": "s",
                         "2": "s",
                         "3": "w"
                     },
-                "bad": 
+                "easy": 
                     {
                         "1": "s",
                         "2": "w",
@@ -134,17 +134,17 @@ var gameStrategies =
         "wave": "4",
         "attack":
             {
-                "best":
+                "hard":
                     {
                         "1": "ss",
                         "2": "s"
                     },
-                "average":
+                "medium":
                     {
                         "1": "ss",
                         "2": "w"
                     },
-                "bad":
+                "easy":
                     {
                         "1": "sw",
                         "2": "w"
@@ -152,17 +152,17 @@ var gameStrategies =
             },
         "target":
             {
-                "best":
+                "hard":
                     {
                         "1": "s",
                         "2": "w"
                     },
-                "average":
+                "medium":
                     {
                         "1": "s",
                         "2": "s"
                     },
-                "bad":
+                "easy":
                     {
                         "1": "s",
                         "2": "s"
@@ -173,21 +173,21 @@ var gameStrategies =
         "wave": "5",
         "attack": 
             {
-                "best":
+                "hard":
                     {
                         "1": "ssww",
                         "2": "ss",
                         "3": "ss",
                         "4": "s"
                     },
-                "average":
+                "medium":
                     {
                         "1": "ssww",
                         "2": "ss",
                         "3": "ww",
                         "4": "s"
                     },
-                "bad":
+                "easy":
                     {
                         "1": "wwww",
                         "2": "ss",
@@ -197,21 +197,21 @@ var gameStrategies =
             },
         "target":
             {
-                "best": 
+                "hard": 
                     {
                         "1": "s",
                         "2": "w",
                         "3": "w",
                         "4": "w"
                     },
-                "average": 
+                "medium": 
                     {
                         "1": "s",
                         "2": "s",
                         "3": "w",
                         "4": "w"
                     },
-                "bad":
+                "easy":
                     {
                         "1": "s",
                         "2": "s",
