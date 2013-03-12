@@ -259,7 +259,7 @@ function initGameTiles() {
 				// 3 is for thin_goodNPC  & 4 is for fiesty_goodNPC 
 				if(gameObjects[objIndex].type == "monkey"){
 					enemies[enemyCount] = new heroObject(1);
-				} else if(gameObjects[objIndex].type == "gorilla"){
+				} else {
 					enemies[enemyCount] = new heroObject(2);
 				}
 				
