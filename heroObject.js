@@ -476,6 +476,10 @@
 	
 	this.coordinateToClearX = 0;
 	this.coordinateToClearY = 0;
+
+	this.internalX = -1;
+	this.internalY = -1;
+	this.elapseSum = 0;
 	
 	//Pass a reference of the parent to the child..
 	this.HeroType = null;
@@ -549,6 +553,14 @@
         // store out the current x and y coordinates
         var prevX = this.x;
         var prevY = this.y;
+
+        this.elapseSum += elapsed;
+
+        if (this.internalX == -1)
+        	this.internalX = this.x;
+        if (this.internalY == -1)
+        	this.internalY = this.y;
+
         // reset the collision property
         this.collision = false;
 
@@ -563,8 +575,24 @@
         {
             case 37:
                 // move the hero left on the screen
-                this.x -= this.moveSpeed * elapsed;
-                this.gridX = parseInt(this.x/this.width);
+                 //this.internalX -= this.moveSpeed * elapsed;
+                 //this.gridX = parseInt(this.internalX/this.width);
+
+                if (this.elapseSum > 1)
+                {
+                 	this.x -= this.moveSpeed * elapsed;
+                 	this.gridX = parseInt(this.x/this.width);
+                	this.x = this.gridX * this.width;
+                	this.elapseSum = 0;
+             	}
+                 // if (this.internalX < ((this.gridX * this.width)- (this.width)/16)) {
+                 // 	this.x = (this.gridX-1) * this.width;
+                 // 	this.gridX = parseInt(this.x/this.width);
+                 // } else{
+                 // 	this.x = this.gridX * this.width;
+                 // 	this.gridX = parseInt(this.x/this.width);
+                 // }
+
                 // Check if the animation timer has elapsed or if we aren't using one of the
                 // two valid sprites for this direction
                 if (delta > this.animSpeed 
@@ -590,8 +618,14 @@
                 break;
             case 38:
                 // move the hero up on the screen
-                this.y -= this.moveSpeed * elapsed;
-                this.gridY = parseInt(this.y/this.height);
+                if (this.elapseSum > 1)
+                {
+                 	this.y -= this.moveSpeed * elapsed;
+                	this.gridY = parseInt(this.y/this.height);
+                	this.y = this.gridY * this.height;
+                	this.elapseSum = 0;
+             	}
+                
                 // Check if the animation timer has elapsed or if we aren't using one of the
                 // two valid sprites for this direction
                 if (delta > this.animSpeed 
@@ -615,8 +649,14 @@
                 break;
             case 39:
                 // move the hero right on the screen
-                this.x += this.moveSpeed * elapsed;
-                this.gridX = parseInt(this.x/this.width);
+                if (this.elapseSum > 1)
+                {
+                 	this.x += this.moveSpeed * elapsed;
+                	this.gridX = parseInt(this.x/this.width) + 1;
+                	this.x = this.gridX * this.width;
+                	this.elapseSum = 0;
+             	}
+                
                 // Check if the animation timer has elapsed or if we aren't using one of the
                 // two valid sprites for this direction
                 if (delta > this.animSpeed 
@@ -640,8 +680,13 @@
                 break;
             case 40:
                 // move the hero down on the screen
-                this.y += this.moveSpeed * elapsed;
-                this.gridY = parseInt(this.y/this.height);
+                if (this.elapseSum > 1)
+                {
+                 	this.y += this.moveSpeed * elapsed;
+                	this.gridY = parseInt(this.y/this.height) + 1;
+                	this.y = this.gridY * this.height;
+                	this.elapseSum = 0;
+             	}
                 // Check if the animation timer has elapsed or if we aren't using one of the
                 // two valid sprites for this direction
                 if (delta > this.animSpeed 
@@ -742,7 +787,9 @@
                 {
                     // reset our x and y coordinates and set our collision property to true
                     this.x = prevX;
+                    //this.internalX = this.x;
                     this.y = prevY;
+                    //this.internalY = this.y;
                     this.collision = true;
                 }
             }
