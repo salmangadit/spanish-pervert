@@ -402,9 +402,7 @@
     	targetReference.updateHealth(this.attackPower);	
     	this.parentRef.render();
     	
-    };//strike with umbrella function
-    
-    
+    };//strike with umbrella function    
  }//end of goodNPC constructor
  
  goodNPC.prototype = new heroObject();

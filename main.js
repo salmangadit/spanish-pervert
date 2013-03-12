@@ -41,6 +41,7 @@ var grid = new Array();
 
 var currentPhase = "A";
 var currentWave = "1";
+var savedLadies = 0;
 
 var Spawner = new Spawner();
 var AI = new AIController();
@@ -54,7 +55,7 @@ function init() {
 	xmlhttp = new XMLHttpRequest();
 	//http://www.salmangadit.me/spanish-pervert/data/data.xmlC:/Users/Salman/Documents/GitHub/spanish-pervert/data/data.xml
 	// /Users/TheGreatOne/Desktop/Sem_6/EE4702/Project/Project_2/spanish-pervert/data/data.xml
-	xmlhttp.open("GET", "E:/Game 2/v8/spanish-pervert/data/data.xml", false);
+	xmlhttp.open("GET", "C:/Users/YuanIng/Desktop/Game_2/v8/spanish-pervert/data/data.xml", false);
 	xmlhttp.send();
 	xmlDoc = xmlhttp.responseXML;
 
@@ -236,6 +237,26 @@ function initGameTiles() {
 					scenery[this.index].render();
 				};
 				sceneryCount++;
+			} else if (gameObjects[objIndex].type == "safezone") {
+				// Create a new static object
+				scenery[sceneryCount] = new staticObject();
+				// load in the width and height
+				scenery[sceneryCount].width = gameObjects[objIndex].width;
+				scenery[sceneryCount].height = gameObjects[objIndex].height;
+				// position it based upon where we are in the grid
+				scenery[sceneryCount].x = j * tileSize;
+				scenery[sceneryCount].y = i * tileSize;
+
+				// set up the image to use the value loaded from the XML
+				scenery[sceneryCount].image = new Image();
+				scenery[sceneryCount].image.src = gameObjects[objIndex].imageSrc;
+				// we are storing out the index of this object, to make sure we can
+				// render it once it has loaded
+				scenery[sceneryCount].image.index = sceneryCount;
+				scenery[sceneryCount].image.onload = function() {
+					scenery[this.index].render();
+				};
+				sceneryCount++;
 			} else if (gameObjects[objIndex].type == "player") {
 				//0 is for mainCharacter
 				hero = new heroObject(0);
@@ -259,7 +280,7 @@ function initGameTiles() {
 				// 3 is for thin_goodNPC  & 4 is for fiesty_goodNPC 
 				if(gameObjects[objIndex].type == "monkey"){
 					enemies[enemyCount] = new heroObject(1);
-				} else {
+				} else if(gameObjects[objIndex].type == "gorilla"){
 					enemies[enemyCount] = new heroObject(2);
 				}
 				
@@ -377,7 +398,7 @@ function gameLoop() {
 	//collision checking
 	//collisionChecker(VG);
 	
-	Controller(VG, hero,enemies,ladies);
+	Controller(VG, hero,enemies,ladies,savedLadies);
 	
 	//------------------------End of Max code------------------------------------
 	

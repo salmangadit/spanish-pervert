@@ -1,4 +1,4 @@
-function Controller(VG, hero, enemies,ladies){
+function Controller(VG, hero, enemies,ladies,savedLadies){
 	for(iter in enemies){
 		awareness(enemies[iter],VG);
 		enemies[iter].targetGrid = new Array(enemies[iter].gridX, enemies[iter].gridY);
@@ -10,10 +10,10 @@ function Controller(VG, hero, enemies,ladies){
 	}
 	
 	heroBehaviour(hero,VG);
-	if(enemies[0]!=null){
-	enemies[0].homing(ladies[0]);
-	}
-	console.log(ladies[0].targetGrid[0], ladies[0].targetGrid[1]);
+	// if(enemies[0]!=null){
+	// enemies[0].homing(ladies[0]);
+	// }
+	//console.log(ladies[0].targetGrid[0], ladies[0].targetGrid[1]);
 	
 	//Iterate through the loop to see if any of the enemies actionType has changed, 
 	//and if did do the necessary attack
@@ -40,8 +40,14 @@ function Controller(VG, hero, enemies,ladies){
 		if(ladies[iter].actionType == 3){
 			ladies[iter].targetGrid = new Array(hero.gridX,hero.gridY);			
 		}
+		if(ladies[iter].gridX<=2 && ladies[iter].gridY>=25){
+			ladies[iter].destroyed = true;
+			ladies[iter].targetGrid = (0,27);
+			savedLadies++;
+			hero.targetBot = null;
+		}
+		console.log(savedLadies);
 	}
-	// console.log(enemies[0].targetBot.selfType);
 	// if(enemies[0].targetBot!=null)
 		
 }
@@ -131,7 +137,6 @@ function setGrid(hero, enemies ,ladies){
 		ladies[iter1].targetBot = null;	//resets targetBot
 	}
 	
-	//console.log(VG[19][11].length);
 	return VG;
 }
 
@@ -145,7 +150,6 @@ function awareness(bot, VG){
 				bot.facingWhichDirection = "up";
 				bot.actionType = 2;
 				bot.targetBot = VG[bot.gridX][bot.gridY-1];
-				//console.log("hero up");
 			}
 			if(	VG[bot.gridX][bot.gridY-1].selfType == 3 || 
 				VG[bot.gridX][bot.gridY-1].selfType == 4){
@@ -168,7 +172,6 @@ function awareness(bot, VG){
 				bot.facingWhichDirection = "down";
 				bot.actionType = 2;	
 				bot.targetBot = VG[bot.gridX][bot.gridY+1];				
-				//console.log("hero down");
 			}
 			if(	VG[bot.gridX][bot.gridY+1].selfType == 3 ||
 				VG[bot.gridX][bot.gridY+1].selfType == 4){				
@@ -191,7 +194,6 @@ function awareness(bot, VG){
 				bot.facingWhichDirection = "left";
 				bot.actionType = 2;
 				bot.targetBot = VG[bot.gridX-1][bot.gridY];
-				//console.log("hero left");
 			}
 			if(	VG[bot.gridX-1][bot.gridY].selfType == 3 ||
 				VG[bot.gridX-1][bot.gridY].selfType == 4){
@@ -214,7 +216,6 @@ function awareness(bot, VG){
 				bot.facingWhichDirection = "right";
 				bot.actionType = 2;
 				bot.targetBot = VG[bot.gridX+1][bot.gridY];
-				//console.log("hero right");
 			}
 			if(	VG[bot.gridX+1][bot.gridY].selfType == 3 ||
 				VG[bot.gridX+1][bot.gridY].selfType == 4){				
