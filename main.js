@@ -54,7 +54,7 @@ function init() {
 	xmlhttp = new XMLHttpRequest();
 	//http://www.salmangadit.me/spanish-pervert/data/data.xmlC:/Users/Salman/Documents/GitHub/spanish-pervert/data/data.xml
 	// /Users/TheGreatOne/Desktop/Sem_6/EE4702/Project/Project_2/spanish-pervert/data/data.xml
-	xmlhttp.open("GET", "C:/Users/YuanIng/Desktop/Game_2/v8/spanish-pervert/data/data.xml", false);
+	xmlhttp.open("GET", "E:/Game 2/v8/spanish-pervert/data/data.xml", false);
 	xmlhttp.send();
 	xmlDoc = xmlhttp.responseXML;
 
@@ -386,25 +386,24 @@ function gameLoop() {
 	for (curEnemy in enemies) {
 		if (enemies[curEnemy].destroyed) {
 			enemies.splice(curEnemy, 1);
-		} else {
-			
+		} else{
 			//testing out of the targetGrid system
-            var tempGrid = new Array();
+			var tempGrid = new Array();
 
-            for (var x = 0; x < rows; x++){
-            	tempGrid[x] = new Array();
-            	for (var y = 0; y < columns; y++ ){
-            		tempGrid[x][y] = grid[x][y];
-            	}
-            }
+			for (var x = 0; x < rows; x++){
+				tempGrid[x] = new Array();
+				for (var y = 0; y < columns; y++ ){
+					tempGrid[x][y] = grid[x][y];
+				}
+			}
 
-            for (var i =0; i<enemies.length; i++){
-                if (enemies[curEnemy] != enemies[i]){
-                    tempGrid[enemies[i].gridY][enemies[i].gridX] = 1;
-                }
-            }
-            //tempGrid[hero.gridY][hero.gridX] = 1;
-            path[index] = a_star(new Array(enemies[curEnemy].gridX, enemies[curEnemy].gridY),
+			for (var i =0; i<enemies.length; i++){
+				if (enemies[curEnemy] != enemies[i]){
+					tempGrid[enemies[i].gridY][enemies[i].gridX] = 1;
+				}
+			}
+			//tempGrid[hero.gridY][hero.gridX] = 1;
+			path[index] = a_star(new Array(enemies[curEnemy].gridX, enemies[curEnemy].gridY),
 			enemies[curEnemy].targetGrid, tempGrid, columns, rows, false);
 
 			//path[index] = a_star(new Array(enemies[curEnemy].gridX, enemies[curEnemy].gridY), enemies[curEnemy].targetGrid, tempGrid, columns, rows, false);
@@ -466,8 +465,7 @@ function gameLoop() {
 		if (ladies[curLady].destroyed) {
 			console.log('this lady ' + ladies[curLady].selfType + ' is dead');
 			ladies.splice(curLady, 1);
-		} else {
-
+		} else{
 			//testing out of the targetGrid system
 			var tempGrid = new Array();
 
@@ -528,7 +526,6 @@ function gameLoop() {
 			if (path[ladyIndex].length == 2) {
 				ladies[curLady].keys.splice(0, 1);
 			}
-
 			// Update the lady based upon how long it took for the game loop
 			ladies[curLady].update(elapsed / screenUpdateTime);
 
@@ -537,7 +534,7 @@ function gameLoop() {
 		}
 
 		ladyIndex++;
-	}
+}
 	
 	
 	// update the lastUpdate variable

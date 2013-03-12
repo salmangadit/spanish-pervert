@@ -34,6 +34,9 @@ function Controller(VG, hero, enemies,ladies){
 		if(ladies[iter].selfType == 4 && ladies[iter].actionType == 1){
 			ladies[iter].HeroType.strikeWithUmbrella(ladies[iter].targetBot);
 		}
+		if(ladies[iter].selfType == 3 && ladies[iter].actionType == 1){
+			ladies[iter].targetGrid = new Array(ladies[iter].targetBot.gridX,ladies[iter].targetBot.gridY);
+		}
 		if(ladies[iter].actionType == 3){
 			ladies[iter].targetGrid = new Array(hero.gridX,hero.gridY);			
 		}
@@ -47,63 +50,57 @@ function Controller(VG, hero, enemies,ladies){
 function heroBehaviour(hero, VG){
 hero.targetBot = null;
 	hero.actionType = 0;
-	if(	hero.gridX + 1 <= 32 && 
-		hero.gridX - 1 >=0 && 
-		hero.gridY + 1 <= 27 
-		&& hero.gridY - 1 >= 0){
-		if(hero.facingWhichDirection == "up"){
-			if(VG[hero.gridX][hero.gridY-1] != null){
-				hero.targetBot = VG[hero.gridX][hero.gridY-1];
-				if(	VG[hero.gridX][hero.gridY-1].selfType == 1 || 
-					VG[hero.gridX][hero.gridY-1].selfType == 2){
-						hero.actionType = 1;
-				}
-				if( VG[hero.gridX][hero.gridY-1].selfType == 3 || 
-					VG[hero.gridX][hero.gridY-1].selfType == 4){
-						hero.actionType = 3;
-						hero.targetBot = VG[hero.gridX][hero.gridY-1];
-						
-				}
+	if(hero.facingWhichDirection == "up" && hero.gridY-1>=0){
+		if(VG[hero.gridX][hero.gridY-1] != null){
+			hero.targetBot = VG[hero.gridX][hero.gridY-1];
+			if(	VG[hero.gridX][hero.gridY-1].selfType == 1 || 
+				VG[hero.gridX][hero.gridY-1].selfType == 2){
+					hero.actionType = 1;
+			}
+			if( VG[hero.gridX][hero.gridY-1].selfType == 3 || 
+				VG[hero.gridX][hero.gridY-1].selfType == 4){
+					hero.actionType = 3;
+					hero.targetBot = VG[hero.gridX][hero.gridY-1];					
 			}
 		}
-		if(hero.facingWhichDirection == "down"){
-			if(VG[hero.gridX][hero.gridY+1] != null){
-				hero.targetBot = VG[hero.gridX][hero.gridY+1];
-				if( VG[hero.gridX][hero.gridY+1].selfType == 1 || 
-					VG[hero.gridX][hero.gridY+1].selfType == 2){				
-						hero.actionType = 1;
-				}
-				if( VG[hero.gridX][hero.gridY+1].selfType == 3 || 
-					VG[hero.gridX][hero.gridY+1].selfType == 4){				
-						hero.actionType = 3;
-						hero.targetBot = VG[hero.gridX][hero.gridY+1];
-				}
+	}
+	if(hero.facingWhichDirection == "down" && hero.gridY+1<=27){
+		if(VG[hero.gridX][hero.gridY+1] != null){
+			hero.targetBot = VG[hero.gridX][hero.gridY+1];
+			if( VG[hero.gridX][hero.gridY+1].selfType == 1 || 
+				VG[hero.gridX][hero.gridY+1].selfType == 2){				
+					hero.actionType = 1;
+			}
+			if( VG[hero.gridX][hero.gridY+1].selfType == 3 || 
+				VG[hero.gridX][hero.gridY+1].selfType == 4){				
+					hero.actionType = 3;
+					hero.targetBot = VG[hero.gridX][hero.gridY+1];
 			}
 		}
-		if(hero.facingWhichDirection == "left"){
-			if(VG[hero.gridX-1][hero.gridY] != null){
-				hero.targetBot = VG[hero.gridX-1][hero.gridY];
-				if(	VG[hero.gridX-1][hero.gridY].selfType == 1 || 
-					VG[hero.gridX-1][hero.gridY].selfType == 2){				
-						hero.actionType = 1;
-				}
-				if(	VG[hero.gridX-1][hero.gridY].selfType == 3 || 
-					VG[hero.gridX-1][hero.gridY].selfType == 4){				
-						hero.actionType = 3;
-				}					
+	}
+	if(hero.facingWhichDirection == "left" && hero.gridX-1>=0){
+		if(VG[hero.gridX-1][hero.gridY] != null){
+			hero.targetBot = VG[hero.gridX-1][hero.gridY];
+			if(	VG[hero.gridX-1][hero.gridY].selfType == 1 || 
+				VG[hero.gridX-1][hero.gridY].selfType == 2){				
+					hero.actionType = 1;
 			}
+			if(	VG[hero.gridX-1][hero.gridY].selfType == 3 || 
+				VG[hero.gridX-1][hero.gridY].selfType == 4){				
+					hero.actionType = 3;
+			}					
 		}
-		if(hero.facingWhichDirection == "right"){
-			if(VG[hero.gridX+1][hero.gridY] != null){
-				hero.targetBot = VG[hero.gridX+1][hero.gridY];
-				if( VG[hero.gridX+1][hero.gridY].selfType == 1 || 
-					VG[hero.gridX+1][hero.gridY].selfType == 2){				
-						hero.actionType = 1;
-				}
-				if( VG[hero.gridX+1][hero.gridY].selfType == 3 || 
-					VG[hero.gridX+1][hero.gridY].selfType == 4){				
-						hero.actionType = 3;
-				}
+	}
+	if(hero.facingWhichDirection == "right" && hero.gridX+1<=32){
+		if(VG[hero.gridX+1][hero.gridY] != null){
+			hero.targetBot = VG[hero.gridX+1][hero.gridY];
+			if( VG[hero.gridX+1][hero.gridY].selfType == 1 || 
+				VG[hero.gridX+1][hero.gridY].selfType == 2){				
+					hero.actionType = 1;
+			}
+			if( VG[hero.gridX+1][hero.gridY].selfType == 3 || 
+				VG[hero.gridX+1][hero.gridY].selfType == 4){				
+					hero.actionType = 3;
 			}
 		}
 	}
@@ -141,11 +138,8 @@ function setGrid(hero, enemies ,ladies){
 //instantly breaks off from function if hero is detected
 //only need to handle checking for enemies
 function awareness(bot, VG){
-	if(	bot.gridX + 1 <= 32 
-		&& bot.gridX - 1 >=0 
-		&& bot.gridY + 1 <= 27 
-		&& bot.gridY - 1 >= 0){
-		//above	
+	//above
+	if(bot.gridY-1>=0){
 		if(VG[bot.gridX][bot.gridY-1] != null){
 			if(VG[bot.gridX][bot.gridY-1].selfType == 0){		
 				bot.facingWhichDirection = "up";
@@ -166,7 +160,9 @@ function awareness(bot, VG){
 				VG[bot.gridX][bot.gridY-1].targetBot = bot;
 			}			
 		}
-		//below
+	}
+	//below
+	if(bot.gridY+1<=27){
 		if(VG[bot.gridX][bot.gridY+1] != null){
 			if(VG[bot.gridX][bot.gridY+1].selfType == 0){			
 				bot.facingWhichDirection = "down";
@@ -186,8 +182,10 @@ function awareness(bot, VG){
 				VG[bot.gridX][bot.gridY+1].facingWhichDirection = "up";
 				VG[bot.gridX][bot.gridY+1].targetBot = bot;
 			}
-		}	
-		//left
+		}
+	}
+	//left
+	if(bot.gridX-1>=0){
 		if(VG[bot.gridX-1][bot.gridY] != null){			
 			if(VG[bot.gridX-1][bot.gridY].selfType == 0){			
 				bot.facingWhichDirection = "left";
@@ -207,8 +205,10 @@ function awareness(bot, VG){
 				VG[bot.gridX-1][bot.gridY].facingWhichDirection = "right";
 				VG[bot.gridX-1][bot.gridY].targetBot = bot;
 			}
-		}	
-		//right
+		}
+	}
+	//right
+	if(bot.gridX+1<=32){
 		if(VG[bot.gridX+1][bot.gridY] != null){			
 			if(VG[bot.gridX+1][bot.gridY].selfType == 0){	
 				bot.facingWhichDirection = "right";
