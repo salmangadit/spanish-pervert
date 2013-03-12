@@ -59,28 +59,29 @@ function AIController(){
 						for (var k=0; k<ladies.length; k++){
 							if ((targetStrategy == "s" && ladies[k].goodNPC_Type == "feisty")||
 								(targetStrategy == "w" && ladies[k].goodNPC_Type == "thin")){
-								for (var m=0; m<references.length; m++){}
+								for (var m=0; m<references.length; m++){
 									references[m].targetGrid[0] = ladies[k].gridX;
 									references[m].targetGrid[1] = ladies[k].gridY;
 									
-								found = true;
-								break;
-							}
+									found = true;
+									break;
+								}
 
-							if (found){
-								break;
+								if (found){
+									break;
+								}
 							}
 						}
-					}
 
-					if (!found && ladies.length > 0){
-						for (var m=0; m<references.length; m++){
-							references[m].targetGrid[0] = ladies[0].gridX;
-							references[m].targetGrid[1] = ladies[0].gridY;
+						if (!found && ladies.length > 0){
+							for (var m=0; m<references.length; m++){
+								references[m].targetGrid[0] = ladies[0].gridX;
+								references[m].targetGrid[1] = ladies[0].gridY;
+							}
 						}
-					}
 
-					console.log(key + " -> " + this.currPhase.attackStrategy.medium[key]);
+						console.log(key + " -> " + this.currPhase.attackStrategy.medium[key]);
+					}
 				}
 			}
 			else if (playerLevel == "hard"){
@@ -166,25 +167,27 @@ function AIController(){
 							for (var k=0; k<ladies.length; k++){
 								if ((targetStrategy == "s" && ladies[k].goodNPC_Type == "feisty")||
 									(targetStrategy == "w" && ladies[k].goodNPC_Type == "thin")){
-									for (var m=0; m<references.length; m++){}
-										references.targetGrid = ladies[k].targetGrid;
-									found = true;
-									break;
-								}
+									for (var m=0; m<references.length; m++){
+										references[m].targetGrid[0] = ladies[k].gridX;
+										references[m].targetGrid[1] = ladies[k].gridY;
+										found = true;
+										break;
+									}
 
-								if (found){
-									break;
+									if (found){
+										break;
+									}
+								}
+							}
+
+							if (!found && ladies.length > 0){
+								for (var m=0; m<references.length; m++){
+									references.targetGrid = ladies[0].targetGrid;
 								}
 							}
 						}
-
-						if (!found && ladies.length > 0){
-							for (var m=0; m<references.length; m++){
-								references.targetGrid = ladies[0].targetGrid;
-							}
-						}
+						console.log(key + " -> " + this.currPhase.attackStrategy.easy[key]);
 					}
-					console.log(key + " -> " + this.currPhase.attackStrategy.easy[key]);
 				}
 			}
 		}
