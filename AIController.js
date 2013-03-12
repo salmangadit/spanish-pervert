@@ -60,7 +60,9 @@ function AIController(){
 							if ((targetStrategy == "s" && ladies[k].goodNPC_Type == "feisty")||
 								(targetStrategy == "w" && ladies[k].goodNPC_Type == "thin")){
 								for (var m=0; m<references.length; m++){}
-									references.targetGrid = ladies[k].targetGrid;
+									references[m].targetGrid[0] = ladies[k].gridX;
+									references[m].targetGrid[1] = ladies[k].gridY;
+									
 								found = true;
 								break;
 							}
@@ -73,7 +75,8 @@ function AIController(){
 
 					if (!found && ladies.length > 0){
 						for (var m=0; m<references.length; m++){
-							references.targetGrid = ladies[0].targetGrid;
+							references[m].targetGrid[0] = ladies[0].gridX;
+							references[m].targetGrid[1] = ladies[0].gridY;
 						}
 					}
 
