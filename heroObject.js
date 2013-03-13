@@ -27,6 +27,20 @@
 	this.delta;// = this.now - this.parentRef.lastRender;
 	
 	this.damageDelivered = -2;
+
+	this.fightController  = new FightController(this);
+
+	/* Measure of hit miss ratio: range from 0 to 1
+	 * the lesser the hit miss ratio, the lesser the chance of executing that move
+	 * e.g if hit miss ratio is 0.3, means out of every 10 times, the player will be able to
+	 * succesfully execute the current move only 3 times.
+	 *
+	 * so if it is 0.7, then he will execute the move (be it kick or punch) successfully
+	 * every 7 times out of 10 tries
+	 */
+	this.hitMissRatio = 1;
+	this.hit = false;
+	this.miss = false;
 	
 	/* Punch sprite indicators:
 	 * 18 -> retreat punch down
@@ -89,16 +103,17 @@
 			
 			// Update the targets health
 			//console.log('targetReference is of type: ' + targetReference.selfType);
-			targetReference.updateHealth(this.damageDelivered);
-			
-			
+						
 			this.parentRef.render();
 						
-			//Then update attributes
-			this.arrayOfLastMoves.push("punch");
-			//this.damageDelivered = 1;
-			//this.gameExp++;
-			//document.getElementById("Score").innerHTML = "Score: " + this.gameExp;
+			//Then update attributes if it is a hit
+			if(true == this.hit){
+				targetReference.updateHealth(this.damageDelivered);
+				this.arrayOfLastMoves.push("punch");
+				console.log('the player did a hit');
+			} else {
+				console.log('the player made a miss');
+			}
 			
 			//Move the hand back
 			this.now = Date.now();
@@ -186,17 +201,16 @@
 				}
 			}//outer most if-else statement
 
-			// Update the targets health
-			targetReference.updateHealth(this.damageDelivered);
-			
-			
 			this.parentRef.render();
 
-			//Then update attributes
-			this.arrayOfLastMoves.push("kick");
-			this.damageDelivered = 2;
-			//this.gameExp+=2;
-			//document.getElementById("Score").innerHTML = "Score: " + this.gameExp;
+			//Then update attributes if it is a hit
+			if(true == this.hit){
+				targetReference.updateHealth(this.damageDelivered);
+				this.arrayOfLastMoves.push("kick");
+				console.log('the player did a hit');
+			} else {
+				console.log('the player made a miss');
+			}
 
 			//Move the hand back
 			this.now = Date.now();
@@ -261,6 +275,11 @@
  		this.attackPower = -0.000005;
  	}
  	
+ 	this.hitMissRatio = 1;
+	this.hit = false;
+	this.miss = false;
+
+
  	this.pullSkirt = function(targetReference){
  		// I need to know the number of the sprite to change to... waiting for max..
  		
@@ -302,8 +321,16 @@
 
 			}//switch case
 		}//actionType if statement
-		targetReference.updateHealth(this.attackPower);
+		
 		this.parentRef.render();
+
+		//Then update attributes if it is a hit
+		if(true == this.hit){
+			targetReference.updateHealth(this.attackPower);
+			console.log('the badNPC did a hit');
+		} else {
+			console.log('the badNPC made a miss');
+		}
     	
     };//end of pullskirt function
     
@@ -348,8 +375,16 @@
 
 			}//switch case
 		}//actionType if statement
-    	targetReference.updateHealth(this.attackPower);
+    	
     	this.parentRef.render();
+
+		//Then update attributes if it is a hit
+		if(true == this.hit){
+			targetReference.updateHealth(this.attackPower);
+			console.log('the badNPC did a hit');
+		} else {
+			console.log('the badNPC made a miss');
+		}
 
     };
     
@@ -367,9 +402,14 @@
  var goodNPC = function(thisReference){
 	
 	this.parentRef = thisReference;
+	this.fightController = new FightController(this);
 	//Only the fiesty lady can attack
 	if (this.parentRef.goodNPC_Type == "fiesty"){		
-		this.attackPower = -5;		
+		this.attackPower = -5;
+		this.hitMissRatio = 1;
+		this.hit = false;
+		this.miss = false;
+	
 	}
  	 		
 	this.strikeWithUmbrella = function(targetReference){
@@ -398,11 +438,17 @@
     	
     	}//actionType if statement	
     	
-    	//Update the target's health
-    	targetReference.updateHealth(this.attackPower);	
+    	//Update the target's health	
     	this.parentRef.render();
+    	if(this.parentRef.goodNPC_Type == "fiesty" && true == this.hit){
+			targetReference.updateHealth(this.attackPower);
+			console.log('the goodNPC did a hit');
+		} else {
+			console.log('the goodNPC made a miss');
+		}
     	
-    };//strike with umbrella function    
+    };//strike with umbrella function  
+      
  }//end of goodNPC constructor
  
  goodNPC.prototype = new heroObject();
@@ -461,7 +507,7 @@
 	//To display the players health properties
 	this.innerHealthMeterX = 0;
 	this.innerHealthMeterY = 0;
-	this.innerHealthMeterWidth  = 32;
+	this.innerHealthMeterWidth  = 30;
 	this.innerHealthMeterHeight = 6;
 	//this.innerHealthMeterImage  = document.getElementById("innerHealthMeterImage");
 	this.innerHealthMeterImage = new Image();
@@ -510,12 +556,12 @@
 	//this function allows the setting of a specific point for any heroObject to move towards
 	this.setTarget = function(targetX, targetY){
 		this.targetGrid = new Array(targetX, targetY);
-	}
+	};
 	
 	//this function makes the heroObject head towards a specific hero
 	this.homing = function(specHero){
 		this.targetGrid = new Array(specHero.gridX, specHero.gridY);
-	}
+	};
 	
 	//this function makes a heroObject loiter to random spots
 	this.loiter = function(){
@@ -526,7 +572,7 @@
 			ycoor = Math.floor(Math.random() * 28);
 			this.targetGrid = new Array(xcoor,ycoor);
 		}
-	}
+	};
 	
     this.render = function(){
         context.drawImage(this.image, this.whichSprite, 0, 
@@ -767,6 +813,9 @@
 		this.outerHealthMeterX = this.innerHealthMeterX;
 		this.outerHealthMeterY = this.innerHealthMeterY; 
 		
+		//Update the hit miss ratio
+		this.updateHitMissRatio();
+
         // loop through all of the rocks in the array
         // we use an for-in loop to go through the rocks in case
         // we later add some logic that can destroy static objects
@@ -811,7 +860,7 @@
 		}
 		//console.log('the ' + this.selfType + ' health meter is: ' + this.innerHealthMeterWidth);
 
-	}   
+	}; 
     
     this.checkCollision = function(obj)
     {
@@ -824,6 +873,26 @@
         }
     };
 
-  
+
+    this.updateHitMissRatio = function(){
+
+    	// Generate a random number between 1 and 10
+    	var localRandomNumber = Math.floor((Math.random()*10)+1);
+    	
+    	// Check the hit miss ratio for example if it is 0.3, 
+    	// the heroObject has to hit 3 times and miss 7 times
+    	if((this.HeroType.hitMissRatio * 10) <= localRandomNumber) {
+    		//This implies a hit should occur
+    		console.log('a hit was computed');
+    		this.HeroType.hit = true;
+    		this.HeroType.miss = false;
+    	} else {
+    		//This implies a miss should occur
+    		console.log('a miss was computed');
+    		this.HeroType.hit = false;
+    		this.HeroType.miss = true;
+    	}
+    };
+	  
 }//heroObject constructor
  
