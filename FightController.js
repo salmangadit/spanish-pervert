@@ -112,7 +112,7 @@ FightController.prototype.updateEnemiesToToggleHitMissRatio = function(){
 
 	// Loop through the current badNPC's surrounding the heroObject,
 	// check their fightStatus, their selfType.
-	for(iter=0, iter < this.surroundingArrayOfObjects.length; iter++){
+	for(iter=0; iter < this.surroundingArrayOfObjects.length; iter++){
 		enemySelfType   = this.surroundingArrayOfObjects[iter].parentRef.selfType;
 		enemyTempHealth = this.surroundingArrayOfObjects[iter].parentRef.innerHealthMeterWidth;
 		FightController.updateFightStatusOfEnemy(this.surroundingArrayOfObjects[iter]);
@@ -216,7 +216,7 @@ FightController.prototype.monitorHeroObjectSitiuation = function(){
 															  0.6);
 					break;
 
-				case default:
+				default:
 					console.log('the fight status is invalid');
 					break;
 			}//inner switch case statement
@@ -253,7 +253,7 @@ FightController.prototype.monitorHeroObjectSitiuation = function(){
 															  0.6);
 					break;
 
-				case default:	
+				default:	
 					console.log('the fight status is invalid');
 					break;
 			}//inner switch case statement
@@ -288,14 +288,14 @@ FightController.prototype.monitorHeroObjectSitiuation = function(){
 															  0.6);
 					break;
 
-				case default:	
+				default:	
 					console.log('the fight status is invalid');
 					break;
 			}//inner switch case statement
 			break;
 
 		//The selfType is invalid
-		case default:
+		default:
 			console.log('the selfType is invalid');
 			break;
 	

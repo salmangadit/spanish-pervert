@@ -883,12 +883,12 @@
     	// the heroObject has to hit 3 times and miss 7 times
     	if((this.HeroType.hitMissRatio * 10) <= localRandomNumber) {
     		//This implies a hit should occur
-    		console.log('a hit was computed');
+    		//console.log('a hit was computed');
     		this.HeroType.hit = true;
     		this.HeroType.miss = false;
     	} else {
     		//This implies a miss should occur
-    		console.log('a miss was computed');
+    		//console.log('a miss was computed');
     		this.HeroType.hit = false;
     		this.HeroType.miss = true;
     	}

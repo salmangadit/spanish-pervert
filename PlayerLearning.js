@@ -46,7 +46,7 @@ var PlayerLearning = function(thisReference){
 	this.actualTimeTakenToCompleteThisWave = null;
 	this.isCurrentWaveObjectiveAchieved = false;
 
-	// These are the model timings (bufferTime and rescueTime are in terms of ms e.g 1000) 
+	// These are the model timings received from AI (bufferTime and rescueTime are in terms of ms e.g 1000) 
 	// and ******* QUESTION IS who determines them? *********
 	this.bufferTimeForKill = 0;
 	this.bufferTimeForRescue = 0;
