@@ -618,9 +618,19 @@
         // this allows us to always move the direction of the most recently pressed
         // key
         switch (this.keys[this.keys.length - 1])
-        {
+        {	
+			//togglling debugMode
+			case 68:
+				
+				if(debugMode == true){
+					debugMode = false;
+				}
+				else{
+					debugMode = true;
+				}
+				break;
             case 37:
-                // move the hero left on the screen
+				 // move the hero left on the screen
                  //this.internalX -= this.moveSpeed * elapsed;
                  //this.gridX = parseInt(this.internalX/this.width);
 

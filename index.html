@@ -20,6 +20,7 @@
 	<script type="text/javascript" language="javascript" src="heroObject.js"></script>
 	<script type="text/javascript" language="javascript" src="staticObject.js"></script>
 	<script type="text/javascript" language="javascript" src="flocker.js"></script>
+	<script type="text/javascript" language="javascript" src="debug.js"></script>
 	<script type="text/javascript" language="javascript" src="main.js"></script>
 	
 	<script type="text/javascript">
@@ -51,7 +52,10 @@
 	{
 		z-index:3;
 	}
-	
+	#debugCanvas
+	{
+		z-index:4;
+	}
 	#logger
 	{
 		position:absolute;
@@ -73,6 +77,7 @@
 		<canvas id="baseCanvas">Your browser does not support HTML5</canvas>
 		<canvas id="mainCanvas">Your browser does not support HTML5</canvas>
 		<canvas id="innerHealthMeter">Your browser does not support HTML5 </canvas>
+		<canvas id="debugCanvas">Your browser does not support HTML5 </canvas>
 	</div> 
 	<br />
 	<!-- <input type='button' onclick='clearLog()' value="Clear"/>

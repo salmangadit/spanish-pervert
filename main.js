@@ -5,10 +5,13 @@ var canvas;
 var context;
 var baseCanvas;
 var baseContext;
+var debugCanvas;
+var debugContext;
 var gameW = 800;
 var gameH = 600;
 var hero = null;
-var virtualGrid = null;
+var VG = null;
+var debugMode = false;
 
 // Variable to hold XML data
 var savedData = null;
@@ -55,7 +58,7 @@ function init() {
 	xmlhttp = new XMLHttpRequest();
 	//http://www.salmangadit.me/spanish-pervert/data/data.xmlC:/Users/Salman/Documents/GitHub/spanish-pervert/data/data.xml
 	// /Users/TheGreatOne/Desktop/Sem_6/EE4702/Project/Project_2/spanish-pervert/data/data.xml
-	xmlhttp.open("GET", "/Users/TheGreatOne/Desktop/Sem_6/EE4702/Project/Project_2/spanish-pervert/data/data.xml", false);
+	xmlhttp.open("GET", "C:/Users/YuanIng/Desktop/Game_2/v8/spanish-pervert/data/data.xml", false);
 	xmlhttp.send();
 	xmlDoc = xmlhttp.responseXML;
 
@@ -74,9 +77,10 @@ function init() {
 	AI.executePhase();
 
 	document.addEventListener('keydown', function(event) {
+		
 		// check if the key being pressed is one of the arrow keys -- 
 		// 80 is the p key (punch), 75 is k (kick), 82 is r (rescue)
-		if ((event.keyCode < 41 && event.keyCode > 36) || event.keyCode == 80 || event.keyCode == 75 || event.keyCode == 82) {
+		if ((event.keyCode < 41 && event.keyCode > 36) || event.keyCode == 80 || event.keyCode == 75 || event.keyCode == 82 || event.keyCode == 68) {
 			// block the default browser action for the arrow keys
 			event.preventDefault();
 
@@ -97,9 +101,11 @@ function init() {
 	});
 
 	document.addEventListener('keyup', function(event) {
+		
+		
 		// check if the key being pressed is one of the arrow keys -- 
 		// 80 is the p key (punch), 75 is k (kick), 82 is r (rescue)
-		if ((event.keyCode < 41 && event.keyCode > 36) || event.keyCode == 80 || event.keyCode == 75 || event.keyCode == 82) {
+		if ((event.keyCode < 41 && event.keyCode > 36) || event.keyCode == 80 || event.keyCode == 75 || event.keyCode == 82 || event.keyCode == 68) {
 			event.preventDefault();
 
 			// check to see if this key is already in the array
@@ -349,6 +355,11 @@ function initCanvas() {
 	// create a context object form the innerHealthMeter canvas
 	iHMCanvasContext = iHMCanvas.getContext("2d");
 	
+	// retrieve a reference to the debugCanvas object
+	debugCanvas = document.getElementById("debugCanvas");
+	// create a context object from our canvas
+	debugContext = debugCanvas.getContext("2d");
+	
 	// set the width and height of the canvas
 	canvas.width = gameW;
 	canvas.height = gameH;
@@ -360,6 +371,10 @@ function initCanvas() {
 	//Set the width and height of the innerHealthMeter canvas
 	iHMCanvas.width = gameW;
 	iHMCanvas.height = gameH;
+	
+	// set the width and height of the debugCanvas
+	debugCanvas.width = gameW;
+	debugCanvas.height = gameH;
 	
 	baseContext.fillStyle = baseColor;
 	// fill the entire baseContext with the color
@@ -553,7 +568,9 @@ function gameLoop() {
 
 		ladyIndex++;
 }
-	
+	if(debugMode == true){
+		Debug();
+	}
 	
 	
 	// update the lastUpdate variable
