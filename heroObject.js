@@ -28,7 +28,7 @@
 	
 	this.damageDelivered = -2;
 
-	this.fightController  = new FightController(this);
+	//this.fightController  = new FightController(this);
 
 	/* Measure of hit miss ratio: range from 0 to 1
 	 * the lesser the hit miss ratio, the lesser the chance of executing that move
@@ -402,7 +402,7 @@
  var goodNPC = function(thisReference){
 	
 	this.parentRef = thisReference;
-	this.fightController = new FightController(this);
+	//this.fightController = new FightController(this);
 	//Only the fiesty lady can attack
 	if (this.parentRef.goodNPC_Type == "fiesty"){		
 		this.attackPower = -5;

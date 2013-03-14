@@ -4,21 +4,11 @@ function Controller(VG, hero, enemies,ladies,savedLadies){
 		enemies[iter].targetGrid = new Array(enemies[iter].gridX, enemies[iter].gridY);
 		//can put the enemies punching inside here, based on the actionType
 	}
-	for(iter in ladies){
-		ladies[iter].targetGrid = new Array(ladies[iter].gridX, ladies[iter].gridY);
-		//ladies[iter1].loiter();
-	}
-	
 	heroBehaviour(hero,VG);
-	// if(enemies[0]!=null){
-	// enemies[0].homing(ladies[0]);
-	// }
-	//console.log(ladies[0].targetGrid[0], ladies[0].targetGrid[1]);
+	//Habeeb, uncomment the following to test
+	//hero.HeroType.fightController.updateSurroundingEnemies(returnSurroundingArray(hero,VG));
 	
-	//Iterate through the loop to see if any of the enemies actionType has changed, 
-	//and if did do the necessary attack
 	for(iter in enemies){
-		
 		switch(enemies[iter].actionType){
 			case 1:	enemies[iter].HeroType.pullSkirt(enemies[iter].targetBot);
 					break;
@@ -27,11 +17,16 @@ function Controller(VG, hero, enemies,ladies,savedLadies){
 			default: 
 					break;
 		}
-	
 	}//for-each loop
 	
 	for(iter in ladies){
+		//default targetGrid, the movement behaviour depending on AI will change the targetGrid
+		ladies[iter].targetGrid = new Array(ladies[iter].gridX, ladies[iter].gridY);
+		//function for updating the surrounding enemies
+		//Habeeb, note here, uncomment the following function to test
+		//ladies[iter].HeroType.fightController.updateSurroundingEnemies(returnSurroundingArray(ladies[iter],VG))
 		if(ladies[iter].selfType == 4 && ladies[iter].actionType == 1){
+			ladies[iter].targetGrid = new Array(ladies[iter].targetBot.gridX,ladies[iter].targetBot.gridY);
 			ladies[iter].HeroType.strikeWithUmbrella(ladies[iter].targetBot);
 		}
 		if(ladies[iter].selfType == 3 && ladies[iter].actionType == 1){
@@ -46,12 +41,57 @@ function Controller(VG, hero, enemies,ladies,savedLadies){
 			savedLadies++;
 			hero.targetBot = null;
 		}
-		console.log(savedLadies);
 	}
-	// if(enemies[0].targetBot!=null)
 		
 }
 
+//returns an array of heroObjects surrounding the heroObject, main
+//puts into array in the top->right->down->left sequence
+function returnSurroundingArray(main, VG){
+	var count = 0;
+	var SurArray = new Array();
+	//top
+	if((main.gridY - 1) >= 0){
+		if (VG[main.gridX][main.gridY-1] != null){
+			if(	VG[main.gridX][main.gridY-1].selfType == 1 ||
+				VG[main.gridX][main.gridY-1].selfType == 2){
+				SurArray[count] = VG[main.gridX][main.gridY-1];
+				count++;
+			}
+		}
+	}
+	//right
+	if((main.gridX + 1) <= 32){
+		if (VG[main.gridX+1][main.gridY] != null){
+			if(	VG[main.gridX+1][main.gridY].selfType == 1 ||
+				VG[main.gridX+1][main.gridY].selfType == 2){
+				SurArray[count] = VG[main.gridX+1][main.gridY];
+				count++;
+			}
+		}
+	}
+	//down
+	if((main.gridY + 1) <= 28){
+		if (VG[main.gridX][main.gridY+1] != null){
+			if(	VG[main.gridX][main.gridY+1].selfType == 1 ||
+				VG[main.gridX][main.gridY+1].selfType == 2){
+				SurArray[count] = VG[main.gridX][main.gridY+1];
+				count++;
+			}
+		}
+	}
+	//left
+	if((main.gridX - 1) >= 0){
+		if (VG[main.gridX-1][main.gridY] != null){
+			if(	VG[main.gridX-1][main.gridY].selfType == 1 ||
+				VG[main.gridX-1][main.gridY].selfType == 2){
+				SurArray[count] = VG[main.gridX-1][main.gridY];
+				count++;
+			}
+		}
+	}
+	return SurArray;
+}
 
 function heroBehaviour(hero, VG){
 hero.targetBot = null;
