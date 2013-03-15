@@ -634,7 +634,7 @@
                  //this.internalX -= this.moveSpeed * elapsed;
                  //this.gridX = parseInt(this.internalX/this.width);
 
-                if (this.elapseSum > 1)
+                if (this.elapseSum > 2)
                 {
                  	this.x -= this.moveSpeed * elapsed;
                  	this.gridX = parseInt(this.x/this.width);
@@ -674,7 +674,7 @@
                 break;
             case 38:
                 // move the hero up on the screen
-                if (this.elapseSum > 1)
+                if (this.elapseSum > 2)
                 {
                  	this.y -= this.moveSpeed * elapsed;
                 	this.gridY = parseInt(this.y/this.height);
@@ -705,7 +705,7 @@
                 break;
             case 39:
                 // move the hero right on the screen
-                if (this.elapseSum > 1)
+                if (this.elapseSum > 2)
                 {
                  	this.x += this.moveSpeed * elapsed;
                 	this.gridX = parseInt(this.x/this.width) + 1;
@@ -736,7 +736,7 @@
                 break;
             case 40:
                 // move the hero down on the screen
-                if (this.elapseSum > 1)
+                if (this.elapseSum > 2)
                 {
                  	this.y += this.moveSpeed * elapsed;
                 	this.gridY = parseInt(this.y/this.height) + 1;
