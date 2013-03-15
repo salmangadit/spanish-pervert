@@ -28,7 +28,7 @@
 	
 	this.damageDelivered = -2;
 
-	//this.fightController  = new FightController(this);
+	this.fightController  = new FightController(this);
 
 	/* Measure of hit miss ratio: range from 0 to 1
 	 * the lesser the hit miss ratio, the lesser the chance of executing that move
@@ -56,7 +56,7 @@
 	
 		console.log('punch status is: ' + this.parentRef.actionType);
 		 if (this.parentRef.actionType == 1) {
-			console.log('the hero is gonna punch');
+			console.log('the hero is gonna punch and his ratio is: ' + this.hitMissRatio);
 			
 			//Set the locations of where the new sprite image is to be drawn			
 			if (this.arrayOfLastMoves == 0 || this.arrayOfLastMoves[this.arrayOfLastMoves.length - 1] != "punch"){
@@ -110,9 +110,9 @@
 			if(true == this.hit){
 				targetReference.updateHealth(this.damageDelivered);
 				this.arrayOfLastMoves.push("punch");
-				console.log('the player did a hit');
+				console.log('the player did a punch`');
 			} else {
-				console.log('the player made a miss');
+				console.log('the player missed a punch');
 			}
 			
 			//Move the hand back
@@ -155,7 +155,7 @@
 				
 		console.log('kick status is: ' + this.parentRef.actionType);
 		if (this.parentRef.actionType == 1) {
-			console.log('the hero is gonna kick');
+			console.log('the hero is gonna kick and his ratio is: ' + this.hitMissRatio);
 
 			//Set the locations of where the new sprite image is to be drawn
 			if (this.arrayOfLastMoves == 0 || this.arrayOfLastMoves[this.arrayOfLastMoves.length - 1] != "kick") {
@@ -207,9 +207,9 @@
 			if(true == this.hit){
 				targetReference.updateHealth(this.damageDelivered);
 				this.arrayOfLastMoves.push("kick");
-				console.log('the player did a hit');
+				console.log('the player did a kick');
 			} else {
-				console.log('the player made a miss');
+				console.log('the player missed a kick');
 			}
 
 			//Move the hand back
@@ -327,9 +327,9 @@
 		//Then update attributes if it is a hit
 		if(true == this.hit){
 			targetReference.updateHealth(this.attackPower);
-			console.log('the badNPC did a hit');
+			console.log('the badNPC pulled a skirt');
 		} else {
-			console.log('the badNPC made a miss');
+			console.log('the badNPC missed pulling the skirt');
 		}
     	
     };//end of pullskirt function
@@ -381,9 +381,9 @@
 		//Then update attributes if it is a hit
 		if(true == this.hit){
 			targetReference.updateHealth(this.attackPower);
-			console.log('the badNPC did a hit');
+			console.log('the badNPC attacked the player');
 		} else {
-			console.log('the badNPC made a miss');
+			console.log('the badNPC missed the player');
 		}
 
     };
@@ -402,7 +402,7 @@
  var goodNPC = function(thisReference){
 	
 	this.parentRef = thisReference;
-	//this.fightController = new FightController(this);
+	this.fightController = new FightController(this);
 	//Only the fiesty lady can attack
 	if (this.parentRef.goodNPC_Type == "fiesty"){		
 		this.attackPower = -5;
@@ -442,9 +442,9 @@
     	this.parentRef.render();
     	if(this.parentRef.goodNPC_Type == "fiesty" && true == this.hit){
 			targetReference.updateHealth(this.attackPower);
-			console.log('the goodNPC did a hit');
+			console.log('the goodNPC hit with an umbrella');
 		} else {
-			console.log('the goodNPC made a miss');
+			console.log('the goodNPC missed the hit');
 		}
     	
     };//strike with umbrella function  

@@ -5,8 +5,12 @@ function Controller(VG, hero, enemies,ladies,savedLadies){
 		//can put the enemies punching inside here, based on the actionType
 	}
 	heroBehaviour(hero,VG);
-	//Habeeb, uncomment the following to test
-	//hero.HeroType.fightController.updateSurroundingEnemies(returnSurroundingArray(hero,VG));
+	// Habeeb, uncomment the following to test -- max we should update only if action type is 1
+	// because only then he can attack and thats when we need to monitor
+	if(hero.actionType == 1){
+		hero.HeroType.fightController.updateSurroundingEnemies(returnSurroundingArray(hero,VG));
+		hero.HeroType.fightController.monitorHeroObjectSituation();
+	}
 	
 	for(iter in enemies){
 		switch(enemies[iter].actionType){
@@ -24,13 +28,15 @@ function Controller(VG, hero, enemies,ladies,savedLadies){
 		ladies[iter].targetGrid = new Array(ladies[iter].gridX, ladies[iter].gridY);
 		//function for updating the surrounding enemies
 		//Habeeb, note here, uncomment the following function to test
-		//ladies[iter].HeroType.fightController.updateSurroundingEnemies(returnSurroundingArray(ladies[iter],VG))
+		ladies[iter].HeroType.fightController.updateSurroundingEnemies(returnSurroundingArray(ladies[iter],VG))
 		if(ladies[iter].selfType == 4 && ladies[iter].actionType == 1){
 			ladies[iter].targetGrid = new Array(ladies[iter].targetBot.gridX,ladies[iter].targetBot.gridY);
+			ladies[iter].HeroType.fightController.monitorHeroObjectSituation();
 			ladies[iter].HeroType.strikeWithUmbrella(ladies[iter].targetBot);
 		}
 		if(ladies[iter].selfType == 3 && ladies[iter].actionType == 1){
 			ladies[iter].targetGrid = new Array(ladies[iter].targetBot.gridX,ladies[iter].targetBot.gridY);
+			ladies[iter].HeroType.fightController.monitorHeroObjectSituation();
 		}
 		if(ladies[iter].actionType == 3){
 			ladies[iter].targetGrid = new Array(hero.gridX,hero.gridY);			

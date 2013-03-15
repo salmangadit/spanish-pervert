@@ -50,42 +50,42 @@ var FightController = function(thisOwner){
 // Lesser damage will be done by the target (which will be a monkey or gorilla)
 // the amount will be always positive values
 FightController.prototype.decreaseHitRatioOfEnemy = function (thisIndex, thisAmount) {
-	this.surroundingArrayOfObjects[thisIndex].hitMissRatio -= thisAmount;
-	FightController.checkHitMissRatioAndCalibrateIfNecessary(this.surroundingArrayOfObjects[thisIndex]);
+	this.surroundingArrayOfObjects[thisIndex].hitMissRatio = thisAmount;
+	this.checkHitMissRatioAndCalibrateIfNecessary(this.surroundingArrayOfObjects[thisIndex]);
 }
 
 // Less damage done by a number of badNPC's surrounding the heroObject
 FightController.prototype.decreaseHitRatioOfEnemies = function(thisArray, thisAmount) {
 	
 	for(iter=0; iter < thisArray.length; iter++) {
-		FightController.decreaseHitRatioOfEnemy(iter, thisAmount);
+		this.decreaseHitRatioOfEnemy(iter, thisAmount);
 	}
 }
 
 // Lesser damage will be done by yourself (either hero or fiesty lady)
 FightController.prototype.decreaseHitRatioOfSelf = function(thisAmount) {
-	this.owner.hitMissRatio -= thisAmount;
-	FightController.checkHitMissRatioAndCalibrateIfNecessary(this.owner);
+	this.owner.hitMissRatio = thisAmount;
+	this.checkHitMissRatioAndCalibrateIfNecessary(this.owner);
 }
 
 // More damage will be done by the target (which will be a monkey or gorilla) 
 FightController.prototype.increaseHitRatioOfEnemy = function (thisIndex, thisAmount) {
-	this.surroundingArrayOfObjects[thisIndex].hitMissRatio += thisAmount;
-	FightController.checkHitMissRatioAndCalibrateIfNecessary(this.surroundingArrayOfObjects[thisIndex]);
+	this.surroundingArrayOfObjects[thisIndex].hitMissRatio = thisAmount;
+	this.checkHitMissRatioAndCalibrateIfNecessary(this.surroundingArrayOfObjects[thisIndex]);
 }
 
 // More damage will be done by a number of badNPC's surrounding the heroObject
 FightController.prototype.increaseHitRatioOfEnemies = function(thisArray, thisAmount) {
 
 	for(iter=0; iter < thisArray.length; iter++) {
-		FightController.increaseHitRatioOfEnemy(iter, thisAmount);
+		this.increaseHitRatioOfEnemy(iter, thisAmount);
 	}
 }
 
 // More damage wil be done by yourself (either hero or fiesty lady)
 FightController.prototype.increaseHitRatioOfSelf = function (thisAmount) {
-	this.owner.hitMissRatio += thisAmount;
-	FightController.checkHitMissRatioAndCalibrateIfNecessary(this.owner);
+	this.owner.hitMissRatio = thisAmount;
+	this.checkHitMissRatioAndCalibrateIfNecessary(this.owner);
 }
 
 // Check hitMissRatio range and recalibrate if out of range (0 - 1 is the range)
@@ -107,7 +107,7 @@ FightController.prototype.updateSurroundingEnemies = function(thisArray) {
 }
 
 // Update the enemies surrounding the heroObject to toggle hitMissRatio
-// this depends on a few factors: the 
+// this depends on a few factors: the heroObject must have a bad health, not critical
 FightController.prototype.updateEnemiesToToggleHitMissRatio = function(){
 
 	// Loop through the current badNPC's surrounding the heroObject,
@@ -115,7 +115,7 @@ FightController.prototype.updateEnemiesToToggleHitMissRatio = function(){
 	for(iter=0; iter < this.surroundingArrayOfObjects.length; iter++){
 		enemySelfType   = this.surroundingArrayOfObjects[iter].parentRef.selfType;
 		enemyTempHealth = this.surroundingArrayOfObjects[iter].parentRef.innerHealthMeterWidth;
-		FightController.updateFightStatusOfEnemy(this.surroundingArrayOfObjects[iter]);
+		this.updateFightStatusOfEnemy(this.surroundingArrayOfObjects[iter]);
 
 		// SelfType 1 refers to a monkey
 		if(enemySelfType == 1) {
@@ -134,7 +134,7 @@ FightController.prototype.updateEnemiesToToggleHitMissRatio = function(){
 	}//for loop
 }
 
-// This function will update the fight status depending on the health bar
+// This function will update the fight status of the heroObject depending on the health bar
 FightController.prototype.updateFightStatus = function(){
 	tempHealthValue = this.owner.parentRef.innerHealthMeterWidth;
 	if(tempHealthValue < 10){
@@ -173,10 +173,10 @@ FightController.prototype.updateFightStatusOfEnemy = function(thisReference){
 
 // This function will monitor the health status and fight status of the hero,
 // and make the necessary adjustments 
-FightController.prototype.monitorHeroObjectSitiuation = function(){
+FightController.prototype.monitorHeroObjectSituation = function(){
 
 	// Update the fight status of the heroObject
-	FightController.updateFightStatus();
+	this.updateFightStatus();
 
 	//We have monitor the situation of both the mainCharacter and the fiesty lady
 	switch(this.owner.parentRef.selfType){
@@ -187,32 +187,32 @@ FightController.prototype.monitorHeroObjectSitiuation = function(){
 			switch(this.fightStatus) {
 				// I will need to update a global flag to indicate the hero is dying also.how..
 
-				// Increase you hit ratio, decrease the surrounding enemies hit ratio
+				// Increase your hit ratio, decrease the surrounding enemies hit ratio
 				case 'critical': 
 					
-					FightController.increaseHitRatioOfSelf(0.9);
-					FightController.decreaseHitRatioOfEnemies(this.surroundingArrayOfObjects,
+					this.increaseHitRatioOfSelf(0.9);
+					this.decreaseHitRatioOfEnemies(this.surroundingArrayOfObjects,
 															  0.2);
 					break;
 
 				// Increase your hit ratio, decrease the hit ratio of the surrounding enemies
 				case 'bad':  
-					FightController.increaseHitRatioOfSelf(0.5);
-					FightController.updateEnemiesToToggleHitMissRatio();
-					FightController.decreaseHitRatioOfEnemies(this.hitMissRatioEnemyArray,
+					this.increaseHitRatioOfSelf(0.5);
+					this.updateEnemiesToToggleHitMissRatio();
+					this.decreaseHitRatioOfEnemies(this.hitMissRatioEnemyArray,
 															  0.3);
 					break;
 				
 				/* What to do here?
 				case 'stable':
-					FightController.increaseHitRatioOfSelf(0);
+					this.increaseHitRatioOfSelf(0);
 					break;
 				*/
 
 				// Increase all the surrounding enemies hit miss ratio
 				case 'good':
-					FightController.decreaseHitRatioOfSelf(0.3);
-					FightController.increaseHitRatioOfEnemies(this.surroundingArrayOfObjects,
+					this.decreaseHitRatioOfSelf(0.3);
+					this.increaseHitRatioOfEnemies(this.surroundingArrayOfObjects,
 															  0.6);
 					break;
 
@@ -230,26 +230,26 @@ FightController.prototype.monitorHeroObjectSitiuation = function(){
 				// For a thin lady with critical fight status, we need to make all the enemies
 				// surrounding her weak
 				case 'critical':
-					FightController.decreaseHitRatioOfEnemies(this.surroundingArrayOfObjects,
+					this.decreaseHitRatioOfEnemies(this.surroundingArrayOfObjects,
 															  0.1);
 					break;
 
 				// Decrease the selected enemies' hit miss ratio surrounding her
 				case 'bad':
-					FightController.updateEnemiesToToggleHitMissRatio();
-					FightController.decreaseHitRatioOfEnemies(this.hitMissRatioEnemyArray,
+					this.updateEnemiesToToggleHitMissRatio();
+					this.decreaseHitRatioOfEnemies(this.hitMissRatioEnemyArray,
 															  0.3);
 					break;
 
 				/*
 				case 'stable':
-					FightController.increaseHitRatioOfSelf(0);
+					this.increaseHitRatioOfSelf(0);
 					break;
 				*/	
 
 				// Increase all the enemies surrounding hit miss ratio
 				case 'good':
-					FightController.increaseHitRatioOfEnemies(this.surroundingArrayOfObjects,
+					this.increaseHitRatioOfEnemies(this.surroundingArrayOfObjects,
 															  0.6);
 					break;
 
@@ -264,27 +264,27 @@ FightController.prototype.monitorHeroObjectSitiuation = function(){
 			//Depending on the fight status
 			switch(this.fightStatus) {
 				case 'critical':
-					FightController.increaseHitRatioOfSelf(0.7);
-					FightController.decreaseHitRatioOfEnemies(this.surroundingArrayOfObjects,
+					this.increaseHitRatioOfSelf(0.7);
+					this.decreaseHitRatioOfEnemies(this.surroundingArrayOfObjects,
 															  0.2);
 					break;
 
 				case 'bad':
-					FightController.increaseHitRatioOfSelf(0.5);
-					FightController.updateEnemiesToToggleHitMissRatio();
-					FightController.decreaseHitRatioOfEnemies(this.hitMissRatioEnemyArray,
+					this.increaseHitRatioOfSelf(0.5);
+					this.updateEnemiesToToggleHitMissRatio();
+					this.decreaseHitRatioOfEnemies(this.hitMissRatioEnemyArray,
 															  0.3);
 					break;
 
 				/*
 				case 'stable':
-					FightController.increaseHitRatioOfSelf(0);
+					this.increaseHitRatioOfSelf(0);
 					break;
 				*/
 				
 				case 'good':
-					FightController.decreaseHitRatioOfSelf(0.3);
-					FightController.increaseHitRatioOfEnemies(this.surroundingArrayOfObjects,
+					this.decreaseHitRatioOfSelf(0.3);
+					this.increaseHitRatioOfEnemies(this.surroundingArrayOfObjects,
 															  0.6);
 					break;
 
