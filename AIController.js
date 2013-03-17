@@ -16,58 +16,109 @@ function AIController(){
 
 		//Set spawning params only if attacking phase
 		if (this.currPhase.phaseType == "attack"){
-			//Figure out the target for this NPC
-			var ratio = targetRatio[this.playerLevel];
-			var parts = ratio.split(":");
-			var pickerArray = new Array();
+			//Number of enemies sent AI - send according to scenario ratio
+			var parsedPhaseRatio = this.currPhase.scenarioRatio.split(':');
+			var alreadyTargeted = new Array();
 
-			for (var i=0; i<= parseInt(parts[0]); i++){
-				pickerArray.push(0);
-			}
+			for (var m = 0; m<parsedPhaseRatio.length; m++){
+				//Figure out the target for this NPC
+				var ratio = targetRatio[this.playerLevel];
+				var parts = ratio.split(":");
+				var pickerArray = new Array();
 
-			for (var i=0; i<= parseInt(parts[1]); i++){
-				pickerArray.push(1);
-			}
+				for (var i=0; i< parseInt(parts[0]); i++){
+					pickerArray.push(0);
+				}
 
-			var targetRandomiser = new Randomiser();
-			var targetNPCtype = targetRandomiser.randomiseArray(pickerArray);
-			var chosenTarget;
-			var targetFound = false;
+				for (var i=0; i< parseInt(parts[1]); i++){
+					pickerArray.push(1);
+				}
 
-			//find appropriate lady, else send to other options
-			for (var k=0; k<ladies.length; k++){
-				if ((targetNPCtype == 0 && ladies[k].goodNPC_Type == "fiesty") ||
-					(targetNPCtype == 1 && ladies[k].goodNPC_Type == "thin")){
-					chosenTarget = ladies[k]; 
-					targetFound = true;
-					break;
+				var targetRandomiser = new Randomiser();
+				var targetNPCtype = targetRandomiser.randomise(0, pickerArray.length - 1);
+				var chosenTarget;
+				var targetFound = false;
+
+				//find appropriate lady, else send to other options
+				for (var k=0; k<ladies.length; k++){
+					if ((pickerArray[targetNPCtype] == 0 && ladies[k].goodNPC_Type == "fiesty") ||
+						(pickerArray[targetNPCtype] == 1 && ladies[k].goodNPC_Type == "thin")){
+						
+						if (alreadyTargeted.indexOf(k) == -1){
+							alreadyTargeted.push(k);
+							chosenTarget = ladies[k]; 
+							targetFound = true;
+							break;
+						}
+					}
+				}
+
+				if (!targetFound && ladies.length > 0){
+					var randomLady;
+					do {
+						var random = new Randomiser();
+						randomLady = random.randomise(0, ladies.length - 1);
+					} while (alreadyTargeted.indexOf(randomLady)!= -1);
+
+						chosenTarget = ladies[randomLady];
+						targetFound = true;
+						alreadyTargeted.push(randomLady);
+				}
+
+				//Spawning locations AI
+				var locations = spawnLocations[this.playerLevel];
+
+				//Find all distances to target and figure out action
+				var distances = new Array();
+				var distancesOriginal = new Array();
+
+				for (var i = 0; i < 10; i++){
+					var coords = locations[i].split(',');
+					distances.push(helperClass.distanceBetweenTwoPoints(parseInt(coords[0]), 
+						parseInt(coords[1]), chosenTarget.gridX, chosenTarget.gridY));
+					distancesOriginal.push(helperClass.distanceBetweenTwoPoints(parseInt(coords[0]), 
+						parseInt(coords[1]), chosenTarget.gridX, chosenTarget.gridY));
+				}
+
+				distances.sort(function(a,b){return a - b});
+				var spawnIndex = targetRandomiser.randomise(this.playerLevel*2, this.playerLevel*2+1);
+				var spawnLocationDesired = distances[spawnIndex];
+
+				var trueIndex = distancesOriginal.indexOf(spawnLocationDesired);
+				var spawnLocation = locations[trueIndex].split(',');
+
+				//Find number of enemies to spawn
+				//Create a custom randomiser and select type of enemy to spawn according to global ratio
+				var monkeyGorillaRandomiser = new Randomiser();
+
+				for (var n = 0; n < parsedPhaseRatio[m]; n++){
+					var MGratio = monkeyGorillaRatio[this.playerLevel];
+					var MGparts = MGratio.split(":");
+					var MGpickerArray = new Array();
+
+					//0: Monkey, 1:Gorilla
+					for (var i=0; i< parseInt(MGparts[0]); i++){
+						MGpickerArray.push(0);
+					}
+
+					for (var i=0; i< parseInt(MGparts[1]); i++){
+						MGpickerArray.push(1);
+					}
+
+					var chosenStrength = monkeyGorillaRandomiser.randomise(0, MGpickerArray.length - 1);
+
+					var reference = Spawner.spawnAt((MGpickerArray[chosenStrength] == 0 ? "monkey":"gorilla"), 
+						parseInt(spawnLocation[0]), parseInt(spawnLocation[1]));
+
+					//Set deciphered target
+					reference.moveTarget = chosenTarget;
+
+	    			console.log("Spawned " + (MGpickerArray[chosenStrength] == 0 ? "monkey":"gorilla")+ " at "
+	    						 + spawnLocation[0] + "," + spawnLocation[1] + " . The target of this NPC is a " +
+	    						 chosenTarget.goodNPC_Type + " lady at location " + chosenTarget.gridX + "," + chosenTarget.gridY);
 				}
 			}
 
-			if (!targetFound && ladies.length > 0){
-					var random = new Randomiser();
-					var randomLady = random.randomise(0, ladies.length - 1);
-					chosenTarget = ladies[randomLady];
-					targetFound = true;
-			}
-
-			//Spawning locations AI
-			var locations = spawnLocations[this.playerLevel];
-
-			//Find all distances to target and figure out action
-			var distances = new Array();
-
-			for (var i = 0; i < 10; i++){
-				var coords = locations[i].split(',');
-				distances.push(helperClass.distanceBetweenTwoPoints(parseInt(coords[0]), 
-					parseInt(coords[1]), chosenTarget.gridX, chosenTarget.gridY));
-			}
-
-			distances.sort();
-			var spawnIndex = targetRandomiser.randomise(this.playerLevel*2, this.playerLevel*2+1);
-			var spawnLocation = locations[spawnIndex];
-
-			//Number of enemies sent AI
 			var a;
 
 			//Enemy strength AI

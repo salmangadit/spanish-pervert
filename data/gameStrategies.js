@@ -1,6 +1,6 @@
 //Monkey:Gorilla
 
-var gorillaMonkeyRatio = 
+var monkeyGorillaRatio = 
 {
     "0":"9:1",
     "1":"7:1",
