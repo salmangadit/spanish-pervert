@@ -50,8 +50,8 @@ var PlayerLearning = function(thisReference){
 	// and ******* QUESTION IS who determines them? *********
 	this.bufferTimeForKill = 0;
 	this.bufferTimeForRescue = 0;
-	this.rescueTimeAnalysedLevel = null;
-	this.killTimeAnalysedLevel = null;
+	this.rescueTimeAnalysedLevel = 0;
+	this.killTimeAnalysedLevel = 0;
 	this.modelTimeTakenToKill = null;
 	this.modelTimeTakenToRescue = null;
 
@@ -59,14 +59,6 @@ var PlayerLearning = function(thisReference){
 	/****** Methods of PlayerLearning ********/
 
 	//******* Have to implement this collect data function ********************
-	this.collectData = function(){
-
-		// If the wave objectives have been met, then analyse the data and set the player level
-		// We can also analyse data in between (maybe have a condition or time whichever preferred)
-		if(this.isCurrentWaveObjectiveAchieved){
-			this.analyseData();
-		}
-	};
 
 	// The data generated will be compared against a model for the current wave
 	this.analyseData = function(){
@@ -79,38 +71,46 @@ var PlayerLearning = function(thisReference){
 		}
 		localAverageKillTime = localAverageKillTime / (arrayOfKillTime.length);
 		// Compare (averageTime + bufferTime) with modelTime, each level has a different bufferTimeForKill
-		// that will be set by the AI controller
-		this.compareTimingAndUpdateFlag(localAverageKillTime, "kill");
+		// that will be set by ....
+		this.compareTimingAndUpdateFlag(localAverageKillTime, 
+										this.modelTimeTakenToKill, 
+										this.bufferTimeForKill, 
+										this.killTimeAnalysedLevel);
 		
 		// Determine average rescue time
 		for(iter = 0; iter < arrayOfRescueTime.length; iter++) {
 			localAverageRescueTime += arrayOfRescueTime[iter];
 		}
 		localAverageRescueTime = localAverageRescueTime / (arrayOfRescueTime.length);
-		this.compareTimingAndUpdateFlag(localAverageRescueTime, "rescue");
+		this.compareTimingAndUpdateFlag(localAverageRescueTime, 
+										this.modelTimeTakenToRescue,
+										this.bufferTimeForRescue,
+										this.rescueTimeAnalysedLevel);
+
 
 		/* Now compare the flags and set the playing level -  What the flags indicate:
-		 *	-> hard means the player is very good and playing very well
-		 *	-> medium means he is within our ideal player, playing at the desired level we want
-		 *	-> easy means he is not a good player with sufficient skills, make the game easier for him
+		 *	-> 4 is hard & it means the player is very good and playing very well
+		 *	-> 2 is medium & it  means he is within our ideal player, playing at the desired level we want
+		 *	-> 0 is easy & it means he is not a good player with sufficient skills, make the game easier for him
+		 *	-> 1 & 3 is in between the respective ranges
 		 */
-		if(this.rescueTimeAnalysedLevel == "hard" && this.killTimeAnalysedLevel == "hard") {
-			AI.playerLevel = "hard";
-		
-		} else if(this.rescueTimeAnalysedLevel == "easy" && this.killTimeAnalysedLevel == "easy") {
-			AI.playerLevel = "easy";
-		
-		} else if(this.rescueTimeAnalysedLevel == "medium" && this.killTimeAnalysedLevel == "medium") {
-			AI.playerLevel = "medium";
 
-		// Tricky sitiuation, player is killing fast but taking his own time to rescue
-		} else if(this.killTimeAnalysedLevel == "hard" && this.rescueTimeAnalysedLevel == "easy") {
-			AI.playerLevel = "hard";
-		
-		// More conditions will be added in	
-		} /*else if() {
+		// Both have the same levels
+		if(this.rescueTimeAnalysedLevel == this.killTimeAnalysedLevel) {
+			
+			AI.playerLevel = this.rescueTimeAnalysedLevel;
 
-		}*/
+		// When they have different levels, take the highest level amongst the two
+		} else  {
+			if(this.rescueTimeAnalysedLevel > this.killTimeAnalysedLevel) {
+				AI.playerLevel = this.rescueTimeAnalysedLevel;
+			} else {
+				AI.playerLevel = this.killTimeAnalysedLevel;
+			}
+		}
+
+		// Reset the objective flag
+		this.isCurrentWaveObjectiveAchieved = false;
 	};
 
 	// Whenever a lady is rescued, this function is invoked 
@@ -147,38 +147,35 @@ var PlayerLearning = function(thisReference){
 	};
 
 	// This function will compare the rescue and kill timing taken by the player against the model timing
-	this.compareTimingAndUpdateFlag = function(thisTimeToCompare, whichKindOfTime) {
+	// and set the level (either rescueAnalyseLevel or killAnalyseLevel)
+	this.compareTimingAndUpdateFlag = function(actualTime, modelTime, bufferTime, thisLevel) {
 
-		if(whichKindOfTime == "rescue") {
-			// The player took a time so fast that even adding that with the buffer is less than the modelTime, so he is of hard level
-			if(thisTimeToCompare < (this.modelTimeTakenToRescue - this.bufferTimeForRescue)) {
-				this.rescueTimeAnalysedLevel = "hard";
-			
-			// The player is within the range of the buffer (plus minus)
-			} else if((this.modelTimeTakenToRescue - this.bufferTimeForRescue) <= this.thisTimeToCompare && 
-					  (this.thisTimeToCompare >= (this.modelTimeTakenToRescue + this.bufferTimeForRescue)) ) {
-				this.rescueTimeAnalysedLevel = "medium";
+		// This is used only to determine if he is an medium (level 2) kikd of player
+		var localSmallBuffer = 100;
 
-			// The player is performing poorly and taking too long even with the buffer, he is of easy level
-			} else  if(this.thisTimeToCompare > (this.modelTimeTakenToRescue + this.bufferTimeForRescue)) {
-				this.rescueTimeAnalysedLevel = "easy";
-			}
-		
-		} else if(whichKindOfTime == "kill") {
-			
-			if(thisTimeToCompare < (this.modelTimeTakenToKill = this.bufferTimeForKill)) {
-				this.killTimeAnalysedLevel = "hard";
+		// At most only 3 conditions will be checked
+		if(actualTime+localSmallBuffer == modelTime || actualTime-localSmallBuffer == modelTime) {
+			thisLevel = 2;
 
-			} else if ( (this.modelTimeTakenToKill - this.bufferTimeForKill) <= this.thisTimeToCompare &&
-						(this.thisTimeToCompare >= (this.modelTimeTakenToKill + this.bufferTimeForKill)) ) {
-				this.killTimeAnalysedLevel = "medium";
+		} else if(actualTime < modelTime) {
 
-			} else if (this.thisTimeToCompare > (this.modelTimeTakenToKill + this.bufferTimeForKill)) {
-				this.killTimeAnalysedLevel = "easy";
+			if(actualTime < modelTime-bufferTime) {
+				// the player is really good
+				thisLevel = 4;
+			} else {
+				// the player is better than medium level
+				thisLevel = 3;
 			}
 
-		} else {
-			console.log('the kind of time to compare is unknown');
+		} else if (actualTime > modelTime) {
+			if(actualTime > modelTime+bufferTime) {
+				// This is a realy lousy player!
+				thisLevel = 0;
+			} else {
+				// the player is better than a lousy standard but still below our medium level
+				thisLevel = 1;
+			}
+
 		}
 	};
 }
@@ -191,3 +188,28 @@ List of things that I am required to know if it is there in our current implemen
 -> the no of enemies this wave will have and also timeStamp attached to each badNPC when they spawn
 -> whenever a lady is rescued, there should be an indication and reference to that lady updated
 */
+
+// Commented out code
+
+		/*
+		 
+		if(this.rescueTimeAnalysedLevel == "hard" && this.killTimeAnalysedLevel == "hard") {
+			AI.playerLevel = "hard";
+		
+		} else if(this.rescueTimeAnalysedLevel == "easy" && this.killTimeAnalysedLevel == "easy") {
+			AI.playerLevel = "easy";
+		
+		} else if(this.rescueTimeAnalysedLevel == "medium" && this.killTimeAnalysedLevel == "medium") {
+			AI.playerLevel = "medium";
+
+		// Tricky sitiuation, player is killing fast but taking his own time to rescue
+		} else if(this.killTimeAnalysedLevel == "hard" && this.rescueTimeAnalysedLevel == "easy") {
+			AI.playerLevel = "hard";
+		// More conditions will be added in	
+		} else if() {
+		} else {
+			// medium for now
+			AI.playerLevel = "medium";
+
+		}
+		*/

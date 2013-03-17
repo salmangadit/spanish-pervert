@@ -1,6 +1,6 @@
 // This js file realises the object creation of different heroObjects and implements their methods
 
-/**
+/*
  * The general idea in implementing attacking mechanism of a 
  * heroObject: the move action
  * hero specific mechansim:

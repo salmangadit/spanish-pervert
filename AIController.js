@@ -226,6 +226,10 @@ function AIController(){
 	this.updateForNextPhase = function(){
 		this.currentPhaseIndex++;
 		if (this.currentPhaseIndex < 10){
+			
+			// Update the playerLearning object that the wave objective has been achieved
+			playerLearningObj.isCurrentWaveObjectiveAchieved = true;
+
 			//we have more phases to go
 			currentPhase = this.phases[this.currentPhaseIndex].phaseName;
 			currentWave = this.phases[this.currentPhaseIndex].wave;
