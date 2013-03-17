@@ -59,8 +59,7 @@ function AIController(){
 						for (var k=0; k<ladies.length; k++){
 							if ((targetStrategy == "s" && ladies[k].goodNPC_Type == "fiesty") || (targetStrategy == "w" && ladies[k].goodNPC_Type == "thin")){
 								for (var m=0; m<references.length; m++){
-									references[m].targetGrid[0] = ladies[k].gridX;
-									references[m].targetGrid[1] = ladies[k].gridY;
+									references[m].moveTarget = ladies[k];
 									
 									found = true;
 									break;
@@ -76,8 +75,7 @@ function AIController(){
 							for (var m=0; m<references.length; m++){
 								var random = new Randomiser();
 								var randomLady = random.randomise(0, ladies.length - 1);
-								references[m].targetGrid[0] = ladies[randomLady].gridX;
-								references[m].targetGrid[1] = ladies[randomLady].gridY;
+								references[m].moveTarget = ladies[randomLady];
 							}
 						}
 
@@ -195,7 +193,7 @@ function AIController(){
 
 		/*Next steps
 		1. DONE. Set parameters to spawn the required scenario
-		2. DONE. Set targets for each spawn
+		2. Set targets for each spawn
 		3. DONE. Set spawn location as per strategy
 		4. DONE (temp) Execute phase globally, by calling Spawner.Execute;
 		5. DONE Put a checker for end of phase? This should (probably) run on its own thread

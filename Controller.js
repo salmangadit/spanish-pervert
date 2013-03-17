@@ -21,10 +21,15 @@ var vendorCount = 24
 
 function Controller(VG, hero, enemies,ladies,savedLadies){
 	
-	//ladiesLoiterTimer();
+	ladiesLoiterTimer();
 	for(iter in enemies){
 		awareness(enemies[iter],VG);
 		//enemies[iter].targetGrid = new Array(enemies[iter].gridX, enemies[iter].gridY);
+		var tx = enemies[iter].moveTarget.gridX;
+		var ty = enemies[iter].moveTarget.gridY;
+		enemies[iter].targetGrid = new Array(tx,ty);
+		//console.log(enemies[iter].targetGrid[0] + "," + enemies[iter].targetGrid[1]);
+		//console.log(enemies[0].targetGrid[0] + "," + enemies[0].targetGrid[1]);
 		//can put the enemies punching inside here, based on the actionType
 	}
 	heroBehaviour(hero,VG);
@@ -45,6 +50,7 @@ function Controller(VG, hero, enemies,ladies,savedLadies){
 					break;
 		}
 	}//for-each loop
+	
 
 	for(iter in ladies){
 		//default targetGrid, the movement behaviour depending on AI will change the targetGrid

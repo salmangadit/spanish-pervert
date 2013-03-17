@@ -65,7 +65,7 @@ function init() {
 	xmlhttp = new XMLHttpRequest();
 	//http://www.salmangadit.me/spanish-pervert/data/data.xmlC:/Users/Salman/Documents/GitHub/spanish-pervert/data/data.xml
 	// /Users/TheGreatOne/Desktop/Sem_6/EE4702/Project/Project_2/spanish-pervert/data/data.xml
-	xmlhttp.open("GET", "Y:/spanish-pervert/data/data.xml", false);
+	xmlhttp.open("GET", "C:/Users/YuanIng/Documents/GitHub/spanish-pervert/data/data.xml", false);
 	xmlhttp.send();
 	xmlDoc = xmlhttp.responseXML;
 
@@ -302,6 +302,7 @@ function initGameTiles() {
 				enemies[enemyCount].y = i * tileSize;
 				enemies[enemyCount].gridX = enemies[enemyCount].x / enemies[enemyCount].width;
 				enemies[enemyCount].gridY = enemies[enemyCount].y / enemies[enemyCount].height;
+				//enemies[enemyCount].targetGrid = new Array (enemies[enemyCount].gridX, enemies[enemyCount].gridY);
 												
 				// set the enemy to be moving a random direction at the start
 				//enemies[enemyCount].keys[0] = Math.floor(Math.random() * 4) + 37;
