@@ -14,8 +14,7 @@
  */
 
 var iter = 0;
-var localAverageKillTime = 0;
-var localAverageRescueTime = 0;
+
 
 var PlayerLearning = function(thisReference){
 	console.log('the PlayerLearning object has been instantiated');
@@ -40,6 +39,10 @@ var PlayerLearning = function(thisReference){
 	this.arrayOfRescueTime = new Array();
 	this.arrayOfHealthDamage = new Array();
 
+	// Average data for learning
+	this.averageKillTime = 0;
+	this.averageRescueTime = 0;
+
 	// we will compute the time taken to complete this wave when the objective is met
 	this.startTimeOfThisWave = null;
 	this.expectedTimeTakenToCompleteThisWave = null;
@@ -63,26 +66,15 @@ var PlayerLearning = function(thisReference){
 	// The data generated will be compared against a model for the current wave
 	this.analyseData = function(){
 
+		console.log('the analyse data function is invoked and playerLearning takes place');
+		console.log('the current player level is: ' + AI.playerLevel);
 		// There will be 2 flags to determine, kill time, rescue time.
-		
-		// Determine average kill time
-		for(iter = 0; iter < arrayOfKillTime.length; iter++) {
-			localAverageKillTime += arrayOfKillTime[iter];
-		}
-		localAverageKillTime = localAverageKillTime / (arrayOfKillTime.length);
-		// Compare (averageTime + bufferTime) with modelTime, each level has a different bufferTimeForKill
-		// that will be set by ....
-		this.compareTimingAndUpdateFlag(localAverageKillTime, 
+		this.compareTimingAndUpdateFlag(this.averageKillTime, 
 										this.modelTimeTakenToKill, 
 										this.bufferTimeForKill, 
 										this.killTimeAnalysedLevel);
-		
-		// Determine average rescue time
-		for(iter = 0; iter < arrayOfRescueTime.length; iter++) {
-			localAverageRescueTime += arrayOfRescueTime[iter];
-		}
-		localAverageRescueTime = localAverageRescueTime / (arrayOfRescueTime.length);
-		this.compareTimingAndUpdateFlag(localAverageRescueTime, 
+
+		this.compareTimingAndUpdateFlag(this.averageRescueTime, 
 										this.modelTimeTakenToRescue,
 										this.bufferTimeForRescue,
 										this.rescueTimeAnalysedLevel);
@@ -111,6 +103,7 @@ var PlayerLearning = function(thisReference){
 
 		// Reset the objective flag
 		this.isCurrentWaveObjectiveAchieved = false;
+		console.log('the updated player learning is: ' + AI.playerLevel);
 	};
 
 	// Whenever a lady is rescued, this function is invoked 
@@ -126,6 +119,7 @@ var PlayerLearning = function(thisReference){
 		
 		this.arrayOfRescueTime.push(this.timeTakenToRescueThisLady);
 		this.arrayOfHealthDamage.push(this.healthDamageIncurredByThisLady);
+		this.averageRescueTime = (this.averageRescueTime + this.timeTakenToRescueThisLady) / thia.arrayOfRescueTime.length;
 
 	};
 
@@ -135,6 +129,8 @@ var PlayerLearning = function(thisReference){
 		console.log('time taken to kill badNPC type: ' + thisBadNPCReference.selfType + ' is: ' + this.timeTakenToKillNPC);
 
 		this.arrayOfKillTime.push(this.timeTakenToKillNPC);
+		this.averageKillTime = (this.averageTime + this.timeTakenToKillNPC) / this.arrayOfKillTime.length;
+
 	};
 
 	// Update the model parameters when the wave changes (can change if we want to update wave parameters dynamically per se)

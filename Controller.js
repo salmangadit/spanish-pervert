@@ -65,6 +65,9 @@ function Controller(VG, hero, enemies,ladies,savedLadies){
 		}
 		if(ladies[iter].gridX<=2 && ladies[iter].gridY>=25){
 			ladies[iter].destroyed = true;
+			// Update that the lady has been rescued
+			ladyWasSaved = true;
+			playerLearningObj.ladyRescueUpdate(ladies[iter]);
 			ladies[iter].targetGrid = (0,27);
 			savedLadies++;
 			hero.targetBot = null;

@@ -51,10 +51,13 @@ var AI = new AIController();
 
 /***** Player Learning object *******/
 var playerLearningObj = new PlayerLearning();
+var enemyDestroyCount = 0;
+var enemyWasDestroyed = false;
 
 var rows = 0;
 var columns = 0;
 var savedLadiesCount = 0;
+var ladyWasSaved = false;
 var randomiser = new Randomiser();
 
 
@@ -424,6 +427,8 @@ function gameLoop() {
 			// Update the player learning that enemy has been destroyed
 			playerLearningObj.badNPCKilledUpdate(enemies[curEnemy]);
 			enemies.splice(curEnemy, 1);
+			enemyWasDestroyed = true;			
+			enemyDestroyCount +=1;
 		} else{
 			//testing out of the targetGrid system
 			var tempGrid = new Array();
@@ -589,15 +594,31 @@ function gameLoop() {
 function updatePlayerLearning(){
 	
 	// Update the players health
-	if(hero != null)
-		playerLearningObj.healthArray.push(hero.innerHealthMeter);
+	//if(hero != null)
+	playerLearningObj.healthArray.push(hero.innerHealthMeter);
 	
+	// If the enemyCount changed, update playerLearning and reset the status
+	if(true == enemyWasDestroyed){
+		playerLearningObj.analyseData();
+		enemyWasDestroyed = false;
+	}
+
+	// If a lady was saved, update playerLearning
+	if(true == ladyWasSaved){
+		playerLearningObj.analyseData();
+		ladyWasSaved = false;
+	}
+
 	// Maybe later need to update more stuff
 
 	if(true == playerLearningObj.isCurrentWaveObjectiveAchieved){
 		playerLearningObj.analyseData();
 	}
+	
 	// Later can use to test
 	//console.log('the wave objective met is: ' + playerLearningObj.isCurrentWaveObjectiveAchieved);
 	//arrayOfPlayerData = [];
 }
+
+
+
