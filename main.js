@@ -65,7 +65,7 @@ function init() {
 	xmlhttp = new XMLHttpRequest();
 	//http://www.salmangadit.me/spanish-pervert/data/data.xmlC:/Users/Salman/Documents/GitHub/spanish-pervert/data/data.xml
 	// /Users/TheGreatOne/Desktop/Sem_6/EE4702/Project/Project_2/spanish-pervert/data/data.xml
-	xmlhttp.open("GET", "C:/Users/YuanIng/Documents/GitHub/spanish-pervert/data/data.xml", false);
+	xmlhttp.open("GET", "C:/Users/YuanIng/Desktop/Game_2/v9/spanish-pervert/data/data.xml", false);
 	xmlhttp.send();
 	xmlDoc = xmlhttp.responseXML;
 
@@ -416,8 +416,7 @@ function gameLoop() {
 	//flocker(ladies[0], enemies, 3, 5);
 	
 	//setting the grid
-	VG = setGrid(hero, enemies, ladies);	
-	Controller(VG, hero,enemies,ladies,savedLadiesCount);
+	Controller();
 	
 	//------------------------End of Max code------------------------------------
 	

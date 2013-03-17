@@ -19,8 +19,8 @@ var vendorTaken = new Array(false, false, false, false, false, false,
 							false, false, false, false, false, false);
 var vendorCount = 24
 
-function Controller(VG, hero, enemies,ladies,savedLadies){
-	
+function Controller(){
+	setGrid();
 	ladiesLoiterTimer();
 	for(iter in enemies){
 		awareness(enemies[iter],VG);
@@ -36,7 +36,7 @@ function Controller(VG, hero, enemies,ladies,savedLadies){
 	// Habeeb, uncomment the following to test -- max we should update only if action type is 1
 	// because only then he can attack and thats when we need to monitor
 	if(hero.actionType == 1){
-		hero.HeroType.fightController.updateSurroundingEnemies(returnSurroundingArray(hero,VG));
+		hero.HeroType.fightController.updateSurroundingEnemies(returnSurroundingArray(hero));
 		hero.HeroType.fightController.monitorHeroObjectSituation();
 	}
 	
@@ -56,7 +56,7 @@ function Controller(VG, hero, enemies,ladies,savedLadies){
 		//default targetGrid, the movement behaviour depending on AI will change the targetGrid
 		//function for updating the surrounding enemies
 		//Habeeb, note here, uncomment the following function to test
-		ladies[iter].HeroType.fightController.updateSurroundingEnemies(returnSurroundingArray(ladies[iter],VG))
+		ladies[iter].HeroType.fightController.updateSurroundingEnemies(returnSurroundingArray(ladies[iter]))
 		if(ladies[iter].selfType == 4 && ladies[iter].actionType == 1){
 			ladies[iter].targetGrid = new Array(ladies[iter].targetBot.gridX,ladies[iter].targetBot.gridY);
 			ladies[iter].HeroType.fightController.monitorHeroObjectSituation();
@@ -72,7 +72,7 @@ function Controller(VG, hero, enemies,ladies,savedLadies){
 		if(ladies[iter].gridX<=2 && ladies[iter].gridY>=25){
 			ladies[iter].destroyed = true;
 			ladies[iter].targetGrid = (0,27);
-			savedLadies++;
+			savedLadiesCount++;
 			hero.targetBot = null;
 		}
 	}
@@ -127,7 +127,7 @@ function ladiesLoiter(){
 
 //returns an array of heroObjects surrounding the heroObject, main
 //puts into array in the top->right->down->left sequence
-function returnSurroundingArray(main, VG){
+function returnSurroundingArray(main){
 	var count = 0;
 	var SurArray = new Array();
 	//top
@@ -233,7 +233,7 @@ hero.targetBot = null;
 }
 
 //33X28 grid
-function setGrid(hero, enemies ,ladies){
+function setGrid(){
 	VG = new Array();
 	for (var i = 0; i < 33; i++){
 		VG[i] = new Array();
@@ -257,8 +257,6 @@ function setGrid(hero, enemies ,ladies){
 		}
 		ladies[iter1].targetBot = null;	//resets targetBot
 	}
-	
-	return VG;
 }
 
 //instantly breaks off from function if hero is detected
