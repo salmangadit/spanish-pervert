@@ -531,6 +531,7 @@
 
 	this.playerSpeed = 2;
 	this.NPCSpeed = 4;
+	this.spawnTime = 0;
 	
 	//Pass a reference of the parent to the child..
 	this.HeroType = null;

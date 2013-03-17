@@ -3,7 +3,7 @@ function Criticality(){
 }
 
 
-//Criticality is a range between 0 to 90. 0 is MAX criticality and 90 is MIN criticality
+//Criticality is a range between 0 to 90. 0 is MIN criticality and 90 is MAX criticality
 Criticality.get = function(){
 	var criticality = -1;
 

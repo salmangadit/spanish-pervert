@@ -21,7 +21,7 @@ function Spawner(){
 				enemies[enemies.length-1].image.index = enemies.length-1;
 				enemies[enemies.length-1].image.src = NPC_BAD_STRONG_SRC;
 			}
-			
+			enemies[enemies.length-1].spawnTime = new Date();
 			enemies[enemies.length-1].width = TILE_SIZE;
 			enemies[enemies.length-1].height = TILE_SIZE;
 			enemies[enemies.length-1].x = locationX * TILE_SIZE;
@@ -47,6 +47,7 @@ function Spawner(){
 				ladies[ladies.length-1].image.src = NPC_GOOD_STRONG_SRC;
 			}
 			
+			ladies[ladies.length-1].spawnTime = new Date();
 			ladies[ladies.length-1].width = TILE_SIZE;
 			ladies[ladies.length-1].height = TILE_SIZE;
 			ladies[ladies.length-1].x = locationX * TILE_SIZE;
