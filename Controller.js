@@ -21,10 +21,9 @@ var vendorCount = 24
 
 function Controller(){
 	setGrid();
-	ladiesLoiterTimer();
 	for(iter in enemies){
-		awareness(enemies[iter],VG);
-		//enemies[iter].targetGrid = new Array(enemies[iter].gridX, enemies[iter].gridY);
+		EnemyAwareness(enemies[iter]);
+		enemies[iter].targetGrid = new Array(enemies[iter].gridX, enemies[iter].gridY);
 		var tx = enemies[iter].moveTarget.gridX;
 		var ty = enemies[iter].moveTarget.gridY;
 		enemies[iter].targetGrid = new Array(tx,ty);
@@ -32,6 +31,13 @@ function Controller(){
 		//console.log(enemies[0].targetGrid[0] + "," + enemies[0].targetGrid[1]);
 		//can put the enemies punching inside here, based on the actionType
 	}
+	for(iter in ladies){
+		LadyAwareness(ladies[iter]);
+	}
+	
+	setMaxOcc();
+	ladiesLoiterTimer();
+	
 	heroBehaviour(hero,VG);
 	// Habeeb, uncomment the following to test -- max we should update only if action type is 1
 	// because only then he can attack and thats when we need to monitor
@@ -39,7 +45,7 @@ function Controller(){
 		hero.HeroType.fightController.updateSurroundingEnemies(returnSurroundingArray(hero));
 		hero.HeroType.fightController.monitorHeroObjectSituation();
 	}
-	
+	EnemiesRadialAwareness();
 	for(iter in enemies){
 		switch(enemies[iter].actionType){
 			case 1:	enemies[iter].HeroType.pullSkirt(enemies[iter].targetBot);
@@ -51,7 +57,7 @@ function Controller(){
 		}
 	}//for-each loop
 	
-
+	
 	for(iter in ladies){
 		//default targetGrid, the movement behaviour depending on AI will change the targetGrid
 		//function for updating the surrounding enemies
@@ -76,35 +82,32 @@ function Controller(){
 			hero.targetBot = null;
 		}
 	}
-	// console.log("Target Grid is: (" + ladies[0].targetGrid[0] + "," + ladies[0].targetGrid[1] + ")" +
-				// "Current Grid is: (" + ladies[0].gridX + "," + ladies[0].gridY + ")");
 	
-		
+	//console.log(collidables[9].maxOccupants);
 }
 
 function ladiesLoiterTimer(){
 	for(iter in ladies){
-		if(	(ladies[iter].gridX + 1 == ladies[iter].targetGrid[0]	&& ladies[iter].gridY == ladies[iter].targetGrid[1]) ||
-			(ladies[iter].gridX - 1 == ladies[iter].targetGrid[0]	&& ladies[iter].gridY == ladies[iter].targetGrid[1]) ||
-			(ladies[iter].gridX == ladies[iter].targetGrid[0]	&& ladies[iter].gridY + 1 == ladies[iter].targetGrid[1]) ||
-			(ladies[iter].gridX == ladies[iter].targetGrid[0]	&& ladies[iter].gridY - 1 == ladies[iter].targetGrid[1])){
-			ladies[iter].loiterTime++;
-		}
-		if(ladies[iter].loiterTime>=50){	
-				var randomNo = Math.floor(Math.random() * 23);
-				while(vendorTaken[randomNo]!=false){
-					randomNo = Math.floor(Math.random() * 23);
-				}				
-				if(ladies[iter].targetVendor!=-1){
-					vendorTaken[ladies[iter].targetVendor] = false;
-				}
-				var x = vendorPosX[randomNo];
-				var y = vendorPosY[randomNo];
-				vendorTaken[randomNo] = true;
-				ladies[iter].targetVendor = randomNo;
-				//console.log(x + "," + y);
-				ladies[iter].targetGrid = new Array(x,y);
-				ladies[iter].loiterTime = 0;
+		if(ladies[iter].actionType == 0){
+			if(	(ladies[iter].gridX + 1 == ladies[iter].targetGrid[0]	&& ladies[iter].gridY == ladies[iter].targetGrid[1]) ||
+				(ladies[iter].gridX - 1 == ladies[iter].targetGrid[0]	&& ladies[iter].gridY == ladies[iter].targetGrid[1]) ||
+				(ladies[iter].gridX == ladies[iter].targetGrid[0]	&& ladies[iter].gridY + 1 == ladies[iter].targetGrid[1]) ||
+				(ladies[iter].gridX == ladies[iter].targetGrid[0]	&& ladies[iter].gridY - 1 == ladies[iter].targetGrid[1])){
+				ladies[iter].loiterTime++;
+			}
+			if(ladies[iter].loiterTime>=150){	
+					while(1){
+						var randomNo = Math.floor(Math.random() * 23);
+						var x = vendorPosX[randomNo];
+						var y = vendorPosY[randomNo];	
+						if(VG[x][y].maxOccupants >= 1){
+							break;
+						}
+					}				
+					VG[x][y].maxOccupant--;
+					ladies[iter].targetGrid = new Array(x,y);
+					ladies[iter].loiterTime = 0;
+			}
 		}
 	}
 }
@@ -123,6 +126,27 @@ function ladiesLoiter(){
 			}
 		}
 	}
+}
+
+function reduceMO(xCor, yCor){
+	VG[xCor][yCor].maxOccupant--;
+	//top
+	if(VG[xCor][yCor-1].selfType == 9){
+		VG[xCor][yCor-1].maxOccupant--;
+	}
+	//down
+	if(VG[xCor][yCor+1].selfType == 9){
+		VG[xCor][yCor+1].maxOccupant--;
+	}
+	//left
+	if(VG[xCor-1][yCor].selfType == 9){
+		VG[xCor-1][yCor].maxOccupant--;
+	}
+	//right
+	if(VG[xCor+1][yCor].selfType == 9){
+		VG[xCor+1][yCor].maxOccupant--;
+	}
+	
 }
 
 //returns an array of heroObjects surrounding the heroObject, main
@@ -214,6 +238,7 @@ hero.targetBot = null;
 			if(	VG[hero.gridX-1][hero.gridY].selfType == 3 || 
 				VG[hero.gridX-1][hero.gridY].selfType == 4){				
 					hero.actionType = 3;
+					hero.targetBot = VG[hero.gridX-1][hero.gridY];
 			}					
 		}
 	}
@@ -227,6 +252,7 @@ hero.targetBot = null;
 			if( VG[hero.gridX+1][hero.gridY].selfType == 3 || 
 				VG[hero.gridX+1][hero.gridY].selfType == 4){				
 					hero.actionType = 3;
+					hero.targetBot = VG[hero.gridX+1][hero.gridY];
 			}
 		}
 	}
@@ -243,25 +269,83 @@ function setGrid(){
 		}
 	}
 	VG[hero.gridX][hero.gridY] = hero;
+	hero.maxOccupants = 4;
 	for (iter in enemies){
 		//slots the gameObject into its grid
 		VG[enemies[iter].gridX][enemies[iter].gridY] = enemies[iter];
 		enemies[iter].actionType = 0;	//resets actionType
 		enemies[iter].targetBot = null;	//resets targetBot
+		enemies[iter].maxOccupants = 4;
 	}
 	
-	for(iter1 in ladies){
-		VG[ladies[iter1].gridX][ladies[iter1].gridY] = ladies[iter1];
-		if(ladies[iter1].actionType != 3){
-			ladies[iter1].actionType = 0;	//resets actionType
+	for(iter in ladies){
+		VG[ladies[iter].gridX][ladies[iter].gridY] = ladies[iter];
+		if(ladies[iter].actionType != 3){
+			ladies[iter].actionType = 0;	//resets actionType
 		}
-		ladies[iter1].targetBot = null;	//resets targetBot
+		ladies[iter].targetBot = null;	//resets targetBot
+		ladies[iter].maxOccupants = 4;
+	}
+	
+	for(iter in collidables){
+		VG[collidables[iter].gridX][collidables[iter].gridY] = collidables[iter];
+		collidables[iter].maxOccupants = 4;
+	}	
+}
+
+function setMaxOcc(){
+	//sets for those that are already being occupied
+	singleMO(hero);
+	for(iter in collidables){
+		singleMO(collidables[iter]);
+	}
+	for(iter in ladies){
+		singleMO(ladies[iter]);
+	}
+	for(iter in enemies){
+		singleMO(enemies[iter]);
+	}
+	
+	//sets to limit the number of people targeting that grid
+	for(iter in ladies){
+		if(ladies[iter] != null && ladies[iter].targetGrid != null){
+			if(ladies[iter].targetGrid[0]!=null && ladies[iter].targetGrid[1]!=null){
+				VG[ladies[iter].targetGrid[0]][ladies[iter].targetGrid[1]].maxOccupants--;
+			}
+		}
+	}
+	for(iter in enemies){
+		if(enemies[iter].targetGrid != null){
+			if(VG[enemies[iter].targetGrid[0]][enemies[iter].targetGrid[1]].maxOccupants!=null){
+				VG[enemies[iter].targetGrid[0]][enemies[iter].targetGrid[1]].maxOccupants--;
+			}
+		}
 	}
 }
 
+function singleMO(obj){
+	//top
+	if((obj.gridY - 1 >= 0 && VG[obj.gridX][obj.gridY-1].selfType != null) || obj.gridY-1 < 0){
+		obj.maxOccupants--;
+	}
+	//down
+	if((obj.gridY + 1 <= 27 && VG[obj.gridX][obj.gridY+1].selfType != null) || obj.gridY + 1 > 27){
+		obj.maxOccupants--;
+	}
+	//left
+	if((obj.gridX - 1 >= 0 && VG[obj.gridX-1][obj.gridY].selfType != null) || obj.gridX - 1 < 0){
+		obj.maxOccupants--;
+	}
+	//right
+	if((obj.gridX + 1 <= 32 && VG[obj.gridX+1][obj.gridY].selfType != null) || obj.gridX + 1 > 32){
+		obj.maxOccupants--;
+	}
+}
+
+
 //instantly breaks off from function if hero is detected
 //only need to handle checking for enemies
-function awareness(bot, VG){
+function EnemyAwareness(bot){
 	//above
 	if(bot.gridY-1>=0){
 		if(VG[bot.gridX][bot.gridY-1] != null){
@@ -278,9 +362,6 @@ function awareness(bot, VG){
 					bot.actionType = 1;					
 					bot.targetBot = VG[bot.gridX][bot.gridY-1];
 				}
-				VG[bot.gridX][bot.gridY-1].actionType = 1;
-				VG[bot.gridX][bot.gridY-1].facingWhichDirection = "down";
-				VG[bot.gridX][bot.gridY-1].targetBot = bot;
 			}			
 		}
 	}
@@ -300,9 +381,6 @@ function awareness(bot, VG){
 					bot.actionType = 1;
 					bot.targetBot = VG[bot.gridX][bot.gridY+1];
 				}
-				VG[bot.gridX][bot.gridY+1].actionType = 1;
-				VG[bot.gridX][bot.gridY+1].facingWhichDirection = "up";
-				VG[bot.gridX][bot.gridY+1].targetBot = bot;
 			}
 		}
 	}
@@ -322,9 +400,6 @@ function awareness(bot, VG){
 					bot.actionType = 1;
 					bot.targetBot = VG[bot.gridX-1][bot.gridY];
 				}
-				VG[bot.gridX-1][bot.gridY].actionType = 1;
-				VG[bot.gridX-1][bot.gridY].facingWhichDirection = "right";
-				VG[bot.gridX-1][bot.gridY].targetBot = bot;
 			}
 		}
 	}
@@ -344,11 +419,111 @@ function awareness(bot, VG){
 					bot.actionType = 1;
 					bot.targetBot = VG[bot.gridX+1][bot.gridY];
 				}
-				VG[bot.gridX+1][bot.gridY].actionType = 1;
-				VG[bot.gridX+1][bot.gridY].facingWhichDirection = "left";
-				VG[bot.gridX+1][bot.gridY].targetBot = bot;
+			}			
+		}
+	}
+}
+
+function EnemiesRadialAwareness(){
+	for(iter in enemies){
+		var imin = enemies[iter].gridX - 3;
+		var imax = enemies[iter].gridX + 3;
+		var jmin = enemies[iter].gridY - 3;
+		var jmax = enemies[iter].gridY + 3;
+		if(imin<0){imin=0;}
+		if(imax>32){imax=33;}
+		if(jmin<0){jmin=0;}
+		if(jmax>27){jmax=28;}
+		for(var i = imin; i < imax; i++){
+			for(var j = jmin; j < jmax; j++){
+				if(VG[i][j].selfType == 0 && VG[i][j].maxOccupants > 0){
+					enemies[iter].moveTarget = VG[i][j];
+				}
 			}
-			
+		}
+	}
+}
+
+function LadyAwareness(bot){
+	//above
+	if(bot.gridY-1>=0){
+		if(VG[bot.gridX][bot.gridY-1] != null){
+			if( VG[bot.gridX][bot.gridY-1].selfType == 1 ||
+				VG[bot.gridX][bot.gridY-1].selfType == 2 ){		
+				bot.facingWhichDirection = "up";
+				bot.actionType = 1;
+				bot.targetBot = VG[bot.gridX][bot.gridY-1];
+			}
+			if(VG[bot.gridX][bot.gridY-1].selfType == 0){
+				if(bot.targetBot != null && (bot.targetBot.selfType != 1 || bot.targetBot.selfType != 2)){
+					bot.facingWhichDirection = "up";
+					if(bot.actionType!=3){
+						bot.actionType = 4;
+					}					
+					bot.targetBot = VG[bot.gridX][bot.gridY-1];
+				}			
+			}
+		}
+	}
+	//below
+	if(bot.gridY+1<=27){
+		if(VG[bot.gridX][bot.gridY+1] != null){
+			if( VG[bot.gridX][bot.gridY+1].selfType == 1 ||
+				VG[bot.gridX][bot.gridY+1].selfType == 2 ){		
+				bot.facingWhichDirection = "up";
+				bot.actionType = 1;
+				bot.targetBot = VG[bot.gridX][bot.gridY+1];
+			}
+			if(VG[bot.gridX][bot.gridY+1].selfType == 0){
+				if(bot.targetBot != null && (bot.targetBot.selfType != 1 || bot.targetBot.selfType != 2)){
+					bot.facingWhichDirection = "up";
+					if(bot.actionType!=3){
+						bot.actionType = 4;
+						bot.targetGrid = new Array(VG[bot.gridX][bot.gridY+1].gridX, VG[bot.gridX][bot.gridY+1].gridY);
+					}					
+					bot.targetBot = VG[bot.gridX][bot.gridY+1];
+				}			
+			}
+		}
+	}
+	//left
+	if(bot.gridX-1>=0){
+		if(VG[bot.gridX-1][bot.gridY] != null){
+			if( VG[bot.gridX-1][bot.gridY].selfType == 1 ||
+				VG[bot.gridX-1][bot.gridY].selfType == 2 ){		
+				bot.facingWhichDirection = "up";
+				bot.actionType = 1;
+				bot.targetBot = VG[bot.gridX-1][bot.gridY];
+			}
+			if(VG[bot.gridX-1][bot.gridY].selfType == 0){
+				if(bot.targetBot != null && (bot.targetBot.selfType != 1 || bot.targetBot.selfType != 2)){
+					bot.facingWhichDirection = "up";
+					if(bot.actionType!=3){
+						bot.actionType = 4;
+					}					
+					bot.targetBot = VG[bot.gridX-1][bot.gridY];
+				}			
+			}
+		}
+	}
+	//right
+	if(bot.gridX+1<=32){
+		if(VG[bot.gridX+1][bot.gridY] != null){
+			if( VG[bot.gridX+1][bot.gridY].selfType == 1 ||
+				VG[bot.gridX+1][bot.gridY].selfType == 2 ){		
+				bot.facingWhichDirection = "up";
+				bot.actionType = 1;
+				bot.targetBot = VG[bot.gridX][bot.gridY-1];
+			}
+			if(VG[bot.gridX+1][bot.gridY].selfType == 0){
+				if(bot.targetBot != null && (bot.targetBot.selfType != 1 || bot.targetBot.selfType != 2)){
+					bot.facingWhichDirection = "up";
+					if(bot.actionType!=3){
+						bot.actionType = 4;
+					}					
+					bot.targetBot = VG[bot.gridX+1][bot.gridY];
+				}			
+			}
 		}
 	}
 }

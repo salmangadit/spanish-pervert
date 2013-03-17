@@ -16,14 +16,14 @@
   </Objects>
 
   <Grid tileSize="32" width="33" height="28" baseColor="#CFB53B">
-    <GridRow>---T-------------------P--------</GridRow>
-    <GridRow>--------------------------------</GridRow>
+    <GridRow>---------------T-------P--------</GridRow>
+    <GridRow>-------------------------------T</GridRow>
     <GridRow>------PP----C-------------------</GridRow>
     <GridRow>-------------------C-------B--B-</GridRow>
     <GridRow>---------------T----------------</GridRow>
     <GridRow>-PVVVVP----------------------B--</GridRow>
     <GridRow>--------WWWWWW----WWWWWWW-------</GridRow>
-    <GridRow>--T-----WVVCC-------CWVVW----T--</GridRow>
+    <GridRow>--------WVVCC-------CWVVW----T--</GridRow>
     <GridRow>--------W-----T-----CW--W-------</GridRow>
     <GridRow>--------W------------B--W-------</GridRow>
     <GridRow>---------------------B--WWW-WWW-</GridRow>
@@ -31,7 +31,7 @@
     <GridRow>--CCBB--W----PLLP-------------W-</GridRow>
     <GridRow>--------W----PLLP----------P--W-</GridRow>
     <GridRow>-------------PPPP-------------W-</GridRow>
-    <GridRow>------------------------------W-</GridRow>
+    <GridRow>--T---------------------------W-</GridRow>
     <GridRow>--------WVV-------------WWWWWWW-</GridRow>
     <GridRow>--------W---------------WVVCBB--</GridRow>
     <GridRow>--------W--------PP---VVW---BB--</GridRow>
@@ -39,11 +39,11 @@
     <GridRow>------H-W-------PBBP----W-------</GridRow>
     <GridRow>--------WWWW--WWWWWWWWWWW-------</GridRow>
     <GridRow>-----------------VW-------------</GridRow>
-    <GridRow>-----------------VW-------------</GridRow>
-    <GridRow>-----------------VW--------VVVVV</GridRow>
+    <GridRow>-T---------------VW-------------</GridRow>
+    <GridRow>-------T---------VW--------VVVVV</GridRow>
     <GridRow>SSS--------------PW---BB--------</GridRow>
     <GridRow>SSS----------CC---W-------------</GridRow>
-    <GridRow>SSS----------CC-------PP--------</GridRow>
+    <GridRow>SSS-----T----CC-------PP--------</GridRow>
   </Grid>
 </GameData>
 

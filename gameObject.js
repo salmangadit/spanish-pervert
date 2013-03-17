@@ -7,4 +7,5 @@ function gameObject()
     this.imageSrc;
     // The type of game object
     this.type;
+	this.selfType = 5;
 }

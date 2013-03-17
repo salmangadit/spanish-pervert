@@ -65,7 +65,7 @@ function init() {
 	xmlhttp = new XMLHttpRequest();
 	//http://www.salmangadit.me/spanish-pervert/data/data.xmlC:/Users/Salman/Documents/GitHub/spanish-pervert/data/data.xml
 	// /Users/TheGreatOne/Desktop/Sem_6/EE4702/Project/Project_2/spanish-pervert/data/data.xml
-	xmlhttp.open("GET", "C:/Users/Salman/Documents/GitHub/spanish-pervert/data/data.xml", false);
+	xmlhttp.open("GET", "C:/Users/YuanIng/Documents/GitHub/spanish-pervert/data/data.xml", false);
 	xmlhttp.send();
 	xmlDoc = xmlhttp.responseXML;
 
@@ -218,6 +218,9 @@ function initGameTiles() {
 				// position it based upon where we are in the grid
 				collidables[collidableCount].x = (j * tileSize) + 2;
 				collidables[collidableCount].y = (i * tileSize) + 2;
+				collidables[collidableCount].gridX = j;
+				collidables[collidableCount].gridY = i;
+				collidables[collidableCount].selfType = 9;
 
 				// set up the image to use the value loaded from the XML
 				collidables[collidableCount].image = new Image();
