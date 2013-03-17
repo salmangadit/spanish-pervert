@@ -1,4 +1,27 @@
+//keeps track of all vendor positions in order for ladies to loiter
+// var vendorPosX = new Array(	2, 3, 4, 5, 2, 3, 4, 5,	9, 10, 22, 23, 23, 26, 24, 25,
+							// 9, 10, 11, 9, 10, 25, 26, 22, 23, 21, 22, 23, 16, 16, 16, 
+							// 27, 28, 29, 30, 31, 26, 32,	27, 28, 29, 30, 31);
+// var vendorPosY = new Array(	4, 4, 4, 4,	6, 6, 6, 6,	8, 8, 8, 8,	11, 11, 12, 12,	15, 15, 
+							// 16, 17, 17, 18, 18, 17, 17, 18, 19, 19,	22, 23, 24,	23, 23, 
+							// 23, 23, 23,	24, 24,	25, 25, 25, 25, 25);
+
+var vendorPosX = new Array(	2, 3, 4, 5, 9, 10, 22, 23, 24, 
+					25, 9, 10, 25, 26, 22, 23, 17, 
+					17, 17, 27, 28, 29, 30, 31);
+
+var vendorPosY = new Array(	5, 5, 5, 5, 7, 7, 7, 7, 11, 11,
+					16, 16, 17, 17, 18, 18, 22, 23,
+					24, 24, 24, 24, 24, 24);
+var vendorTaken = new Array(false, false, false, false, false, false,
+							false, false, false, false, false, false,
+							false, false, false, false, false, false,
+							false, false, false, false, false, false);
+var vendorCount = 24
+
 function Controller(VG, hero, enemies,ladies,savedLadies){
+	
+	ladiesLoiterTimer();
 	for(iter in enemies){
 		awareness(enemies[iter],VG);
 		enemies[iter].targetGrid = new Array(enemies[iter].gridX, enemies[iter].gridY);
@@ -22,10 +45,9 @@ function Controller(VG, hero, enemies,ladies,savedLadies){
 					break;
 		}
 	}//for-each loop
-	
+
 	for(iter in ladies){
 		//default targetGrid, the movement behaviour depending on AI will change the targetGrid
-		ladies[iter].targetGrid = new Array(ladies[iter].gridX, ladies[iter].gridY);
 		//function for updating the surrounding enemies
 		//Habeeb, note here, uncomment the following function to test
 		ladies[iter].HeroType.fightController.updateSurroundingEnemies(returnSurroundingArray(ladies[iter],VG))
@@ -43,14 +65,58 @@ function Controller(VG, hero, enemies,ladies,savedLadies){
 		}
 		if(ladies[iter].gridX<=2 && ladies[iter].gridY>=25){
 			ladies[iter].destroyed = true;
-			// Update that the lady has been rescued
-			playerLearningObj.ladyRescueUpdate(ladies[iter]);
 			ladies[iter].targetGrid = (0,27);
 			savedLadies++;
 			hero.targetBot = null;
 		}
 	}
+	// console.log("Target Grid is: (" + ladies[0].targetGrid[0] + "," + ladies[0].targetGrid[1] + ")" +
+				// "Current Grid is: (" + ladies[0].gridX + "," + ladies[0].gridY + ")");
+	
 		
+}
+
+function ladiesLoiterTimer(){
+	for(iter in ladies){
+		if(	(ladies[iter].gridX + 1 == ladies[iter].targetGrid[0]	&& ladies[iter].gridY == ladies[iter].targetGrid[1]) ||
+			(ladies[iter].gridX - 1 == ladies[iter].targetGrid[0]	&& ladies[iter].gridY == ladies[iter].targetGrid[1]) ||
+			(ladies[iter].gridX == ladies[iter].targetGrid[0]	&& ladies[iter].gridY + 1 == ladies[iter].targetGrid[1]) ||
+			(ladies[iter].gridX == ladies[iter].targetGrid[0]	&& ladies[iter].gridY - 1 == ladies[iter].targetGrid[1])){
+			ladies[iter].loiterTime++;
+		}
+		if(ladies[iter].loiterTime>=50){	
+				var randomNo = Math.floor(Math.random() * 23);
+				while(vendorTaken[randomNo]!=false){
+					randomNo = Math.floor(Math.random() * 23);
+				}				
+				if(ladies[iter].targetVendor!=-1){
+					vendorTaken[ladies[iter].targetVendor] = false;
+				}
+				var x = vendorPosX[randomNo];
+				var y = vendorPosY[randomNo];
+				vendorTaken[randomNo] = true;
+				ladies[iter].targetVendor = randomNo;
+				//console.log(x + "," + y);
+				ladies[iter].targetGrid = new Array(x,y);
+				ladies[iter].loiterTime = 0;
+		}
+	}
+}
+
+function ladiesLoiter(){
+	for (iter in ladies){
+		if(ladies[iter].actionType == 0){
+			if(ladies[iter].targetGrid[0] == ladies[iter].gridX && ladies[iter].targetGrid[1] == ladies[iter].gridY){
+				//ladies[iter].targetGrid = new Array( vendorPos[Math.floor(Math.random() * 42)][0], vendorPos[Math.floor(Math.random() * 42)][1]);
+				alert("a");
+				var randomNo = Math.floor(Math.random() * 43);
+				var x = vendorPosX[randomNo];
+				var y = vendorPosY[randomNo];
+				console.log(randomNo);
+				ladies[iter].targetGrid = new Array(x,y);
+			}
+		}
+	}
 }
 
 //returns an array of heroObjects surrounding the heroObject, main
@@ -159,6 +225,7 @@ hero.targetBot = null;
 		}
 	}
 }
+
 //33X28 grid
 function setGrid(hero, enemies ,ladies){
 	VG = new Array();

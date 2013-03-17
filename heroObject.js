@@ -475,6 +475,8 @@
 	this.actionType = 0; 
 	this.selfType = thisType;
 	this.targetBot;
+	this.loiterTime = 51;
+	this.targetVendor = -1;
 	//--------------End of Max code----------------------
 
     this.keys = new Array();
@@ -856,6 +858,56 @@
                 }
             }
         }
+		for (iter in enemies)
+		{
+			// if we already have a collision there's no need to continue
+			// checking the other rocks
+			if (this.collision)
+			{
+				break;
+			}
+			else
+			{
+				// check to see if we have a collision event with the
+				// current rock
+				if(this.gridX != enemies[iter].gridX && this.gridY != enemies[iter].gridY){
+					if (this.checkCollision(enemies[iter]))
+					{
+						// reset our x and y coordinates and set our collision property to true
+						this.x = prevX;
+						//this.internalX = this.x;
+						this.y = prevY;
+						//this.internalY = this.y;
+						this.collision = true;
+					}
+				}
+			}
+		}
+		for (iter in ladies)
+		{
+			// if we already have a collision there's no need to continue
+			// checking the other rocks
+			if (this.collision)
+			{
+				break;
+			}
+			else
+			{
+				// check to see if we have a collision event with the
+				// current rock
+				if(this.gridX != ladies[iter].gridX && this.gridY != ladies[iter].gridY){
+					if (this.checkCollision(ladies[iter]))
+					{						
+						// reset our x and y coordinates and set our collision property to true
+						this.x = prevX;
+						//this.internalX = this.x;
+						this.y = prevY;
+						//this.internalY = this.y;
+						this.collision = true;
+					}
+				}
+			}
+		}
     };
 
 	this.updateHealth = function(thisHealth){

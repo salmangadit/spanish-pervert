@@ -62,7 +62,7 @@ function init() {
 	xmlhttp = new XMLHttpRequest();
 	//http://www.salmangadit.me/spanish-pervert/data/data.xmlC:/Users/Salman/Documents/GitHub/spanish-pervert/data/data.xml
 	// /Users/TheGreatOne/Desktop/Sem_6/EE4702/Project/Project_2/spanish-pervert/data/data.xml
-	xmlhttp.open("GET", "C:/Users/Salman/Documents/GitHub/spanish-pervert/data/data.xml", false);
+	xmlhttp.open("GET", "C:/Users/YuanIng/Documents/GitHub/spanish-pervert/data/data.xml", false);
 	xmlhttp.send();
 	xmlDoc = xmlhttp.responseXML;
 
@@ -325,7 +325,8 @@ function initGameTiles() {
 				ladies[ladiesCount].y = i * tileSize;
 				ladies[ladiesCount].gridX = ladies[ladiesCount].x / ladies[ladiesCount].width;
 				ladies[ladiesCount].gridY = ladies[ladiesCount].y / ladies[ladiesCount].height;
-												
+				ladies[ladiesCount].targetGrid = new Array(ladies[ladiesCount].gridX, ladies[ladiesCount].gridY);
+				
 				ladies[ladiesCount].image = new Image();
 				ladies[ladiesCount].image.src = gameObjects[objIndex].imageSrc;
 				ladies[ladiesCount].image.index = ladiesCount;
