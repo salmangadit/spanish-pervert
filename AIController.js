@@ -59,8 +59,7 @@ function AIController(){
 						for (var k=0; k<ladies.length; k++){
 							if ((targetStrategy == "s" && ladies[k].goodNPC_Type == "fiesty") || (targetStrategy == "w" && ladies[k].goodNPC_Type == "thin")){
 								for (var m=0; m<references.length; m++){
-									references[m].targetGrid[0] = ladies[k].gridX;
-									references[m].targetGrid[1] = ladies[k].gridY;
+									references[m].targetBot = ladies[k];
 									
 									found = true;
 									break;
@@ -74,8 +73,9 @@ function AIController(){
 
 						if (!found && ladies.length > 0){
 							for (var m=0; m<references.length; m++){
-								references[m].targetGrid[0] = ladies[0].gridX;
-								references[m].targetGrid[1] = ladies[0].gridY;
+								var random = new Randomiser();
+								var randomLady = random.randomise(0, ladies.length - 1);
+								references[m].targetBot = ladies[randomLady];
 							}
 						}
 
