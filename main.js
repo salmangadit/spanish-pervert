@@ -52,6 +52,7 @@ var AI = new AIController();
 var rows = 0;
 var columns = 0;
 var savedLadiesCount = 0;
+var randomiser = new Randomiser();
 
 
 function init() {

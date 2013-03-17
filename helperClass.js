@@ -43,6 +43,8 @@ helperClass.checkIfTwoRectanglesIntersect = function(xCoordOfRect1, yCoordOfRect
 	
 }
 
+
+
 /*Array.prototype.last = function(){
 	console.log('array.last() was invoked');
 	return this[this.length -1];
