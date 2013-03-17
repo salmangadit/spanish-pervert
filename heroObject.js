@@ -530,7 +530,7 @@
 	this.elapseSum = 0;
 
 	this.playerSpeed = 2;
-	this.NPCSpeed = 4;
+	this.NPCSpeed = 6;
 	this.spawnTime = 0;
 	
 	//Pass a reference of the parent to the child..

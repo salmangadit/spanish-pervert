@@ -62,7 +62,7 @@ function init() {
 	xmlhttp = new XMLHttpRequest();
 	//http://www.salmangadit.me/spanish-pervert/data/data.xmlC:/Users/Salman/Documents/GitHub/spanish-pervert/data/data.xml
 	// /Users/TheGreatOne/Desktop/Sem_6/EE4702/Project/Project_2/spanish-pervert/data/data.xml
-	xmlhttp.open("GET", "C:/Users/YuanIng/Documents/GitHub/spanish-pervert/data/data.xml", false);
+	xmlhttp.open("GET", "C:/Users/Salman/Documents/GitHub/spanish-pervert/data/data.xml", false);
 	xmlhttp.send();
 	xmlDoc = xmlhttp.responseXML;
 
@@ -318,7 +318,7 @@ function initGameTiles() {
 				} else {
 					ladies[ladiesCount] = new heroObject(4);
 				}
-				
+				ladies[ladiesCount].spawnTime = new Date();
 				ladies[ladiesCount].width = gameObjects[objIndex].width;
 				ladies[ladiesCount].height = gameObjects[objIndex].height;
 				ladies[ladiesCount].x = j * tileSize;

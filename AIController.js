@@ -227,6 +227,10 @@ function AIController(){
 		this.currentPhaseIndex++;
 		if (this.currentPhaseIndex < 10){
 			
+			for (var i=0; i< ladies.length; i++){
+				ladies[i].spawnTime = new Date();
+			}
+
 			// Update the playerLearning object that the wave objective has been achieved
 			playerLearningObj.isCurrentWaveObjectiveAchieved = true;
 
