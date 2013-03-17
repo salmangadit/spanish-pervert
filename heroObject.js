@@ -526,6 +526,9 @@
 	this.internalX = -1;
 	this.internalY = -1;
 	this.elapseSum = 0;
+
+	this.playerSpeed = 2;
+	this.NPCSpeed = 4;
 	
 	//Pass a reference of the parent to the child..
 	this.HeroType = null;
@@ -634,7 +637,7 @@
                  //this.internalX -= this.moveSpeed * elapsed;
                  //this.gridX = parseInt(this.internalX/this.width);
 
-                if (this.elapseSum > 2)
+                if (this.elapseSum > (this.selfType == 0 ? this.playerSpeed : this.NPCSpeed))
                 {
                  	this.x -= this.moveSpeed * elapsed;
                  	this.gridX = parseInt(this.x/this.width);
@@ -674,7 +677,7 @@
                 break;
             case 38:
                 // move the hero up on the screen
-                if (this.elapseSum > 2)
+                if (this.elapseSum > (this.selfType == 0 ? this.playerSpeed : this.NPCSpeed))
                 {
                  	this.y -= this.moveSpeed * elapsed;
                 	this.gridY = parseInt(this.y/this.height);
@@ -705,7 +708,7 @@
                 break;
             case 39:
                 // move the hero right on the screen
-                if (this.elapseSum > 2)
+                if (this.elapseSum > (this.selfType == 0 ? this.playerSpeed : this.NPCSpeed))
                 {
                  	this.x += this.moveSpeed * elapsed;
                 	this.gridX = parseInt(this.x/this.width) + 1;
@@ -736,7 +739,7 @@
                 break;
             case 40:
                 // move the hero down on the screen
-                if (this.elapseSum > 2)
+                if (this.elapseSum > (this.selfType == 0 ? this.playerSpeed : this.NPCSpeed))
                 {
                  	this.y += this.moveSpeed * elapsed;
                 	this.gridY = parseInt(this.y/this.height) + 1;
