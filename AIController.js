@@ -1,10 +1,8 @@
 function AIController(){
 	this.phases = gamePhases;
-	this.strategies = gameStrategies;
 	this.currentPhaseIndex = 0;
 	this.currPhase =  new Phase();
-
-	var playerLevel = "medium";
+	this.playerLevel = 2;
 
 	this.executePhase = function(){
 		//Update JSON objects for current phase
@@ -16,184 +14,68 @@ function AIController(){
 		console.log("Current Phase: " + currentPhase);
 		console.log("Current Wave: " + currentWave);
 
-		//Now pick out appropriate wave details and update strategy for phase
-		for (var j= 0; j< this.strategies.length; j++){
-			if (this.strategies[j].wave == this.currPhase.wave){
-				this.currPhase.attackStrategy = this.strategies[j].attack;
-				this.currPhase.defenseStrategy = this.strategies[j].target;
-			}
-		}
-
 		//Set spawning params only if attacking phase
 		if (this.currPhase.phaseType == "attack"){
-			if (playerLevel == "medium"){
-				//Spawn enemy
-				for (var key in this.currPhase.attackStrategy.medium) {
-					// Where to spawn le NPC, choose random location as per strategy
-					var randomNumber = Math.floor(Math.random()*10);
-					var spawnLocation = spawnLocations.medium[randomNumber];
-					var coords = spawnLocation.split(",");
+			//Figure out the target for this NPC
+			var ratio = targetRatio[this.playerLevel];
+			var parts = ratio.split(":");
+			var pickerArray = new Array();
 
-					//Type of NPC to spawn
-					if (this.currPhase.attackStrategy.medium.hasOwnProperty(key)) {
-	    				//Spawn different levels of attackers for that location
-	    				var references = new Array();
+			for (var i=0; i<= parseInt(parts[0]); i++){
+				pickerArray.push(0);
+			}
 
-	    				for (var i=0; i<this.currPhase.attackStrategy.medium[key].length; i++){
-	    					if (this.currPhase.attackStrategy.medium[key][i] == "w"){
-	    						//console.log('Spawn a weak one here');
-	    						references.push(Spawner.spawnAt("monkey", parseInt(coords[0]), parseInt(coords[1])));
-	    						console.log("Spawned monkey at " + coords[0] + "," + coords[1]);
+			for (var i=0; i<= parseInt(parts[1]); i++){
+				pickerArray.push(1);
+			}
 
-	    					} else {
-	    						//console.log('Spawn a strong one here');
-	    						references.push(Spawner.spawnAt("gorilla", parseInt(coords[0]), parseInt(coords[1])));
-	    						console.log("Spawned gorilla at " + coords[0] + "," + coords[1]);
-	    					}
-	    				}
-	    				//Now set target for this 
-	    				var targetStrategy = this.currPhase.defenseStrategy.medium[key];
-	    				var found = false;
+			var targetRandomiser = new Randomiser();
+			var targetNPCtype = targetRandomiser.randomiseArray(pickerArray);
+			var chosenTarget;
+			var targetFound = false;
 
-						//find appropriate lady, else send to other options
-						for (var k=0; k<ladies.length; k++){
-							if ((targetStrategy == "s" && ladies[k].goodNPC_Type == "fiesty") || (targetStrategy == "w" && ladies[k].goodNPC_Type == "thin")){
-								for (var m=0; m<references.length; m++){
-									references[m].moveTarget = ladies[k];
-									
-									found = true;
-									break;
-								}
-
-								if (found){
-									break;
-								}
-							}
-						}
-
-						if (!found && ladies.length > 0){
-							for (var m=0; m<references.length; m++){
-								var random = new Randomiser();
-								var randomLady = random.randomise(0, ladies.length - 1);
-								references[m].moveTarget = ladies[randomLady];
-							}
-						}
-
-						console.log(key + " -> " + this.currPhase.attackStrategy.medium[key]);
-					}
+			//find appropriate lady, else send to other options
+			for (var k=0; k<ladies.length; k++){
+				if ((targetNPCtype == 0 && ladies[k].goodNPC_Type == "fiesty") ||
+					(targetNPCtype == 1 && ladies[k].goodNPC_Type == "thin")){
+					chosenTarget = ladies[k]; 
+					targetFound = true;
+					break;
 				}
 			}
-			else if (playerLevel == "hard"){
-				//Spawn enemy
-				for (var key in this.currPhase.attackStrategy.hard) {
-					// Where to spawn le NPC, choose random location as per strategy
-					var randomNumber = Math.floor(Math.random()*10);
-					var spawnLocation = spawnLocations.hard[randomNumber];
-					var coords = spawnLocation.split(",");
 
-					//Type of NPC to spawn
-					if (this.currPhase.attackStrategy.hard.hasOwnProperty(key)) {
-	    				//Spawn different levels of attackers for that location
-	    				for (var i=0; i<this.currPhase.attackStrategy.hard[key].length; i++){
-	    					var references = new Array();
-	    					if (this.currPhase.attackStrategy.hard[key][i] == "w"){
-	    						//console.log('Spawn a weak one here');
-	    						Spawner.spawnAt("monkey", parseInt(coords[0]), parseInt(coords[1]),1);
-	    						console.log("Spawned monkey at " + coords[0] + "," + coords[1]);
-	    					} else {
-	    						//console.log('Spawn a strong one here');
-	    						Spawner.spawnAt("gorilla", parseInt(coords[0]), parseInt(coords[1]),1);
-	    						console.log("Spawned gorilla at " + coords[0] + "," + coords[1]);
-	    					}
-
-	    					//Now set target for this 
-	    					var targetStrategy = this.currPhase.defenseStrategy.medium[key];
-	    					var found = false;
-
-							//find appropriate lady, else send to other options
-							for (var k=0; k<ladies.length; k++){
-								if ((targetStrategy == "s" && ladies[k].goodNPC_Type == "feisty")||
-									(targetStrategy == "w" && ladies[k].goodNPC_Type == "thin")){
-									for (var m=0; m<references.length; m++){}
-										references.targetGrid = ladies[k].targetGrid;
-									found = true;
-									break;
-								}
-
-								if (found){
-									break;
-								}
-							}
-						}
-
-						if (!found && ladies.length > 0){
-							for (var m=0; m<references.length; m++){
-								references.targetGrid = ladies[0].targetGrid;
-							}
-						}
-					}
-					console.log(key + " -> " + this.currPhase.attackStrategy.hard[key]);
-				}
+			if (!targetFound && ladies.length > 0){
+					var random = new Randomiser();
+					var randomLady = random.randomise(0, ladies.length - 1);
+					chosenTarget = ladies[randomLady];
+					targetFound = true;
 			}
-			else if (playerLevel == "easy"){
-				//Spawn enemy
-				for (var key in this.currPhase.attackStrategy.easy) {
-					// Where to spawn le NPC, choose random location as per strategy
-					var randomNumber = Math.floor(Math.random()*10);
-					var spawnLocation = spawnLocations.easy[randomNumber];
-					var coords = spawnLocation.split(",");
 
-					//Type of NPC to spawn
-					if (this.currPhase.attackStrategy.easy.hasOwnProperty(key)) {
-	    				//Spawn different levels of attackers for that location
-	    				for (var i=0; i<this.currPhase.attackStrategy.easy[key].length; i++){
-	    					var references = new Array();
-	    					if (this.currPhase.attackStrategy.easy[key][i] == "w"){
-	    						//console.log('Spawn a weak one here');
-	    						Spawner.spawnAt("monkey", parseInt(coords[0]), parseInt(coords[1]),1);
-	    						console.log("Spawned monkey at " + coords[0] + "," + coords[1]);
-	    					} else {
-	    						//console.log('Spawn a strong one here');
-	    						Spawner.spawnAt("gorilla", parseInt(coords[0]), parseInt(coords[1]),1);
-	    						console.log("Spawned gorilla at " + coords[0] + "," + coords[1]);
-	    					}
+			//Spawning locations AI
+			var locations = spawnLocations[this.playerLevel];
 
-	    					//Now set target for this 
-	    					var targetStrategy = this.currPhase.defenseStrategy.medium[key];
-	    					var found = false;
+			//Find all distances to target and figure out action
+			var distances = new Array();
 
-							//find appropriate lady, else send to other options
-							for (var k=0; k<ladies.length; k++){
-								if ((targetStrategy == "s" && ladies[k].goodNPC_Type == "feisty")||
-									(targetStrategy == "w" && ladies[k].goodNPC_Type == "thin")){
-									for (var m=0; m<references.length; m++){
-										references[m].targetGrid[0] = ladies[k].gridX;
-										references[m].targetGrid[1] = ladies[k].gridY;
-										found = true;
-										break;
-									}
-
-									if (found){
-										break;
-									}
-								}
-							}
-
-							if (!found && ladies.length > 0){
-								for (var m=0; m<references.length; m++){
-									references.targetGrid = ladies[0].targetGrid;
-								}
-							}
-						}
-						console.log(key + " -> " + this.currPhase.attackStrategy.easy[key]);
-					}
-				}
+			for (var i = 0; i < 10; i++){
+				var coords = locations[i].split(',');
+				distances.push(helperClass.distanceBetweenTwoPoints(parseInt(coords[0]), 
+					parseInt(coords[1]), chosenTarget.gridX, chosenTarget.gridY));
 			}
+
+			distances.sort();
+			var spawnIndex = targetRandomiser.randomise(this.playerLevel*2, this.playerLevel*2+1);
+			var spawnLocation = locations[spawnIndex];
+
+			//Number of enemies sent AI
+			var a;
+
+			//Enemy strength AI
 		}
 
 		/*Next steps
 		1. DONE. Set parameters to spawn the required scenario
-		2. Set targets for each spawn
+		2. DONE. Set targets for each spawn
 		3. DONE. Set spawn location as per strategy
 		4. DONE (temp) Execute phase globally, by calling Spawner.Execute;
 		5. DONE Put a checker for end of phase? This should (probably) run on its own thread

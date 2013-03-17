@@ -1,4 +1,4 @@
-function Randomiser(){
+function Randomiser(randArray){
 	this.randArray = new Array();
 
 	this.randomise = function(min, max){
@@ -31,6 +31,11 @@ function Randomiser(){
 			this.resetRandomiser();
 			return newRange[0];
 		}
+	}
+
+	this.randomiseArray = function (randomArray){
+		var shuffled = this.shuffle(randomArray);
+		return shuffled[0];
 	}
 
 	this.shuffle = function (o){ 

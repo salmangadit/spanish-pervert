@@ -65,7 +65,11 @@ function init() {
 	xmlhttp = new XMLHttpRequest();
 	//http://www.salmangadit.me/spanish-pervert/data/data.xmlC:/Users/Salman/Documents/GitHub/spanish-pervert/data/data.xml
 	// /Users/TheGreatOne/Desktop/Sem_6/EE4702/Project/Project_2/spanish-pervert/data/data.xml
+<<<<<<< HEAD
 	xmlhttp.open("GET", "C:/Users/YuanIng/Desktop/Game_2/v9/spanish-pervert/data/data.xml", false);
+=======
+	xmlhttp.open("GET", "C:/Users/Salman/Documents/GitHub/spanish-pervert/data/data.xml", false);
+>>>>>>> Target lady AI and Spawn location AI done
 	xmlhttp.send();
 	xmlDoc = xmlhttp.responseXML;
 
