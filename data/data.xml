@@ -16,14 +16,14 @@
   </Objects>
 
   <Grid tileSize="32" width="33" height="28" baseColor="#CFB53B">
-    <GridRow>-----------------------P--------</GridRow>
+    <GridRow>---T-------------------P--------</GridRow>
     <GridRow>--------------------------------</GridRow>
     <GridRow>------PP----C-------------------</GridRow>
     <GridRow>-------------------C-------B--B-</GridRow>
-    <GridRow>--------------------------------</GridRow>
+    <GridRow>---------------T----------------</GridRow>
     <GridRow>-PVVVVP----------------------B--</GridRow>
     <GridRow>--------WWWWWW----WWWWWWW-------</GridRow>
-    <GridRow>--------WVVCC-------CWVVW-------</GridRow>
+    <GridRow>--T-----WVVCC-------CWVVW----T--</GridRow>
     <GridRow>--------W-----T-----CW--W-------</GridRow>
     <GridRow>--------W------------B--W-------</GridRow>
     <GridRow>---------------------B--WWW-WWW-</GridRow>
@@ -33,7 +33,7 @@
     <GridRow>-------------PPPP-------------W-</GridRow>
     <GridRow>------------------------------W-</GridRow>
     <GridRow>--------WVV-------------WWWWWWW-</GridRow>
-    <GridRow>------F-W---------------WVVCBB--</GridRow>
+    <GridRow>--------W---------------WVVCBB--</GridRow>
     <GridRow>--------W--------PP---VVW---BB--</GridRow>
     <GridRow>--PPPP--W-------PBBP----W---PP--</GridRow>
     <GridRow>------H-W-------PBBP----W-------</GridRow>
