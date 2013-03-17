@@ -57,8 +57,7 @@ function AIController(){
 
 						//find appropriate lady, else send to other options
 						for (var k=0; k<ladies.length; k++){
-							if ((targetStrategy == "s" && ladies[k].goodNPC_Type == "feisty")||
-								(targetStrategy == "w" && ladies[k].goodNPC_Type == "thin")){
+							if ((targetStrategy == "s" && ladies[k].goodNPC_Type == "fiesty") || (targetStrategy == "w" && ladies[k].goodNPC_Type == "thin")){
 								for (var m=0; m<references.length; m++){
 									references[m].targetGrid[0] = ladies[k].gridX;
 									references[m].targetGrid[1] = ladies[k].gridY;
