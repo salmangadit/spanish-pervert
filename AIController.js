@@ -137,6 +137,13 @@ function AIController(){
 
 	this.checkEndOfPhase = function(){
 		// If the phase is over, call updateForNextPhase function
+
+		//NOTE: change for phases with Criticality and NOT objectives.
+		// TO DO: Add predictor function, and therefore time-based spawner to predict criticality
+		// TO DO: Toggle enemy AI speeds
+		// TO DO: Specific AI situation (gorilla walk away from player / woman if either is crap)
+		// TO DO: Hollywood scenario
+
 		if (this.currPhase.phaseType){
 			if (this.currPhase.phaseType == "attack"){
 				// An attack phase is ended by killing all enemies
