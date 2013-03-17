@@ -73,7 +73,7 @@ function init() {
 	setInterval(gameLoop, screenUpdateTime);
 
 	setInterval(function(){AI.checkEndOfPhase();}, screenUpdateTime);
-
+	
 	//temporarily putting basic AI calls here till controller is up
 	AI.executePhase();
 
