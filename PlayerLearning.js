@@ -55,8 +55,8 @@ var PlayerLearning = function(thisReference){
 	this.bufferTimeForRescue = 0;
 	this.rescueTimeAnalysedLevel = 0;
 	this.killTimeAnalysedLevel = 0;
-	this.modelTimeTakenToKill = null;
-	this.modelTimeTakenToRescue = null;
+	this.modelTimeTakenToKill = 100;
+	this.modelTimeTakenToRescue = 100;
 
 
 	/****** Methods of PlayerLearning ********/
@@ -72,12 +72,14 @@ var PlayerLearning = function(thisReference){
 		this.compareTimingAndUpdateFlag(this.averageKillTime, 
 										this.modelTimeTakenToKill, 
 										this.bufferTimeForKill, 
-										this.killTimeAnalysedLevel);
+										this.killTimeAnalysedLevel,
+										"kill");
 
 		this.compareTimingAndUpdateFlag(this.averageRescueTime, 
 										this.modelTimeTakenToRescue,
 										this.bufferTimeForRescue,
-										this.rescueTimeAnalysedLevel);
+										this.rescueTimeAnalysedLevel,
+										"rescue");
 
 
 		/* Now compare the flags and set the playing level -  What the flags indicate:
@@ -86,7 +88,9 @@ var PlayerLearning = function(thisReference){
 		 *	-> 0 is easy & it means he is not a good player with sufficient skills, make the game easier for him
 		 *	-> 1 & 3 is in between the respective ranges
 		 */
-
+	
+		console.log('rescueTimeAnalysedLevel is: '+ this.rescueTimeAnalysedLevel);
+		console.log('killTimeAnalysedLevel is: ' + this.killTimeAnalysedLevel);
 		// Both have the same levels
 		if(this.rescueTimeAnalysedLevel == this.killTimeAnalysedLevel) {
 			
@@ -119,18 +123,19 @@ var PlayerLearning = function(thisReference){
 		
 		this.arrayOfRescueTime.push(this.timeTakenToRescueThisLady);
 		this.arrayOfHealthDamage.push(this.healthDamageIncurredByThisLady);
-		this.averageRescueTime = (this.averageRescueTime + this.timeTakenToRescueThisLady) / thia.arrayOfRescueTime.length;
-
+		this.averageRescueTime = (this.averageRescueTime + this.timeTakenToRescueThisLady) / this.arrayOfRescueTime.length;
+		console.log('the averageRescueTime is: ' + this.averageRescueTime);
 	};
 
 	// Whenever a badNPC is killed, this function is invoked
 	this.badNPCKilledUpdate = function(thisBadNPCReference){
+		console.log('the spawnTime is: ' + thisBadNPCReference.HeroType.spawnTime);
 		this.timeTakenToKillNPC = Date.now() - thisBadNPCReference.HeroType.spawnTime;
 		console.log('time taken to kill badNPC type: ' + thisBadNPCReference.selfType + ' is: ' + this.timeTakenToKillNPC);
 
 		this.arrayOfKillTime.push(this.timeTakenToKillNPC);
-		this.averageKillTime = (this.averageTime + this.timeTakenToKillNPC) / this.arrayOfKillTime.length;
-
+		this.averageKillTime = (this.averageKillTime + this.timeTakenToKillNPC) / this.arrayOfKillTime.length;
+		console.log('the averageKillTime is: ' + this.averageKillTime);
 	};
 
 	// Update the model parameters when the wave changes (can change if we want to update wave parameters dynamically per se)
@@ -144,11 +149,14 @@ var PlayerLearning = function(thisReference){
 
 	// This function will compare the rescue and kill timing taken by the player against the model timing
 	// and set the level (either rescueAnalyseLevel or killAnalyseLevel)
-	this.compareTimingAndUpdateFlag = function(actualTime, modelTime, bufferTime, thisLevel) {
+	this.compareTimingAndUpdateFlag = function(actualTime, modelTime, bufferTime, thisLevel, thisTypeOfLevelToSet) {
 
 		// This is used only to determine if he is an medium (level 2) kikd of player
-		var localSmallBuffer = 100;
-
+		var localSmallBuffer = 50;
+		console.log('actualTime is: ' + actualTime);
+		console.log('modelTime is: ' + modelTime);
+		console.log('bufferTime is: ' + bufferTime);
+		console.log('thisLevel before is: ' + thisLevel);
 		// At most only 3 conditions will be checked
 		if(actualTime+localSmallBuffer == modelTime || actualTime-localSmallBuffer == modelTime) {
 			thisLevel = 2;
@@ -172,6 +180,12 @@ var PlayerLearning = function(thisReference){
 				thisLevel = 1;
 			}
 
+		}
+		console.log('thisLevel after is: ' + thisLevel);
+		if(thisTypeOfLevelToSet == "kill"){
+			this.killTimeAnalysedLevel = thisLevel;
+		} else {
+			this.rescueTimeAnalysedLevel = thisLevel;
 		}
 	};
 }
