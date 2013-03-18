@@ -7,7 +7,7 @@
     <Object id="G" type="gorilla"    	src="images/gorilla-move.png" 	width="32" 	height="32"></Object>
     <Object id="T" type="thin"       	src="images/shy_32x32.png"     	width="32" 	height="32"></Object>
     <Object id="F" type="fiesty"     	src="images/fiesty-move.png" 	width="32" 	height="32"></Object>
-    <Object id="S" type="safezone"	src="images/safe.png"		width="95" 	height="95"></Object>
+    <Object id="S" type="safezone"	    src="images/safe.png"		    width="95" 	height="95"></Object>
     <Object id="V" type="collidable"	src="images/vendor.png"     	width="30" 	height="30"></Object>
     <Object id="P" type="collidable"	src="images/plant.png"    	 	width="28" 	height="30"></Object>
     <Object id="W" type="collidable"	src="images/wall.png"     		width="30" 	height="30"></Object>
@@ -15,15 +15,15 @@
     <Object id="L" type="collidable"	src="images/liquid.png"			width="30" 	height="30"></Object>
 	<Object id="A" type="alex"			src="images/alex_64x64.png"		width="64"	height="64"></Object>
 	<Object id="a" type="alex"			src=""							width=""	height="  "></Object>
-    <Object id="1" type="scenery"	src="images/safe1.png"		width="32" 	height="32"></Object>
-    <Object id="2" type="scenery"	src="images/safe2.png"		width="32" 	height="32"></Object>
-    <Object id="3" type="scenery"	src="images/safe3.png"		width="32" 	height="32"></Object>
-    <Object id="4" type="scenery"	src="images/safe4.png"		width="32" 	height="32"></Object>
-    <Object id="5" type="scenery"	src="images/safe5.png"		width="32" 	height="32"></Object>
-    <Object id="6" type="scenery"	src="images/safe6.png"		width="32" 	height="32"></Object>
-    <Object id="7" type="scenery"	src="images/safe7.png"		width="32" 	height="32"></Object>
-    <Object id="8" type="scenery"	src="images/safe8.png"		width="32" 	height="32"></Object>
-    <Object id="9" type="scenery"	src="images/safe9.png"		width="32" 	height="32"></Object>
+    <Object id="1" type="scenery"	    src="images/safe1.png"		    width="32" 	height="32"></Object>
+    <Object id="2" type="scenery"	    src="images/safe2.png"		    width="32" 	height="32"></Object>
+    <Object id="3" type="scenery"	    src="images/safe3.png"		    width="32" 	height="32"></Object>
+    <Object id="4" type="scenery"	    src="images/safe4.png"		    width="32" 	height="32"></Object>
+    <Object id="5" type="scenery"	    src="images/safe5.png"		    width="32" 	height="32"></Object>
+    <Object id="6" type="scenery"	    src="images/safe6.png"		    width="32" 	height="32"></Object>
+    <Object id="7" type="scenery"	    src="images/safe7.png"		    width="32" 	height="32"></Object>
+    <Object id="8" type="scenery"	    src="images/safe8.png"		    width="32" 	height="32"></Object>
+    <Object id="9" type="scenery"	    src="images/safe9.png"		    width="32" 	height="32"></Object>
 
 
   </Objects>

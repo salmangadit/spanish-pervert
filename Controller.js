@@ -81,15 +81,17 @@ function Controller(){
 			ladies[iter].targetGrid = new Array(hero.gridX,hero.gridY);			
 		}
 		if(ladies[iter].gridX<=2 && ladies[iter].gridY>=25){
+
+			// Update global flag that a lady was saved
+			ladyWasSaved = true;
 			// Update the player learning also
-			//playerLearningObj.ladyRescueUpdate(ladies[iter]);
+			playerLearningObj.ladyRescueUpdate(ladies[iter])//.spawnTime, ladies[iter].health);
 			// To clear the health bar issue upon reaching safe zone
 			ladies[iter].HeroType.specialRender();
-			ladies[iter].destroyed = true;
+			// I will update the destroyed in playerLearning
+			//ladies[iter].destroyed = true;
 			ladies[iter].targetGrid = (0,27);
 			savedLadiesCount++;
-			// Update global flag that a lady was saved
-			ladyWasSaved = true;			
 			hero.targetBot = null;
 		}
 	}

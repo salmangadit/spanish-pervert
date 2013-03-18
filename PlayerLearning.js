@@ -112,13 +112,13 @@ var PlayerLearning = function(thisReference){
 
 	// Whenever a lady is rescued, this function is invoked 
 	// and the necessary parameters are updated
-	this.ladyRescueUpdate = function(thisLadyReference){
+	this.ladyRescueUpdate = function(thisReference){
 		// I am assuming that there is a spawnTime for the lady which
 		// either corresponds to the start of the current phase
-		this.timeTakenToRescueThisLady = Date.now() - thisLadyReference.HeroType.spawnTime;
+		this.timeTakenToRescueThisLady = Date.now() - thisReference.spawnTime;
 		//console.log('time taken to rescue this lady type ' + thisLadyReference.selfType + ' is: ' + this.timeTakenToRescueThisLady);
 		
-		this.healthDamageIncurredByThisLady = 30 - thisLadyReference.health;
+		this.healthDamageIncurredByThisLady = 30 - thisReference.health;
 		//console.log('health damage incurred by this lady is: ' + this.healthDamageIncurredByThisLady);
 		
 		this.arrayOfRescueTime.push(this.timeTakenToRescueThisLady);
@@ -128,6 +128,9 @@ var PlayerLearning = function(thisReference){
 		}
 		this.averageRescueTime = this.averageRescueTime  / this.arrayOfRescueTime.length;
 		console.log('the averageRescueTime is: ' + this.averageRescueTime);
+
+		// I set the lady parameter destroy to be true
+		thisReference.destroyed = true;
 	};
 
 	// Whenever a badNPC is killed, this function is invoked
