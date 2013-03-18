@@ -8,14 +8,14 @@ Criticality.get = function(){
 	var criticality = -1;
 
 	//Player contribution
-	var playerCrit = 30 - ((hero.health*3)/10);
+	var playerCrit = 30 - hero.health;
 
 	//Bad NPC contribution
 	var badNPCCritSum = 0;
 	var badNPCCrit = 0;
 
 	for (var i = 0; i < enemies.length; i++){
-		badNPCCritSum += (30 - ((enemies[i].health*3)/10));
+		badNPCCritSum += (30 - enemies[i].health);
 	}
 
 	if (enemies.length > 0){
@@ -26,7 +26,7 @@ Criticality.get = function(){
 	var goodNPCCritSum = 0;
 	var goodNPCCrit = 0;
 	for (var i = 0; i < ladies.length; i++){
-		goodNPCCritSum += (30 - (ladies[i].health*3)/10);
+		goodNPCCritSum += (30 - ladies[i].health);
 	}
 
 	if (ladies.length > 0){

@@ -6,6 +6,7 @@ function Predictor(){
 
 	this.updatePredictor = function(){
 		var change = Criticality.get() - prevCriticality;
+		prevCriticality = Criticality.get();
 		accumulatedChange += change;
 		totalCalls++;
 		projectedCriticality += (accumulatedChange/totalCalls);

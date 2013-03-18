@@ -226,10 +226,10 @@
  	this.parentRef = thisReference;
  	this.attackPower = null;
  	if(this.parentRef.badNPC_Type == "monkey"){
- 		this.defaultAttackPower = -0.00003;
+ 		this.defaultAttackPower = -0.3;
  		this.attackPower = this.defaultAttackPower;
  	}else if(this.parentRef.badNPC_Type == "gorilla"){
- 		this.defaultAttackPower = -0.00005;
+ 		this.defaultAttackPower = -0.5;
  		this.attackPower = this.defaultAttackPower;
  	}
  	
