@@ -92,7 +92,7 @@ function init() {
 		
 		// check if the key being pressed is one of the arrow keys -- 
 		// 80 is the p key (punch), 75 is k (kick), 82 is r (rescue)
-		if ((event.keyCode < 41 && event.keyCode > 36) || event.keyCode == 80 || event.keyCode == 75 || event.keyCode == 82 || event.keyCode == 68) {
+		if ((event.keyCode < 41 && event.keyCode > 36) || event.keyCode == 80 || event.keyCode == 75 || event.keyCode == 82 || event.keyCode == 68 || event.keyCode == 79) {
 			// block the default browser action for the arrow keys
 			event.preventDefault();
 

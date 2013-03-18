@@ -723,14 +723,14 @@
         switch (this.keys[this.keys.length - 1])
         {	
 			//togglling debugMode
-			case 68:
+			case 68:				
+				debugMode=true;
+				break;
 				
-				if(debugMode == true){
-					debugMode = false;
-				}
-				else{
-					debugMode = true;
-				}
+			case  79:
+				debugMode=false;
+				debugContext.clearRect(0,0,debugCanvas.width,debugCanvas.height);
+				graphContext.clearRect(0,0,graphCanvas.width,graphCanvas.height);
 				break;
             case 37:
 					this.lastMovedDirection = 37;
