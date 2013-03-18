@@ -10,7 +10,7 @@
  *	   be of the nature that he controls so that it is useful for us to understand about him. 
  * 	
  *	-> secondly with this gathered data we analyse his play. Compare that with a pre-defined model
- *	   and from there conclude what is the playing level is. 
+ *	   and from there conclude what the playing level is. 
  */
 
 var iter = 0;
@@ -89,8 +89,8 @@ var PlayerLearning = function(thisReference){
 		 *	-> 1 & 3 is in between the respective ranges
 		 */
 	
-		console.log('rescueTimeAnalysedLevel is: '+ this.rescueTimeAnalysedLevel);
-		console.log('killTimeAnalysedLevel is: ' + this.killTimeAnalysedLevel);
+		//console.log('rescueTimeAnalysedLevel is: '+ this.rescueTimeAnalysedLevel);
+		//console.log('killTimeAnalysedLevel is: ' + this.killTimeAnalysedLevel);
 		// Both have the same levels
 		if(this.rescueTimeAnalysedLevel == this.killTimeAnalysedLevel) {
 			
@@ -116,25 +116,30 @@ var PlayerLearning = function(thisReference){
 		// I am assuming that there is a spawnTime for the lady which
 		// either corresponds to the start of the current phase
 		this.timeTakenToRescueThisLady = Date.now() - thisLadyReference.HeroType.spawnTime;
-		console.log('time taken to rescue this lady type ' + thisLadyReference.selfType + ' is: ' + this.timeTakenToRescueThisLady);
+		//console.log('time taken to rescue this lady type ' + thisLadyReference.selfType + ' is: ' + this.timeTakenToRescueThisLady);
 		
 		this.healthDamageIncurredByThisLady = 30 - thisLadyReference.innerHealthMeterWidth;
-		console.log('health damage incurred by this lady is: ' + this.healthDamageIncurredByThisLady);
+		//console.log('health damage incurred by this lady is: ' + this.healthDamageIncurredByThisLady);
 		
 		this.arrayOfRescueTime.push(this.timeTakenToRescueThisLady);
 		this.arrayOfHealthDamage.push(this.healthDamageIncurredByThisLady);
-		this.averageRescueTime = (this.averageRescueTime + this.timeTakenToRescueThisLady) / this.arrayOfRescueTime.length;
+		for(iter =0,this.averageRescueTime=0; iter<this.arrayOfRescueTime.length;iter++) {
+			this.averageRescueTime += this.arrayOfRescueTime[iter];
+		}
+		this.averageRescueTime = this.averageRescueTime  / this.arrayOfRescueTime.length;
 		console.log('the averageRescueTime is: ' + this.averageRescueTime);
 	};
 
 	// Whenever a badNPC is killed, this function is invoked
 	this.badNPCKilledUpdate = function(thisBadNPCReference){
-		console.log('the spawnTime is: ' + thisBadNPCReference.HeroType.spawnTime);
+		//console.log('the spawnTime is: ' + thisBadNPCReference.HeroType.spawnTime);
 		this.timeTakenToKillNPC = Date.now() - thisBadNPCReference.HeroType.spawnTime;
-		console.log('time taken to kill badNPC type: ' + thisBadNPCReference.selfType + ' is: ' + this.timeTakenToKillNPC);
-
+		//console.log('time taken to kill badNPC type: ' + thisBadNPCReference.selfType + ' is: ' + this.timeTakenToKillNPC);
 		this.arrayOfKillTime.push(this.timeTakenToKillNPC);
-		this.averageKillTime = (this.averageKillTime + this.timeTakenToKillNPC) / this.arrayOfKillTime.length;
+		for(iter=0, this.averageKillTime=0; iter<this.arrayOfKillTime; iter++){
+			this.averageKillTime += this.arrayOfKillTime[iter];
+		}
+		this.averageKillTime = this.averageKillTime / this.arrayOfKillTime.length;
 		console.log('the averageKillTime is: ' + this.averageKillTime);
 	};
 
