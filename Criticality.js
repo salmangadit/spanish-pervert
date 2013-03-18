@@ -10,28 +10,27 @@ Criticality.get = function(){
 	//Player contribution
 	var playerCrit = 30 - ((hero.health*3)/10);
 
-	//Good NPC contribution
-	var goodNPCCritSum = 0;
-	var goodNPCCrit = 0;
-
-	for (var i = 0; i < enemies.length; i++){
-		goodNPCCritSum += (30 - enemies[i].health);
-	}
-
-	if (enemies.length > 0){
-		goodNPCCrit = goodNPCCritSum/enemies.length;
-	}
-
 	//Bad NPC contribution
 	var badNPCCritSum = 0;
 	var badNPCCrit = 0;
 
+	for (var i = 0; i < enemies.length; i++){
+		badNPCCritSum += (30 - ((enemies[i].health*3)/10));
+	}
+
+	if (enemies.length > 0){
+		badNPCCrit = badNPCCritSum/enemies.length;
+	}
+	
+	//Good NPC contribution
+	var goodNPCCritSum = 0;
+	var goodNPCCrit = 0;
 	for (var i = 0; i < ladies.length; i++){
-		badNPCCritSum += (30 - ladies[i].health);
+		goodNPCCritSum += (30 - (ladies[i].health*3)/10);
 	}
 
 	if (ladies.length > 0){
-		badNPCCrit = badNPCCritSum/ladies.length;
+		goodNPCCrit = goodNPCCritSum/ladies.length;
 	}
 
 	//Criticality inverted

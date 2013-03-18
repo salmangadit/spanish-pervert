@@ -327,9 +327,9 @@
 		//Then update attributes if it is a hit
 		if(true == this.hit){
 			targetReference.updateHealth(this.attackPower);
-			console.log('the badNPC pulled a skirt');
+			//console.log('the badNPC pulled a skirt');
 		} else {
-			console.log('the badNPC missed pulling the skirt');
+			//console.log('the badNPC missed pulling the skirt');
 		}
     	
     };//end of pullskirt function
@@ -381,9 +381,9 @@
 		//Then update attributes if it is a hit
 		if(true == this.hit){
 			targetReference.updateHealth(this.attackPower);
-			console.log('the badNPC attacked the player');
+			//console.log('the badNPC attacked the player');
 		} else {
-			console.log('the badNPC missed the player');
+			//console.log('the badNPC missed the player');
 		}
 
     };

@@ -9,6 +9,8 @@ function Predictor(){
 		accumulatedChange += change;
 		totalCalls++;
 		projectedCriticality += (accumulatedChange/totalCalls);
+
+		console.log('Enemy killed. Criticality is: ' + Criticality.get() + '. Predicted Criticality: '+projectedCriticality);
 	}
 
 	this.getProjectedCriticality = function(){
