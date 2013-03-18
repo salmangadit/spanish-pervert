@@ -66,12 +66,21 @@ var ladyWasSaved = false;
 var randomiser = new Randomiser();
 var predictor = new Predictor();
 
+//AI manipulated stages
+//0: not manipulated
+//1: lady has been called
+//2: lady has arrived, send your enemy to her now
+var enemiesToGetRidOf;
+var selectedLadies;
+var AImanipulated = 0;
+var manipulatedIndexes;
+
 function init() {
 	xmlhttp = new XMLHttpRequest();
 	//http://www.salmangadit.me/spanish-pervert/data/data.xmlC:/Users/Salman/Documents/GitHub/spanish-pervert/data/data.xml
 	// /Users/TheGreatOne/Desktop/Sem_6/EE4702/Project/Project_2/spanish-pervert/data/data.xml
 	//xmlhttp.open("GET", "C:/Users/YuanIng/Documents/GitHub/spanish-pervert/data/data.xml", false);
-	xmlhttp.open("GET", "/Users/TheGreatOne/Desktop/Sem_6/EE4702/Project/Project_2/spanish-pervert/data/data.xml", false);
+	xmlhttp.open("GET", "C:/Users/Salman/Documents/GitHub/spanish-pervert/data/data.xml", false);
 	xmlhttp.send();
 	xmlDoc = xmlhttp.responseXML;
 
@@ -620,7 +629,7 @@ function gameLoop() {
 		Debug();
 	}
 	
-	
+	checkDangerStage();
 	// update the lastUpdate variable
 	lastUpdate = now;
 
@@ -658,15 +667,118 @@ function updatePlayerLearning(){
 }
 
 function checkDangerStage(){
-	if (hero.health <= 7){
+	if (hero.health <= 7 && AImanipulated == 0){
 		//there is a problem, the hero is getting the shiznit beaten out of him!
 		//Options:
 		//0. Find number of enemies around the hero
 		//1. Distract each enemy with a lady around
 		//2. She should come near the scene
 		//3. Enemy should follow her
+		enemiesToGetRidOf = new Array();
+		selectedLadies = new Array();
+		manipulatedIndexes = new Array();
+
+		for (var i= 0; i< enemies.length; i++){
+			if (enemies[i].moveTarget.selfType == 0){
+				enemiesToGetRidOf.push(enemies[i]);
+			}
+		}
+
+		for (var i =0; i< enemiesToGetRidOf.length; i++){
+			//Find closest lady to come distract
+			var distances = new Array();
+
+			for (var j = 0; j < ladies.length; j++){
+				distances.push(helperClass.distanceBetweenTwoPoints(enemiesToGetRidOf[i].gridX, enemiesToGetRidOf[i].gridY, ladies[j].gridX, ladies[j].gridY));
+			}
+
+			var selected = false;
+			var selectedLady;
+
+			do {
+				var minDist = Math.min.apply(Math, distances);
+				if (selectedLadies.indexOf(ladies[distances.indexOf(minDist)]) == -1){
+					selectedLadies.push(ladies[distances.indexOf(minDist)]);
+					selectedLady = ladies[distances.indexOf(minDist)];
+					selected = true;
+				} else {
+					distances.splice(distances.indexOf(minDist), 1);
+				}
+			} while (selected == false);
+
+			var nearestFree = findNearestFreeSpace(enemiesToGetRidOf[i]);
+			selectedLady.targetGrid = nearestFree;
+		}
+
+		AImanipulated = 1;
 
 		//COMBO becomes easier, as well
+	} else if (AImanipulated == 1){
+		//Waiting for lady to arrive
+		for (var i = 0; i < selectedLadies.length; i++){
+			if (manipulatedIndexes.indexOf(i)!=-1){
+				continue;
+			}
+
+			if ((selectedLadies[i].targetGrid[0] == selectedLadies[i].gridX) 
+				&& (selectedLadies[i].targetGrid[1] == selectedLadies[i].gridY)){
+				enemiesToGetRidOf[i].moveTarget = selectedLadies[i];
+				manipulatedIndexes.push(i);
+			}
+		}
+
+		if (manipulatedIndexes.length = selectedLadies.length){
+			//AI is done, send back to 0
+			AImanipulated = 0;
+		}
+	}
+
+	function findNearestFreeSpace(object){
+		//go round, declustering style
+		var jump = 3;
+		var found = false;
+		var position = 1;
+		var nearestFree;
+
+		do {
+			var x, y;
+			if (position == 1){
+				x = object.gridX + jump;
+				y = object.gridY;
+			} else if (position == 2){
+				x = object.gridX;
+				y = object.gridY + jump;
+			} else if (position == 3){
+				x = object.gridX - jump;
+				y = object.gridY;
+			} else if (position == 4){
+				x = object.gridX;
+				y = object.gridY - jump;
+			}
+
+			if(CheckArrayIndex(x, y) != null){
+				if (grid[x][y] == 0){
+					found = true;
+					nearestFree = new Array(object.gridX + jump, object.gridY)
+				} else {
+					position++;
+					if (position == 5){
+						position = 1;
+						jump++;
+					}
+				}
+			}
+		} while (found == false);
+
+		return nearestFree;
+	}
+
+	function CheckArrayIndex(x, y) {
+	    if (grid.length-1 > x && grid[x].length-1 > y) {
+	        return grid[x][y];
+	    }
+
+	    return null;
 	}
 }
 
