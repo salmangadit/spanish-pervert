@@ -170,6 +170,29 @@ function AIController(){
 
 							var numberToSpawn = requirementDiff/criticalityDiff;
 
+							var parsedPhaseRatio = this.currPhase.scenarioRatio.split(':');
+							var alreadyTargeted = new Array();
+
+							if (numberToSpawn%2 != 0 && numberToSpawn != 1){
+								numberToSpawn--;
+							}
+
+							var chosenRatioIndex = parsedPhaseRatio.length - 1;
+							for (var i =0; i<parsedPhaseRatio.length; i++){
+								if (numberToSpawn < parsedPhaseRatio[m]){
+									continue;
+								} else {
+									chosenRatioIndex = i;
+									break;
+								}
+							}
+
+							var chosenTarget = this.targetNPCAI(alreadyTargeted);
+							var spawnLocation = this.spawnLocationAI(chosenTarget);
+							var monkeyGorillaRandomiser = new Randomiser();
+							for (var n = 0; n < parsedPhaseRatio[chosenRatioIndex]; n++){
+								this.enemyStrengthAI(monkeyGorillaRandomiser, chosenTarget, spawnLocation);
+							}
 						}
 					}
 			} else if (this.currPhase.phaseType == "defense"){
