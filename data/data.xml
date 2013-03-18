@@ -43,9 +43,9 @@
     <GridRow>-----------------VW-------------</GridRow>
     <GridRow>-----------------VW-------------</GridRow>
     <GridRow>------F--M-------VW--------VVVVV</GridRow>
-    <GridRow>SSS--------------PW---BB--------</GridRow>
-    <GridRow>SSS----------CC---W-------------</GridRow>
-    <GridRow>SSS----------CC-------PP--------</GridRow>
+    <GridRow>S----------------PW---BB--------</GridRow>
+    <GridRow>-------------CC---W-------------</GridRow>
+    <GridRow>-------------CC-------PP--------</GridRow>
   </Grid>
 </GameData>
 
