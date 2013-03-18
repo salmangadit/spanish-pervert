@@ -118,7 +118,7 @@ var PlayerLearning = function(thisReference){
 		this.timeTakenToRescueThisLady = Date.now() - thisLadyReference.HeroType.spawnTime;
 		//console.log('time taken to rescue this lady type ' + thisLadyReference.selfType + ' is: ' + this.timeTakenToRescueThisLady);
 		
-		this.healthDamageIncurredByThisLady = 30 - thisLadyReference.innerHealthMeterWidth;
+		this.healthDamageIncurredByThisLady = 30 - thisLadyReference.health;
 		//console.log('health damage incurred by this lady is: ' + this.healthDamageIncurredByThisLady);
 		
 		this.arrayOfRescueTime.push(this.timeTakenToRescueThisLady);

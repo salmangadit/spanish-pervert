@@ -15,26 +15,25 @@
     <Object id="L" type="collidable"	src="images/liquid.png"			width="30" 	height="30"></Object>
 	<Object id="A" type="alex"			src="images/alex_64x64.png"		width="64"	height="64"></Object>
 	<Object id="a" type="alex"			src=""							width=""	height="  "></Object>
-	
   </Objects>
 
   <Grid tileSize="32" width="33" height="28" baseColor="#CFB53B">
-    <GridRow>---------------T-------P--------</GridRow>
-    <GridRow>-------------------------------T</GridRow>
+    <GridRow>---------------F-------P--------</GridRow>
+    <GridRow>--------------------------------</GridRow>
     <GridRow>------PP----C-------------------</GridRow>
-    <GridRow>-------------------C-------B--B-</GridRow>
-    <GridRow>---------------T----------------</GridRow>
+    <GridRow>-------------------C---F---B--B-</GridRow>
+    <GridRow>--------------------------------</GridRow>
     <GridRow>-PVVVVP----------------------B--</GridRow>
     <GridRow>--------WWWWWW----WWWWWWW-------</GridRow>
-    <GridRow>--------WVVCC-------CWVVW----T--</GridRow>
-    <GridRow>--------W-----T-----CW--W-------</GridRow>
+    <GridRow>--------WVVCC-------CWVVW-------</GridRow>
+    <GridRow>--------W-----------CW--W-------</GridRow>
     <GridRow>--------W------------B--W-------</GridRow>
     <GridRow>---------------------B--WWW-WWW-</GridRow>
     <GridRow>--CC----W----PPPP----B--VV----W-</GridRow>
     <GridRow>--CCBB--W----PA-P-------------W-</GridRow>
     <GridRow>--------W----P--P----------P--W-</GridRow>
     <GridRow>-------------PPPP-------------W-</GridRow>
-    <GridRow>--T---------------------------W-</GridRow>
+    <GridRow>------------------------------W-</GridRow>
     <GridRow>--------WVV-------------WWWWWWW-</GridRow>
     <GridRow>--------W---------------WVVCBB--</GridRow>
     <GridRow>--------W--------PP---VVW---BB--</GridRow>
@@ -42,11 +41,11 @@
     <GridRow>------H-W-------PBBP----W-------</GridRow>
     <GridRow>--------WWWW--WWWWWWWWWWW-------</GridRow>
     <GridRow>-----------------VW-------------</GridRow>
-    <GridRow>-T---------------VW-------------</GridRow>
-    <GridRow>-------T---------VW--------VVVVV</GridRow>
+    <GridRow>-----------------VW-------------</GridRow>
+    <GridRow>------F----------VW--------VVVVV</GridRow>
     <GridRow>SSS--------------PW---BB--------</GridRow>
     <GridRow>SSS----------CC---W-------------</GridRow>
-    <GridRow>SSS-----T----CC-------PP--------</GridRow>
+    <GridRow>SSS----------CC-------PP--------</GridRow>
   </Grid>
 </GameData>
 

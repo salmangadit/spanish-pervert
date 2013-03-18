@@ -26,7 +26,8 @@
 	this.now;// = Date.now();
 	this.delta;// = this.now - this.parentRef.lastRender;
 	
-	this.damageDelivered = -2;
+	this.defaultDamageDelivered = -2;
+	this.damageDelivered = this.defaultDamageDelivered;
 
 	this.fightController  = new FightController(this);
 
@@ -43,197 +44,151 @@
 	this.miss = false;
 	
 	/* Punch sprite indicators:
-	 * 18 -> retreat punch down
-	 * 19 -> punch down
-	 * 21 -> punch left
-	 * 22 -> retreat left punch
-	 * 24 -> punch right
-	 * 25 -> retreat right punch
-	 * 28 -> retreat punch up
-	 * 29 -> punch up
+	 *  -> retreat punch down
+	 *  -> punch down
+	 * 17 -> punch left
+	 * 16 -> retreat left punch
+	 * 19 -> punch right
+	 * 18 -> retreat right punch
+	 * 24 -> retreat punch up
+	 * 25 -> punch up
 	 */
 	this.punch = function(targetReference) {
 	
 		console.log('punch status is: ' + this.parentRef.actionType);
 		 if (this.parentRef.actionType == 1) {
-			console.log('the hero is gonna punch and his ratio is: ' + this.hitMissRatio);
+			//console.log('the hero is gonna punch and his ratio is: ' + this.hitMissRatio);
 			
-			//Set the locations of where the new sprite image is to be drawn			
-			if (this.arrayOfLastMoves == 0 || this.arrayOfLastMoves[this.arrayOfLastMoves.length - 1] != "punch"){
-				if(this.parentRef.facingWhichDirection == "left"){
-					this.parentRef.x = this.parentRef.x + 4;
-					this.parentRef.whichSprite = this.parentRef.width * 24;
-				
-				} else if (this.parentRef.facingWhichDirection == "right"){
-					this.parentRef.x = this.parentRef.x - 4;
-					this.parentRef.whichSprite = this.parentRef.width * 23;
-				
-				} else if (this.parentRef.facingWhichDirection == "down"){
-					this.parentRef.x = this.parentRef.x - 4;
+			// Draw the sprite to punch	
+			switch(this.parentRef.facingWhichDirection){
+				case 'left':
+					this.parentRef.whichSprite = this.parentRef.width * 17;
+					break;
+				case 'right':
 					this.parentRef.whichSprite = this.parentRef.width * 19;
-				
-				} else if (this.parentRef.facingWhichDirection == "up"){
-					this.parentRef.x = this.parentRef.x - 4;
-					this.parentRef.whichSprite = this.parentRef.width * 29;
-				
-				} else {
-					alert("this is a weird direction");
-				}
-				
-			//The hero could have been punching
-			} else {
-				if(this.arrayOfLastMoves[this.arrayOfLastMoves.length - 1] == "punch") {
-					if(this.parentRef.facingWhichDirection == "left"){
-						this.parentRef.whichSprite = this.parentRef.width * 24;
-					
-					} else if(this.parentRef.facingWhichDirection == "right") {
-						this.parentRef.whichSprite = this.parentRef.width * 23;
-					
-					} else if(this.parentRef.facingWhichDirection == "down"){
-						this.parentRef.whichSprite = this.parentRef.width * 19;					
-					
-					} else if(this.parentRef.facingWhichDirection == "up"){
-						this.parentRef.whichSprite = this.parentRef.width * 29;
-					
-					} else {
-						alert('this is the wrong direction and thus no appropriate sprite');
-					}
-				}							
-			}//outer most if-else statement
+					break;
+				case 'up':
+					this.parentRef.whichSprite = this.parentRef.width * 25;
+					break;
+				case 'down':
+					this.parentRef.whichSprite = this.parentRef.width * 29;//down need to update
+					break;
+				default:
+					console.log('this is a weird direction');
+					break;
+			}//switch case statement						
 			
-			// Update the targets health
-			//console.log('targetReference is of type: ' + targetReference.selfType);
-						
+			// Render the image
 			this.parentRef.render();
-						
-			//Then update attributes if it is a hit
-			if(true == this.hit){
-				targetReference.updateHealth(this.damageDelivered);
-				this.arrayOfLastMoves.push("punch");
-				console.log('the player did a punch`');
-			} else {
-				console.log('the player missed a punch');
-			}
-			
-			//Move the hand back
+
+			//Then update attributes (because it will always be a hit)
+			targetReference.updateHealth(this.damageDelivered);
+			//For testing
+			console.log(this.parentRef.selfType + ' delivered ' + this.damageDelivered + ' damage');
+			console.log(this.parentRef.selfType + ' updated ' + targetReference.selfType + ' health');
+			this.arrayOfLastMoves.push("punch");					
 			this.now = Date.now();
 			this.delta = this.now - this.parentRef.lastRender;
+
+			// Move the hand back
 			if(this.delta > this.parentRef.animSpeed){
-				if(this.parentRef.facingWhichDirection == "left"){
-					this.parentRef.whichSprite = this.parentRef.width * 25;
-				
-				} else if (this.parentRef.facingWhichDirection == "right"){
-					this.parentRef.whichSprite = this.parentRef.width * 22;
-				
-				} else if(this.parentRef.facingWhichDirection == "down"){
-					this.parentRef.whichSprite = this.parentRef.width * 18;
-				
-				} else if(this.parentRef.facingWhichDirection == "up"){
-					this.parentRef.whichSprite = this.parentRef.width * 28;
-				
-				} else {
-					alert('this is the wrong direction and thus no appropriate sprite');
-				}				
+				switch(this.parentRef.facingWhichDirection){
+					case 'left':
+						this.parentRef.whichSprite = this.parentRef.width * 16;
+						break;
+					case 'right':
+						this.parentRef.whichSprite = this.parentRef.width * 18;
+						break;
+					case 'up':
+						this.parentRef.whichSprite = this.parentRef.width * 24;
+						break;
+					case 'down':
+						this.parentRef.whichSprite = this.parentRef.width * 18;//down need to update
+						break;
+					default:
+						console.log('this is a weird direction');
+						break;
+				}//switch case statement
+
+				// Render the image
 				this.parentRef.render();				
-			}
+			}//if statement
 			
 		}//actionType if statement
 		
 	};
 	
 	/* Kick sprite indicators:
-	 * 1  -> kick down
-	 * 2  -> retreat down kick
-	 * 4  -> kick left
-	 * 5  -> retreat left kick
-	 * 10 -> retreat right kick
-	 * 11 -> kick right
-	 * 13 -> kick up
-	 * 14 -> retreat up kick
+	 *  -> kick down
+	 *   -> retreat down kick
+	 * 21 -> kick left
+	 * 4  -> retreat left kick
+	 * 8  -> retreat right kick
+	 * 23 -> kick right
+	 * 26 -> kick up
+	 * 13 -> retreat up kick
 	 */
 	this.kick = function(targetReference) {
 				
 		console.log('kick status is: ' + this.parentRef.actionType);
 		if (this.parentRef.actionType == 1) {
-			console.log('the hero is gonna kick and his ratio is: ' + this.hitMissRatio);
-
-			//Set the locations of where the new sprite image is to be drawn
-			if (this.arrayOfLastMoves == 0 || this.arrayOfLastMoves[this.arrayOfLastMoves.length - 1] != "kick") {
-				if (this.parentRef.facingWhichDirection == "left") {
-					this.parentRef.x = this.parentRef.x + 4;
-					this.parentRef.whichSprite = this.parentRef.width * 4;
-				
-				} else if (this.parentRef.facingWhichDirection == "right") {
-					this.parentRef.x = this.parentRef.x - 4;
-					this.parentRef.whichSprite = this.parentRef.width * 11;
-				
-				} else if (this.parentRef.facingWhichDirection == "down") {
-					this.parentRef.x = this.parentRef.x - 4;
-					this.parentRef.whichSprite = this.parentRef.width * 1;
-					
-				
-				} else if (this.parentRef.facingWhichDirection == "up") {
-					this.parentRef.x = this.parentRef.x - 4;
-					this.parentRef.whichSprite = this.parentRef.width * 13;
-				
-				} else {
-					alert('this is a weird direction');
-				}
-
-				//The hero has already made some moves
-			} else {
-				if (this.arrayOfLastMoves[this.arrayOfLastMoves.length - 1] == "kick") {
-					if (this.parentRef.facingWhichDirection == "left") {
-						this.parentRef.whichSprite = this.parentRef.width * 4;
-					
-					} else if (this.parentRef.facingWhichDirection == "right") {
-						this.parentRef.whichSprite = this.parentRef.width * 11;
-					
-					} else if (this.parentRef.facingWhichDirection == "down") {
-						this.parentRef.whichSprite = this.parentRef.width * 1;
-					
-					} else if (this.parentRef.facingWhichDirection == "up") {
-						this.parentRef.whichSprite = this.parentRef.width * 13;
-					
-					} else {
-						alert('this is a weird direction');
-					}
-				}
-			}//outer most if-else statement
-
+			//console.log('the hero is gonna kick and his ratio is: ' + this.hitMissRatio);
+			
+			// Draw the sprite to kick	
+			switch(this.parentRef.facingWhichDirection){
+				case 'left':
+					this.parentRef.whichSprite = this.parentRef.width * 21;
+					break;
+				case 'right':
+					this.parentRef.whichSprite = this.parentRef.width * 23;
+					break;
+				case 'up':
+					this.parentRef.whichSprite = this.parentRef.width * 26;
+					break;
+				case 'down':
+					this.parentRef.whichSprite = this.parentRef.width * 29;//down need to update
+					break;
+				default:
+					console.log('this is a weird direction');
+					break;
+			}//switch case statement						
+			
+			// Render the image
 			this.parentRef.render();
 
-			//Then update attributes if it is a hit
-			if(true == this.hit){
-				targetReference.updateHealth(this.damageDelivered);
-				this.arrayOfLastMoves.push("kick");
-				console.log('the player did a kick');
-			} else {
-				console.log('the player missed a kick');
-			}
-
-			//Move the hand back
+			//Then update attributes (because it will always be a hit)
+			targetReference.updateHealth(this.damageDelivered);
+			//for testing
+			console.log(this.parentRef.selfType + ' delivered ' + this.damageDelivered + ' damage');
+			console.log(this.parentRef.selfType + ' updated ' + targetReference.selfType + ' health');
+			this.arrayOfLastMoves.push("kick");
 			this.now = Date.now();
 			this.delta = this.now - this.parentRef.lastRender;
-			if (this.delta > this.parentRef.animSpeed) {
-				if (this.parentRef.facingWhichDirection == "left") {
-					this.parentRef.whichSprite = this.parentRef.width * 5;
-				
-				} else if (this.parentRef.facingWhichDirection == "right") {
-					this.parentRef.whichSprite = this.parentRef.width * 10;
-				
-				} else if(this.parentRef.facingWhichDirection == "down") {
-					this.parentRef.whichSprite = this.parentRef.width * 2;
-				
-				} else if(this.parentRef.facingWhichDirection == "up") {
-					this.parentRef.whichSprite = this.parentRef.width * 14;
-				
-				} else {
-					alert('this is the wrong direction and thus no appropriate sprite');
-				}
-				this.parentRef.render();
-			}
-		
+
+			// Move the leg back
+			if(this.delta > this.parentRef.animSpeed){
+				switch(this.parentRef.facingWhichDirection){
+					case 'left':
+						this.parentRef.whichSprite = this.parentRef.width * 4;
+						break;
+					case 'right':
+						this.parentRef.whichSprite = this.parentRef.width * 8;
+						break;
+					case 'up':
+						this.parentRef.whichSprite = this.parentRef.width * 13;
+						break;
+					case 'down':
+						this.parentRef.whichSprite = this.parentRef.width * 18;//down need to update
+						break;
+					default:
+						console.log('this is a weird direction');
+						break;
+				}//switch case statement
+
+				// Render the image
+				this.parentRef.render();				
+			}//if statement
+			
 		}//actionType if statement
 
 	};	
@@ -270,26 +225,32 @@
  	this.parentRef = thisReference;
  	this.attackPower = null;
  	if(this.parentRef.badNPC_Type == "monkey"){
- 		this.attackPower = -0.000003;
+ 		this.defaultAttackPower = -0.00003;
+ 		this.attackPower = this.defaultAttackPower;
  	}else if(this.parentRef.badNPC_Type == "gorilla"){
- 		this.attackPower = -0.000005;
+ 		this.defaultAttackPower = -0.00005;
+ 		this.attackPower = this.defaultAttackPower;
  	}
  	
  	this.hitMissRatio = 1;
 	this.hit = false;
 	this.miss = false;
 
+	this.now;
+	this.delta;
+
 
  	this.pullSkirt = function(targetReference){
- 		// I need to know the number of the sprite to change to... waiting for max..
  		
 		if (this.parentRef.actionType == 1) {
-			//console.log('badNPC is pulling the skirts');
+			//console.log('badNPC is pulling the skirts of: ' + targetReference.goodNPC_Type);
+
+			// Draw the sprite to pull the skirt
 			switch(this.parentRef.facingWhichDirection) {
 
 				case 'up':
 					if (this.parentRef.badNPC_Type == "monkey") {
-						this.parentRef.whichSprite = this.parentRef.width * 14;
+						this.parentRef.whichSprite = this.parentRef.width * 14;//need to update
 					} else {
 						this.parentRef.whichSprite = this.parentRef.width * 14;
 					}
@@ -297,7 +258,7 @@
 
 				case 'down':
 					if (this.parentRef.badNPC_Type == "monkey") {
-						this.parentRef.whichSprite = this.parentRef.width * 14;
+						this.parentRef.whichSprite = this.parentRef.width * 14;//need to update
 					} else {
 						this.parentRef.whichSprite = this.parentRef.width * 14;
 					}
@@ -305,53 +266,105 @@
 
 				case 'right':
 					if (this.parentRef.badNPC_Type == "monkey") {
-						this.parentRef.whichSprite = this.parentRef.width * 14;
+						this.parentRef.whichSprite = this.parentRef.width * 22;
 					} else {
-						this.parentRef.whichSprite = this.parentRef.width * 14;
+						this.parentRef.whichSprite = this.parentRef.width * 22;
 					}
 					break;
 
 				case 'left':
 					if (this.parentRef.badNPC_Type == "monkey") {
-						this.parentRef.whichSprite = this.parentRef.width * 14;
+						this.parentRef.whichSprite = this.parentRef.width * 20;
 					} else {
-						this.parentRef.whichSprite = this.parentRef.width * 14;
+						this.parentRef.whichSprite = this.parentRef.width * 20;
 					}
 					break;
 
 			}//switch case
-		}//actionType if statement
-		
-		this.parentRef.render();
 
-		//Then update attributes if it is a hit
-		if(true == this.hit){
+			// Render the image
+			this.parentRef.render();
+
+			//Then update attributes if it is a hit
 			targetReference.updateHealth(this.attackPower);
+<<<<<<< HEAD
 			//console.log('the badNPC pulled a skirt');
 		} else {
 			//console.log('the badNPC missed pulling the skirt');
 		}
     	
+=======
+			//for testing
+			console.log(this.parentRef.selfType + ' delivered ' + this.attackPower + ' damage');
+			console.log(this.parentRef.selfType + ' updated ' + targetReference.selfType + ' health');
+			this.now = Date.now();
+			this.delta = this.now - this.parentRef.lastRender;
+
+			// Retreat the pulling action
+			if(this.delta > this.parentRef.animSpeed){
+				switch(this.parentRef.facingWhichDirection) {
+
+					case 'up':
+						if (this.parentRef.badNPC_Type == "monkey") {
+							this.parentRef.whichSprite = this.parentRef.width * 14;//need to update
+						} else {
+							this.parentRef.whichSprite = this.parentRef.width * 14;
+						}
+						break;
+
+					case 'down':
+						if (this.parentRef.badNPC_Type == "monkey") {
+							this.parentRef.whichSprite = this.parentRef.width * 14;//need to update
+						} else {
+							this.parentRef.whichSprite = this.parentRef.width * 14;
+						}
+						break;
+
+					case 'right':
+						if (this.parentRef.badNPC_Type == "monkey") {
+							this.parentRef.whichSprite = this.parentRef.width * 23;
+						} else {
+							this.parentRef.whichSprite = this.parentRef.width * 23;
+						}
+						break;
+
+					case 'left':
+						if (this.parentRef.badNPC_Type == "monkey") {
+							this.parentRef.whichSprite = this.parentRef.width * 21;
+						} else {
+							this.parentRef.whichSprite = this.parentRef.width * 21;
+						}
+						break;
+
+				}//switch case
+			}
+
+			// Render the image
+			this.parentRef.render();
+
+		}//actionType if statement
+		
+>>>>>>> fixed quite some bugs..made the code neater..
     };//end of pullskirt function
     
     this.attackPlayer = function(targetReference){
     	
 		if (this.parentRef.actionType == 2) {
-			//console.log('the badNPC is attacking the Hero');
-			//console.log('the ' + this.parentRef.badNPC_Type + ' is gonna attack');
+
+			// Draw the attack sprite
 			switch(this.parentRef.facingWhichDirection) {
 
 				case 'up':
 					if (this.parentRef.badNPC_Type == "monkey") {
-						this.parentRef.whichSprite = this.parentRef.width * 14;
+						this.parentRef.whichSprite = this.parentRef.width * 13;
 					} else {
-						this.parentRef.whichSprite = this.parentRef.width * 14;
+						this.parentRef.whichSprite = this.parentRef.width * 13;
 					}
 					break;
 
 				case 'down':
 					if (this.parentRef.badNPC_Type == "monkey") {
-						this.parentRef.whichSprite = this.parentRef.width * 14;
+						this.parentRef.whichSprite = this.parentRef.width * 14;//need to update
 					} else {
 						this.parentRef.whichSprite = this.parentRef.width * 14;
 					}
@@ -374,17 +387,69 @@
 					break;
 
 			}//switch case
-		}//actionType if statement
-    	
-    	this.parentRef.render();
 
-		//Then update attributes if it is a hit
-		if(true == this.hit){
+			// Render the image
+    		this.parentRef.render();
+
+			// Then update attributes if it is a hit
 			targetReference.updateHealth(this.attackPower);
+<<<<<<< HEAD
 			//console.log('the badNPC attacked the player');
 		} else {
 			//console.log('the badNPC missed the player');
 		}
+=======
+			//for testing
+			console.log(this.parentRef.selfType + ' delivered ' + this.attackPower + ' damage');
+			console.log(this.parentRef.selfType + ' updated ' + targetReference.selfType + ' health');
+			this.now = Date.now();
+			this.delta = this.now - this.parentRef.lastRender;
+
+			// Retreat the pulling action
+			if(this.delta > this.parentRef.animSpeed){
+			
+				switch(this.parentRef.facingWhichDirection) {
+
+					case 'up':
+						if (this.parentRef.badNPC_Type == "monkey") {
+							this.parentRef.whichSprite = this.parentRef.width * 12;
+						} else {
+							this.parentRef.whichSprite = this.parentRef.width * 12;
+						}
+						break;
+
+					case 'down':
+						if (this.parentRef.badNPC_Type == "monkey") {
+							this.parentRef.whichSprite = this.parentRef.width * 14;//need to update
+						} else {
+							this.parentRef.whichSprite = this.parentRef.width * 14;
+						}
+						break;
+
+					case 'right':
+						if (this.parentRef.badNPC_Type == "monkey") {
+							this.parentRef.whichSprite = this.parentRef.width * 18;
+						} else {
+							this.parentRef.whichSprite = this.parentRef.width * 18;
+						}
+						break;
+
+					case 'left':
+						if (this.parentRef.badNPC_Type == "monkey") {
+							this.parentRef.whichSprite = this.parentRef.width * 16;
+						} else {
+							this.parentRef.whichSprite = this.parentRef.width * 16;
+						}
+						break;
+
+				}//switch case
+			}
+
+			// Render the image
+    		this.parentRef.render();
+
+		}//actionType if statement
+>>>>>>> fixed quite some bugs..made the code neater..
 
     };
     
@@ -403,27 +468,31 @@
 	
 	this.parentRef = thisReference;
 	this.fightController = new FightController(this);
+	this.now;
+	this.delta;
 	//Only the fiesty lady can attack
-	if (this.parentRef.goodNPC_Type == "fiesty"){		
-		this.attackPower = -5;
+	if (this.parentRef.goodNPC_Type == "fiesty"){
+		this.defaultAttackPower = -5;		
+		this.attackPower = this.defaultAttackPower;
 		this.hitMissRatio = 1;
-		this.hit = false;
-		this.miss = false;
-	
+		//this.hit = false;
+		//this.miss = false;
 	}
  	 		
 	this.strikeWithUmbrella = function(targetReference){
     	
-    	console.log('lady target reference is: ' + targetReference);
+    	
     	if (this.parentRef.actionType == 1) {
+    		//console.log('the fiesty lady is attacking and her target reference is: ' + targetReference);
+    		// Get the lady to attack with the umbrella
     		switch(this.parentRef.facingWhichDirection) {
 
 				case 'up':
-					this.parentRef.whichSprite = this.parentRef.width * 14;
+					this.parentRef.whichSprite = this.parentRef.width * 21;
 					break;
 
 				case 'down':
-					this.parentRef.whichSprite = this.parentRef.width * 14;
+					this.parentRef.whichSprite = this.parentRef.width * 23;
 					break;
 
 				case 'right':
@@ -436,17 +505,48 @@
 
 			}//switch case statement
     	
+    		// Render the image
+    		this.parentRef.render();
+
+    		//Update the target's health only for a fiesty lady
+    		if(this.parentRef.goodNPC_Type == "fiesty"){
+				targetReference.updateHealth(this.attackPower);
+				//for testing
+				console.log(this.parentRef.selfType + ' delivered ' + this.attackPower + ' damage');
+				console.log(this.parentRef.selfType + ' updated ' + targetReference.selfType + ' health');
+			}
+			
+			this.now = Date.now();
+			this.delta = this.now - this.parentRef.lastRender;
+			// Retreat the umbrella action
+			if(this.delta > this.parentRef.animSpeed){
+				// Retreat the umbrella hit
+				switch(this.parentRef.facingWhichDirection) {
+
+					case 'up':
+						this.parentRef.whichSprite = this.parentRef.width * 20;
+						break;
+
+					case 'down':
+						this.parentRef.whichSprite = this.parentRef.width * 22;
+						break;
+
+					case 'right':
+						this.parentRef.whichSprite = this.parentRef.width * 18;
+						break;
+
+					case 'left':
+						this.parentRef.whichSprite = this.parentRef.width * 16;
+						break;
+
+				}//switch case statement
+			}
+
+			// Render the image
+    		this.parentRef.render();
+
     	}//actionType if statement	
-    	
-    	//Update the target's health	
-    	this.parentRef.render();
-    	if(this.parentRef.goodNPC_Type == "fiesty" && true == this.hit){
-			targetReference.updateHealth(this.attackPower);
-			console.log('the goodNPC hit with an umbrella');
-		} else {
-			console.log('the goodNPC missed the hit');
-		}
-    	
+    	    	
     };//strike with umbrella function  
       
  }//end of goodNPC constructor
@@ -534,9 +634,10 @@
 	this.playerSpeed = 2;
 	this.NPCSpeed = 6;
 	this.spawnTime = 0;
-
 	this.keepMoving = false;
 	this.lastMovedDirection = 0;
+	// For the randomly acquired number to toggle hit miss ratio
+	this.randomMiser = new Randomiser();
 	
 	//Pass a reference of the parent to the child..
 	this.HeroType = null;
@@ -839,9 +940,6 @@
 		this.outerHealthMeterX = this.innerHealthMeterX;
 		this.outerHealthMeterY = this.innerHealthMeterY; 
 		
-		//Update the hit miss ratio
-		this.updateHitMissRatio();
-
         // loop through all of the rocks in the array
         // we use an for-in loop to go through the rocks in case
         // we later add some logic that can destroy static objects
@@ -922,19 +1020,21 @@
     };
 
 	this.updateHealth = function(thisHealth){
-		
-		this.innerHealthMeterWidth += (thisHealth*0.3);
+		//console.log('the health passed in is: ' + thisHealth);
+		this.innerHealthMeterWidth += (thisHealth * 0.3);
+		this.health = this.innerHealthMeterWidth;
 		// 30 is the maximum width of the innerHealthMeter
 		if(this.innerHealthMeterWidth > 30){
 			this.innerHealthMeterWidth = 30;	
+			this.health = this.innerHealthMeterWidth;
 		
 		} else if(this.innerHealthMeterWidth < 0) {
 			this.innerHealthMeterWidth = 0;
+			this.health = this.innerHealthMeterWidth;
 			// If the hero is dead..update the necessary parameters
 			this.destroyed = true;
 			console.log(this.selfType + ' is dead');
 		}
-		//console.log('the ' + this.selfType + ' health meter is: ' + this.innerHealthMeterWidth);
 
 	}; 
     
@@ -949,14 +1049,47 @@
         }
     };
 
-
+    // Okay a small change, this function will update the attackPower 
+    // using the hitMissRatio, instead of setting hit or miss to TRUE
     this.updateHitMissRatio = function(){
 
-    	// Generate a random number between 1 and 10
-    	var localRandomNumber = Math.floor((Math.random()*10)+1);
+    	// New implementation to toggleAttackPower
+    	switch(this.selfType) {
+    		case 0:
+    			this.HeroType.damageDelivered = this.HeroType.defaultDamageDelivered;
+    			this.HeroType.damageDelivered *= this.HeroType.hitMissRatio;
+    			//console.log('damageDelivered is: ' + this.HeroType.damageDelivered);
+    			break;
+    		case 1:
+    			this.HeroType.attackPower = this.HeroType.defaultAttackPower;
+    			this.HeroType.attackPower *= this.HeroType.hitMissRatio;
+    			//console.log('attackPower is: ' + this.HeroType.attackPower);
+    			break;
+    		case 2:
+    			this.HeroType.attackPower = this.HeroType.defaultAttackPower;
+    			this.HeroType.attackPower *= this.HeroType.hitMissRatio;
+    			//console.log('attackPower is: ' + this.HeroType.attackPower);
+    			break;
+    		case 3:
+    			//console.log('the attack to update is non existence for thin lady');
+    			break;
+    		case 4:
+    			this.HeroType.attackPower = this.HeroType.defaultAttackPower;
+    			this.HeroType.attackPower *= this.HeroType.hitMissRatio;
+    			//console.log('attackPower is: ' + this.HeroType.attackPower);
+    			break;
+    		default:
+    			console.log('the self type is invalid');
+    			break;
     	
-    	// Check the hit miss ratio for example if it is 0.3, 
-    	// the heroObject has to hit 3 times and miss 7 times
+    	}//switch case statement
+
+
+    	/* Toggle Hit Miss Ratio Implemnetation
+    	Generate a random number between 1 and 10
+    	var localRandomNumber = Math.floor((Math.random()*10)+1);
+    	Check the hit miss ratio for example if it is 0.3, 
+    	the heroObject has to hit 3 times and miss 7 times
     	if((this.HeroType.hitMissRatio * 10) <= localRandomNumber) {
     		//This implies a hit should occur
     		//console.log('a hit was computed');
@@ -968,6 +1101,7 @@
     		this.HeroType.hit = false;
     		this.HeroType.miss = true;
     	}
+    	*/
     };
 	  
 }//heroObject constructor
