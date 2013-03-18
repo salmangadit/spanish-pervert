@@ -81,19 +81,19 @@ function Controller(){
 			ladies[iter].targetGrid = new Array(hero.gridX,hero.gridY);			
 		}
 		if(ladies[iter].gridX<=2 && ladies[iter].gridY>=25){
+			// Update the player learning also
+			//playerLearningObj.ladyRescueUpdate(ladies[iter]);
+			// To clear the health bar issue upon reaching safe zone
+			ladies[iter].HeroType.specialRender();
 			ladies[iter].destroyed = true;
 			ladies[iter].targetGrid = (0,27);
 			savedLadiesCount++;
 			// Update global flag that a lady was saved
-			ladyWasSaved = true;
-			// Update the player learning also
-			playerLearningObj.ladyRescueUpdate(ladies[iter]);
-			// To clear the health bar issue upon reaching safe zone
-			ladies[iter].HeroType.specialRender();
+			ladyWasSaved = true;			
 			hero.targetBot = null;
 		}
 	}
-	//console.log(ladies[1].facingWhichDirection);
+	console.log(ladies.length);
 }
 
 function ladiesLoiterTimer(){

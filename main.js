@@ -86,7 +86,7 @@ function init() {
 	setInterval(function(){AI.checkEndOfPhase();}, screenUpdateTime);
 	setInterval(updatePlayerLearning, screenUpdateTime);
 	//temporarily putting basic AI calls here till controller is up
-	AI.executePhase();
+	//AI.executePhase();
 
 	document.addEventListener('keydown', function(event) {
 		
