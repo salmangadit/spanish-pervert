@@ -7,12 +7,16 @@ var baseCanvas;
 var baseContext;
 var debugCanvas;
 var debugContext;
+var graphCanvas;
+var graphContext;
 var gameW = 800;
 var gameH = 600;
 var hero = null;
 var lion = null;
 var VG = null;
 var debugMode = false;
+var critArray = new Array(0,0,0,0,0,0,0,0,0,0);
+
 
 // Variable to hold XML data
 var savedData = null;
@@ -66,7 +70,8 @@ function init() {
 	xmlhttp = new XMLHttpRequest();
 	//http://www.salmangadit.me/spanish-pervert/data/data.xmlC:/Users/Salman/Documents/GitHub/spanish-pervert/data/data.xml
 	// /Users/TheGreatOne/Desktop/Sem_6/EE4702/Project/Project_2/spanish-pervert/data/data.xml
-	xmlhttp.open("GET", "C:/Users/Salman/Documents/GitHub/spanish-pervert/data/data.xml", false);
+	//xmlhttp.open("GET", "C:/Users/YuanIng/Documents/GitHub/spanish-pervert/data/data.xml", false);
+	xmlhttp.open("GET", "C:/Users/YuanIng/Documents/GitHub/spanish-pervert/data/data.xml", false);
 	xmlhttp.send();
 	xmlDoc = xmlhttp.responseXML;
 
@@ -388,6 +393,11 @@ function initCanvas() {
 	// create a context object from our canvas
 	debugContext = debugCanvas.getContext("2d");
 	
+	// retrieve a reference to the debugCanvas object
+	graphCanvas = document.getElementById("graphCanvas");
+	// create a context object from our canvas
+	graphContext = graphCanvas.getContext("2d");
+	
 	// set the width and height of the canvas
 	canvas.width = gameW;
 	canvas.height = gameH;
@@ -403,6 +413,10 @@ function initCanvas() {
 	// set the width and height of the debugCanvas
 	debugCanvas.width = gameW;
 	debugCanvas.height = gameH;
+	
+	// set the width and height of the graphCanvas
+	graphCanvas.width = gameW*2;
+	graphCanvas.height = gameH;
 	
 	baseContext.fillStyle = baseColor;
 	// fill the entire baseContext with the color
