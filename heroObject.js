@@ -11,6 +11,7 @@
 
 
  var maximumHealthLife = 100;
+ var constantHealthRecovery = 2;
   
  //------------------------ mainCharacter implementation -------------------------
  
@@ -84,8 +85,8 @@
 			//Then update attributes (because it will always be a hit)
 			targetReference.updateHealth(this.damageDelivered);
 			//For testing
-			console.log(this.parentRef.selfType + ' delivered ' + this.damageDelivered + ' damage');
-			console.log(this.parentRef.selfType + ' updated ' + targetReference.selfType + ' health');
+			//console.log(this.parentRef.selfType + ' delivered ' + this.damageDelivered + ' damage');
+			//console.log(this.parentRef.selfType + ' updated ' + targetReference.selfType + ' health');
 			this.arrayOfLastMoves.push("punch");					
 			this.now = Date.now();
 			this.delta = this.now - this.parentRef.lastRender;
@@ -159,8 +160,8 @@
 			//Then update attributes (because it will always be a hit)
 			targetReference.updateHealth(this.damageDelivered);
 			//for testing
-			console.log(this.parentRef.selfType + ' delivered ' + this.damageDelivered + ' damage');
-			console.log(this.parentRef.selfType + ' updated ' + targetReference.selfType + ' health');
+			//console.log(this.parentRef.selfType + ' delivered ' + this.damageDelivered + ' damage');
+			//console.log(this.parentRef.selfType + ' updated ' + targetReference.selfType + ' health');
 			this.arrayOfLastMoves.push("kick");
 			this.now = Date.now();
 			this.delta = this.now - this.parentRef.lastRender;
@@ -288,8 +289,8 @@
 			//Then update attributes if it is a hit
 			targetReference.updateHealth(this.attackPower);
 			//for testing
-			console.log(this.parentRef.selfType + ' delivered ' + this.attackPower + ' damage');
-			console.log(this.parentRef.selfType + ' updated ' + targetReference.selfType + ' health');
+			//console.log(this.parentRef.selfType + ' delivered ' + this.attackPower + ' damage');
+			//console.log(this.parentRef.selfType + ' updated ' + targetReference.selfType + ' health');
 			this.now = Date.now();
 			this.delta = this.now - this.parentRef.lastRender;
 
@@ -386,8 +387,8 @@
 			// Then update attributes if it is a hit
 			targetReference.updateHealth(this.attackPower);
 			//for testing
-			console.log(this.parentRef.selfType + ' delivered ' + this.attackPower + ' damage');
-			console.log(this.parentRef.selfType + ' updated ' + targetReference.selfType + ' health');
+			//console.log(this.parentRef.selfType + ' delivered ' + this.attackPower + ' damage');
+			//console.log(this.parentRef.selfType + ' updated ' + targetReference.selfType + ' health');
 			this.now = Date.now();
 			this.delta = this.now - this.parentRef.lastRender;
 
@@ -435,7 +436,7 @@
     		this.parentRef.render();
 
 		}//actionType if statement
-		
+
     };
     
  }//end of badNPC constructor
@@ -497,8 +498,8 @@
     		if(this.parentRef.goodNPC_Type == "fiesty"){
 				targetReference.updateHealth(this.attackPower);
 				//for testing
-				console.log(this.parentRef.selfType + ' delivered ' + this.attackPower + ' damage');
-				console.log(this.parentRef.selfType + ' updated ' + targetReference.selfType + ' health');
+				//console.log(this.parentRef.selfType + ' delivered ' + this.attackPower + ' damage');
+				//console.log(this.parentRef.selfType + ' updated ' + targetReference.selfType + ' health');
 			}
 			
 			this.now = Date.now();
@@ -533,6 +534,12 @@
     	}//actionType if statement	
     	    	
     };//strike with umbrella function  
+
+    // To clear the health bar issue when rescued
+    this.specialRender = function(){
+    	console.log('special render was called upon rescue');
+    	iHMCanvasContext.clearRect(0,0,iHMCanvas.width,iHMCanvas.height);
+    };
       
  }//end of goodNPC constructor
  
@@ -666,11 +673,9 @@
             			  Math.floor(this.y), this.width, this.height);	
         
         //Clear the canvas that the innerHealthMeter is drawn, then render
-        //iHMCanvasContext.clearRect(this.coordinateToClearX, this.coordinateToClearY, this.innerHealthMeterWidth, this.innerHealthMeterHeight);
-        iHMCanvasContext.clearRect(this.coordinateToClearX, this.coordinateToClearY, 64, 64);					   
+        iHMCanvasContext.clearRect(this.coordinateToClearX, this.coordinateToClearY, 50, 50);					   
         iHMCanvasContext.drawImage(this.innerHealthMeterImage, this.innerHealthMeterX, this.innerHealthMeterY,
         						   this.innerHealthMeterWidth, this.innerHealthMeterHeight);
-        //iHMCanvasContext.restore();
         
         //The outer health meter is drawn on the same canvas
         context.drawImage(this.outerHealthMeterImage,            			    
@@ -1001,6 +1006,23 @@
 					}
 				}
 			}
+		}
+
+		// Means they are walking around, recover their health
+		if(this.actionType == 0 && (this.selfType != 1 || this.selfType != 2) ) {
+
+			// For testing only
+			/*if(this.selfType == 3){
+				console.log(this.selfType + ' previous health is: ' + this.health);
+			}*/
+			
+			// The actual health update
+			this.updateHealth(constantHealthRecovery * 3);
+
+			// For testing only
+			/*if(this.selfType == 3){
+				console.log(this.selfType + ' current health with recovery is: ' + this.health);
+			}*/
 		}
     };
 

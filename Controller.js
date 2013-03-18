@@ -84,10 +84,16 @@ function Controller(){
 			ladies[iter].destroyed = true;
 			ladies[iter].targetGrid = (0,27);
 			savedLadiesCount++;
+			// Update global flag that a lady was saved
+			ladyWasSaved = true;
+			// Update the player learning also
+			playerLearningObj.ladyRescueUpdate(ladies[iter]);
+			// To clear the health bar issue upon reaching safe zone
+			ladies[iter].HeroType.specialRender();
 			hero.targetBot = null;
 		}
 	}
-	console.log(ladies[1].facingWhichDirection);
+	//console.log(ladies[1].facingWhichDirection);
 }
 
 function ladiesLoiterTimer(){

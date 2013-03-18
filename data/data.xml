@@ -22,7 +22,7 @@
     <GridRow>--------------------------------</GridRow>
     <GridRow>------PP----C-------------------</GridRow>
     <GridRow>-------------------C---F---B--B-</GridRow>
-    <GridRow>--------------------------------</GridRow>
+    <GridRow>-------------------------M------</GridRow>
     <GridRow>-PVVVVP----------------------B--</GridRow>
     <GridRow>--------WWWWWW----WWWWWWW-------</GridRow>
     <GridRow>--------WVVCC-------CWVVW-------</GridRow>
@@ -31,7 +31,7 @@
     <GridRow>---------------------B--WWW-WWW-</GridRow>
     <GridRow>--CC----W----PPPP----B--VV----W-</GridRow>
     <GridRow>--CCBB--W----PA-P-------------W-</GridRow>
-    <GridRow>--------W----P--P----------P--W-</GridRow>
+    <GridRow>--------W----P--P-------T--P--W-</GridRow>
     <GridRow>-------------PPPP-------------W-</GridRow>
     <GridRow>------------------------------W-</GridRow>
     <GridRow>--------WVV-------------WWWWWWW-</GridRow>
@@ -42,10 +42,10 @@
     <GridRow>--------WWWW--WWWWWWWWWWW-------</GridRow>
     <GridRow>-----------------VW-------------</GridRow>
     <GridRow>-----------------VW-------------</GridRow>
-    <GridRow>------F----------VW--------VVVVV</GridRow>
-    <GridRow>S----------------PW---BB--------</GridRow>
-    <GridRow>-------------CC---W-------------</GridRow>
-    <GridRow>-------------CC-------PP--------</GridRow>
+    <GridRow>------F--M-------VW--------VVVVV</GridRow>
+    <GridRow>SSS--------------PW---BB--------</GridRow>
+    <GridRow>SSS----------CC---W-------------</GridRow>
+    <GridRow>SSS----------CC-------PP--------</GridRow>
   </Grid>
 </GameData>
 
