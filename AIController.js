@@ -154,8 +154,8 @@ function AIController(){
 		if (this.currPhase.phaseType){
 			if (this.currPhase.phaseType == "attack"){
 				// An attack phase is ended by killing all enemies AND meeting criticality requirement
-					if (enemies.length == 0){
-						if (Criticality.get() >= currentCriticalityRequirement){
+					if (enemies.length == 1){
+						if (Criticality.get() <= currentCriticalityRequirement){
 							console.log("Changing from Phase: "+ currentPhase + "to next phase");
 							this.updateForNextPhase();
 						} else {
@@ -168,7 +168,7 @@ function AIController(){
 							var criticalityDiff = projectedCriticality - Criticality.get();
 							var requirementDiff = currentCriticalityRequirement - Criticality.get();
 
-							var numberToSpawn = parseInt(requirementDiff/criticalityDiff);
+							var numberToSpawn = requirementDiff/criticalityDiff;
 
 							var parsedPhaseRatio = this.currPhase.scenarioRatio.split(':');
 							var alreadyTargeted = new Array();
@@ -179,7 +179,7 @@ function AIController(){
 
 							var chosenRatioIndex = parsedPhaseRatio.length - 1;
 							for (var i =0; i<parsedPhaseRatio.length; i++){
-								if (numberToSpawn < parsedPhaseRatio[i]){
+								if (numberToSpawn < parsedPhaseRatio[m]){
 									continue;
 								} else {
 									chosenRatioIndex = i;
@@ -197,7 +197,7 @@ function AIController(){
 					}
 			} else if (this.currPhase.phaseType == "defense"){
 				//A defense phase is ended by meeting the criticality requirement
-				if (Criticality.get() <= currentCriticalityRequirement){
+				if (Criticality.get() == currentCriticalityRequirement){
 					console.log("Changing from Phase: "+ currentPhase + "to next phase");
 					this.updateForNextPhase();
 				} else {

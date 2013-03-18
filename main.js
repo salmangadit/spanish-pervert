@@ -656,5 +656,18 @@ function updatePlayerLearning(){
 	//arrayOfPlayerData = [];
 }
 
+function checkDangerStage(){
+	if (hero.health <= 7){
+		//there is a problem, the hero is getting the shiznit beaten out of him!
+		//Options:
+		//0. Find number of enemies around the hero
+		//1. Distract each enemy with a lady around
+		//2. She should come near the scene
+		//3. Enemy should follow her
+
+		//COMBO becomes easier, as well
+	}
+}
+
 
 
