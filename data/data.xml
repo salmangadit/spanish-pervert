@@ -7,7 +7,7 @@
     <Object id="G" type="gorilla"    	src="images/gorilla-move.png" 	width="32" 	height="32"></Object>
     <Object id="T" type="thin"       	src="images/shy_32x32.png"     	width="32" 	height="32"></Object>
     <Object id="F" type="fiesty"     	src="images/fiesty-move.png" 	width="32" 	height="32"></Object>
-    <Object id="S" type="safezone"	 	src="images/safe.png"			width="32" 	height="32"></Object>
+    <Object id="S" type="safezone"	 	src="images/safe.png"			width="96" 	height="96"></Object>
     <Object id="V" type="collidable"	src="images/vendor.png"     	width="32" 	height="32"></Object>
     <Object id="P" type="collidable"	src="images/plant.png"    	 	width="28" 	height="30"></Object>
     <Object id="W" type="collidable"	src="images/wall.png"     		width="30" 	height="30"></Object>
