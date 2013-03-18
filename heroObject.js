@@ -571,17 +571,6 @@
 		this.targetGrid = new Array(specHero.gridX, specHero.gridY);
 	};
 	
-	//this function makes a heroObject loiter to random spots
-	this.loiter = function(){
-		//alert("a");
-		if(this.targetGrid[0] == this.gridX && this.targetGrid[1] == this.gridY){
-			//alert("a");
-			xcoor = Math.floor(Math.random() * 33);
-			ycoor = Math.floor(Math.random() * 28);
-			this.targetGrid = new Array(xcoor,ycoor);
-		}
-	};
-	
     this.render = function(){
         context.drawImage(this.image, this.whichSprite, 0, 
             			  this.width, this.height, Math.floor(this.x), 

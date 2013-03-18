@@ -83,7 +83,7 @@ function Controller(){
 		}
 	}
 	
-	//console.log(collidables[9].maxOccupants);
+	console.log(collidables[0].maxOccupants);
 }
 
 function ladiesLoiterTimer(){
@@ -426,6 +426,7 @@ function EnemyAwareness(bot){
 
 function EnemiesRadialAwareness(){
 	for(iter in enemies){
+		var awareness = false;
 		var imin = enemies[iter].gridX - 3;
 		var imax = enemies[iter].gridX + 3;
 		var jmin = enemies[iter].gridY - 3;
@@ -438,8 +439,12 @@ function EnemiesRadialAwareness(){
 			for(var j = jmin; j < jmax; j++){
 				if(VG[i][j].selfType == 0 && VG[i][j].maxOccupants > 0){
 					enemies[iter].moveTarget = VG[i][j];
+					awareness = true;
 				}
 			}
+		}
+		if(awareness == false && enemies[iter].moveTarget.selfType == 0){
+			//enemies[iter].moveTarget = 
 		}
 	}
 }
@@ -448,8 +453,9 @@ function LadyAwareness(bot){
 	//above
 	if(bot.gridY-1>=0){
 		if(VG[bot.gridX][bot.gridY-1] != null){
-			if( VG[bot.gridX][bot.gridY-1].selfType == 1 ||
-				VG[bot.gridX][bot.gridY-1].selfType == 2 ){		
+			if( VG[bot.gridX][bot.gridY-1].moveTarget == bot &&
+				(VG[bot.gridX][bot.gridY-1].selfType == 1 ||
+				VG[bot.gridX][bot.gridY-1].selfType == 2 )){		
 				bot.facingWhichDirection = "up";
 				bot.actionType = 1;
 				bot.targetBot = VG[bot.gridX][bot.gridY-1];
@@ -468,8 +474,9 @@ function LadyAwareness(bot){
 	//below
 	if(bot.gridY+1<=27){
 		if(VG[bot.gridX][bot.gridY+1] != null){
-			if( VG[bot.gridX][bot.gridY+1].selfType == 1 ||
-				VG[bot.gridX][bot.gridY+1].selfType == 2 ){		
+			if( VG[bot.gridX][bot.gridY+1].moveTarget == bot &&
+				(VG[bot.gridX][bot.gridY+1].selfType == 1 ||
+				VG[bot.gridX][bot.gridY+1].selfType == 2 )){		
 				bot.facingWhichDirection = "up";
 				bot.actionType = 1;
 				bot.targetBot = VG[bot.gridX][bot.gridY+1];
@@ -489,8 +496,9 @@ function LadyAwareness(bot){
 	//left
 	if(bot.gridX-1>=0){
 		if(VG[bot.gridX-1][bot.gridY] != null){
-			if( VG[bot.gridX-1][bot.gridY].selfType == 1 ||
-				VG[bot.gridX-1][bot.gridY].selfType == 2 ){		
+			if( VG[bot.gridX-1][bot.gridY].moveTarget == bot &&
+				(VG[bot.gridX-1][bot.gridY].selfType == 1 ||
+				VG[bot.gridX-1][bot.gridY].selfType == 2 )){		
 				bot.facingWhichDirection = "up";
 				bot.actionType = 1;
 				bot.targetBot = VG[bot.gridX-1][bot.gridY];
@@ -509,8 +517,9 @@ function LadyAwareness(bot){
 	//right
 	if(bot.gridX+1<=32){
 		if(VG[bot.gridX+1][bot.gridY] != null){
-			if( VG[bot.gridX+1][bot.gridY].selfType == 1 ||
-				VG[bot.gridX+1][bot.gridY].selfType == 2 ){		
+			if( VG[bot.gridX+1][bot.gridY].moveTarget == bot &&
+				(VG[bot.gridX+1][bot.gridY].selfType == 1 ||
+				VG[bot.gridX+1][bot.gridY].selfType == 2 )){		
 				bot.facingWhichDirection = "up";
 				bot.actionType = 1;
 				bot.targetBot = VG[bot.gridX][bot.gridY-1];

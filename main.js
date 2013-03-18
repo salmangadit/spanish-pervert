@@ -10,6 +10,7 @@ var debugContext;
 var gameW = 800;
 var gameH = 600;
 var hero = null;
+var lion = null;
 var VG = null;
 var debugMode = false;
 
@@ -65,7 +66,7 @@ function init() {
 	xmlhttp = new XMLHttpRequest();
 	//http://www.salmangadit.me/spanish-pervert/data/data.xmlC:/Users/Salman/Documents/GitHub/spanish-pervert/data/data.xml
 	// /Users/TheGreatOne/Desktop/Sem_6/EE4702/Project/Project_2/spanish-pervert/data/data.xml
-	xmlhttp.open("GET", "C:/Users/Salman/Documents/GitHub/spanish-pervert/data/data.xml", false);
+	xmlhttp.open("GET", "C:/Users/YuanIng/Desktop/Game_2/v9/spanish-pervert/data/data.xml", false);
 	xmlhttp.send();
 	xmlDoc = xmlhttp.responseXML;
 
@@ -221,7 +222,6 @@ function initGameTiles() {
 				collidables[collidableCount].gridX = j;
 				collidables[collidableCount].gridY = i;
 				collidables[collidableCount].selfType = 9;
-
 				// set up the image to use the value loaded from the XML
 				collidables[collidableCount].image = new Image();
 				collidables[collidableCount].image.src = gameObjects[objIndex].imageSrc;
@@ -289,7 +289,23 @@ function initGameTiles() {
 					hero.render();
 					//hero.render();
 				};
-				
+			} else if (gameObjects[objIndex].type == "alex") {
+				//7 is for alex
+				lion = new heroObject(7);
+				lion.width = gameObjects[objIndex].width;
+				lion.height = gameObjects[objIndex].height;
+				lion.x = j * tileSize;
+				lion.y = i * tileSize;
+				lion.gridX = lion.x / lion.width;
+				lion.gridY = lion.y / lion.height;
+				lion.image = new Image();
+				// set it's image to the proper src URL
+				lion.image.src = gameObjects[objIndex].imageSrc;
+				// once the image has completed loading, render it to the screen
+				lion.image.onload = function() {
+					lion.render();
+					//lion.render();
+				}; 
 			} else if (gameObjects[objIndex].type == "monkey" || gameObjects[objIndex].type == "gorilla") {
 				// 1 is for monkey_badNPC & 2 is for gorilla_badNPC
 				// 3 is for thin_goodNPC  & 4 is for fiesty_goodNPC 
@@ -582,6 +598,7 @@ function gameLoop() {
 
 		ladyIndex++;
 }
+	lion.render();
 	if(debugMode == true){
 		Debug();
 	}

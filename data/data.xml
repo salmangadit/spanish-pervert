@@ -1,18 +1,21 @@
 <GameData>
   <Objects>
-    <Object id="-" type="nothing"    src="" width="" height=""></Object>
-    <Object id="B" type="collidable" src="images/barrel.png" 		width="28" height="28"></Object>
-    <Object id="H" type="player"     src="images/hero_32x32.png" 	width="32" height="32"></Object>
-    <Object id="M" type="monkey"     src="images/monkey_32x32.png"  width="32" height="32"></Object>
-    <Object id="G" type="gorilla"    src="images/gorilla-move.png" 	width="32" height="32"></Object>
-    <Object id="T" type="thin"       src="images/shy_32x32.png"     width="32" height="32"></Object>
-    <Object id="F" type="fiesty"     src="images/fiesty-move.png" 	width="32" height="32"></Object>
-    <Object id="S" type="safezone"	 src="images/safe.png"			width="32" height="32"></Object>
-    <Object id="V" type="collidable"       src="images/vendor.png"     width="30" height="30"></Object>
-    <Object id="P" type="collidable"       src="images/plant.png"     width="28" height="30"></Object>
-    <Object id="W" type="collidable"       src="images/wall.png"     width="30" height="30"></Object>
-    <Object id="C" type="collidable"       src="images/crate.png"     width="30" height="30"></Object>
-    <Object id="L" type="collidable"       src="images/liquid.png"     width="30" height="30"></Object>
+    <Object id="-" type="nothing"    	src="" 							width="" 	height="  "></Object>
+    <Object id="B" type="collidable" 	src="images/barrel.png" 		width="28" 	height="28"></Object>
+    <Object id="H" type="player"     	src="images/hero_32x32.png" 	width="32" 	height="32"></Object>
+    <Object id="M" type="monkey"     	src="images/monkey_32x32.png"  	width="32" 	height="32"></Object>
+    <Object id="G" type="gorilla"    	src="images/gorilla-move.png" 	width="32" 	height="32"></Object>
+    <Object id="T" type="thin"       	src="images/shy_32x32.png"     	width="32" 	height="32"></Object>
+    <Object id="F" type="fiesty"     	src="images/fiesty-move.png" 	width="32" 	height="32"></Object>
+    <Object id="S" type="safezone"	 	src="images/safe.png"			width="32" 	height="32"></Object>
+    <Object id="V" type="collidable"	src="images/vendor.png"     	width="30" 	height="30"></Object>
+    <Object id="P" type="collidable"	src="images/plant.png"    	 	width="28" 	height="30"></Object>
+    <Object id="W" type="collidable"	src="images/wall.png"     		width="30" 	height="30"></Object>
+    <Object id="C" type="collidable"	src="images/crate.png"     		width="30" 	height="30"></Object>
+    <Object id="L" type="collidable"	src="images/liquid.png"			width="30" 	height="30"></Object>
+	<Object id="A" type="alex"			src="images/alex_64x64.png"		width="64"	height="64"></Object>
+	<Object id="a" type="alex"			src=""							width=""	height="  "></Object>
+	
   </Objects>
 
   <Grid tileSize="32" width="33" height="28" baseColor="#CFB53B">
@@ -28,8 +31,8 @@
     <GridRow>--------W------------B--W-------</GridRow>
     <GridRow>---------------------B--WWW-WWW-</GridRow>
     <GridRow>--CC----W----PPPP----B--VV----W-</GridRow>
-    <GridRow>--CCBB--W----PLLP-------------W-</GridRow>
-    <GridRow>--------W----PLLP----------P--W-</GridRow>
+    <GridRow>--CCBB--W----PA-P-------------W-</GridRow>
+    <GridRow>--------W----P--P----------P--W-</GridRow>
     <GridRow>-------------PPPP-------------W-</GridRow>
     <GridRow>--T---------------------------W-</GridRow>
     <GridRow>--------WVV-------------WWWWWWW-</GridRow>
