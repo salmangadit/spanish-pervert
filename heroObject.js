@@ -489,7 +489,7 @@
 	//Specifies the type of character
     this.whichSprite = 0;	
     // How many pixels do we want to move the hero each loop
-    this.moveSpeed = 4;
+    this.moveSpeed = (thisType == 0? 8 : 4);
     //Can use this and * by number of pixels an image is to get the current sprite image
     //this.currentSpriteImageIndex = 0;
     //Set these during collision detections
@@ -534,6 +534,9 @@
 	this.playerSpeed = 2;
 	this.NPCSpeed = 6;
 	this.spawnTime = 0;
+
+	this.keepMoving = false;
+	this.lastMovedDirection = 0;
 	
 	//Pass a reference of the parent to the child..
 	this.HeroType = null;
@@ -597,6 +600,16 @@
         var prevX = this.x;
         var prevY = this.y;
 
+        if (this.x%32 != 0 || this.y%32 !=0){
+        	this.keepMoving = true;
+        } else {
+        	this.keepMoving = false;
+        }
+
+        if (this.keepMoving){
+        	this.keys[0] = this.lastMovedDirection;
+        }
+
         this.elapseSum += elapsed;
 
         if (this.internalX == -1)
@@ -627,24 +640,17 @@
 				}
 				break;
             case 37:
-				 // move the hero left on the screen
-                 //this.internalX -= this.moveSpeed * elapsed;
-                 //this.gridX = parseInt(this.internalX/this.width);
-
-                if (this.elapseSum > (this.selfType == 0 ? this.playerSpeed : this.NPCSpeed))
-                {
-                 	this.x -= this.moveSpeed * elapsed;
-                 	this.gridX = parseInt(this.x/this.width);
-                	this.x = this.gridX * this.width;
-                	this.elapseSum = 0;
-             	}
-                 // if (this.internalX < ((this.gridX * this.width)- (this.width)/16)) {
-                 // 	this.x = (this.gridX-1) * this.width;
-                 // 	this.gridX = parseInt(this.x/this.width);
-                 // } else{
-                 // 	this.x = this.gridX * this.width;
-                 // 	this.gridX = parseInt(this.x/this.width);
-                 // }
+					this.lastMovedDirection = 37;
+					this.x -= this.moveSpeed * 1;
+					//if (this.x%32 == 0){
+						this.gridX = parseInt(this.x/this.width);
+						if (this.x%32 != 0 || this.y%32 !=0){
+				        	this.keepMoving = true;
+				        } else {
+				        	this.keepMoving = false;
+				        	if (this.keys.indexOf(37) > -1) 
+				        		this.keys.splice(hero.keys.indexOf(37), 1);
+				        }
 
                 // Check if the animation timer has elapsed or if we aren't using one of the
                 // two valid sprites for this direction
@@ -671,14 +677,18 @@
                 break;
             case 38:
                 // move the hero up on the screen
-                if (this.elapseSum > (this.selfType == 0 ? this.playerSpeed : this.NPCSpeed))
-                {
-                 	this.y -= this.moveSpeed * elapsed;
-                	this.gridY = parseInt(this.y/this.height);
-                	this.y = this.gridY * this.height;
-                	this.elapseSum = 0;
-             	}
-                
+					this.lastMovedDirection = 38;
+					this.y -= this.moveSpeed * 1;
+					this.gridY = parseInt(this.y/this.height);
+
+					if (this.x%32 != 0 || this.y%32 !=0){
+			        	this.keepMoving = true;
+			        } else {
+			        	this.keepMoving = false;
+			        	if (this.keys.indexOf(38) > -1) 
+			        		this.keys.splice(hero.keys.indexOf(38), 1);
+			        }
+            
                 // Check if the animation timer has elapsed or if we aren't using one of the
                 // two valid sprites for this direction
                 if (delta > this.animSpeed 
@@ -702,14 +712,18 @@
                 break;
             case 39:
                 // move the hero right on the screen
-                if (this.elapseSum > (this.selfType == 0 ? this.playerSpeed : this.NPCSpeed))
-                {
-                 	this.x += this.moveSpeed * elapsed;
-                	this.gridX = parseInt(this.x/this.width) + 1;
-                	this.x = this.gridX * this.width;
-                	this.elapseSum = 0;
-             	}
-                
+					this.lastMovedDirection = 39;
+					this.x += this.moveSpeed * 1;
+					this.gridX = parseInt(this.x/this.width);
+
+					if (this.x%32 != 0 || this.y%32 !=0){
+			        	this.keepMoving = true;
+			        } else {
+			        	this.keepMoving = false;
+			        	if (this.keys.indexOf(39) > -1) 
+			        		this.keys.splice(hero.keys.indexOf(39), 1);
+			        }
+
                 // Check if the animation timer has elapsed or if we aren't using one of the
                 // two valid sprites for this direction
                 if (delta > this.animSpeed 
@@ -733,13 +747,18 @@
                 break;
             case 40:
                 // move the hero down on the screen
-                if (this.elapseSum > (this.selfType == 0 ? this.playerSpeed : this.NPCSpeed))
-                {
-                 	this.y += this.moveSpeed * elapsed;
-                	this.gridY = parseInt(this.y/this.height) + 1;
-                	this.y = this.gridY * this.height;
-                	this.elapseSum = 0;
-             	}
+				this.lastMovedDirection = 40;
+				this.y += this.moveSpeed * 1;
+
+				this.gridY = parseInt(this.y/this.height);
+				if (this.x%32 != 0 || this.y%32 !=0){
+		        	this.keepMoving = true;
+		        } else {
+		        	this.keepMoving = false;
+		        	if (this.keys.indexOf(40) > -1) 
+		        		this.keys.splice(hero.keys.indexOf(40), 1);
+		        }
+
                 // Check if the animation timer has elapsed or if we aren't using one of the
                 // two valid sprites for this direction
                 if (delta > this.animSpeed 

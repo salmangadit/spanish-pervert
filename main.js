@@ -95,7 +95,8 @@ function init() {
 			// of keys being pressed, if not add it to the array
 			//curKey = $.inArray(event.keyCode, hero.keys);
 			if (hero.keys.indexOf(event.keyCode) == -1)
-				hero.keys.push(event.keyCode);
+				//hero.keys.push(event.keyCode);
+				hero.keys[0] = (event.keyCode);
 
 			// if (event.keyCode == 40){
 				// if (AI.currPhase.phaseType == "attack"){
@@ -118,7 +119,7 @@ function init() {
 			// check to see if this key is already in the array
 			// of keys being pressed, if so remove it from the array
 			//curKey = $.inArray(event.keyCode, hero.keys);
-			if (hero.keys.indexOf(event.keyCode) > -1)
+			if (hero.keys.indexOf(event.keyCode) > -1 && !hero.keepMoving) 
 				hero.keys.splice(hero.keys.indexOf(event.keyCode), 1);
 		}
 	});
@@ -474,39 +475,39 @@ function gameLoop() {
 			var nextPoint = path[index][1];
 
 			// check if the enemy collided with a collidable, if it did turn it a random direction
-			if (enemies[curEnemy].collision) {
-				if (enemies[curEnemy].keys[0] == 37) {
-					enemies[curEnemy].keys[0] = 38;
-					enemies[curEnemy].lastKeyChange = Date.now();
-				} else if (enemies[curEnemy].keys[0] == 38) {
-					enemies[curEnemy].keys[0] = 39;
-					enemies[curEnemy].lastKeyChange = Date.now();
-				} else if (enemies[curEnemy].keys[0] == 39) {
-					enemies[curEnemy].keys[0] = 40;
-					enemies[curEnemy].lastKeyChange = Date.now();
-				} else if (enemies[curEnemy].keys[0] == 40) {
-					enemies[curEnemy].keys[0] = 37;
-					enemies[curEnemy].lastKeyChange = Date.now();
-				}
+			// if (enemies[curEnemy].collision) {
+				// if (enemies[curEnemy].keys[0] == 37) {
+				// 	enemies[curEnemy].keys[0] = 38;
+				// 	enemies[curEnemy].lastKeyChange = Date.now();
+				// } else if (enemies[curEnemy].keys[0] == 38) {
+				// 	enemies[curEnemy].keys[0] = 39;
+				// 	enemies[curEnemy].lastKeyChange = Date.now();
+				// } else if (enemies[curEnemy].keys[0] == 39) {
+				// 	enemies[curEnemy].keys[0] = 40;
+				// 	enemies[curEnemy].lastKeyChange = Date.now();
+				// } else if (enemies[curEnemy].keys[0] == 40) {
+				// 	enemies[curEnemy].keys[0] = 37;
+				// 	enemies[curEnemy].lastKeyChange = Date.now();
+				// }
 
-			} else {
+			// } else {
 
 				if (nextPoint) {
-					if (nextPoint.x > enemies[curEnemy].gridX) {
+					if (nextPoint.x > enemies[curEnemy].gridX && !enemies[curEnemy].keepMoving) {
 						enemies[curEnemy].keys[0] = 39;
 						enemies[curEnemy].lastKeyChange = Date.now();
-					} else if (nextPoint.x < enemies[curEnemy].gridX) {
+					} else if (nextPoint.x < enemies[curEnemy].gridX && !enemies[curEnemy].keepMoving) {
 						enemies[curEnemy].keys[0] = 37;
 						enemies[curEnemy].lastKeyChange = Date.now();
-					} else if (nextPoint.y > enemies[curEnemy].gridY) {
+					} else if (nextPoint.y > enemies[curEnemy].gridY && !enemies[curEnemy].keepMoving) {
 						enemies[curEnemy].keys[0] = 40;
 						enemies[curEnemy].lastKeyChange = Date.now();
-					} else if (nextPoint.y < enemies[curEnemy].gridY) {
+					} else if (nextPoint.y < enemies[curEnemy].gridY && !enemies[curEnemy].keepMoving) {
 						enemies[curEnemy].keys[0] = 38;
 						enemies[curEnemy].lastKeyChange = Date.now();
 					}
 				}
-			}
+			//}
 
 			if (path[index].length == 2){
 				enemies[curEnemy].keys.splice(0, 1);
@@ -553,39 +554,39 @@ function gameLoop() {
 			var nextPoint = path[ladyIndex][1];
 
 			// check if the lady collided with a collidable, if it did turn it a random direction
-			if (ladies[curLady].collision) {
-				if (ladies[curLady].keys[0] == 37) {
-					ladies[curLady].keys[0] = 38;
-					ladies[curLady].lastKeyChange = Date.now();
-				} else if (ladies[curLady].keys[0] == 38) {
-					ladies[curLady].keys[0] = 39;
-					ladies[curLady].lastKeyChange = Date.now();
-				} else if (ladies[curLady].keys[0] == 39) {
-					ladies[curLady].keys[0] = 40;
-					ladies[curLady].lastKeyChange = Date.now();
-				} else if (ladies[curLady].keys[0] == 40) {
-					ladies[curLady].keys[0] = 37;
-					ladies[curLady].lastKeyChange = Date.now();
-				}
+			// if (ladies[curLady].collision) {
+			// 	// if (ladies[curLady].keys[0] == 37) {
+			// 	// 	ladies[curLady].keys[0] = 38;
+			// 	// 	ladies[curLady].lastKeyChange = Date.now();
+			// 	// } else if (ladies[curLady].keys[0] == 38) {
+			// 	// 	ladies[curLady].keys[0] = 39;
+			// 	// 	ladies[curLady].lastKeyChange = Date.now();
+			// 	// } else if (ladies[curLady].keys[0] == 39) {
+			// 	// 	ladies[curLady].keys[0] = 40;
+			// 	// 	ladies[curLady].lastKeyChange = Date.now();
+			// 	// } else if (ladies[curLady].keys[0] == 40) {
+			// 	// 	ladies[curLady].keys[0] = 37;
+			// 	// 	ladies[curLady].lastKeyChange = Date.now();
+			// 	// }
 
-			} else {
+			// } else {
 
 				if (nextPoint) {
-					if (nextPoint.x > ladies[curLady].gridX) {
+					if (nextPoint.x > ladies[curLady].gridX && !ladies[curLady].keepMoving) {
 						ladies[curLady].keys[0] = 39;
 						ladies[curLady].lastKeyChange = Date.now();
-					} else if (nextPoint.x < ladies[curLady].gridX) {
+					} else if (nextPoint.x < ladies[curLady].gridX && !ladies[curLady].keepMoving) {
 						ladies[curLady].keys[0] = 37;
 						ladies[curLady].lastKeyChange = Date.now();
-					} else if (nextPoint.y > ladies[curLady].gridY) {
+					} else if (nextPoint.y > ladies[curLady].gridY && !ladies[curLady].keepMoving) {
 						ladies[curLady].keys[0] = 40;
 						ladies[curLady].lastKeyChange = Date.now();
-					} else if (nextPoint.y < ladies[curLady].gridY) {
+					} else if (nextPoint.y < ladies[curLady].gridY && !ladies[curLady].keepMoving) {
 						ladies[curLady].keys[0] = 38;
 						ladies[curLady].lastKeyChange = Date.now();
 					}
 				}
-			}
+			// }
 
 			if (path[ladyIndex].length == 2) {
 				ladies[curLady].keys.splice(0, 1);

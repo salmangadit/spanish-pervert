@@ -1,7 +1,7 @@
 var gamePhases = [
     {
         "phaseName": "A",
-        "scenario": "1:1:1",
+        "scenario": "1",
         "wave": "1",
         "phaseType":"attack"
     },
