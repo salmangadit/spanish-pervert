@@ -136,7 +136,7 @@ var PlayerLearning = function(thisReference){
 		this.timeTakenToKillNPC = Date.now() - thisBadNPCReference.HeroType.spawnTime;
 		//console.log('time taken to kill badNPC type: ' + thisBadNPCReference.selfType + ' is: ' + this.timeTakenToKillNPC);
 		this.arrayOfKillTime.push(this.timeTakenToKillNPC);
-		for(iter=0, this.averageKillTime=0; iter<this.arrayOfKillTime; iter++){
+		for(iter=0, this.averageKillTime=0; iter<this.arrayOfKillTime.length; iter++){
 			this.averageKillTime += this.arrayOfKillTime[iter];
 		}
 		this.averageKillTime = this.averageKillTime / this.arrayOfKillTime.length;

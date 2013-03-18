@@ -8,7 +8,7 @@ Criticality.get = function(){
 	var criticality = -1;
 
 	//Player contribution
-	var playerCrit = 30 - hero.health;
+	var playerCrit = 30 - ((hero.health*3)/10);
 
 	//Good NPC contribution
 	var goodNPCCritSum = 0;

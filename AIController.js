@@ -120,19 +120,7 @@ function AIController(){
 			}
 
 			var a;
-
-			//Enemy strength AI
 		}
-
-		/*Next steps
-		1. DONE. Set parameters to spawn the required scenario
-		2. DONE. Set targets for each spawn
-		3. DONE. Set spawn location as per strategy
-		4. DONE (temp) Execute phase globally, by calling Spawner.Execute;
-		5. DONE Put a checker for end of phase? This should (probably) run on its own thread
-		*/
-
-		//console.log("Found current phase details");
 	}
 
 	this.checkEndOfPhase = function(){
@@ -144,22 +132,49 @@ function AIController(){
 		// TO DO: Hollywood scenario
 		// TO DO: Toggle enemy AI speeds
 
+		var currentCriticalityRequirement = criticalityRequirement[currentPhase];
 		if (this.currPhase.phaseType){
 			if (this.currPhase.phaseType == "attack"){
-				// An attack phase is ended by killing all enemies
-				if (enemies.length == 0){
+				// An attack phase is ended by killing all enemies AND meeting criticality requirement
+					if (enemies.length == 0){
+						if (Criticality.get() == currentCriticalityRequirement){
+							console.log("Changing from Phase: "+ currentPhase + "to next phase");
+							//this.updateForNextPhase();
+						} else {
+							console.log("Enemies killed but criticality requirement not met. Applying prediction analysis to spawn");
+							var projectedCriticality = predictor.getProjectedCriticality();
+
+							//Check if projected criticality will meet criticality requirement
+							//if so, spawn simple. Else spawn a slightly harder
+						}
+					}
+			} else if (this.currPhase.phaseType == "defense"){
+				//A defense phase is ended by meeting the criticality requirement
+				if (Criticality.get() == currentCriticalityRequirement){
 					console.log("Changing from Phase: "+ currentPhase + "to next phase");
-					this.updateForNextPhase();
-				}
-			}
-			else if (this.currPhase.phaseType == "defense"){
-				//A defense phase is ended by saving the required total of ladies saved
-				if (savedLadiesCount >= this.currPhase.scenarioRatio){
-					console.log("Changing from Phase: "+ currentPhase + "to next phase");
-					this.updateForNextPhase();
+					//this.updateForNextPhase();
+				} else {
+					console.log("Not reached criticality requirement - save ladies or let them heal!")
 				}
 			}
 		}
+
+		// if (this.currPhase.phaseType){
+		// 	if (this.currPhase.phaseType == "attack"){
+		// 		// An attack phase is ended by killing all enemies
+		// 		if (enemies.length == 0){
+		// 			console.log("Changing from Phase: "+ currentPhase + "to next phase");
+		// 			this.updateForNextPhase();
+		// 		}
+		// 	}
+		// 	else if (this.currPhase.phaseType == "defense"){
+		// 		//A defense phase is ended by saving the required total of ladies saved
+		// 		if (savedLadiesCount >= this.currPhase.scenarioRatio){
+		// 			console.log("Changing from Phase: "+ currentPhase + "to next phase");
+		// 			this.updateForNextPhase();
+		// 		}
+		// 	}
+		// }
 	}
 
 	this.updateForNextPhase = function(){

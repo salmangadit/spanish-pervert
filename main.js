@@ -60,7 +60,7 @@ var columns = 0;
 var savedLadiesCount = 0;
 var ladyWasSaved = false;
 var randomiser = new Randomiser();
-
+var predictor = new Predictor();
 
 function init() {
 	xmlhttp = new XMLHttpRequest();
@@ -445,6 +445,7 @@ function gameLoop() {
 		if (enemies[curEnemy].destroyed) {
 			// Update the player learning that enemy has been destroyed
 			playerLearningObj.badNPCKilledUpdate(enemies[curEnemy]);
+			predictor.updatePredictor();
 			enemies.splice(curEnemy, 1);
 			enemyWasDestroyed = true;			
 			enemyDestroyCount +=1;
