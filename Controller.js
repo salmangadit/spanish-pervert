@@ -24,13 +24,16 @@ function Controller(){
 	for(iter in enemies){
 		EnemyAwareness(enemies[iter]);
 		enemies[iter].targetGrid = new Array(enemies[iter].gridX, enemies[iter].gridY);
-		var tx = enemies[iter].moveTarget.gridX;
-		var ty = enemies[iter].moveTarget.gridY;
-		enemies[iter].targetGrid = new Array(tx,ty);
+		if(enemies[iter].moveTarget!=null){
+			var tx = enemies[iter].moveTarget.gridX;
+			var ty = enemies[iter].moveTarget.gridY;
+			enemies[iter].targetGrid = new Array(tx,ty);
+		}
 		//console.log(enemies[iter].targetGrid[0] + "," + enemies[iter].targetGrid[1]);
 		//console.log(enemies[0].targetGrid[0] + "," + enemies[0].targetGrid[1]);
 		//can put the enemies punching inside here, based on the actionType
 	}
+
 	for(iter in ladies){
 		LadyAwareness(ladies[iter]);
 	}
@@ -45,6 +48,8 @@ function Controller(){
 		hero.HeroType.fightController.updateSurroundingEnemies(returnSurroundingArray(hero));
 		hero.HeroType.fightController.monitorHeroObjectSituation();
 	}
+
+	
 	EnemiesRadialAwareness();
 	for(iter in enemies){
 		switch(enemies[iter].actionType){
@@ -63,7 +68,7 @@ function Controller(){
 		//function for updating the surrounding enemies
 		//Habeeb, note here, uncomment the following function to test
 		ladies[iter].HeroType.fightController.updateSurroundingEnemies(returnSurroundingArray(ladies[iter]))
-		if(ladies[iter].selfType == 4 && ladies[iter].actionType == 1){
+		if(ladies[iter].selfType == 4 && ladies[iter].actionType == 1 && (ladies[iter].targetBot.selfType == 1 || ladies[iter].targetBot.selfType == 2)){
 			ladies[iter].targetGrid = new Array(ladies[iter].targetBot.gridX,ladies[iter].targetBot.gridY);
 			ladies[iter].HeroType.fightController.monitorHeroObjectSituation();
 			ladies[iter].HeroType.strikeWithUmbrella(ladies[iter].targetBot);
@@ -82,8 +87,7 @@ function Controller(){
 			hero.targetBot = null;
 		}
 	}
-	
-	console.log(collidables[0].maxOccupants);
+	console.log(ladies[1].facingWhichDirection);
 }
 
 function ladiesLoiterTimer(){
@@ -443,7 +447,7 @@ function EnemiesRadialAwareness(){
 				}
 			}
 		}
-		if(awareness == false && enemies[iter].moveTarget.selfType == 0){
+		if(awareness == false &&  enemies[iter].moveTarget!=null && enemies[iter].moveTarget.selfType == 0){
 			//enemies[iter].moveTarget = 
 		}
 	}
@@ -477,13 +481,13 @@ function LadyAwareness(bot){
 			if( VG[bot.gridX][bot.gridY+1].moveTarget == bot &&
 				(VG[bot.gridX][bot.gridY+1].selfType == 1 ||
 				VG[bot.gridX][bot.gridY+1].selfType == 2 )){		
-				bot.facingWhichDirection = "up";
+				bot.facingWhichDirection = "down";
 				bot.actionType = 1;
 				bot.targetBot = VG[bot.gridX][bot.gridY+1];
 			}
 			if(VG[bot.gridX][bot.gridY+1].selfType == 0){
 				if(bot.targetBot != null && (bot.targetBot.selfType != 1 || bot.targetBot.selfType != 2)){
-					bot.facingWhichDirection = "up";
+					bot.facingWhichDirection = "down";
 					if(bot.actionType!=3){
 						bot.actionType = 4;
 						bot.targetGrid = new Array(VG[bot.gridX][bot.gridY+1].gridX, VG[bot.gridX][bot.gridY+1].gridY);
@@ -499,13 +503,13 @@ function LadyAwareness(bot){
 			if( VG[bot.gridX-1][bot.gridY].moveTarget == bot &&
 				(VG[bot.gridX-1][bot.gridY].selfType == 1 ||
 				VG[bot.gridX-1][bot.gridY].selfType == 2 )){		
-				bot.facingWhichDirection = "up";
+				bot.facingWhichDirection = "left";
 				bot.actionType = 1;
 				bot.targetBot = VG[bot.gridX-1][bot.gridY];
 			}
 			if(VG[bot.gridX-1][bot.gridY].selfType == 0){
 				if(bot.targetBot != null && (bot.targetBot.selfType != 1 || bot.targetBot.selfType != 2)){
-					bot.facingWhichDirection = "up";
+					bot.facingWhichDirection = "left";
 					if(bot.actionType!=3){
 						bot.actionType = 4;
 					}					
@@ -520,13 +524,13 @@ function LadyAwareness(bot){
 			if( VG[bot.gridX+1][bot.gridY].moveTarget == bot &&
 				(VG[bot.gridX+1][bot.gridY].selfType == 1 ||
 				VG[bot.gridX+1][bot.gridY].selfType == 2 )){		
-				bot.facingWhichDirection = "up";
+				bot.facingWhichDirection = "right";
 				bot.actionType = 1;
-				bot.targetBot = VG[bot.gridX][bot.gridY-1];
+				bot.targetBot = VG[bot.gridX+1][bot.gridY];
 			}
 			if(VG[bot.gridX+1][bot.gridY].selfType == 0){
 				if(bot.targetBot != null && (bot.targetBot.selfType != 1 || bot.targetBot.selfType != 2)){
-					bot.facingWhichDirection = "up";
+					bot.facingWhichDirection = "right";
 					if(bot.actionType!=3){
 						bot.actionType = 4;
 					}					
