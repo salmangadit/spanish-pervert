@@ -287,13 +287,6 @@
 
 			//Then update attributes if it is a hit
 			targetReference.updateHealth(this.attackPower);
-<<<<<<< HEAD
-			//console.log('the badNPC pulled a skirt');
-		} else {
-			//console.log('the badNPC missed pulling the skirt');
-		}
-    	
-=======
 			//for testing
 			console.log(this.parentRef.selfType + ' delivered ' + this.attackPower + ' damage');
 			console.log(this.parentRef.selfType + ' updated ' + targetReference.selfType + ' health');
@@ -344,7 +337,6 @@
 
 		}//actionType if statement
 		
->>>>>>> fixed quite some bugs..made the code neater..
     };//end of pullskirt function
     
     this.attackPlayer = function(targetReference){
@@ -393,12 +385,6 @@
 
 			// Then update attributes if it is a hit
 			targetReference.updateHealth(this.attackPower);
-<<<<<<< HEAD
-			//console.log('the badNPC attacked the player');
-		} else {
-			//console.log('the badNPC missed the player');
-		}
-=======
 			//for testing
 			console.log(this.parentRef.selfType + ' delivered ' + this.attackPower + ' damage');
 			console.log(this.parentRef.selfType + ' updated ' + targetReference.selfType + ' health');
@@ -449,8 +435,7 @@
     		this.parentRef.render();
 
 		}//actionType if statement
->>>>>>> fixed quite some bugs..made the code neater..
-
+		
     };
     
  }//end of badNPC constructor
