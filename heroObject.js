@@ -11,7 +11,8 @@
 
 
  var maximumHealthLife = 100;
- var constantHealthRecovery = 2;
+ var constantMainCharcterHealthRecovery = 2;
+ var constantGoodNPCRecoveryHealth = 0.8;
   
  //------------------------ mainCharacter implementation -------------------------
  
@@ -56,7 +57,7 @@
 	 */
 	this.punch = function(targetReference) {
 	
-		console.log('punch status is: ' + this.parentRef.actionType);
+		//console.log('punch status is: ' + this.parentRef.actionType);
 		 if (this.parentRef.actionType == 1) {
 			//console.log('the hero is gonna punch and his ratio is: ' + this.hitMissRatio);
 			
@@ -131,7 +132,7 @@
 	 */
 	this.kick = function(targetReference) {
 				
-		console.log('kick status is: ' + this.parentRef.actionType);
+		//console.log('kick status is: ' + this.parentRef.actionType);
 		if (this.parentRef.actionType == 1) {
 			//console.log('the hero is gonna kick and his ratio is: ' + this.hitMissRatio);
 			
@@ -673,6 +674,7 @@
             			  Math.floor(this.y), this.width, this.height);	
         
         //Clear the canvas that the innerHealthMeter is drawn, then render
+        //iHMCanvasContext.clearRect(this.coordinateToClearX, this.coordinateToClearY, 50, 50);//currently working but cross over issue version
         iHMCanvasContext.clearRect(this.coordinateToClearX, this.coordinateToClearY, 50, 50);					   
         iHMCanvasContext.drawImage(this.innerHealthMeterImage, this.innerHealthMeterX, this.innerHealthMeterY,
         						   this.innerHealthMeterWidth, this.innerHealthMeterHeight);
@@ -1008,21 +1010,14 @@
 			}
 		}
 
-		// Means they are walking around, recover their health
-		if(this.actionType == 0 && (this.selfType != 1 || this.selfType != 2) ) {
-
-			// For testing only
-			/*if(this.selfType == 3){
-				console.log(this.selfType + ' previous health is: ' + this.health);
-			}*/
-			
+		// Means they are walking around, recover their health (only good npcs and mainCharacter)
+		if(this.actionType == 0 && this.selfType != 1 && this.selfType != 2) {						
 			// The actual health update
-			this.updateHealth(constantHealthRecovery * 3);
-
-			// For testing only
-			/*if(this.selfType == 3){
-				console.log(this.selfType + ' current health with recovery is: ' + this.health);
-			}*/
+			if(this.selfType == 0){
+				this.updateHealth(constantMainCharcterHealthRecovery * 3);
+			} else {
+				this.updateHealth(constantGoodNPCRecoveryHealth * 3);
+			}
 		}
     };
 
@@ -1043,6 +1038,10 @@
 			console.log(this.selfType + ' is dead');
 		}
 
+		// For testing only
+		if(this.selfType == 1 || this.selfType == 2){
+			console.log(this.HeroType.badNPC_Type + ' health is: ' + this.health);
+		}
 	}; 
     
     this.checkCollision = function(obj)

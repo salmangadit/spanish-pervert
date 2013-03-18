@@ -68,7 +68,7 @@ FightController.prototype.decreaseHitRatioOfEnemies = function(thisArray, thisAm
 // Lesser damage will be done by yourself (either hero or fiesty lady)
 FightController.prototype.decreaseHitRatioOfSelf = function(thisAmount) {
 	this.owner.hitMissRatio = thisAmount;
-	this.checkHitMissRatioAndCalibrateIfNecessary(this.owner);
+	this.checkHitMissRatioAndCalibrateIfNecessary(this.owner.parentRef);
 	this.owner.parentRef.updateHitMissRatio();
 }
 
@@ -92,16 +92,16 @@ FightController.prototype.increaseHitRatioOfEnemies = function(thisArray, thisAm
 // More damage wil be done by yourself (either hero or fiesty lady)
 FightController.prototype.increaseHitRatioOfSelf = function (thisAmount) {
 	this.owner.hitMissRatio = thisAmount;
-	this.checkHitMissRatioAndCalibrateIfNecessary(this.owner);
+	this.checkHitMissRatioAndCalibrateIfNecessary(this.owner.parentRef);
 	this.owner.parentRef.updateHitMissRatio();
 }
 
 // Check hitMissRatio range and recalibrate if out of range (0 - 1 is the range)
 FightController.prototype.checkHitMissRatioAndCalibrateIfNecessary = function(thisReference){
 	if(thisReference.hitMissRatio > 1){
-		thisReference.hitMissRatio = 1;
+		thisReference.HeroType.hitMissRatio = 1;
 	} else if (thisReference.hitMissRatio < 0){
-		thisReference.hitMissRatio = 0;
+		thisReference.HeroType.hitMissRatio = 0;
 	}
 }
 
@@ -122,7 +122,7 @@ FightController.prototype.updateEnemiesToToggleHitMissRatio = function(){
 	// Loop through the current badNPC's surrounding the heroObject,
 	// check their fightStatus, their selfType.
 	for(iter=0; iter < this.surroundingArrayOfObjects.length; iter++){
-		enemySelfType   = this.surroundingArrayOfObjects[iter].parentRef.selfType;
+		enemySelfType   = this.surroundingArrayOfObjects[iter].selfType;
 		//enemyTempHealth = this.surroundingArrayOfObjects[iter].parentRef.health;
 		this.updateFightStatusOfEnemy(this.surroundingArrayOfObjects[iter]);
 
