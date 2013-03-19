@@ -3,9 +3,11 @@
 function Debug(){
 	renderGrids();
 	drawGraphs();
+	displayParameters();
 }
 
 function renderGrids(){
+	debugContext.clearRect(0,0,debugCanvas.width,debugCanvas.height);
 	var recImage = new Image();
 	recImage.src = "images/rec.png";
 	for (var i = 0; i < 33; i++){
@@ -23,6 +25,32 @@ function maintainCritArray(){
 		critArray[i] = newValue;
 		newValue = tmp;		
 	}
+}
+
+function displayParameters(){
+	var textX = gameW+10;
+	var textY = 520;
+	debugContext.fillStyle = "rgb(0,0,0)";
+	debugContext.font = "18px Helvetica";
+	
+	/* To add in new lines for data, copy these 2 lines of codes:
+		debugContext.fillText("YOUR TEXT " + YOUR_PARAMETER, textX, textY);
+		textY+=20;
+	*/		
+	
+	
+	debugContext.fillText("Current AI Phase is: " + currentPhase, textX, textY);
+	textY+=20;
+	debugContext.fillText("Current AI Wave is: " + currentWave, textX, textY);
+	textY+=20;
+	debugContext.fillText("Ladies saved: " + savedLadiesCount, textX, textY);
+	textY+=20;
+	debugContext.fillText("Ladies left on field: " + ladies.length, textX, textY);
+	textY+=20;
+	debugContext.fillText("Enemies destroyed: " + enemyDestroyCount, textX, textY);
+	textY+=20;
+	debugContext.fillText("Criticality: " + Criticality.get(), textX, textY);
+	textY+=20;
 }
 
 function drawGraphs(){
