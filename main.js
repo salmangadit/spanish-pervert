@@ -624,7 +624,7 @@ function gameLoop() {
 		ladyIndex++;
 	}
 	
-	lion.render();
+	//lion.render();
 	if(debugMode == true){
 		Debug();
 	}
