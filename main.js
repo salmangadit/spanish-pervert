@@ -95,7 +95,7 @@ function init() {
 	setInterval(function(){AI.checkEndOfPhase();}, screenUpdateTime);
 	setInterval(updatePlayerLearning, screenUpdateTime);
 	//temporarily putting basic AI calls here till controller is up
-	//AI.executePhase();
+	AI.executePhase();
 
 	document.addEventListener('keydown', function(event) {
 		
@@ -424,8 +424,8 @@ function initCanvas() {
 	debugCanvas.height = gameH;
 	
 	// set the width and height of the graphCanvas
-	graphCanvas.width = gameW*2;
-	graphCanvas.height = gameH;
+	graphCanvas.width = 800;//gameW*2;
+	graphCanvas.height = 500;//gameH;
 	
 	baseContext.fillStyle = baseColor;
 	// fill the entire baseContext with the color

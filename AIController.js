@@ -146,8 +146,8 @@ function AIController(){
 
 		// DONE: change for phases with Criticality and NOT objectives.
 		// DONE: Add predictor function, and therefore time-based spawner to predict criticality
-		// TO DO: Specific AI situation (gorilla walk away from player / woman if either is crap)
-		// TO DO: Hollywood scenario
+		// DONE: TO DO: Specific AI situation (gorilla walk away from player / woman if either is crap)
+		// DONE: TO DO: Hollywood scenario
 		// TO DO: Toggle enemy AI speeds
 
 		var currentCriticalityRequirement = criticalityRequirement[currentPhase];
