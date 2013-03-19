@@ -38,7 +38,7 @@ Criticality.get = function(){
 
 	criticality = 90 - critInv;
 
-	console.log('Criticality is ' + criticality);
+	//console.log('Criticality is ' + criticality);
 
 	return criticality;
 }

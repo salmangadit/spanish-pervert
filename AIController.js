@@ -11,8 +11,8 @@ function AIController(){
 		this.currPhase.scenarioRatio = this.phases[this.currentPhaseIndex].scenario;
 		this.currPhase.phaseType = this.phases[this.currentPhaseIndex].phaseType;
 
-		console.log("Current Phase: " + currentPhase);
-		console.log("Current Wave: " + currentWave);
+		//console.log("Current Phase: " + currentPhase);
+		//console.log("Current Wave: " + currentWave);
 
 		//Set spawning params only if attacking phase
 		if (this.currPhase.phaseType == "attack"){
@@ -208,10 +208,10 @@ function AIController(){
 			} else if (this.currPhase.phaseType == "defense"){
 				//A defense phase is ended by meeting the criticality requirement
 				if (Criticality.get() <= currentCriticalityRequirement){
-					console.log("Changing from Phase: "+ currentPhase + "to next phase");
+					//console.log("Changing from Phase: "+ currentPhase + "to next phase");
 					this.updateForNextPhase();
 				} else {
-					console.log("Not reached criticality requirement - save ladies or let them heal!")
+					//console.log("Not reached criticality requirement - save ladies or let them heal!")
 				}
 			}
 		}

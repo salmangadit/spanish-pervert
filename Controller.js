@@ -95,7 +95,7 @@ function Controller(){
 			hero.targetBot = null;
 		}
 	}
-	console.log(ladies.length);
+	//console.log(ladies.length);
 }
 
 function ladiesLoiterTimer(){
@@ -133,7 +133,7 @@ function ladiesLoiter(){
 				var randomNo = Math.floor(Math.random() * 43);
 				var x = vendorPosX[randomNo];
 				var y = vendorPosY[randomNo];
-				console.log(randomNo);
+				//console.log(randomNo);
 				ladies[iter].targetGrid = new Array(x,y);
 			}
 		}
