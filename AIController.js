@@ -19,15 +19,15 @@ function AIController(){
 			//Number of enemies sent AI - send according to scenario ratio
 			var parsedPhaseRatio = this.currPhase.scenarioRatio.split(':');
 			var alreadyTargeted = new Array();
+			var alreadySpawned = new Array();
 
 			for (var m = 0; m<parsedPhaseRatio.length; m++){
 				var chosenTarget = this.targetNPCAI(alreadyTargeted);
-				var spawnLocation = this.spawnLocationAI(chosenTarget);
+				var spawnLocation = this.spawnLocationAI(chosenTarget, alreadySpawned);
 
 				//Find number of enemies to spawn
 				//Create a custom randomiser and select type of enemy to spawn according to global ratio
 				var monkeyGorillaRandomiser = new Randomiser();
-
 
 				for (var n = 0; n < parsedPhaseRatio[m]; n++){
 					this.enemyStrengthAI(monkeyGorillaRandomiser, chosenTarget, spawnLocation);
@@ -86,7 +86,7 @@ function AIController(){
 		return chosenTarget;		
 	}
 
-	this.spawnLocationAI = function(chosenTarget){
+	this.spawnLocationAI = function(chosenTarget, alreadySpawned){
 		//Spawning locations AI
 		var locations = spawnLocations[this.playerLevel];
 
@@ -103,14 +103,16 @@ function AIController(){
 		}
 
 		distances.sort(function(a,b){return a - b});
-
+		var spawnLocation;
 		var targetRandomiser = new Randomiser();
-		var spawnIndex = targetRandomiser.randomise(this.playerLevel*2, this.playerLevel*2+1);
-		var spawnLocationDesired = distances[spawnIndex];
+		do{
+			var spawnIndex = targetRandomiser.randomise(this.playerLevel*2, this.playerLevel*2+3);
+			var spawnLocationDesired = distances[spawnIndex];
 
-		var trueIndex = distancesOriginal.indexOf(spawnLocationDesired);
-		var spawnLocation = locations[trueIndex].split(',');
-
+			var trueIndex = distancesOriginal.indexOf(spawnLocationDesired);
+			spawnLocation = locations[trueIndex].split(',');
+		} while (alreadySpawned.indexOf(locations[trueIndex]) != -1);
+		alreadySpawned.push(locations[trueIndex]);
 		return spawnLocation;
 	}
 
