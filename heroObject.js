@@ -19,7 +19,7 @@
  var mainCharacter = function(thisReference){
 
 	this.parentRef = thisReference;
-	//console.log(this.parentRef);
+	console.log('health upon instantaiation is:  ' + this.parentRef.health);
 	//Attributes associated with the main character specifically
 	this.arrayOfLastMoves = new Array();		//to be used for probability distribution or if same as the keys array then, this can be deemed redundant
 	this.gameExp = 0;
@@ -225,6 +225,7 @@
  var badNPC = function(thisReference){
  	
  	this.parentRef = thisReference;
+ 	console.log('health upon instantaiation is:  ' + this.parentRef.health);
  	this.attackPower = null;
  	if(this.parentRef.badNPC_Type == "monkey"){
  		this.defaultAttackPower = -0.3;
@@ -454,6 +455,7 @@
  var goodNPC = function(thisReference){
 	
 	this.parentRef = thisReference;
+	console.log('health upon instantaiation is:  ' + this.parentRef.health);
 	this.fightController = new FightController(this);
 	this.now;
 	this.delta;
