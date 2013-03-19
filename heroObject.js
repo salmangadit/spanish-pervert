@@ -11,8 +11,8 @@
 
 
  var maximumHealthLife = 100;
- var constantMainCharcterHealthRecovery = 2;
- var constantGoodNPCRecoveryHealth = 0.8;
+ var constantMainCharcterHealthRecovery = 0.02;
+ var constantGoodNPCRecoveryHealth = 0.008;
   
  //------------------------ mainCharacter implementation -------------------------
  
@@ -731,7 +731,9 @@
 				debugMode=false;
 				debugContext.clearRect(0,0,debugCanvas.width,debugCanvas.height);
 				graphContext.clearRect(0,0,graphCanvas.width,graphCanvas.height);
+				clearFPS();
 				break;
+
             case 37:
 					this.lastMovedDirection = 37;
 					this.x -= this.moveSpeed * 1;

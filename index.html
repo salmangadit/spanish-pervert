@@ -25,6 +25,7 @@
 	<script type="text/javascript" language="javascript" src="Predictor.js"></script>
 	<script type="text/javascript" language="javascript" src="flocker.js"></script>
 	<script type="text/javascript" language="javascript" src="debug.js"></script>
+	<script type="text/javascript" language="javascript" src="HUD.js"></script>
 	<script type="text/javascript" language="javascript" src="RGraph.common.core.js"></script>
 	<script type="text/javascript" language="javascript" src="RGraph.line.js"></script>
 	<script type="text/javascript" language="javascript" src="main.js"></script>
@@ -82,6 +83,13 @@
 	<!-- <div id="Score" style="color:#0000FF;margin-left:600px"> Score: 0 </div> -->
 	<!-- <img id="innerHealthMeterImage" src="/Users/TheGreatOne/Desktop/Sem_6/EE4702/Project/Project_2/spanish-pervert/images/innerHealthMeter.png" width="0" height="0" >
 	-->
+
+	<!-- To display the HUD -->
+	<div id = "message"		style="display: inline; color:#00CC00; margin-left:100px"> </div>
+	<div id = "hero_health" style="display: inline; color:#FF6E6E; margin-left:500px"> Your Health: </div>
+	<div id = "fps" 		style="display: inline; color:#0000FF; margin-left:100px">  </div>
+	
+
 </head>
 <BODY onload="javascript:if (typeof(init) != 'undefined') init();">
 	<div id="canvasWrapper">
@@ -92,6 +100,7 @@
 		<canvas id="graphCanvas">Your browser does not support HTML5 </canvas>
 	</div> 
 	<br />
+
 	<!-- <input type='button' onclick='clearLog()' value="Clear"/>
 	<div id="logger" class="logger" style="font-family: 'Iceland', cursive;">
 		<div><b>Logger</b></div>

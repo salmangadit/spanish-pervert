@@ -79,7 +79,7 @@ function init() {
 	xmlhttp = new XMLHttpRequest();
 	//http://www.salmangadit.me/spanish-pervert/data/data.xmlC:/Users/Salman/Documents/GitHub/spanish-pervert/data/data.xml
 	// /Users/TheGreatOne/Desktop/Sem_6/EE4702/Project/Project_2/spanish-pervert/data/data.xml
-	xmlhttp.open("GET", "C:/Users/YuanIng/Documents/GitHub/spanish-pervert/data/data.xml", false);
+	xmlhttp.open("GET", "/Users/TheGreatOne/Desktop/Sem_6/EE4702/Project/Project_2/spanish-pervert/data/data.xml", false);
 	//xmlhttp.open("GET", "C:/Users/Salman/Documents/GitHub/spanish-pervert/data/data.xml", false);
 	xmlhttp.send();
 	xmlDoc = xmlhttp.responseXML;
@@ -94,6 +94,8 @@ function init() {
 	setInterval(gameLoop, screenUpdateTime);
 	setInterval(function(){AI.checkEndOfPhase();}, screenUpdateTime);
 	setInterval(updatePlayerLearning, screenUpdateTime);
+	// To display the HUD on screen
+	setInterval(displayHUD, screenUpdateTime);
 	//temporarily putting basic AI calls here till controller is up
 	AI.executePhase();
 
@@ -304,6 +306,9 @@ function initGameTiles() {
 					hero.render();
 					//hero.render();
 				};
+
+				// Pass in a reference for the HUD to display health
+				keepHeroReference(hero);
 			} else if (gameObjects[objIndex].type == "alex") {
 				//7 is for alex
 				lion = new heroObject(7);
@@ -431,14 +436,14 @@ function initCanvas() {
 	// fill the entire baseContext with the color
 	baseContext.fillRect(0, 0, gameW, gameH);
 	
-	/* If i include this piece of code, the whole screen is empty with only the health meter images..
-	iHMCanvasContext.fillStyle = baseColor;
-	iHMCanvasContext.fillRect(0, 0, gameW, gameH);
-	*/
 }
 
 
 function gameLoop() {
+
+	// To get the frame rate
+	//requestAnimFrame(gameLoop);
+
 	var now = Date.now();
 	// calculate how long as passed since our last iteration
 	var elapsed = now - lastUpdate;
@@ -624,21 +629,26 @@ function gameLoop() {
 		ladyIndex++;
 	}
 	
-	//lion.render();
-	if(debugMode == true){
-		Debug();
-	}
 	
 	checkDangerStage();
 	// update the lastUpdate variable
 	lastUpdate = now;
 
+	//lion.render();
+	// Max put you debug code here cause when activated I need the lastUpdate to be
+	// reflected in the HUD
+	if(debugMode == true){
+		Debug();
+		displayFPS(lastUpdate);
+	}
 
-	
 }
 
 function updatePlayerLearning(){
 	
+	// To get the frame rate
+	//requestAnimFrame(updatePlayerLearning);
+
 	// Update the players health
 	//if(hero != null)
 	playerLearningObj.healthArray.push(hero.innerHealthMeter);
@@ -782,5 +792,18 @@ function checkDangerStage(){
 	}
 }
 
+
+// For the windows request animation frame thing
+window.requestAnimFrame = (function(){
+
+	return  window.requestAnimationFrame       || 
+			window.webkitRequestAnimationFrame || 
+			window.mozRequestAnimationFrame    || 
+			window.oRequestAnimationFrame      || 
+			window.msRequestAnimationFrame     || 
+			function(/* function */ callback, /* DOMElement */ element){
+				window.setTimeout(callback, 1000 / 60);
+			};
+})();
 
 
