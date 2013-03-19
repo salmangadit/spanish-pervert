@@ -105,16 +105,21 @@ function AIController(){
 		distances.sort(function(a,b){return a - b});
 		var spawnLocation;
 		var targetRandomiser = new Randomiser();
-		do{
-			var spawnIndex = targetRandomiser.randomise(
+		var spawnIndex = targetRandomiser.randomise(
 				(this.playerLevel == 0 ? this.playerLevel*2:this.playerLevel*2-1), 
 				(this.playerLevel == 4 ? this.playerLevel*2:this.playerLevel*2+1));
-			var spawnLocationDesired = distances[spawnIndex];
+		var spawnLocationDesired = distances[spawnIndex];
 
-			var trueIndex = distancesOriginal.indexOf(spawnLocationDesired);
+		var trueIndex = distancesOriginal.indexOf(spawnLocationDesired);
+
+		if (alreadySpawned.indexOf(locations[trueIndex])==-1){
 			spawnLocation = locations[trueIndex].split(',');
-		} while (alreadySpawned.indexOf(locations[trueIndex]) != -1);
-		alreadySpawned.push(locations[trueIndex]);
+		} else {
+			//Return nearest free space
+			var coords = locations[trueIndex].split(',');
+			spawnLocation = helperClass.nearestFreeSpace(coords[0], coords[1], 1);
+		}
+
 		return spawnLocation;
 	}
 
@@ -176,6 +181,7 @@ function AIController(){
 
 							var parsedPhaseRatio = this.currPhase.scenarioRatio.split(':');
 							var alreadyTargeted = new Array();
+							var alreadySpawned = new Array();
 
 							if (numberToSpawn%2 != 0 && numberToSpawn != 1){
 								numberToSpawn--;
@@ -192,7 +198,7 @@ function AIController(){
 							}
 
 							var chosenTarget = this.targetNPCAI(alreadyTargeted);
-							var spawnLocation = this.spawnLocationAI(chosenTarget);
+							var spawnLocation = this.spawnLocationAI(chosenTarget, alreadySpawned);
 							var monkeyGorillaRandomiser = new Randomiser();
 							for (var n = 0; n < parsedPhaseRatio[chosenRatioIndex]; n++){
 								this.enemyStrengthAI(monkeyGorillaRandomiser, chosenTarget, spawnLocation);

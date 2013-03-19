@@ -429,8 +429,8 @@ function initCanvas() {
 	debugCanvas.height = gameH;
 	
 	// set the width and height of the graphCanvas
-	graphCanvas.width = 800;//gameW*2;
-	graphCanvas.height = 500;//gameH;
+	graphCanvas.width = 600;//gameW*2;
+	graphCanvas.height = 300;//gameH;
 	
 	baseContext.fillStyle = baseColor;
 	// fill the entire baseContext with the color
@@ -494,6 +494,11 @@ function gameLoop() {
 					tempGrid[enemies[i].gridY][enemies[i].gridX] = 1;
 				}
 			}
+
+			for (var i = 0; i < ladies.length; i++) {
+					tempGrid[ladies[i].gridY][ladies[i].gridX] = 1;
+			}
+
 			//tempGrid[hero.gridY][hero.gridX] = 1;
 			path[index] = a_star(new Array(enemies[curEnemy].gridX, enemies[curEnemy].gridY),
 			enemies[curEnemy].targetGrid, tempGrid, columns, rows, false);
@@ -572,6 +577,10 @@ function gameLoop() {
 				if (ladies[curLady] != ladies[i]) {
 					tempGrid[ladies[i].gridY][ladies[i].gridX] = 1;
 				}
+			}
+
+			for (var i = 0; i < enemies.length; i++) {
+					tempGrid[enemies[i].gridY][enemies[i].gridX] = 1;
 			}
 			//tempGrid[hero.gridY][hero.gridX] = 1;
 			path[ladyIndex] = a_star(new Array(ladies[curLady].gridX, ladies[curLady].gridY), 
@@ -716,7 +725,7 @@ function checkDangerStage(){
 				}
 			} while (selected == false);
 
-			var nearestFree = findNearestFreeSpace(enemiesToGetRidOf[i]);
+			var nearestFree = helperClass.findNearestFreeSpace(enemiesToGetRidOf[i].gridX, enemiesToGetRidOf[i].gridY, 3);
 			selectedLady.targetGrid = nearestFree;
 		}
 
@@ -741,54 +750,6 @@ function checkDangerStage(){
 			//AI is done, send back to 0
 			AImanipulated = 0;
 		}
-	}
-
-	function findNearestFreeSpace(object){
-		//go round, declustering style
-		var jump = 3;
-		var found = false;
-		var position = 1;
-		var nearestFree;
-
-		do {
-			var x, y;
-			if (position == 1){
-				x = object.gridX + jump;
-				y = object.gridY;
-			} else if (position == 2){
-				x = object.gridX;
-				y = object.gridY + jump;
-			} else if (position == 3){
-				x = object.gridX - jump;
-				y = object.gridY;
-			} else if (position == 4){
-				x = object.gridX;
-				y = object.gridY - jump;
-			}
-
-			if(CheckArrayIndex(x, y) != null){
-				if (grid[x][y] == 0){
-					found = true;
-					nearestFree = new Array(object.gridX + jump, object.gridY)
-				} else {
-					position++;
-					if (position == 5){
-						position = 1;
-						jump++;
-					}
-				}
-			}
-		} while (found == false);
-
-		return nearestFree;
-	}
-
-	function CheckArrayIndex(x, y) {
-	    if (grid.length-1 > x && grid[x].length-1 > y) {
-	        return grid[x][y];
-	    }
-
-	    return null;
 	}
 }
 

@@ -47,6 +47,57 @@ helperClass.distanceBetweenTwoPoints = function(x1, y1, x2, y2){
 	return Math.sqrt(Math.pow((x1-x2),2) + Math.pow((y1-y2),2));
 }
 
+helperClass.findNearestFreeSpace = function(pointX, pointY, jump){
+		//go round, declustering style
+		if (jump == 1){
+			if (grid[pointX][pointY] == 0){
+				return new Array(pointX, pointY);
+			}
+		}
+		var found = false;
+		var position = 1;
+		var nearestFree;
+
+		do {
+			var x, y;
+			if (position == 1){
+				x = pointX + jump;
+				y = pointY;
+			} else if (position == 2){
+				x = pointX;
+				y = pointY + jump;
+			} else if (position == 3){
+				x = pointX - jump;
+				y = pointY;
+			} else if (position == 4){
+				x = pointX;
+				y = pointY - jump;
+			}
+
+			if(helperClass.CheckArrayIndex(x, y) != null){
+				if (grid[x][y] == 0){
+					found = true;
+					nearestFree = new Array(x, y)
+				} else {
+					position++;
+					if (position == 5){
+						position = 1;
+						jump++;
+					}
+				}
+			}
+		} while (found == false);
+
+		return nearestFree;
+	}
+
+helperClass.CheckArrayIndex = function(x, y) {
+    if (grid.length-1 > x && grid[x].length-1 > y) {
+        return grid[x][y];
+    }
+
+    return null;
+}
 
 
 /*Array.prototype.last = function(){

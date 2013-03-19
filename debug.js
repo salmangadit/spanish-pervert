@@ -22,6 +22,13 @@ function renderGrids(){
 			}
 		}
 	}
+
+	var locations = spawnLocations[AI.playerLevel];
+
+	for (var i = 0; i < 10; i++){
+		var coords = locations[i].split(',');
+		debugContext.drawImage(rescueRecImage, coords[0]*32, coords[1]*32, 32, 32);
+	}
 }
 
 function maintainCritArray(){
@@ -35,8 +42,8 @@ function maintainCritArray(){
 }
 
 function displayParameters(){
-	var textX = gameW+10;
-	var textY = 520;
+	var textX = gameW+30;
+	var textY = 320;
 	debugContext.fillStyle = "rgb(0,0,0)";
 	debugContext.font = "18px Helvetica";
 	
@@ -60,6 +67,9 @@ function displayParameters(){
 	textY+=20;
 	debugContext.fillText("Projected criticality: " + predictor.getProjectedCriticality(), textX, textY);
 	textY+=20;
+	debugContext.fillText("Required criticality to change: " + criticalityRequirement[currentPhase], textX, textY);
+	textY+=20;
+
 	debugContext.fillText("Player level: " + AI.playerLevel, textX, textY);
 	textY+=20;
 	debugContext.fillText("Enemy info: ", textX, textY);
@@ -83,6 +93,12 @@ function displayParameters(){
 
 	debugContext.fillText("Player health: " + hero.health, textX, textY);
 	textY+=20;
+	textY+=20;
+	if(AImanipulated){
+		debugContext.fillText("Specific AI kicks in!", textX, textY);
+		textY+=20;
+	}
+	
 }
 
 function drawGraphs(){
