@@ -49,11 +49,6 @@ helperClass.distanceBetweenTwoPoints = function(x1, y1, x2, y2){
 
 helperClass.findNearestFreeSpace = function(pointX, pointY, jump){
 		//go round, declustering style
-		if (jump == 1){
-			if (grid[pointX][pointY] == 0){
-				return new Array(pointX, pointY);
-			}
-		}
 		var found = false;
 		var position = 1;
 		var nearestFree;

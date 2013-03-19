@@ -16,6 +16,8 @@ function AIController(){
 
 		//Set spawning params only if attacking phase
 		if (this.currPhase.phaseType == "attack"){
+			displayMessage("Fight the enemies and save the ladies!")
+
 			//Number of enemies sent AI - send according to scenario ratio
 			var parsedPhaseRatio = this.currPhase.scenarioRatio.split(':');
 			var alreadyTargeted = new Array();
@@ -30,11 +32,17 @@ function AIController(){
 				var monkeyGorillaRandomiser = new Randomiser();
 
 				for (var n = 0; n < parsedPhaseRatio[m]; n++){
+					if (n > 0){
+						//spawnLocation = helperClass.findNearestFreeSpace(spawnLocation[0], spawnLocation[1], 1)
+					}
 					this.enemyStrengthAI(monkeyGorillaRandomiser, chosenTarget, spawnLocation);
 				}
 			}
 
 			var a;
+		}
+		else{
+			displayMessage("Save the ladies and recover health!")
 		}
 	}
 
@@ -117,7 +125,7 @@ function AIController(){
 		} else {
 			//Return nearest free space
 			var coords = locations[trueIndex].split(',');
-			spawnLocation = helperClass.nearestFreeSpace(coords[0], coords[1], 1);
+			spawnLocation = helperClass.findNearestFreeSpace(coords[0], coords[1], 1);
 		}
 
 		return spawnLocation;
@@ -206,8 +214,8 @@ function AIController(){
 						}
 					}
 			} else if (this.currPhase.phaseType == "defense"){
-				//A defense phase is ended by meeting the criticality requirement
-				if (Criticality.get() <= currentCriticalityRequirement){
+				//A defense phase is ended by meeting the criticality requirement or savig ladies
+				if (Criticality.get() <= currentCriticalityRequirement || savedLadiesCount == scenarioRatio){
 					//console.log("Changing from Phase: "+ currentPhase + "to next phase");
 					this.updateForNextPhase();
 				} else {
@@ -236,6 +244,7 @@ function AIController(){
 		else {
 			//End game
 			console.log("Game over!");
+			displayMessage("Game over!")
 		}
 	}
 }

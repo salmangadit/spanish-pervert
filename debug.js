@@ -67,12 +67,21 @@ function displayParameters(){
 	textY+=20;
 	debugContext.fillText("Projected criticality: " + predictor.getProjectedCriticality(), textX, textY);
 	textY+=20;
+
+	var criticalityDiff = (predictor.getProjectedCriticality() - Criticality.get())
+	var requirementDiff = criticalityRequirement[currentPhase] - Criticality.get();
+	var numberToSpawn = requirementDiff/criticalityDiff;
+
+	debugContext.fillText("Projected spawn: " + numberToSpawn, textX, textY);
+	textY+=20;
+	textY+=20;
 	debugContext.fillText("Required criticality to change: " + criticalityRequirement[currentPhase], textX, textY);
 	textY+=20;
 
 	debugContext.fillText("Player level: " + AI.playerLevel, textX, textY);
 	textY+=20;
 	debugContext.fillText("Enemy info: ", textX, textY);
+	textY+=20;
 	textY+=20;
 
 	//Enemy, their health and target
@@ -81,11 +90,10 @@ function displayParameters(){
 			(enemies[i].moveTarget ? ", Target: " + enemies[i].moveTarget.goodNPC_Type : ""), textX, textY);
 		textY+=20;
 	}
-
+	textY+=20;
 	debugContext.fillText("Lady info: ", textX, textY);
 	textY+=20;
 
-	//Enemy, their health and target
 	for (var i =0; i < ladies.length; i++){
 		debugContext.fillText("Type: " + ladies[i].goodNPC_Type + " , Health: " + ladies[i].health, textX, textY);
 		textY+=20;
