@@ -9,10 +9,17 @@ function Debug(){
 function renderGrids(){
 	debugContext.clearRect(0,0,debugCanvas.width,debugCanvas.height);
 	var recImage = new Image();
+	var rescueRecImage = new Image();
+	rescueRecImage.src = "images/rescueRec.png";
 	recImage.src = "images/rec.png";
 	for (var i = 0; i < 33; i++){
 		for (var j = 0; j < 28; j++){
 			debugContext.drawImage(recImage, i * 32, j * 32, 32, 32);
+			if(	VG[i][j]!= null && 
+				(VG[i][j].selfType == 3 || VG[i][j].selfType == 4) &&
+				VG[i][j].actionType == 3){
+				debugContext.drawImage(rescueRecImage, i*32, j*32, 32, 32);
+			}
 		}
 	}
 }
