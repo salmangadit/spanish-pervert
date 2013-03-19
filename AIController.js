@@ -106,7 +106,9 @@ function AIController(){
 		var spawnLocation;
 		var targetRandomiser = new Randomiser();
 		do{
-			var spawnIndex = targetRandomiser.randomise(this.playerLevel*2, this.playerLevel*2+3);
+			var spawnIndex = targetRandomiser.randomise(
+				(this.playerLevel == 0 ? this.playerLevel*2:this.playerLevel*2-1), 
+				(this.playerLevel == 4 ? this.playerLevel*2:this.playerLevel*2+1));
 			var spawnLocationDesired = distances[spawnIndex];
 
 			var trueIndex = distancesOriginal.indexOf(spawnLocationDesired);
@@ -156,7 +158,7 @@ function AIController(){
 		if (this.currPhase.phaseType){
 			if (this.currPhase.phaseType == "attack"){
 				// An attack phase is ended by killing all enemies AND meeting criticality requirement
-					if (enemies.length == 1){
+					if (enemies.length <= 1){
 						if (Criticality.get() >= currentCriticalityRequirement){
 							console.log("Changing from Phase: "+ currentPhase + "to next phase");
 							this.updateForNextPhase();

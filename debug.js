@@ -58,6 +58,31 @@ function displayParameters(){
 	textY+=20;
 	debugContext.fillText("Criticality: " + Criticality.get(), textX, textY);
 	textY+=20;
+	debugContext.fillText("Projected criticality: " + predictor.getProjectedCriticality(), textX, textY);
+	textY+=20;
+	debugContext.fillText("Player level: " + AI.playerLevel, textX, textY);
+	textY+=20;
+	debugContext.fillText("Enemy info: ", textX, textY);
+	textY+=20;
+
+	//Enemy, their health and target
+	for (var i =0; i < enemies.length; i++){
+		debugContext.fillText("Type: " + enemies[i].badNPC_Type + " , Health: " + enemies[i].health + 
+			(enemies[i].moveTarget ? ", Target: " + enemies[i].moveTarget.goodNPC_Type : ""), textX, textY);
+		textY+=20;
+	}
+
+	debugContext.fillText("Lady info: ", textX, textY);
+	textY+=20;
+
+	//Enemy, their health and target
+	for (var i =0; i < ladies.length; i++){
+		debugContext.fillText("Type: " + ladies[i].goodNPC_Type + " , Health: " + ladies[i].health, textX, textY);
+		textY+=20;
+	}
+
+	debugContext.fillText("Player health: " + hero.health, textX, textY);
+	textY+=20;
 }
 
 function drawGraphs(){
