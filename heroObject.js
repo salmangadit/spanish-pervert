@@ -46,8 +46,8 @@
 	this.miss = false;
 	
 	/* Punch sprite indicators:
-	 *  -> retreat punch down
-	 *  -> punch down
+	 * 28 -> retreat punch down
+	 * 29 -> punch down
 	 * 17 -> punch left
 	 * 16 -> retreat left punch
 	 * 19 -> punch right
@@ -73,7 +73,7 @@
 					this.parentRef.whichSprite = this.parentRef.width * 25;
 					break;
 				case 'down':
-					this.parentRef.whichSprite = this.parentRef.width * 29;//down need to update
+					this.parentRef.whichSprite = this.parentRef.width * 29;
 					break;
 				default:
 					console.log('this is a weird direction');
@@ -89,8 +89,13 @@
 			//console.log(this.parentRef.selfType + ' delivered ' + this.damageDelivered + ' damage');
 			//console.log(this.parentRef.selfType + ' updated ' + targetReference.selfType + ' health');
 			this.arrayOfLastMoves.push("punch");					
-			this.now = Date.now();
-			this.delta = this.now - this.parentRef.lastRender;
+			
+			// A simple loop to delay time
+			do {
+				this.now = Date.now();
+				this.delta = this.now - this.parentRef.lastRender;
+				//console.log('delta is: ' + this.delta);
+			} while(this.delta < this.parentRef.animSpeed);
 
 			// Move the hand back
 			if(this.delta > this.parentRef.animSpeed){
@@ -105,7 +110,7 @@
 						this.parentRef.whichSprite = this.parentRef.width * 24;
 						break;
 					case 'down':
-						this.parentRef.whichSprite = this.parentRef.width * 18;//down need to update
+						this.parentRef.whichSprite = this.parentRef.width * 28;
 						break;
 					default:
 						console.log('this is a weird direction');
@@ -113,7 +118,7 @@
 				}//switch case statement
 
 				// Render the image
-				this.parentRef.render();				
+				this.parentRef.render();			
 			}//if statement
 			
 		}//actionType if statement
@@ -121,8 +126,8 @@
 	};
 	
 	/* Kick sprite indicators:
-	 *  -> kick down
-	 *   -> retreat down kick
+	 * 31 -> kick down
+	 * 30 -> retreat down kick
 	 * 21 -> kick left
 	 * 4  -> retreat left kick
 	 * 8  -> retreat right kick
@@ -148,7 +153,7 @@
 					this.parentRef.whichSprite = this.parentRef.width * 26;
 					break;
 				case 'down':
-					this.parentRef.whichSprite = this.parentRef.width * 29;//down need to update
+					this.parentRef.whichSprite = this.parentRef.width * 31;
 					break;
 				default:
 					console.log('this is a weird direction');
@@ -160,12 +165,13 @@
 
 			//Then update attributes (because it will always be a hit)
 			targetReference.updateHealth(this.damageDelivered);
-			//for testing
-			//console.log(this.parentRef.selfType + ' delivered ' + this.damageDelivered + ' damage');
-			//console.log(this.parentRef.selfType + ' updated ' + targetReference.selfType + ' health');
-			this.arrayOfLastMoves.push("kick");
-			this.now = Date.now();
-			this.delta = this.now - this.parentRef.lastRender;
+
+			// A simple loop to delay time
+			do {
+				this.now = Date.now();
+				this.delta = this.now - this.parentRef.lastRender;
+				//console.log('delta is: ' + this.delta);
+			} while(this.delta < this.parentRef.animSpeed);
 
 			// Move the leg back
 			if(this.delta > this.parentRef.animSpeed){
@@ -180,7 +186,7 @@
 						this.parentRef.whichSprite = this.parentRef.width * 13;
 						break;
 					case 'down':
-						this.parentRef.whichSprite = this.parentRef.width * 18;//down need to update
+						this.parentRef.whichSprite = this.parentRef.width * 30;
 						break;
 					default:
 						console.log('this is a weird direction');
@@ -195,7 +201,7 @@
 
 	};	
 	
-	//Added new mechanism
+	// Added new mechanism
 	this.rescue = function(targetReference){
 		if(this.parentRef.actionType == 3){
 			console.log('the hero is rescuing a lady');
@@ -290,11 +296,13 @@
 
 			//Then update attributes if it is a hit
 			targetReference.updateHealth(this.attackPower);
-			//for testing
-			//console.log(this.parentRef.selfType + ' delivered ' + this.attackPower + ' damage');
-			//console.log(this.parentRef.selfType + ' updated ' + targetReference.selfType + ' health');
-			this.now = Date.now();
-			this.delta = this.now - this.parentRef.lastRender;
+			
+			// A simple loop to delay time
+			do {
+				this.now = Date.now();
+				this.delta = this.now - this.parentRef.lastRender;
+				//console.log('delta is: ' + this.delta);
+			} while(this.delta < this.parentRef.animSpeed);
 
 			// Retreat the pulling action
 			if(this.delta > this.parentRef.animSpeed){
@@ -351,17 +359,17 @@
 
 				case 'up':
 					if (this.parentRef.badNPC_Type == "monkey") {
-						this.parentRef.whichSprite = this.parentRef.width * 13;
+						this.parentRef.whichSprite = this.parentRef.width * 27;
 					} else {
-						this.parentRef.whichSprite = this.parentRef.width * 13;
+						this.parentRef.whichSprite = this.parentRef.width * 25;
 					}
 					break;
 
 				case 'down':
 					if (this.parentRef.badNPC_Type == "monkey") {
-						this.parentRef.whichSprite = this.parentRef.width * 14;//need to update
+						this.parentRef.whichSprite = this.parentRef.width * 25;//need to update
 					} else {
-						this.parentRef.whichSprite = this.parentRef.width * 14;
+						this.parentRef.whichSprite = this.parentRef.width * 27;
 					}
 					break;
 
@@ -401,17 +409,17 @@
 
 					case 'up':
 						if (this.parentRef.badNPC_Type == "monkey") {
-							this.parentRef.whichSprite = this.parentRef.width * 12;
+							this.parentRef.whichSprite = this.parentRef.width * 26;
 						} else {
-							this.parentRef.whichSprite = this.parentRef.width * 12;
+							this.parentRef.whichSprite = this.parentRef.width * 24;
 						}
 						break;
 
 					case 'down':
 						if (this.parentRef.badNPC_Type == "monkey") {
-							this.parentRef.whichSprite = this.parentRef.width * 14;//need to update
+							this.parentRef.whichSprite = this.parentRef.width * 24;//need to update
 						} else {
-							this.parentRef.whichSprite = this.parentRef.width * 14;
+							this.parentRef.whichSprite = this.parentRef.width * 26;
 						}
 						break;
 
