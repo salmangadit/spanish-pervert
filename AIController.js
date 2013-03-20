@@ -221,7 +221,7 @@ function AIController(){
 				}
 			} else if (this.currPhase.phaseType == "defense"){
 				//A defense phase is ended by meeting the criticality requirement or savig ladies
-				if ((Criticality.get() <= currentCriticalityRequirement || savedLadiesCount == scenarioRatio)&&(enemies.length == 0)){
+				if ((Criticality.get() <= currentCriticalityRequirement || savedLadiesCount == this.currPhase.scenarioRatio)&&(enemies.length == 0)){
 					//console.log("Changing from Phase: "+ currentPhase + "to next phase");
 					this.updateForNextPhase();
 				} else {
