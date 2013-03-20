@@ -33,7 +33,8 @@ function AIController(){
 
 				for (var n = 0; n < parsedPhaseRatio[m]; n++){
 					if (n > 0){
-						//spawnLocation = helperClass.findNearestFreeSpace(spawnLocation[0], spawnLocation[1], 1)
+						spawnLocation = helperClass.findNearestFreeSpace(parseInt(spawnLocation[0]), 
+							parseInt(spawnLocation[1]), 1)
 					}
 					this.enemyStrengthAI(monkeyGorillaRandomiser, chosenTarget, spawnLocation);
 				}
@@ -88,9 +89,9 @@ function AIController(){
 				randomLady = random.randomise(0, ladies.length - 1);
 			} while (alreadyTargeted.indexOf(randomLady)!= -1 && ladies[randomLady].maxOccupant>1);
 
-				chosenTarget = ladies[randomLady];
-				targetFound = true;
-				alreadyTargeted.push(randomLady);
+			chosenTarget = ladies[randomLady];
+			targetFound = true;
+			alreadyTargeted.push(randomLady);
 		}
 
 		return chosenTarget;		
@@ -116,8 +117,8 @@ function AIController(){
 		var spawnLocation;
 		var targetRandomiser = new Randomiser();
 		var spawnIndex = targetRandomiser.randomise(
-				(this.playerLevel == 0 ? this.playerLevel*2:this.playerLevel*2-1), 
-				(this.playerLevel == 4 ? this.playerLevel*2:this.playerLevel*2+1));
+			(this.playerLevel == 0 ? this.playerLevel*2:this.playerLevel*2-1), 
+			(this.playerLevel == 4 ? this.playerLevel*2:this.playerLevel*2+1));
 		var spawnLocationDesired = distances[spawnIndex];
 
 		var trueIndex = distancesOriginal.indexOf(spawnLocationDesired);
@@ -156,8 +157,8 @@ function AIController(){
 		reference.moveTarget = chosenTarget;
 
 		console.log("Spawned " + (MGpickerArray[chosenStrength] == 0 ? "monkey":"gorilla")+ " at "
-					 + spawnLocation[0] + "," + spawnLocation[1] + " . The target of this NPC is a " +
-					 chosenTarget.goodNPC_Type + " lady at location " + chosenTarget.gridX + "," + chosenTarget.gridY);
+			+ spawnLocation[0] + "," + spawnLocation[1] + " . The target of this NPC is a " +
+			chosenTarget.goodNPC_Type + " lady at location " + chosenTarget.gridX + "," + chosenTarget.gridY);
 	}
 
 	this.checkEndOfPhase = function(){
@@ -172,52 +173,55 @@ function AIController(){
 		var currentCriticalityRequirement = criticalityRequirement[currentPhase];
 		if (this.currPhase.phaseType){
 			if (this.currPhase.phaseType == "attack"){
-				// An attack phase is ended by killing all enemies AND meeting criticality requirement
+				// An attack phase is ended meeting criticality requirement
+				if (Criticality.get() >= currentCriticalityRequirement){
+					console.log("Changing from Phase: "+ currentPhase + "to next phase");
+					this.updateForNextPhase();
+				} else {
 					if (enemies.length <= 1){
-						if (Criticality.get() >= currentCriticalityRequirement){
-							console.log("Changing from Phase: "+ currentPhase + "to next phase");
-							this.updateForNextPhase();
-						} else {
-							console.log("Enemies killed but criticality requirement not met. Applying prediction analysis to spawn");
-							var projectedCriticality = predictor.getProjectedCriticality();
+						console.log("Enemies killed but criticality requirement not met. Applying prediction analysis to spawn");
+						var projectedCriticality = predictor.getProjectedCriticality();
 
-							//Check if projected criticality will meet criticality requirement and spawn 1
-							//else figure out how many to spawn as per phase ratio
+						//Check if projected criticality will meet criticality requirement and spawn 1
+						//else figure out how many to spawn as per phase ratio
+						var criticalityDiff = projectedCriticality - Criticality.get();
+						var requirementDiff = currentCriticalityRequirement - Criticality.get();
 
-							var criticalityDiff = projectedCriticality - Criticality.get();
-							var requirementDiff = currentCriticalityRequirement - Criticality.get();
+						var numberToSpawn = requirementDiff/criticalityDiff;
 
-							var numberToSpawn = requirementDiff/criticalityDiff;
+						var parsedPhaseRatio = this.currPhase.scenarioRatio.split(':');
+						var alreadyTargeted = new Array();
+						var alreadySpawned = new Array();
 
-							var parsedPhaseRatio = this.currPhase.scenarioRatio.split(':');
-							var alreadyTargeted = new Array();
-							var alreadySpawned = new Array();
+						if (numberToSpawn%2 != 0 && numberToSpawn != 1){
+							numberToSpawn--;
+						}
 
-							if (numberToSpawn%2 != 0 && numberToSpawn != 1){
-								numberToSpawn--;
-							}
-
-							var chosenRatioIndex = parsedPhaseRatio.length - 1;
-							for (var i =0; i<parsedPhaseRatio.length; i++){
-								if (numberToSpawn < parsedPhaseRatio[i]){
-									continue;
-								} else {
-									chosenRatioIndex = i;
-									break;
-								}
-							}
-
-							var chosenTarget = this.targetNPCAI(alreadyTargeted);
-							var spawnLocation = this.spawnLocationAI(chosenTarget, alreadySpawned);
-							var monkeyGorillaRandomiser = new Randomiser();
-							for (var n = 0; n < parsedPhaseRatio[chosenRatioIndex]; n++){
-								this.enemyStrengthAI(monkeyGorillaRandomiser, chosenTarget, spawnLocation);
+						var chosenRatioIndex = parsedPhaseRatio.length - 1;
+						for (var i =0; i<parsedPhaseRatio.length; i++){
+							if (numberToSpawn < parsedPhaseRatio[i]){
+								continue;
+							} else {
+								chosenRatioIndex = i;
+								break;
 							}
 						}
+
+						var chosenTarget = this.targetNPCAI(alreadyTargeted);
+						var spawnLocation = this.spawnLocationAI(chosenTarget, alreadySpawned);
+						var monkeyGorillaRandomiser = new Randomiser();
+						for (var n = 0; n < parsedPhaseRatio[chosenRatioIndex]; n++){
+							if (n > 0){
+								spawnLocation = helperClass.findNearestFreeSpace(parseInt(spawnLocation[0]), 
+									parseInt(spawnLocation[1]), 1)
+							}
+							this.enemyStrengthAI(monkeyGorillaRandomiser, chosenTarget, spawnLocation);
+						}
 					}
+				}
 			} else if (this.currPhase.phaseType == "defense"){
 				//A defense phase is ended by meeting the criticality requirement or savig ladies
-				if (Criticality.get() <= currentCriticalityRequirement || savedLadiesCount == scenarioRatio){
+				if ((Criticality.get() <= currentCriticalityRequirement || savedLadiesCount == scenarioRatio)&&(enemies.length == 0)){
 					//console.log("Changing from Phase: "+ currentPhase + "to next phase");
 					this.updateForNextPhase();
 				} else {

@@ -81,7 +81,7 @@ helperClass.findNearestFreeSpace = function(pointX, pointY, jump){
 					}
 				}
 			}
-		} while (found == false);
+		} while (!found);
 
 		return nearestFree;
 	}

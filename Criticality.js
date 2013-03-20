@@ -25,12 +25,16 @@ Criticality.get = function(){
 	//Good NPC contribution
 	var goodNPCCritSum = 0;
 	var goodNPCCrit = 0;
+	var ladiesSum = 0;
 	for (var i = 0; i < ladies.length; i++){
-		goodNPCCritSum += (30 - ladies[i].health);
+		if (ladies[i].health < 30){
+			goodNPCCritSum += (30 - ladies[i].health);
+			ladiesSum++;
+		}
 	}
 
-	if (ladies.length > 0){
-		goodNPCCrit = goodNPCCritSum/ladies.length;
+	if (ladiesSum > 0){
+		goodNPCCrit = goodNPCCritSum/ladiesSum;
 	}
 
 	//Criticality inverted
