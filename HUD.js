@@ -1,3 +1,9 @@
+/* This file creates the Heads Up Display on the screen
+ * the static displays are: Hero's health
+ * the dynamic displays are:
+ 		-> message to the player: from AI controller
+  		-> frame rate per second: if debug mode is triggered
+ */
 
 // For the frame per second display
 var fps = 0;
@@ -11,15 +17,13 @@ var localHeroReference;
 var messageOut;
 
 function displayHUD(){
-	//console.log('the update received is: ' + thisUpdate);
 	// Display the hero's health
 	displayHeroHealth();
 
-	// Display message --for now this is a manual case later it would be called directly
+	// Display message -- for now this is a manual case later it would be called directly
 	// by salman
-	displayMessage("hiiiiiii Playaaaa");
+	//displayMessage("hiiiiiii Playaaaa");
 }
-
 
 function keepHeroReference(thisReference){
 	localHeroReference = thisReference;
@@ -27,7 +31,7 @@ function keepHeroReference(thisReference){
 
 function displayHeroHealth(){
 	healthOut = document.getElementById("hero_health");
-	healthOut.innerHTML = "Your Health: " + (localHeroReference.health * 3);
+	healthOut.innerHTML = "Your Health: " + (localHeroReference.health * 3.33333).toFixed(5);
 }
 
 function displayFPS(thisUpdate){
@@ -44,4 +48,9 @@ function clearFPS(){
 function displayMessage(thisMessage){
 	messageOut = document.getElementById("message");
 	messageOut.innerHTML = "Message to the player: " + thisMessage;
+}
+
+function clearDisplayMessage(){
+	messageOut = document.getElementById("message");
+	messageOut.innerHTML = "";
 }

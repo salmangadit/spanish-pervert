@@ -1,5 +1,11 @@
+// to test time taken for a_star algo
+var initialTime;
+var endTime;
+
 function a_star(start, destination, board, columns, rows, allow_diagonals)
 {
+	initialTime = Date.now(); //testing
+
 	//Create start and destination as true nodes
 	start = new node(start[0], start[1], -1, -1, -1, -1);
 	destination = new node(destination[0], destination[1], -1, -1, -1, -1);
@@ -104,6 +110,9 @@ function a_star(start, destination, board, columns, rows, allow_diagonals)
 				}
 			}
 	}
+
+	endTime = Date.now() - initialTime;
+	console.log('time taken to compute a star is: ' + endTime);
 
 	return [];
 }

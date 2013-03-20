@@ -1,4 +1,4 @@
-var FPS = 50;
+var FPS = 30;
 var screenUpdateTime = 1000/FPS;
 
 var canvas;
@@ -92,11 +92,18 @@ function init() {
 	initGameTiles();
 
 	lastUpdate = Date.now();
-	setInterval(gameLoop, screenUpdateTime);
+	
+	//setInterval(gameLoop, screenUpdateTime);
+	gameLoop();
+	
 	setInterval(function(){AI.checkEndOfPhase();}, screenUpdateTime);
-	setInterval(updatePlayerLearning, screenUpdateTime);
+	
+	//setInterval(updatePlayerLearning, screenUpdateTime);
+	updatePlayerLearning();
+	
 	// To display the HUD on screen
 	setInterval(displayHUD, screenUpdateTime);
+	
 	//temporarily putting basic AI calls here till controller is up
 	AI.executePhase();
 
@@ -140,7 +147,6 @@ function init() {
 				hero.keys.splice(hero.keys.indexOf(event.keyCode), 1);
 		}
 	});
-
 }
 
 
@@ -439,11 +445,18 @@ function initCanvas() {
 	
 }
 
+// Variables to test the rendering issues
+var initialtime;
+var timeTaken;
+var ladyLoopTime;
+var enemyLoopTime;
+var gameTime;
+var stageCheckTime;
 
 function gameLoop() {
 
 	// To get the frame rate
-	//requestAnimFrame(gameLoop);
+	requestAnimFrame(gameLoop);
 
 	var now = Date.now();
 	// calculate how long as passed since our last iteration
@@ -465,11 +478,22 @@ function gameLoop() {
 	//flocker(ladies[0], enemies, 3, 5);
 	
 	//setting the grid
+	// Testing time
+	initialtime = Date.now();
 	Controller();
+	timeTaken = Date.now() - initialtime;
+	if(timeTaken > 50)
+		console.log('time taken for Controller() in gameLoop is: ' + timeTaken);
 	
 	//------------------------End of Max code------------------------------------
 	
-	// do a foreach type loop through the enemies
+	
+	// Testing time for enemies ------------------------------------
+	initialtime = Date.now();
+
+
+	// Actual code
+	// Do a foreach type loop through the enemies
 	var index = 0;	
 	for (curEnemy in enemies) {
 		if (enemies[curEnemy].destroyed) {
@@ -560,8 +584,21 @@ function gameLoop() {
 		
 		index++;
 	}
-	
-	//Do a for each loop for the ladies as well
+
+
+
+	// Output time taken to loop thru enemy -------------------------
+	enemyLoopTime = Date.now() - initialtime;
+	if(enemyLoopTime > 50)
+		console.log('enemyLoopTime in gameLoop is: ' + enemyLoopTime);
+
+
+	// Testing time for ladies *****************************
+	initialtime = Date.now();
+
+
+	// Actual code
+	// Do a for each loop for the ladies as well
 	var ladyIndex = 0;
 	for (curLady in ladies) {
 		if (ladies[curLady].destroyed) {
@@ -646,26 +683,50 @@ function gameLoop() {
 		
 		ladyIndex++;
 	}
+
+
+
+	// Output time taken to loop thru lady **********************
+	ladyLoopTime = Date.now() - initialtime;
+	if(ladyLoopTime > 50)
+		console.log('ladyLoopTime in gameLoop is: ' + ladyLoopTime);
 	
-	
+
+	// Testing time for danger stage check ==========================
+	initialtime = Date.now();
+
+
+	// Actual code
 	checkDangerStage();
+
+
+	// Output time taken to check stage ==============================
+	stageCheckTime = Date.now() - initialtime;
+	if(stageCheckTime > 50)
+		console.log('checkDangerStage in gameLoop is: ' + stageCheckTime);
+
+
 	// update the lastUpdate variable
 	lastUpdate = now;
 
 	//lion.render();
-	// Max put you debug code here cause when activated I need the lastUpdate to be
-	// reflected in the HUD
+
+
 	if(debugMode == true){
 		Debug();
 		displayFPS(lastUpdate);
 	}
 
+	// Testing time
+	gameTime = Date.now() - now;
+	if(gameTime > 50)
+		console.log('time taken for gameLoop is: ' + gameTime);
 }
 
 function updatePlayerLearning(){
 	
 	// To get the frame rate
-	//requestAnimFrame(updatePlayerLearning);
+	requestAnimFrame(updatePlayerLearning);
 
 	// Update the players health
 	//if(hero != null)
@@ -777,3 +838,32 @@ window.requestAnimFrame = (function(){
 })();
 
 
+// For the rendering, but how to call this function?
+
+/*
+(function() {
+    var lastTime = 0;
+    var vendors = ['ms', 'moz', 'webkit', 'o'];
+    for(var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
+        window.requestAnimationFrame = window[vendors[x]+'RequestAnimationFrame'];
+        window.cancelRequestAnimationFrame = window[vendors[x]+
+          'CancelRequestAnimationFrame'];
+    }
+    if(!window.requestAnimationFrame)
+        window.requestAnimationFrame = 
+    		function(callback, element) {
+            	var currTime = new Date().getTime();
+            	var timeToCall = Math.max(0, 16 - (currTime - lastTime));
+            	var id = window.setTimeout(function() { callback(currTime + timeToCall); },
+              		timeToCall);
+            	lastTime = currTime + timeToCall;
+            	return id;
+    		};
+
+    if(!window.cancelAnimationFrame)
+        window.cancelAnimationFrame = 
+    		function(id) {
+            	clearTimeout(id);
+        	};
+}());
+*/

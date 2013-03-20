@@ -20,6 +20,7 @@ var vendorTaken = new Array(false, false, false, false, false, false,
 var vendorCount = 24
 
 function Controller(){
+	//requestAnimFrame(Controller);
 	setGrid();
 	for(iter in enemies){
 		EnemyAwareness(enemies[iter]);
@@ -422,6 +423,7 @@ function EnemyAwareness(bot){
 }
 
 function EnemiesRadialAwareness(){
+
 	for(iter in enemies){
 		var awareness = false;
 		var imin = enemies[iter].gridX - 3;
@@ -447,6 +449,7 @@ function EnemiesRadialAwareness(){
 }
 
 function LadyAwareness(bot){
+
 	//above
 	if(bot.gridY-1>=0){
 		if(VG[bot.gridX][bot.gridY-1] != null){
@@ -532,4 +535,5 @@ function LadyAwareness(bot){
 			}
 		}
 	}
+
 }

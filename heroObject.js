@@ -10,7 +10,7 @@
  */
 
 
- var maximumHealthLife = 100;
+ var maximumHealthLife = 30;
  var constantMainCharcterHealthRecovery = 0.02;
  var constantGoodNPCRecoveryHealth = 0.01;
   
@@ -19,7 +19,7 @@
  var mainCharacter = function(thisReference){
 
 	this.parentRef = thisReference;
-	console.log('health upon instantaiation is:  ' + this.parentRef.health);
+//	console.log('health upon instantaiation is:  ' + this.parentRef.health);
 	//Attributes associated with the main character specifically
 	this.arrayOfLastMoves = new Array();		//to be used for probability distribution or if same as the keys array then, this can be deemed redundant
 	this.gameExp = 0;
@@ -231,7 +231,7 @@
  var badNPC = function(thisReference){
  	
  	this.parentRef = thisReference;
- 	console.log('health upon instantaiation is:  ' + this.parentRef.health);
+// 	console.log('health upon instantaiation is:  ' + this.parentRef.health);
  	this.attackPower = null;
  	if(this.parentRef.badNPC_Type == "monkey"){
  		this.defaultAttackPower = -0.3;
@@ -396,11 +396,13 @@
 
 			// Then update attributes if it is a hit
 			targetReference.updateHealth(this.attackPower);
-			//for testing
-			//console.log(this.parentRef.selfType + ' delivered ' + this.attackPower + ' damage');
-			//console.log(this.parentRef.selfType + ' updated ' + targetReference.selfType + ' health');
-			this.now = Date.now();
-			this.delta = this.now - this.parentRef.lastRender;
+
+			// A simple loop to delay time
+			do {
+				this.now = Date.now();
+				this.delta = this.now - this.parentRef.lastRender;
+				//console.log('delta is: ' + this.delta);
+			} while(this.delta < this.parentRef.animSpeed);
 
 			// Retreat the pulling action
 			if(this.delta > this.parentRef.animSpeed){
@@ -463,13 +465,13 @@
  var goodNPC = function(thisReference){
 	
 	this.parentRef = thisReference;
-	console.log('health upon instantaiation is:  ' + this.parentRef.health);
+//	console.log('health upon instantaiation is:  ' + this.parentRef.health);
 	this.fightController = new FightController(this);
 	this.now;
 	this.delta;
 	//Only the fiesty lady can attack
 	if (this.parentRef.goodNPC_Type == "fiesty"){
-		this.defaultAttackPower = -5;		
+		this.defaultAttackPower = -2;		
 		this.attackPower = this.defaultAttackPower;
 		this.hitMissRatio = 1;
 		//this.hit = false;
@@ -508,13 +510,16 @@
     		//Update the target's health only for a fiesty lady
     		if(this.parentRef.goodNPC_Type == "fiesty"){
 				targetReference.updateHealth(this.attackPower);
-				//for testing
-				//console.log(this.parentRef.selfType + ' delivered ' + this.attackPower + ' damage');
-				//console.log(this.parentRef.selfType + ' updated ' + targetReference.selfType + ' health');
 			}
 			
-			this.now = Date.now();
-			this.delta = this.now - this.parentRef.lastRender;
+			// A simple loop to delay time
+			do {
+				this.now = Date.now();
+				this.delta = this.now - this.parentRef.lastRender;
+				//console.log('delta is: ' + this.delta);
+			} while(this.delta < this.parentRef.animSpeed);
+
+
 			// Retreat the umbrella action
 			if(this.delta > this.parentRef.animSpeed){
 				// Retreat the umbrella hit
@@ -646,7 +651,7 @@
 	this.HeroType = null;
 	this.badNPC_Type = null;
 	this.goodNPC_Type = null;
-	console.log('the heroObject type to be created is: ' + thisType);
+//	console.log('the heroObject type to be created is: ' + thisType);
 	switch(thisType){
  		case 0:		this.HeroType = new mainCharacter(this);
  					break;
@@ -887,17 +892,37 @@
                 break;
                 
             case 75:
+            	/*** Previous working implementation ****/
             	//Make the hero kick
-            	this.HeroType.kick(this.targetBot);
+            	/*this.HeroType.kick(this.targetBot);
             	if(delta > this.animSpeed){
             		this.lastRender = now;	
+            	}***************************************/
+
+            	// Trying new implementation to get smoother transition
+            	// This loop exits once delta is greater than animation speed
+            	do {
+            		now = Date.now();
+            		delta = now - this.lastRender;
+            	} while(delta < this.animSpeed);
+            	
+            	// Now we are ready to perform the action inline
+            	if(delta > this.animSpeed){
+            		this.HeroType.kick(this.targetBot);
+            		this.lastRender = now;	
             	}
-            	break;    
+            	break;
             	
         	case 80:
-        		//Make the hero punch
-        		this.HeroType.punch(this.targetBot);
+        		// Smoothen the transition
+        		do {
+            		now = Date.now();
+            		delta = now - this.lastRender;
+            	} while(delta < this.animSpeed);
+        		
+        		// Now we are ready tp punch
         		if(delta > this.animSpeed){
+        			this.HeroType.punch(this.targetBot);
         			this.lastRender = now;	
         		}
         		break;     
@@ -1035,12 +1060,12 @@
 
 	this.updateHealth = function(thisHealth){
 		//console.log('the health passed in is: ' + thisHealth);
-		this.innerHealthMeterWidth += (thisHealth * 0.3);
+		this.innerHealthMeterWidth += thisHealth;
 		this.health = this.innerHealthMeterWidth;
 		// 30 is the maximum width of the innerHealthMeter
 		if(this.innerHealthMeterWidth > 30){
 			this.innerHealthMeterWidth = 30;	
-			this.health = this.innerHealthMeterWidth;
+			this.health = maximumHealthLife;
 		
 		} else if(this.innerHealthMeterWidth < 0) {
 			this.innerHealthMeterWidth = 0;
@@ -1052,7 +1077,7 @@
 
 		// For testing only
 		if(this.selfType == 1 || this.selfType == 2){
-			console.log(this.HeroType.badNPC_Type + ' health is: ' + this.health);
+//			console.log(this.HeroType.badNPC_Type + ' health is: ' + this.health);
 		}
 	}; 
     
