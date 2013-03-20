@@ -105,18 +105,23 @@ function Controller(){
 
 function moveLion(){
 	var strongestEnemy = enemies[0];
-	if(lion.moveTarget == null){
-		for(iter in enemies){
-			if(enemies[iter].health>strongestEnemy.health){
-				strongestEnemy = enemies[iter]
+	if(lionStatus){
+		if(lion.moveTarget == null){
+			for(iter in enemies){
+				if(enemies[iter].health>strongestEnemy.health){
+					strongestEnemy = enemies[iter]
+				}
 			}
+			lion.moveTarget = strongestEnemy;
 		}
-		lion.moveTarget = strongestEnemy;
+		if(lion.moveTarget != null){
+			var tx = lion.moveTarget.gridX;
+			var ty = lion.moveTarget.gridY;
+			lion.targetGrid = new Array(tx,ty);
+		}
 	}
-	if(lion.moveTarget != null){
-		var tx = lion.moveTarget.gridX;
-		var ty = lion.moveTarget.gridY;
-		lion.targetGrid = new Array(tx,ty);
+	if(!lionStatus){
+		lion.targetGrid = new Array(20,20);
 	}
 }
 
