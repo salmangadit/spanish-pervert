@@ -29,10 +29,10 @@
   </Objects>
 
   <Grid tileSize="32" width="33" height="28" baseColor="#CFB53B">
-    <GridRow>---------------F-------P--------</GridRow>
+    <GridRow>---T-----------F-------P--------</GridRow>
     <GridRow>--------------------------------</GridRow>
     <GridRow>------PP----C-------------------</GridRow>
-    <GridRow>-------------------C---F---B--B-</GridRow>
+    <GridRow>---F-----T----F----C---F---B--B-</GridRow>
     <GridRow>--------------------------------</GridRow>
     <GridRow>-PVVVVP----------------------B--</GridRow>
     <GridRow>--------WWWWWW----WWWWWWW-------</GridRow>
@@ -55,7 +55,7 @@
     <GridRow>-----------------VW-------------</GridRow>
     <GridRow>------F----------VW--------VVVVV</GridRow>
     <GridRow>S----------------PW---BB--------</GridRow>
-    <GridRow>-------------CC---W-------------</GridRow>
+    <GridRow>-------------CC-----------------</GridRow>
     <GridRow>-------------CC-------PP--------</GridRow>
   </Grid>
 </GameData>

@@ -98,7 +98,23 @@ function displayParameters(){
 		debugContext.fillText("Type: " + ladies[i].goodNPC_Type + " , Health: " + ladies[i].health, textX, textY);
 		textY+=20;
 	}
-
+	
+	var maxOccValue = false;
+	
+	for(iter in collidables){
+		if(collidables[iter].maxOccupants<0){
+			maxOccValue = true;
+		}
+	}
+	if(maxOccValue == true){
+		debugContext.fillText("Max occupants less than 0", textX, textY);
+		textY+=20;
+	}
+	else{
+		debugContext.fillText("Nothing wrong", textX, textY);
+		textY+=20;
+	}
+	
 	debugContext.fillText("Player health: " + hero.health, textX, textY);
 	textY+=20;
 	textY+=20;
@@ -106,6 +122,7 @@ function displayParameters(){
 		debugContext.fillText("Specific AI kicks in!", textX, textY);
 		textY+=20;
 	}
+	
 	
 }
 

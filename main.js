@@ -79,7 +79,8 @@ function init() {
 	xmlhttp = new XMLHttpRequest();
 	//http://www.salmangadit.me/spanish-pervert/data/data.xmlC:/Users/Salman/Documents/GitHub/spanish-pervert/data/data.xml
 	// /Users/TheGreatOne/Desktop/Sem_6/EE4702/Project/Project_2/spanish-pervert/data/data.xml
-	xmlhttp.open("GET", "/Users/TheGreatOne/Desktop/Sem_6/EE4702/Project/Project_2/spanish-pervert/data/data.xml", false);
+	xmlhttp.open("GET", "C:/Users/YuanIng/Documents/GitHub/spanish-pervert/data/data.xml", false);
+	//xmlhttp.open("GET", "/Users/TheGreatOne/Desktop/Sem_6/EE4702/Project/Project_2/spanish-pervert/data/data.xml", false);
 	//xmlhttp.open("GET", "C:/Users/Salman/Documents/GitHub/spanish-pervert/data/data.xml", false);
 	xmlhttp.send();
 	xmlDoc = xmlhttp.responseXML;
@@ -478,7 +479,7 @@ function gameLoop() {
 			enemies.splice(curEnemy, 1);
 			enemyWasDestroyed = true;			
 			enemyDestroyCount +=1;
-		} else{
+		} else {
 			//testing out of the targetGrid system
 			var tempGrid = new Array();
 
@@ -545,14 +546,18 @@ function gameLoop() {
 			if (path[index].length == 2){
 				enemies[curEnemy].keys.splice(0, 1);
 			}
-
+			
 			// Update the enemy based upon how long it took for the game loop
 			enemies[curEnemy].update(elapsed / screenUpdateTime);
 
-			// draw the enemy to the screen again
-			enemies[curEnemy].render();
-		}
+		// draw the enemy to the screen again
 
+			
+		}
+		
+		
+		enemies[curEnemy].render();
+		
 		index++;
 	}
 	
@@ -562,7 +567,7 @@ function gameLoop() {
 		if (ladies[curLady].destroyed) {
 			console.log('this lady ' + ladies[curLady].selfType + ' is dead');
 			ladies.splice(curLady, 1);
-		} else{
+		} else {
 			//testing out of the targetGrid system
 			var tempGrid = new Array();
 
@@ -628,13 +633,17 @@ function gameLoop() {
 			if (path[ladyIndex].length == 2) {
 				ladies[curLady].keys.splice(0, 1);
 			}
-			// Update the lady based upon how long it took for the game loop
+			
+			
+			
+		}
+
+		// Update the lady based upon how long it took for the game loop
 			ladies[curLady].update(elapsed / screenUpdateTime);
 
 			// draw the lady to the screen again
 			ladies[curLady].render();
-		}
-
+		
 		ladyIndex++;
 	}
 	

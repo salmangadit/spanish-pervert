@@ -95,7 +95,7 @@ function Controller(){
 			hero.targetBot = null;
 		}
 	}
-	//console.log(ladies.length);
+	console.log(ladies.length);
 }
 
 function ladiesLoiterTimer(){
@@ -109,32 +109,17 @@ function ladiesLoiterTimer(){
 			}
 			if(ladies[iter].loiterTime>=150){	
 					while(1){
-						var randomNo = Math.floor(Math.random() * 23);
+						var random = new Randomiser();
+						var randomNo = random.randomise(0,23);
 						var x = vendorPosX[randomNo];
 						var y = vendorPosY[randomNo];	
-						if(VG[x][y].maxOccupants >= 1){
+						if(VG[x][y].maxOccupants > 1){
 							break;
 						}
-					}				
+					}	
 					VG[x][y].maxOccupant--;
 					ladies[iter].targetGrid = new Array(x,y);
 					ladies[iter].loiterTime = 0;
-			}
-		}
-	}
-}
-
-function ladiesLoiter(){
-	for (iter in ladies){
-		if(ladies[iter].actionType == 0){
-			if(ladies[iter].targetGrid[0] == ladies[iter].gridX && ladies[iter].targetGrid[1] == ladies[iter].gridY){
-				//ladies[iter].targetGrid = new Array( vendorPos[Math.floor(Math.random() * 42)][0], vendorPos[Math.floor(Math.random() * 42)][1]);
-				alert("a");
-				var randomNo = Math.floor(Math.random() * 43);
-				var x = vendorPosX[randomNo];
-				var y = vendorPosY[randomNo];
-				//console.log(randomNo);
-				ladies[iter].targetGrid = new Array(x,y);
 			}
 		}
 	}

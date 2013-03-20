@@ -71,9 +71,11 @@ function AIController(){
 				(pickerArray[targetNPCtype] == 1 && ladies[k].goodNPC_Type == "thin")){
 				
 				if (alreadyTargeted.indexOf(k) == -1){
-					alreadyTargeted.push(k);
-					chosenTarget = ladies[k]; 
-					targetFound = true;
+					if(ladies[k].maxOccupant>1){
+						alreadyTargeted.push(k);
+						chosenTarget = ladies[k]; 
+						targetFound = true;
+					}
 					break;
 				}
 			}
@@ -84,7 +86,7 @@ function AIController(){
 			do {
 				var random = new Randomiser();
 				randomLady = random.randomise(0, ladies.length - 1);
-			} while (alreadyTargeted.indexOf(randomLady)!= -1);
+			} while (alreadyTargeted.indexOf(randomLady)!= -1 && ladies[randomLady].maxOccupant>1);
 
 				chosenTarget = ladies[randomLady];
 				targetFound = true;
