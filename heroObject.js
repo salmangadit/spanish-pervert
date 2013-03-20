@@ -999,14 +999,18 @@
                 // current rock
                 if (this.checkCollision(collidables[iter]))
                 {
-                	if (!this.keepMoving){
 	                    // reset our x and y coordinates and set our collision property to true
 	                    this.x = prevX;
 	                    //this.internalX = this.x;
 	                    this.y = prevY;
 	                    //this.internalY = this.y;
 	                    this.collision = true;
-                	}
+
+	                    if (this.x%32 != 0 || this.y%32 !=0){
+				        	this.keepMoving = true;
+				        } else {
+				        	this.keepMoving = false;
+				        }
                 }
             }
         }
@@ -1032,6 +1036,12 @@
 							this.y = prevY;
 							//this.internalY = this.y;
 							this.collision = true;
+
+							if (this.x%32 != 0 || this.y%32 !=0){
+					        	this.keepMoving = true;
+					        } else {
+					        	this.keepMoving = false;
+					        }
 						}
 					}
 				}
@@ -1059,6 +1069,12 @@
 							this.y = prevY;
 							//this.internalY = this.y;
 							this.collision = true;
+
+							if (this.x%32 != 0 || this.y%32 !=0){
+					        	this.keepMoving = true;
+					        } else {
+					        	this.keepMoving = false;
+					        }
 						}
 					}
 				}
