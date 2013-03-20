@@ -45,17 +45,18 @@ function Controller(){
 	heroBehaviour(hero,VG);
 	LadyAwareness(lion);
 	if(lion.actionType == 1){
+		
 		lion.HeroType.strikeWithUmbrella(lion.targetBot);	
 	}
 	// Habeeb, uncomment the following to test -- max we should update only if action type is 1
 	// because only then he can attack and thats when we need to monitor
 	if(hero.actionType == 1){
-		hero.HeroType.fightController.updateSurroundingEnemies(returnSurroundingArray(hero));
-		hero.HeroType.fightController.monitorHeroObjectSituation();
+		//hero.HeroType.fightController.updateSurroundingEnemies(returnSurroundingArray(hero));
+		//hero.HeroType.fightController.monitorHeroObjectSituation();
 	}
 
 	
-	EnemiesRadialAwareness();
+	//EnemiesRadialAwareness();
 	for(iter in enemies){
 		switch(enemies[iter].actionType){
 			case 1:	enemies[iter].HeroType.pullSkirt(enemies[iter].targetBot);
@@ -75,12 +76,12 @@ function Controller(){
 		ladies[iter].HeroType.fightController.updateSurroundingEnemies(returnSurroundingArray(ladies[iter]))
 		if(ladies[iter].selfType == 4 && ladies[iter].actionType == 1 && (ladies[iter].targetBot.selfType == 1 || ladies[iter].targetBot.selfType == 2)){
 			ladies[iter].targetGrid = new Array(ladies[iter].targetBot.gridX,ladies[iter].targetBot.gridY);
-			ladies[iter].HeroType.fightController.monitorHeroObjectSituation();
+			//ladies[iter].HeroType.fightController.monitorHeroObjectSituation();
 			ladies[iter].HeroType.strikeWithUmbrella(ladies[iter].targetBot);
 		}
 		if(ladies[iter].selfType == 3 && ladies[iter].actionType == 1){
 			ladies[iter].targetGrid = new Array(ladies[iter].targetBot.gridX,ladies[iter].targetBot.gridY);
-			ladies[iter].HeroType.fightController.monitorHeroObjectSituation();
+			//ladies[iter].HeroType.fightController.monitorHeroObjectSituation();
 		}
 		if(ladies[iter].actionType == 3){
 			ladies[iter].targetGrid = new Array(hero.gridX,hero.gridY);			
@@ -385,8 +386,9 @@ function EnemyAwareness(bot){
 				bot.actionType = 2;
 				bot.targetBot = VG[bot.gridX][bot.gridY-1];
 			}
-			if(	VG[bot.gridX][bot.gridY-1].selfType == 3 || 
-				VG[bot.gridX][bot.gridY-1].selfType == 4){
+			if(	VG[bot.gridX][bot.gridY-1] == bot.targetBot &&
+				(VG[bot.gridX][bot.gridY-1].selfType == 3 || 
+				VG[bot.gridX][bot.gridY-1].selfType == 4)){
 				if((bot.targetBot != null && bot.targetBot.selfType!=0) ||
 					bot.targetBot == null){
 					bot.facingWhichDirection = "up";
@@ -404,8 +406,9 @@ function EnemyAwareness(bot){
 				bot.actionType = 2;	
 				bot.targetBot = VG[bot.gridX][bot.gridY+1];				
 			}
-			if(	VG[bot.gridX][bot.gridY+1].selfType == 3 ||
-				VG[bot.gridX][bot.gridY+1].selfType == 4){				
+			if(	VG[bot.gridX][bot.gridY+1] == bot.targetBot &&
+				(VG[bot.gridX][bot.gridY+1].selfType == 3 ||
+				VG[bot.gridX][bot.gridY+1].selfType == 4)){				
 				if((bot.targetBot != null && bot.targetBot.selfType!=0) ||
 					bot.targetBot == null){
 					bot.facingWhichDirection = "down";
@@ -423,8 +426,9 @@ function EnemyAwareness(bot){
 				bot.actionType = 2;
 				bot.targetBot = VG[bot.gridX-1][bot.gridY];
 			}
-			if(	VG[bot.gridX-1][bot.gridY].selfType == 3 ||
-				VG[bot.gridX-1][bot.gridY].selfType == 4){
+			if(	VG[bot.gridX-1][bot.gridY] == bot.targetBot &&
+				(VG[bot.gridX-1][bot.gridY].selfType == 3 ||
+				VG[bot.gridX-1][bot.gridY].selfType == 4)){
 				if((bot.targetBot != null && bot.targetBot.selfType!=0) ||
 					bot.targetBot == null){
 					bot.facingWhichDirection = "left";
@@ -442,8 +446,9 @@ function EnemyAwareness(bot){
 				bot.actionType = 2;
 				bot.targetBot = VG[bot.gridX+1][bot.gridY];
 			}
-			if(	VG[bot.gridX+1][bot.gridY].selfType == 3 ||
-				VG[bot.gridX+1][bot.gridY].selfType == 4){				
+			if(	VG[bot.gridX+1][bot.gridY] == bot.targetBot &&
+				(VG[bot.gridX+1][bot.gridY].selfType == 3 ||
+				VG[bot.gridX+1][bot.gridY].selfType == 4) ){				
 				if((bot.targetBot != null && bot.targetBot.selfType!=0) ||
 					bot.targetBot == null){
 					bot.facingWhichDirection = "right";
@@ -597,4 +602,13 @@ function LadyAwareness(bot){
 		}
 	}
 
+}
+
+function safetyLock(bot){
+	if(bot.targetGrid[0] == null){
+		bot.targetGrid[0] = 1;
+	}
+	if(bot.targetGrid[1] == null){
+		bot.targetGrid[1] = 1;
+	}
 }
