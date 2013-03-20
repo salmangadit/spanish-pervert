@@ -11,7 +11,7 @@
 
 
  var maximumHealthLife = 30;
- var constantMainCharcterHealthRecovery = 0.02;
+ var constantMainCharcterHealthRecovery = 0.03;
  var constantGoodNPCRecoveryHealth = 0.01;
   
  //------------------------ mainCharacter implementation -------------------------
@@ -234,10 +234,10 @@
 // 	console.log('health upon instantaiation is:  ' + this.parentRef.health);
  	this.attackPower = null;
  	if(this.parentRef.badNPC_Type == "monkey"){
- 		this.defaultAttackPower = -0.3;
+ 		this.defaultAttackPower = -0.15;
  		this.attackPower = this.defaultAttackPower;
  	}else if(this.parentRef.badNPC_Type == "gorilla"){
- 		this.defaultAttackPower = -0.5;
+ 		this.defaultAttackPower = -0.4;
  		this.attackPower = this.defaultAttackPower;
  	}
  	
@@ -471,7 +471,7 @@
 	this.delta;
 	//Only the fiesty lady can attack
 	if (this.parentRef.goodNPC_Type == "fiesty"){
-		this.defaultAttackPower = -2;		
+		this.defaultAttackPower = -1;		
 		this.attackPower = this.defaultAttackPower;
 		this.hitMissRatio = 1;
 		//this.hit = false;

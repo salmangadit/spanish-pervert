@@ -1,4 +1,5 @@
 //Debug mode
+var lastCritUpdate = Date.now();
 
 function Debug(){
 	renderGrids();
@@ -32,12 +33,14 @@ function renderGrids(){
 }
 
 function maintainCritArray(){
-	var tmp = 0;
-	var newValue = Criticality.get();
-	for(var i = 0; i<10; i++){
-		tmp = critArray[i];
-		critArray[i] = newValue;
-		newValue = tmp;		
+	if (Date.now() - lastCritUpdate >= 1000){
+		var newValue = Criticality.get();
+		critArray.push(newValue);
+
+		if (critArray.length > 10){
+			critArray.shift();
+		}
+		lastCritUpdate = Date.now();
 	}
 }
 
