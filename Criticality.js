@@ -15,7 +15,7 @@ Criticality.get = function(){
 	var badNPCCrit = 0;
 
 	for (var i = 0; i < enemies.length; i++){
-		badNPCCritSum += (30 - (enemies[i].health*3)/10);
+		badNPCCritSum += (30 - enemies[i].health);
 	}
 
 	if (enemies.length > 0){

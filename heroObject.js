@@ -999,12 +999,14 @@
                 // current rock
                 if (this.checkCollision(collidables[iter]))
                 {
-                    // reset our x and y coordinates and set our collision property to true
-                    this.x = prevX;
-                    //this.internalX = this.x;
-                    this.y = prevY;
-                    //this.internalY = this.y;
-                    this.collision = true;
+                	if (!this.keepMoving){
+	                    // reset our x and y coordinates and set our collision property to true
+	                    this.x = prevX;
+	                    //this.internalX = this.x;
+	                    this.y = prevY;
+	                    //this.internalY = this.y;
+	                    this.collision = true;
+                	}
                 }
             }
         }
@@ -1023,12 +1025,14 @@
 				if(this.gridX != enemies[iter].gridX && this.gridY != enemies[iter].gridY){
 					if (this.checkCollision(enemies[iter]))
 					{
-						// reset our x and y coordinates and set our collision property to true
-						this.x = prevX;
-						//this.internalX = this.x;
-						this.y = prevY;
-						//this.internalY = this.y;
-						this.collision = true;
+						if (!this.keepMoving){
+							// reset our x and y coordinates and set our collision property to true
+							this.x = prevX;
+							//this.internalX = this.x;
+							this.y = prevY;
+							//this.internalY = this.y;
+							this.collision = true;
+						}
 					}
 				}
 			}
@@ -1047,13 +1051,15 @@
 				// current rock
 				if(this.gridX != ladies[iter].gridX && this.gridY != ladies[iter].gridY){
 					if (this.checkCollision(ladies[iter]))
-					{						
-						// reset our x and y coordinates and set our collision property to true
-						this.x = prevX;
-						//this.internalX = this.x;
-						this.y = prevY;
-						//this.internalY = this.y;
-						this.collision = true;
+					{
+						if (!this.keepMoving){						
+							// reset our x and y coordinates and set our collision property to true
+							this.x = prevX;
+							//this.internalX = this.x;
+							this.y = prevY;
+							//this.internalY = this.y;
+							this.collision = true;
+						}
 					}
 				}
 			}
