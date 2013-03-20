@@ -387,7 +387,7 @@ function EnemyAwareness(bot){
 				bot.actionType = 2;
 				bot.targetBot = VG[bot.gridX][bot.gridY-1];
 			}
-			if(	VG[bot.gridX][bot.gridY-1] == bot.targetBot &&
+			if(	VG[bot.gridX][bot.gridY-1].partIndex == bot.moveTarget.partIndex &&
 				(VG[bot.gridX][bot.gridY-1].selfType == 3 || 
 				VG[bot.gridX][bot.gridY-1].selfType == 4)){
 				if((bot.targetBot != null && bot.targetBot.selfType!=0) ||
@@ -407,9 +407,9 @@ function EnemyAwareness(bot){
 				bot.actionType = 2;	
 				bot.targetBot = VG[bot.gridX][bot.gridY+1];				
 			}
-			if(	VG[bot.gridX][bot.gridY+1] == bot.targetBot &&
+			if(	VG[bot.gridX][bot.gridY+1].partIndex == bot.moveTarget.partIndex &&
 				(VG[bot.gridX][bot.gridY+1].selfType == 3 ||
-				VG[bot.gridX][bot.gridY+1].selfType == 4)){				
+				VG[bot.gridX][bot.gridY+1].selfType == 4)){			
 				if((bot.targetBot != null && bot.targetBot.selfType!=0) ||
 					bot.targetBot == null){
 					bot.facingWhichDirection = "down";
@@ -427,7 +427,7 @@ function EnemyAwareness(bot){
 				bot.actionType = 2;
 				bot.targetBot = VG[bot.gridX-1][bot.gridY];
 			}
-			if(	VG[bot.gridX-1][bot.gridY] == bot.targetBot &&
+			if(	VG[bot.gridX-1][bot.gridY].partIndex == bot.moveTarget.partIndex &&
 				(VG[bot.gridX-1][bot.gridY].selfType == 3 ||
 				VG[bot.gridX-1][bot.gridY].selfType == 4)){
 				if((bot.targetBot != null && bot.targetBot.selfType!=0) ||
@@ -447,7 +447,7 @@ function EnemyAwareness(bot){
 				bot.actionType = 2;
 				bot.targetBot = VG[bot.gridX+1][bot.gridY];
 			}
-			if(	VG[bot.gridX+1][bot.gridY] == bot.targetBot &&
+			if(	VG[bot.gridX+1][bot.gridY].partIndex == bot.moveTarget.partIndex &&
 				(VG[bot.gridX+1][bot.gridY].selfType == 3 ||
 				VG[bot.gridX+1][bot.gridY].selfType == 4) ){				
 				if((bot.targetBot != null && bot.targetBot.selfType!=0) ||

@@ -361,6 +361,7 @@ function initGameTiles() {
 				enemies[enemyCount].image.onload = function() {
 					enemies[this.index].render();
 				};
+				enemies[enemyCount].partIndex = enemyCount;
 				enemyCount++;
 			
 			} else if (gameObjects[objIndex].type == "thin" || gameObjects[objIndex].type == "fiesty") {
@@ -385,6 +386,7 @@ function initGameTiles() {
 				ladies[ladiesCount].image.onload = function(){
 					ladies[this.index].render();
 				}
+				ladies[ladiesCount].partIndex = ladiesCount
 				ladiesCount++; 
 			}
 		}
@@ -583,7 +585,7 @@ function gameLoop() {
 		
 		
 		enemies[curEnemy].render();
-		
+		enemies[curEnemy].partIndex = index;
 		index++;
 	}
 
@@ -682,7 +684,7 @@ function gameLoop() {
 
 			// draw the lady to the screen again
 			ladies[curLady].render();
-		
+		ladies[curLady].partIndex = ladyIndex;
 		ladyIndex++;
 	}
 
