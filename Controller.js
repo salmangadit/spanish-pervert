@@ -38,11 +38,15 @@ function Controller(){
 	for(iter in ladies){
 		LadyAwareness(ladies[iter]);
 	}
-	
+	moveLion();
 	setMaxOcc();
 	ladiesLoiterTimer();
 	
 	heroBehaviour(hero,VG);
+	LadyAwareness(lion);
+	if(lion.actionType == 1){
+		lion.HeroType.strikeWithUmbrella(lion.targetBot);	
+	}
 	// Habeeb, uncomment the following to test -- max we should update only if action type is 1
 	// because only then he can attack and thats when we need to monitor
 	if(hero.actionType == 1){
@@ -96,7 +100,24 @@ function Controller(){
 			hero.targetBot = null;
 		}
 	}
-	console.log(ladies.length);
+	//console.log(ladies.length);
+}
+
+function moveLion(){
+	var strongestEnemy = enemies[0];
+	if(lion.moveTarget == null){
+		for(iter in enemies){
+			if(enemies[iter].health>strongestEnemy.health){
+				strongestEnemy = enemies[iter]
+			}
+		}
+		lion.moveTarget = strongestEnemy;
+	}
+	if(lion.moveTarget != null){
+		var tx = lion.moveTarget.gridX;
+		var ty = lion.moveTarget.gridY;
+		lion.targetGrid = new Array(tx,ty);
+	}
 }
 
 function ladiesLoiterTimer(){
@@ -268,6 +289,12 @@ function setGrid(){
 	}
 	VG[hero.gridX][hero.gridY] = hero;
 	hero.maxOccupants = 4;
+	
+	VG[lion.gridX][lion.gridY] = lion;
+	lion.actionType = 0;
+	lion.targetBot = null;
+	lion.maxOccupants = 4;
+	
 	for (iter in enemies){
 		//slots the gameObject into its grid
 		VG[enemies[iter].gridX][enemies[iter].gridY] = enemies[iter];
@@ -294,6 +321,7 @@ function setGrid(){
 function setMaxOcc(){
 	//sets for those that are already being occupied
 	singleMO(hero);
+	singleMO(lion);
 	for(iter in collidables){
 		singleMO(collidables[iter]);
 	}
@@ -469,6 +497,13 @@ function LadyAwareness(bot){
 					bot.targetBot = VG[bot.gridX][bot.gridY-1];
 				}			
 			}
+			if( bot.selfType == 5 &&
+				(VG[bot.gridX][bot.gridY-1].selfType == 1 ||
+				VG[bot.gridX][bot.gridY-1].selfType == 2 )){		
+				bot.facingWhichDirection = "up";
+				bot.actionType = 1;
+				bot.targetBot = VG[bot.gridX][bot.gridY-1];
+			}
 		}
 	}
 	//below
@@ -491,6 +526,13 @@ function LadyAwareness(bot){
 					bot.targetBot = VG[bot.gridX][bot.gridY+1];
 				}			
 			}
+			if( bot.selfType == 5 &&
+				(VG[bot.gridX][bot.gridY+1].selfType == 1 ||
+				VG[bot.gridX][bot.gridY+1].selfType == 2 )){		
+				bot.facingWhichDirection = "down";
+				bot.actionType = 1;
+				bot.targetBot = VG[bot.gridX][bot.gridY+1];
+			}
 		}
 	}
 	//left
@@ -512,6 +554,13 @@ function LadyAwareness(bot){
 					bot.targetBot = VG[bot.gridX-1][bot.gridY];
 				}			
 			}
+			if( bot.selfType == bot &&
+				(VG[bot.gridX-1][bot.gridY].selfType == 1 ||
+				VG[bot.gridX-1][bot.gridY].selfType == 2 )){		
+				bot.facingWhichDirection = "left";
+				bot.actionType = 1;
+				bot.targetBot = VG[bot.gridX-1][bot.gridY];
+			}
 		}
 	}
 	//right
@@ -532,6 +581,13 @@ function LadyAwareness(bot){
 					}					
 					bot.targetBot = VG[bot.gridX+1][bot.gridY];
 				}			
+			}
+			if( bot.selfType == 5 &&
+				(VG[bot.gridX+1][bot.gridY].selfType == 1 ||
+				VG[bot.gridX+1][bot.gridY].selfType == 2 )){		
+				bot.facingWhichDirection = "right";
+				bot.actionType = 1;
+				bot.targetBot = VG[bot.gridX+1][bot.gridY];
 			}
 		}
 	}

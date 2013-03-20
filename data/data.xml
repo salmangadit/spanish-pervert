@@ -13,8 +13,7 @@
     <Object id="W" type="collidable"	src="images/wall.png"     		width="30" 	height="30"></Object>
     <Object id="C" type="collidable"	src="images/crate.png"     		width="30" 	height="30"></Object>
     <Object id="L" type="collidable"	src="images/liquid.png"			width="30" 	height="30"></Object>
-	<Object id="A" type="alex"			src="images/alex_64x64.png"		width="64"	height="64"></Object>
-	<Object id="a" type="alex"			src=""							width=""	height="  "></Object>
+	<Object id="A" type="lion"			src="images/lion_32x32.png"		width="32"	height="32"></Object>
     <Object id="1" type="scenery"	    src="images/safe1.png"		    width="32" 	height="32"></Object>
     <Object id="2" type="scenery"	    src="images/safe2.png"		    width="32" 	height="32"></Object>
     <Object id="3" type="scenery"	    src="images/safe3.png"		    width="32" 	height="32"></Object>
@@ -38,7 +37,7 @@
     <GridRow>--------WWWWWW----WWWWWWW-------</GridRow>
     <GridRow>--------WVVCC-------CWVVW-------</GridRow>
     <GridRow>--------W-----------CW--W-------</GridRow>
-    <GridRow>--------W------------B--W-------</GridRow>
+    <GridRow>--------W--------A---B--W-------</GridRow>
     <GridRow>---------------------B--WWW-WWW-</GridRow>
     <GridRow>--CC----W----PPPP----B--VV----W-</GridRow>
     <GridRow>--CCBB--W----PLLP-------------W-</GridRow>

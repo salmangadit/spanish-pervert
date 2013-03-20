@@ -122,6 +122,8 @@ function displayParameters(){
 		debugContext.fillText("Specific AI kicks in!", textX, textY);
 		textY+=20;
 	}
+	debugContext.fillText("Lion action type: " + lion.actionType, textX, textY);
+	textY+=20;
 	
 	
 }

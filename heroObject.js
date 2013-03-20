@@ -477,6 +477,12 @@
 		//this.hit = false;
 		//this.miss = false;
 	}
+	
+	if (this.parentRef.goodNPC_Type == "combo"){
+		this.defaultAttackPower = 30;
+		this.attackPower = this.defaultAttackPower;
+		this.hitMissRatio = 1;
+	}
  	 		
 	this.strikeWithUmbrella = function(targetReference){
     	
@@ -670,7 +676,11 @@
  		
  		case 4:		this.goodNPC_Type = "fiesty";
  					this.HeroType = new goodNPC(this);
- 					break;		
+ 					break;	
+
+		case 5:		this.goodNPC_Type = "combo";
+					this.HeroType = new goodNPC(this);
+					break;
  	}
   
 	//this function allows the setting of a specific point for any heroObject to move towards

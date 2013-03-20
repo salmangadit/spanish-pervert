@@ -16,6 +16,8 @@ var lion = null;
 var VG = null;
 var debugMode = false;
 var critArray = new Array(0,0,0,0,0,0,0,0,0,0);
+var lionStatus = false;
+var lionMaxKills = 3;
 
 
 // Variable to hold XML data
@@ -316,9 +318,9 @@ function initGameTiles() {
 
 				// Pass in a reference for the HUD to display health
 				keepHeroReference(hero);
-			} else if (gameObjects[objIndex].type == "alex") {
-				//7 is for alex
-				lion = new heroObject(7);
+			} else if (gameObjects[objIndex].type == "lion") {
+				//5 is for lion
+				lion = new heroObject(5);
 				lion.width = gameObjects[objIndex].width;
 				lion.height = gameObjects[objIndex].height;
 				lion.x = j * tileSize;
@@ -691,6 +693,81 @@ function gameLoop() {
 	if(ladyLoopTime > 50)
 		console.log('ladyLoopTime in gameLoop is: ' + ladyLoopTime);
 	
+	//lion
+	//testing out of the targetGrid system
+	var lionIndex = 0;
+	var tempGrid = new Array();
+
+	for (var x = 0; x < rows; x++) {
+		tempGrid[x] = new Array();
+		for (var y = 0; y < columns; y++) {
+			tempGrid[x][y] = grid[x][y];
+		}
+	}
+
+	for (var i = 0; i < ladies.length; i++) {
+		if (ladies[curLady] != ladies[i]) {
+			tempGrid[ladies[i].gridY][ladies[i].gridX] = 1;
+		}
+	}
+
+	for (var i = 0; i < enemies.length; i++) {
+			tempGrid[enemies[i].gridY][enemies[i].gridX] = 1;
+	}
+	//tempGrid[hero.gridY][hero.gridX] = 1;
+	path[lionIndex] = a_star(new Array(lion.gridX, lion.gridY), 
+		lion.targetGrid, tempGrid, columns, rows, false);
+
+	//path[lionIndex] = a_star(new Array(ladies[curLady].gridX, ladies[curLady].gridY), ladies[curLady].targetGrid, tempGrid, columns, rows, false);
+
+	var nextPoint = path[lionIndex][1];
+
+	// check if the lady collided with a collidable, if it did turn it a random direction
+	// if (ladies[curLady].collision) {
+	// 	// if (ladies[curLady].keys[0] == 37) {
+	// 	// 	ladies[curLady].keys[0] = 38;
+	// 	// 	ladies[curLady].lastKeyChange = Date.now();
+	// 	// } else if (ladies[curLady].keys[0] == 38) {
+	// 	// 	ladies[curLady].keys[0] = 39;
+	// 	// 	ladies[curLady].lastKeyChange = Date.now();
+	// 	// } else if (ladies[curLady].keys[0] == 39) {
+	// 	// 	ladies[curLady].keys[0] = 40;
+	// 	// 	ladies[curLady].lastKeyChange = Date.now();
+	// 	// } else if (ladies[curLady].keys[0] == 40) {
+	// 	// 	ladies[curLady].keys[0] = 37;
+	// 	// 	ladies[curLady].lastKeyChange = Date.now();
+	// 	// }
+
+	// } else {
+
+		if (nextPoint) {
+			if (nextPoint.x > lion.gridX && !lion.keepMoving) {
+				lion.keys[0] = 39;
+				lion.lastKeyChange = Date.now();
+			} else if (nextPoint.x < lion.gridX && !lion.keepMoving) {
+				lion.keys[0] = 37;
+				lion.lastKeyChange = Date.now();
+			} else if (nextPoint.y > lion.gridY && !lion.keepMoving) {
+				lion.keys[0] = 40;
+				lion.lastKeyChange = Date.now();
+			} else if (nextPoint.y < lion.gridY && !lion.keepMoving) {
+				lion.keys[0] = 38;
+				lion.lastKeyChange = Date.now();
+			}
+		}
+	// }
+
+	if (path[lionIndex].length == 2) {
+		lion.keys.splice(0, 1);
+	}
+
+// Update the lady based upon how long it took for the game loop
+	lion.update(elapsed / screenUpdateTime);
+
+	// draw the lady to the screen again
+	lion.render();
+
+	lionIndex++;
 
 	// Testing time for danger stage check ==========================
 	initialtime = Date.now();
@@ -708,9 +785,6 @@ function gameLoop() {
 
 	// update the lastUpdate variable
 	lastUpdate = now;
-
-	//lion.render();
-
 
 	if(debugMode == true){
 		Debug();
