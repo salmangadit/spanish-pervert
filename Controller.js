@@ -51,8 +51,8 @@ function Controller(){
 	// Habeeb, uncomment the following to test -- max we should update only if action type is 1
 	// because only then he can attack and thats when we need to monitor
 	if(hero.actionType == 1){
-		//hero.HeroType.fightController.updateSurroundingEnemies(returnSurroundingArray(hero));
-		//hero.HeroType.fightController.monitorHeroObjectSituation();
+		hero.HeroType.fightController.updateSurroundingEnemies(returnSurroundingArray(hero));
+		hero.HeroType.fightController.monitorHeroObjectSituation();
 	}
 
 	
@@ -76,12 +76,12 @@ function Controller(){
 		ladies[iter].HeroType.fightController.updateSurroundingEnemies(returnSurroundingArray(ladies[iter]))
 		if(ladies[iter].selfType == 4 && ladies[iter].actionType == 1 && (ladies[iter].targetBot.selfType == 1 || ladies[iter].targetBot.selfType == 2)){
 			ladies[iter].targetGrid = new Array(ladies[iter].targetBot.gridX,ladies[iter].targetBot.gridY);
-			//ladies[iter].HeroType.fightController.monitorHeroObjectSituation();
+			ladies[iter].HeroType.fightController.monitorHeroObjectSituation();
 			ladies[iter].HeroType.strikeWithUmbrella(ladies[iter].targetBot);
 		}
 		if(ladies[iter].selfType == 3 && ladies[iter].actionType == 1){
 			ladies[iter].targetGrid = new Array(ladies[iter].targetBot.gridX,ladies[iter].targetBot.gridY);
-			//ladies[iter].HeroType.fightController.monitorHeroObjectSituation();
+			ladies[iter].HeroType.fightController.monitorHeroObjectSituation();
 		}
 		if(ladies[iter].actionType == 3){
 			ladies[iter].targetGrid = new Array(hero.gridX,hero.gridY);			
