@@ -102,6 +102,7 @@ function Controller(){
 		}
 	}
 	//console.log(ladies.length);
+	overallSafety();
 }
 
 function moveLion(){
@@ -604,11 +605,31 @@ function LadyAwareness(bot){
 
 }
 
+function overallSafety(){
+	safetyLock(hero);
+	safetyLock(lion);
+	for(iter in ladies){
+		safetyLock(ladies[iter]);
+	}
+	for(iter in enemies){
+		safetyLock(enemies[iter]);
+	}
+}
+
 function safetyLock(bot){
 	if(bot.targetGrid[0] == null){
-		bot.targetGrid[0] = 1;
+		bot.targetGrid[0] = 0;
 	}
 	if(bot.targetGrid[1] == null){
-		bot.targetGrid[1] = 1;
+		bot.targetGrid[1] = 0;
+	}
+	if(bot.actionType == null){
+		bot.actionType = 0;
+	}
+	if(bot.targetBot == null){
+		bot.targetBot = hero;
+	}
+	if(bot.moveTarget == null){
+		bot.moveTarget = hero;
 	}
 }

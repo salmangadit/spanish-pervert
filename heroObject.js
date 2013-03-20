@@ -589,6 +589,7 @@
 	this.actionType = 0; 
 	this.selfType = thisType;
 	this.targetBot;
+	this.moveTarget;
 	this.loiterTime = 151;
 	this.targetVendor = -1;
 	//maxOccupants gives the maximum objects that can be around any heroObject at any point in time
