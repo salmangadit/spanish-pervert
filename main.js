@@ -76,11 +76,6 @@ var predictor = new Predictor();
 //0: not manipulated
 //1: lady has been called
 //2: lady has arrived, send your enemy to her now
-var enemiesToGetRidOf;
-var selectedLadies;
-var AImanipulated = 0;
-var manipulatedIndexes;
-var AIdone = false;
 var hollywoodScenario = false;
 
 function init() {
@@ -89,8 +84,8 @@ function init() {
 	// /Users/TheGreatOne/Desktop/Sem_6/EE4702/Project/Project_2/spanish-pervert/data/data.xml
 	//xmlhttp.open("GET", "C:/Users/YuanIng/Documents/GitHub/spanish-pervert/data/data.xml", false);
 	//xmlhttp.open("GET", "/Users/TheGreatOne/Desktop/Sem_6/EE4702/Project/Project_2/spanish-pervert/data/data.xml", false);
-	//xmlhttp.open("GET", "C:/Users/Salman/Documents/GitHub/spanish-pervert/data/data.xml", false);
-	xmlhttp.open("GET", "C:/Users/YuanIng/Documents/GitHub/spanish-pervert/data/data.xml", false);
+	xmlhttp.open("GET", "C:/Users/Salman/Documents/GitHub/spanish-pervert/data/data.xml", false);
+	//xmlhttp.open("GET", "C:/Users/YuanIng/Documents/GitHub/spanish-pervert/data/data.xml", false);
 	//xmlhttp.open("GET", "/Users/TheGreatOne/Desktop/Sem_6/EE4702/Project/Project_2/spanish-pervert/data/data.xml", false);
 	//xmlhttp.open("GET", "C:/Users/Salman/Documents/GitHub/spanish-pervert/data/data.xml", false);
 	//xmlhttp.open("GET", "/Users/TheGreatOne/Desktop/Sem_6/EE4702/Project/Project_2/spanish-pervert/data/data.xml", false);
@@ -774,13 +769,14 @@ function gameLoop() {
 	lion.render();
 
 	lionIndex++;
-	
+
 	if(hero.health<=0 && debugMode == false){
 		gameOver();
 	}
-	
-	// Actual code
-	checkDangerStage();
+
+	checkHeroDangerStage();
+	checkLadiesDangerStage();
+
 
 	// update the lastUpdate variable
 	lastUpdate = now;
@@ -824,34 +820,34 @@ function updatePlayerLearning(){
 	//arrayOfPlayerData = [];
 }
 
-function checkDangerStage(){
+function checkHeroDangerStage(){
 	if (hero.health > 7){
-		if (AIdone){
-			AIdone = false;
+		if (hero.AIdone){
+			hero.AIdone = false;
 		}
 	}
-	else if (hero.health <= 7 && AImanipulated == 0 &&!AIdone){
+	else if (hero.health <= 7 && hero.AImanipulated == 0 && !hero.AIdone){
 		//there is a problem, the hero is getting the shiznit beaten out of him!
 		if (currentPhase == "I") {	//make it hollywood like!
 			hollywoodScenario = true;
 		}
 
-		enemiesToGetRidOf = new Array();
-		selectedLadies = new Array();
-		manipulatedIndexes = [];
+		hero.AIenemiesToGetRidOf = new Array();
+		hero.AIselectedLadies = new Array();
+		hero.AImanipulatedIndexes = [];
 
 		for (var i= 0; i< enemies.length; i++){
 			if (enemies[i].moveTarget.selfType == 0){
-				enemiesToGetRidOf.push(enemies[i]);
+				hero.AIenemiesToGetRidOf.push(enemies[i]);
 			}
 		}
 
-		for (var i =0; i< enemiesToGetRidOf.length; i++){
+		for (var i =0; i< hero.AIenemiesToGetRidOf.length; i++){
 			//Find closest lady to come distract
 			var distances = new Array();
 
 			for (var j = 0; j < ladies.length; j++){
-				distances.push(helperClass.distanceBetweenTwoPoints(enemiesToGetRidOf[i].gridX, enemiesToGetRidOf[i].gridY, ladies[j].gridX, ladies[j].gridY));
+				distances.push(helperClass.distanceBetweenTwoPoints(hero.AIenemiesToGetRidOf[i].gridX, hero.AIenemiesToGetRidOf[i].gridY, ladies[j].gridX, ladies[j].gridY));
 			}
 
 			var selected = false;
@@ -859,8 +855,8 @@ function checkDangerStage(){
 
 			do {
 				var minDist = Math.min.apply(Math, distances);
-				if (selectedLadies.indexOf(ladies[distances.indexOf(minDist)]) == -1){
-					selectedLadies.push(ladies[distances.indexOf(minDist)]);
+				if (hero.AIselectedLadies.indexOf(ladies[distances.indexOf(minDist)]) == -1){
+					hero.AIselectedLadies.push(ladies[distances.indexOf(minDist)]);
 					selectedLady = ladies[distances.indexOf(minDist)];
 					selected = true;
 				} else {
@@ -868,63 +864,63 @@ function checkDangerStage(){
 				}
 			} while (selected == false);
 
-			var nearestFree = helperClass.findNearestFreeSpace(enemiesToGetRidOf[i].gridX, enemiesToGetRidOf[i].gridY, 5);
+			var nearestFree = helperClass.findNearestFreeSpace(hero.AIenemiesToGetRidOf[i].gridX, hero.AIenemiesToGetRidOf[i].gridY, 5);
 			selectedLady.targetGrid = nearestFree;
 		}
 
-		AImanipulated = 1;
+		hero.AImanipulated = 1;
 
 		//COMBO becomes easier, as well
 		lionMaxKills = 2;
-	} else if (AImanipulated == 1){
+	} else if (hero.AImanipulated == 1){
 		//Waiting for lady to arrive
-		for (var i = 0; i < selectedLadies.length; i++){
-			if (manipulatedIndexes.indexOf(i)!=-1){
+		for (var i = 0; i < hero.AIselectedLadies.length; i++){
+			if (hero.AImanipulatedIndexes.indexOf(i)!=-1){
 				continue;
 			}
 
 			if ((hollywoodScenario && hero.health < 1) || !hollywoodScenario){
-				if ((selectedLadies[i].targetGrid[0] == selectedLadies[i].gridX ||
-				 	selectedLadies[i].targetGrid[0] == selectedLadies[i].gridX - 1 || 
-					selectedLadies[i].targetGrid[0] == selectedLadies[i].gridX +1) 
-					&& (selectedLadies[i].targetGrid[1] == selectedLadies[i].gridY ||
-						selectedLadies[i].targetGrid[1] == selectedLadies[i].gridY - 1 ||
-						selectedLadies[i].targetGrid[1] == selectedLadies[i].gridY + 1)){
-					enemiesToGetRidOf[i].radialAwareness = false;
-					enemiesToGetRidOf[i].moveTarget = selectedLadies[i];
-					manipulatedIndexes.push(i);
+				if ((hero.AIselectedLadies[i].targetGrid[0] == hero.AIselectedLadies[i].gridX ||
+				 	hero.AIselectedLadies[i].targetGrid[0] == hero.AIselectedLadies[i].gridX - 1 || 
+					hero.AIselectedLadies[i].targetGrid[0] == hero.AIselectedLadies[i].gridX +1) 
+					&& (hero.AIselectedLadies[i].targetGrid[1] == hero.AIselectedLadies[i].gridY ||
+						hero.AIselectedLadies[i].targetGrid[1] == hero.AIselectedLadies[i].gridY - 1 ||
+						hero.AIselectedLadies[i].targetGrid[1] == hero.AIselectedLadies[i].gridY + 1)){
+					hero.AIenemiesToGetRidOf[i].radialAwareness = false;
+					hero.AIenemiesToGetRidOf[i].moveTarget = hero.AIselectedLadies[i];
+					hero.AImanipulatedIndexes.push(i);
 				}
 			}
 		}
 
-		if (manipulatedIndexes.length == selectedLadies.length){
+		if (hero.AImanipulatedIndexes.length == hero.AIselectedLadies.length){
 			//The sending has been done. Now make sure the monkey reaches the lady and then toggle off the AI
-			AImanipulated = 2;
+			hero.AImanipulated = 2;
 		}
 	}
-	else if (AImanipulated == 2){
-		manipulatedIndexes = [];
+	else if (hero.AImanipulated == 2){
+		hero.AImanipulatedIndexes = [];
 		//Waiting for enemies to reach targets
-		for (var i = 0; i < enemiesToGetRidOf.length; i++){
-			if (!enemiesToGetRidOf[i].radialAwareness){
+		for (var i = 0; i < hero.AIenemiesToGetRidOf.length; i++){
+			if (!hero.AIenemiesToGetRidOf[i].radialAwareness){
 
-				if ((enemiesToGetRidOf[i].targetGrid[0] == enemiesToGetRidOf[i].gridX ||
-			 	enemiesToGetRidOf[i].targetGrid[0] == enemiesToGetRidOf[i].gridX - 1 || 
-				enemiesToGetRidOf[i].targetGrid[0] == enemiesToGetRidOf[i].gridX +1) 
-				&& (enemiesToGetRidOf[i].targetGrid[1] == enemiesToGetRidOf[i].gridY ||
-					enemiesToGetRidOf[i].targetGrid[1] == enemiesToGetRidOf[i].gridY - 1 ||
-					enemiesToGetRidOf[i].targetGrid[1] == enemiesToGetRidOf[i].gridY + 1)){
+				if ((hero.AIenemiesToGetRidOf[i].targetGrid[0] == hero.AIenemiesToGetRidOf[i].gridX ||
+			 	hero.AIenemiesToGetRidOf[i].targetGrid[0] == hero.AIenemiesToGetRidOf[i].gridX - 1 || 
+				hero.AIenemiesToGetRidOf[i].targetGrid[0] == hero.AIenemiesToGetRidOf[i].gridX +1) 
+				&& (hero.AIenemiesToGetRidOf[i].targetGrid[1] == hero.AIenemiesToGetRidOf[i].gridY ||
+					hero.AIenemiesToGetRidOf[i].targetGrid[1] == hero.AIenemiesToGetRidOf[i].gridY - 1 ||
+					hero.AIenemiesToGetRidOf[i].targetGrid[1] == hero.AIenemiesToGetRidOf[i].gridY + 1)){
 
-					enemiesToGetRidOf[i].radialAwareness = true;
-					manipulatedIndexes.push(i);
+					hero.AIenemiesToGetRidOf[i].radialAwareness = true;
+					hero.AImanipulatedIndexes.push(i);
 				}
 			}
 		}
 
-		if (manipulatedIndexes.length == enemiesToGetRidOf.length){
+		if (hero.AImanipulatedIndexes.length == hero.AIenemiesToGetRidOf.length){
 			//The sending has been done. Now make sure the monkey reaches the lady and then toggle off the AI
-			AImanipulated = 0;
-			AIdone = true;
+			hero.AImanipulated = 0;
+			hero.AIdone = true;
 		}
 	}
 
@@ -936,6 +932,84 @@ function checkDangerStage(){
 
 }
 
+ function checkLadiesDangerStage(){
+	for (var i = 0; i< ladies.length; i++){
+		if (ladies[i].health > 7){
+			if (ladies[i].AIdone){
+				ladies[i].AIdone = false;
+			}
+		}
+		else if (ladies[i].health <= 7 && ladies[i].AImanipulated == 0 && !ladies[i].AIdone){
+			//there is a problem, the lady is getting the shiznit beaten out of him!
+			ladies[i].AIenemiesToGetRidOf = new Array();
+			ladies[i].AIselectedLadies = new Array();
+			ladies[i].AImanipulatedIndexes = [];
+
+			for (var j= 0; j< enemies.length; j++){
+				if (enemies[j].moveTarget == ladies[i]){
+					ladies[i].AIenemiesToGetRidOf.push(enemies[j]);
+				}
+			}
+
+			for (var j =0; j< ladies[i].AIenemiesToGetRidOf.length; j++){
+				//Find closest lady to come distract
+				var distances = new Array();
+
+				for (var k = 0; k < ladies.length; k++){
+					if (i == k){
+						distances.push(99);
+					} else {
+						distances.push(helperClass.distanceBetweenTwoPoints(ladies[i].AIenemiesToGetRidOf[j].gridX, 
+							ladies[i].AIenemiesToGetRidOf[j].gridY, ladies[k].gridX, ladies[k].gridY));
+					}
+				}
+
+				var selected = false;
+				var selectedLady;
+
+				do {
+					var minDist = Math.min.apply(Math, distances);
+					if (ladies[i].AIselectedLadies.indexOf(ladies[distances.indexOf(minDist)]) == -1){
+						ladies[i].AIselectedLadies.push(ladies[distances.indexOf(minDist)]);
+						selectedLady = ladies[distances.indexOf(minDist)];
+						selected = true;
+					} else {
+						distances.splice(distances.indexOf(minDist), 1);
+					}
+				} while (selected == false);
+
+				var nearestFree = helperClass.findNearestFreeSpace(ladies[i].AIenemiesToGetRidOf[j].gridX, ladies[i].AIenemiesToGetRidOf[j].gridY, 5);
+				selectedLady.targetGrid = nearestFree;
+			}
+
+			ladies[i].AImanipulated = 1;
+		} else if (ladies[i].AImanipulated == 1){
+			//Waiting for lady to arrive
+			for (var j = 0; j < ladies[i].AIselectedLadies.length; j++){
+				if (ladies[i].AImanipulatedIndexes.indexOf(j)!=-1){
+					continue;
+				}
+
+				if ((ladies[i].AIselectedLadies[j].targetGrid[0] == ladies[i].AIselectedLadies[j].gridX ||
+				 	ladies[i].AIselectedLadies[j].targetGrid[0] == ladies[i].AIselectedLadies[j].gridX - 1 || 
+					ladies[i].AIselectedLadies[j].targetGrid[0] == ladies[i].AIselectedLadies[j].gridX +1) 
+					&& (ladies[i].AIselectedLadies[j].targetGrid[1] == ladies[i].AIselectedLadies[j].gridY ||
+						ladies[i].AIselectedLadies[j].targetGrid[1] == ladies[i].AIselectedLadies[j].gridY - 1 ||
+						ladies[i].AIselectedLadies[j].targetGrid[1] == ladies[i].AIselectedLadies[j].gridY + 1)){
+					ladies[i].AIenemiesToGetRidOf[j].moveTarget = ladies[i].AIselectedLadies[j];
+					ladies[i].AImanipulatedIndexes.push(j);
+				}
+
+			}
+
+			if (ladies[i].AImanipulatedIndexes.length == ladies[i].AIselectedLadies.length){
+				//The sending has been done. Now make sure the monkey reaches the lady and then toggle off the AI
+				ladies[i].AImanipulated = 0;
+				ladies[i].AIdone = true;
+			}
+		}
+	}
+ }
 
 // For the windows request animation frame thing
 window.requestAnimFrame = (function(){

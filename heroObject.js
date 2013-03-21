@@ -672,6 +672,13 @@
 	this.spawnTime = Date.now();
 	this.keepMoving = false;
 	this.lastMovedDirection = 0;
+
+	this.AIdone = false;
+	this.AImanipulated = 0;
+	this.AIenemiesToGetRidOf;
+	this.AIselectedLadies;
+	this.AImanipulatedIndexes;
+
 	// For the randomly acquired number to toggle hit miss ratio
 	this.randomMiser = new Randomiser();
 	

@@ -131,7 +131,7 @@ function displayParameters(){
 	debugContext.fillText("Player health: " + hero.health, textX, textY);
 	textY+=20;
 	textY+=20;
-	if(AImanipulated){
+	if(hero.AImanipulated){
 		debugContext.fillText("Specific AI kicks in!", textX, textY);
 		textY+=20;
 	}
