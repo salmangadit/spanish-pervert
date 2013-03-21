@@ -31,9 +31,17 @@ function AIController(){
 			var parsedPhaseRatio = this.currPhase.scenarioRatio.split(':');
 			var alreadyTargeted = new Array();
 			var alreadySpawned = new Array();
+			var targetingPlayer = 0;
 
 			for (var m = 0; m<parsedPhaseRatio.length; m++){
-				var chosenTarget = this.targetNPCAI(alreadyTargeted);
+				var chosenTarget;
+
+				if (currentPhase == "E" && targetingPlayer < 3){
+					chosenTarget = hero;
+					targetingPlayer++;
+				} else {
+					chosenTarget = this.targetNPCAI(alreadyTargeted);
+				}
 				var spawnLocation = this.spawnLocationAI(chosenTarget, alreadySpawned);
 
 				//Find number of enemies to spawn
@@ -48,8 +56,6 @@ function AIController(){
 					this.enemyStrengthAI(monkeyGorillaRandomiser, chosenTarget, spawnLocation);
 				}
 			}
-
-			var a;
 		}
 		else{
 			displayMessage("Save the ladies and recover health!")
