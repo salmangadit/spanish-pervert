@@ -26,6 +26,9 @@ function Controller(){
 		EnemyAwareness(enemies[iter]);
 		enemies[iter].targetGrid = new Array(enemies[iter].gridX, enemies[iter].gridY);
 		if(enemies[iter].moveTarget!=null){
+			if(enemies[iter].moveTarget.selfType == 3 || enemies[iter].selfType == 4){
+				enemies[iter].ladyTarget = enemies[iter].moveTarget;
+			}
 			var tx = enemies[iter].moveTarget.gridX;
 			var ty = enemies[iter].moveTarget.gridY;
 			enemies[iter].targetGrid = new Array(tx,ty);
@@ -50,13 +53,14 @@ function Controller(){
 	}
 	// Habeeb, uncomment the following to test -- max we should update only if action type is 1
 	// because only then he can attack and thats when we need to monitor
+	overallSafety();
 	if(hero.actionType == 1){
 		hero.HeroType.fightController.updateSurroundingEnemies(returnSurroundingArray(hero));
 		hero.HeroType.fightController.monitorHeroObjectSituation();
 	}
 
 	
-	//EnemiesRadialAwareness();
+	EnemiesRadialAwareness();
 	for(iter in enemies){
 		switch(enemies[iter].actionType){
 			case 1:	enemies[iter].HeroType.pullSkirt(enemies[iter].targetBot);
@@ -478,6 +482,10 @@ function EnemiesRadialAwareness(){
 				if(VG[i][j].selfType == 0 && VG[i][j].maxOccupants > 0){
 					enemies[iter].moveTarget = VG[i][j];
 					awareness = true;
+					break;
+				}
+				else {
+					enemies[iter].moveTarget = enemies[iter].ladyTarget;
 				}
 			}
 		}

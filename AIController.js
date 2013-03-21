@@ -155,6 +155,7 @@ function AIController(){
 
 		//Set deciphered target
 		reference.moveTarget = chosenTarget;
+		reference.ladyTarget = chosenTarget;
 
 		console.log("Spawned " + (MGpickerArray[chosenStrength] == 0 ? "monkey":"gorilla")+ " at "
 			+ spawnLocation[0] + "," + spawnLocation[1] + " . The target of this NPC is a " +
