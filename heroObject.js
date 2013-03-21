@@ -19,7 +19,7 @@
  var mainCharacter = function(thisReference){
 
 	this.parentRef = thisReference;
-//	console.log('health upon instantaiation is:  ' + this.parentRef.health);
+	//console.log('health upon instantaiation is:  ' + this.parentRef.health);
 	//Attributes associated with the main character specifically
 	this.arrayOfLastMoves = new Array();		//to be used for probability distribution or if same as the keys array then, this can be deemed redundant
 	this.gameExp = 0;
@@ -58,7 +58,7 @@
 	this.punch = function(targetReference) {
 	
 		//console.log('punch status is: ' + this.parentRef.actionType);
-		 if (this.parentRef.actionType == 1) {
+		 if (this.parentRef.actionType == 1 && this.parentRef.elapseSum > 16) {
 			//console.log('the hero is gonna punch and his ratio is: ' + this.hitMissRatio);
 			
 			// Draw the sprite to punch	
@@ -90,15 +90,15 @@
 			//console.log(this.parentRef.selfType + ' updated ' + targetReference.selfType + ' health');
 			this.arrayOfLastMoves.push("punch");					
 			
-			// A simple loop to delay time
+			/*// A simple loop to delay time
 			do {
 				this.now = Date.now();
 				this.delta = this.now - this.parentRef.lastRender;
 				//console.log('delta is: ' + this.delta);
-			} while(this.delta < 15);
+			} while(this.delta < 15);*/
 
 			// Move the hand back
-			if(this.delta > this.parentRef.animSpeed){
+			if(this.parentRef.elapseSum > 25){
 				switch(this.parentRef.facingWhichDirection){
 					case 'left':
 						this.parentRef.whichSprite = this.parentRef.width * 16;
@@ -118,7 +118,11 @@
 				}//switch case statement
 
 				// Render the image
-				this.parentRef.render();			
+				this.parentRef.render();
+
+				// Reset the elapsed sum
+				this.parentRef.elapseSum = 0;
+
 			}//if statement
 			
 		}//actionType if statement
@@ -138,7 +142,7 @@
 	this.kick = function(targetReference) {
 				
 		//console.log('kick status is: ' + this.parentRef.actionType);
-		if (this.parentRef.actionType == 1) {
+		if (this.parentRef.actionType == 1 && this.parentRef.elapseSum > 16) {
 			//console.log('the hero is gonna kick and his ratio is: ' + this.hitMissRatio);
 			
 			// Draw the sprite to kick	
@@ -166,15 +170,15 @@
 			//Then update attributes (because it will always be a hit)
 			targetReference.updateHealth(this.damageDelivered);
 
-			// A simple loop to delay time
+			/*// A simple loop to delay time
 			do {
 				this.now = Date.now();
 				this.delta = this.now - this.parentRef.lastRender;
 				//console.log('delta is: ' + this.delta);
-			} while(this.delta < 15);
+			} while(this.delta < 15);*/
 
 			// Move the leg back
-			if(this.delta > this.parentRef.animSpeed){
+			if(this.parentRef.elapseSum > 25){
 				switch(this.parentRef.facingWhichDirection){
 					case 'left':
 						this.parentRef.whichSprite = this.parentRef.width * 4;
@@ -194,7 +198,10 @@
 				}//switch case statement
 
 				// Render the image
-				this.parentRef.render();				
+				this.parentRef.render();	
+
+				// Reset the elapsed sum
+				this.parentRef.elapseSum = 0;			
 			}//if statement
 			
 		}//actionType if statement
@@ -234,10 +241,10 @@
 // 	console.log('health upon instantaiation is:  ' + this.parentRef.health);
  	this.attackPower = null;
  	if(this.parentRef.badNPC_Type == "monkey"){
- 		this.defaultAttackPower = -0.0004;
+ 		this.defaultAttackPower = -0.04;
  		this.attackPower = this.defaultAttackPower;
  	}else if(this.parentRef.badNPC_Type == "gorilla"){
- 		this.defaultAttackPower = -0.0015;
+ 		this.defaultAttackPower = -0.15;
  		this.attackPower = this.defaultAttackPower;
  	}
  	
@@ -251,7 +258,7 @@
 
  	this.pullSkirt = function(targetReference){
  		
-		if (this.parentRef.actionType == 1) {
+		if (this.parentRef.actionType == 1 && this.parentRef.elapseSum > 16) {
 			//console.log('badNPC is pulling the skirts of: ' + targetReference.goodNPC_Type);
 
 			// Draw the sprite to pull the skirt
@@ -297,15 +304,15 @@
 			//Then update attributes if it is a hit
 			targetReference.updateHealth(this.attackPower);
 			
-			// A simple loop to delay time
+			/*// A simple loop to delay time
 			do {
 				this.now = Date.now();
 				this.delta = this.now - this.parentRef.lastRender;
 				//console.log('delta is: ' + this.delta);
-			} while(this.delta < 15);
+			} while(this.delta < 15);*/
 
 			// Retreat the pulling action
-			if(this.delta > this.parentRef.animSpeed){
+			if(this.parentRef.elapseSum > 25){
 				switch(this.parentRef.facingWhichDirection) {
 
 					case 'up':
@@ -341,10 +348,14 @@
 						break;
 
 				}//switch case
-			}
 
-			// Render the image
-			this.parentRef.render();
+				// Render the image
+				this.parentRef.render();
+
+				// Reset the elapsed sum
+				this.parentRef.elapseSum = 0;
+
+			}
 
 		}//actionType if statement
 		
@@ -352,7 +363,7 @@
     
     this.attackPlayer = function(targetReference){
     	
-		if (this.parentRef.actionType == 2) {
+		if (this.parentRef.actionType == 2 && this.parentRef.elapseSum > 16) {
 
 			// Draw the attack sprite
 			switch(this.parentRef.facingWhichDirection) {
@@ -397,15 +408,15 @@
 			// Then update attributes if it is a hit
 			targetReference.updateHealth(this.attackPower);
 
-			// A simple loop to delay time
+			/*// A simple loop to delay time
 			do {
 				this.now = Date.now();
 				this.delta = this.now - this.parentRef.lastRender;
 				//console.log('delta is: ' + this.delta);
-			} while(this.delta < 15);
+			} while(this.delta < 15);*/
 
 			// Retreat the pulling action
-			if(this.delta > this.parentRef.animSpeed){
+			if(this.parentRef.elapseSum > 25){
 			
 				switch(this.parentRef.facingWhichDirection) {
 
@@ -442,10 +453,13 @@
 						break;
 
 				}//switch case
-			}
+				
+				// Render the image
+    			this.parentRef.render();
 
-			// Render the image
-    		this.parentRef.render();
+    			// Reset the elapsed sum
+				this.parentRef.elapseSum = 0;
+			}
 
 		}//actionType if statement
 
@@ -487,8 +501,8 @@
 	this.strikeWithUmbrella = function(targetReference){
     	
     	
-    	if (this.parentRef.actionType == 1) {
-    		//console.log('the fiesty lady is attacking and her target reference is: ' + targetReference);
+    	if (this.parentRef.actionType == 1 && this.parentRef.elapseSum  > 16) {
+    		console.log('the fiesty lady is attacking and her target reference is: ' + targetReference);
     		// Get the lady to attack with the umbrella
     		switch(this.parentRef.facingWhichDirection) {
 
@@ -518,16 +532,16 @@
 				targetReference.updateHealth(this.attackPower);
 			}
 			
-			// A simple loop to delay time
+			/*// A simple loop to delay time
 			do {
 				this.now = Date.now();
 				this.delta = this.now - this.parentRef.lastRender;
 				//console.log('delta is: ' + this.delta);
-			} while(this.delta < 15);
+			} while(this.delta < 15);*/
 
 
 			// Retreat the umbrella action
-			if(this.delta > this.parentRef.animSpeed){
+			if(this.parentRef.elapseSum > 25){
 				// Retreat the umbrella hit
 				switch(this.parentRef.facingWhichDirection) {
 
@@ -548,10 +562,13 @@
 						break;
 
 				}//switch case statement
+				
+				// Reset the elapsed sum
+				this.parentRef.elapseSum = 0;
+				
+				// Render the image
+    			this.parentRef.render();
 			}
-
-			// Render the image
-    		this.parentRef.render();
 
     	}//actionType if statement	
     	    	
@@ -616,14 +633,8 @@
     // Do we have a collision event?
     this.collision = false;
     
-    //Maximum health life is 100
-    // Testing in such a way that the ladies dun die so fast
-    if(thisType == 3){
-    	this.health = 900;
-    } else {
-    	this.health = maximumHealthLife;
-    }
-
+    //Maximum health life is 90
+    this.health = maximumHealthLife;
 
 	this.destroyed = false;
 	//For the grid thing
@@ -667,7 +678,7 @@
 	this.HeroType = null;
 	this.badNPC_Type = null;
 	this.goodNPC_Type = null;
-//	console.log('the heroObject type to be created is: ' + thisType);
+	//console.log('the heroObject type to be created is: ' + thisType);
 	switch(thisType){
  		case 0:		this.HeroType = new mainCharacter(this);
  					break;
@@ -739,6 +750,7 @@
         }
 
         this.elapseSum += elapsed;
+        console.log('elapseSum is for ' + this.selfType + ' is:' + this.elapseSum);
 
         if (this.internalX == -1)
         	this.internalX = this.x;
@@ -1105,18 +1117,7 @@
 		this.innerHealthMeterWidth += thisHealth;
 		//this.health = this.innerHealthMeterWidth;
 		// 30 is the maximum width of the innerHealthMeter
-		
-		// Just to test out our game and make the thin ladies "immortal"
-		if(this.innerHealthMeterWidth > 30 && this.selfType == 3) {//this case is only to make thin ladies immortal for now..and test game
-			this.innerHealthMeterWidth = 30;
-			this.health = 900;
-
-		// For the thin lady -- her mapping for now is * 30 (max health is 900)
-		} else if(this.innerHealthMeterWidth > 0 && this.selfType == 3){
-			this.health = this.innerHealthMeterWidth * 30;
-		
-		// When the health bar increase beyond the normal
-		} else if(this.innerHealthMeterWidth > 30){
+		if(this.innerHealthMeterWidth > 30){
 			this.innerHealthMeterWidth = 30;	
 			this.health = maximumHealthLife;
 		
@@ -1127,7 +1128,7 @@
 			// If the hero is dead..update the necessary parameters
 			this.destroyed = true;
 			console.log(this.selfType + ' is dead');
-		
+
 		// For all cases
 		} else {
 			this.health = this.innerHealthMeterWidth;

@@ -117,6 +117,9 @@ var PlayerLearning = function(thisReference){
 		// either corresponds to the start of the current phase
 		this.timeTakenToRescueThisLady = Date.now() - thisReference.spawnTime;
 		//console.log('time taken to rescue this lady type ' + thisLadyReference.selfType + ' is: ' + this.timeTakenToRescueThisLady);
+
+		// I set the lady parameter destroy to be true
+		thisReference.destroyed = true;
 		
 		this.healthDamageIncurredByThisLady = 30 - thisReference.health;
 		//console.log('health damage incurred by this lady is: ' + this.healthDamageIncurredByThisLady);
@@ -128,9 +131,6 @@ var PlayerLearning = function(thisReference){
 		}
 		this.averageRescueTime = this.averageRescueTime  / this.arrayOfRescueTime.length;
 		console.log('the averageRescueTime is: ' + this.averageRescueTime);
-
-		// I set the lady parameter destroy to be true
-		thisReference.destroyed = true;
 	};
 
 	// Whenever a badNPC is killed, this function is invoked
