@@ -482,15 +482,11 @@ function EnemiesRadialAwareness(){
 				if(VG[i][j].selfType == 0 && VG[i][j].maxOccupants > 0){
 					enemies[iter].moveTarget = VG[i][j];
 					awareness = true;
-					break;
-				}
-				else {
-					enemies[iter].moveTarget = enemies[iter].ladyTarget;
 				}
 			}
 		}
 		if(awareness == false &&  enemies[iter].moveTarget!=null && enemies[iter].moveTarget.selfType == 0){
-			//enemies[iter].moveTarget = 
+			enemies[iter].moveTarget = enemies[iter].ladyTarget;
 		}
 	}
 }
