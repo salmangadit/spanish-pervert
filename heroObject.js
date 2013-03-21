@@ -613,6 +613,7 @@
 	this.maxOccupants = 0;
 	this.partIndex;
 	this.ladyTarget;
+	this.radialAwareness = true;
 	//--------------End of Max code----------------------
 
     this.keys = new Array();

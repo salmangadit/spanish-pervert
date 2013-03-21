@@ -476,25 +476,28 @@ function EnemyAwareness(bot){
 function EnemiesRadialAwareness(){
 
 	for(iter in enemies){
-		var awareness = false;
-		var imin = enemies[iter].gridX - 3;
-		var imax = enemies[iter].gridX + 3;
-		var jmin = enemies[iter].gridY - 3;
-		var jmax = enemies[iter].gridY + 3;
-		if(imin<0){imin=0;}
-		if(imax>32){imax=33;}
-		if(jmin<0){jmin=0;}
-		if(jmax>27){jmax=28;}
-		for(var i = imin; i < imax; i++){
-			for(var j = jmin; j < jmax; j++){
-				if(VG[i][j].selfType == 0 && VG[i][j].maxOccupants > 0){
-					enemies[iter].moveTarget = VG[i][j];
-					awareness = true;
+		if(enemies[iter].radialAwareness == true)
+		{
+			var awareness = false;
+			var imin = enemies[iter].gridX - 3;
+			var imax = enemies[iter].gridX + 3;
+			var jmin = enemies[iter].gridY - 3;
+			var jmax = enemies[iter].gridY + 3;
+			if(imin<0){imin=0;}
+			if(imax>32){imax=33;}
+			if(jmin<0){jmin=0;}
+			if(jmax>27){jmax=28;}
+			for(var i = imin; i < imax; i++){
+				for(var j = jmin; j < jmax; j++){
+					if(VG[i][j].selfType == 0 && VG[i][j].maxOccupants > 0){
+						enemies[iter].moveTarget = VG[i][j];
+						awareness = true;
+					}
 				}
 			}
-		}
-		if(awareness == false &&  enemies[iter].moveTarget!=null && enemies[iter].moveTarget.selfType == 0){
-			enemies[iter].moveTarget = enemies[iter].ladyTarget;
+			if(awareness == false &&  enemies[iter].moveTarget!=null && enemies[iter].moveTarget.selfType == 0){
+				enemies[iter].moveTarget = enemies[iter].ladyTarget;
+			}
 		}
 	}
 }
