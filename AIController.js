@@ -34,14 +34,9 @@ function AIController(){
 			var targetingPlayer = 0;
 
 			for (var m = 0; m<parsedPhaseRatio.length; m++){
-				var chosenTarget;
+				
+				var chosenTarget = this.targetNPCAI(alreadyTargeted);
 
-				if (currentPhase == "E" && targetingPlayer < 3){
-					chosenTarget = hero;
-					targetingPlayer++;
-				} else {
-					chosenTarget = this.targetNPCAI(alreadyTargeted);
-				}
 				var spawnLocation = this.spawnLocationAI(chosenTarget, alreadySpawned);
 
 				//Find number of enemies to spawn
@@ -52,6 +47,10 @@ function AIController(){
 					if (n > 0){
 						spawnLocation = helperClass.findNearestFreeSpace(parseInt(spawnLocation[0]), 
 							parseInt(spawnLocation[1]), 1)
+					}
+					if (currentPhase == "E" && targetingPlayer < 3){
+						chosenTarget = hero;
+						targetingPlayer++;
 					}
 					this.enemyStrengthAI(monkeyGorillaRandomiser, chosenTarget, spawnLocation);
 				}
