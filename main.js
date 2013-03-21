@@ -79,6 +79,7 @@ var enemiesToGetRidOf;
 var selectedLadies;
 var AImanipulated = 0;
 var manipulatedIndexes;
+var AIdone = false;
 
 function init() {
 	xmlhttp = new XMLHttpRequest();
@@ -803,7 +804,12 @@ function updatePlayerLearning(){
 }
 
 function checkDangerStage(){
-	if (hero.health <= 7 && AImanipulated == 0){
+	if (hero.health > 7){
+		if (AIdone){
+			AIdone = false;
+		}
+	}
+	else if (hero.health <= 7 && AImanipulated == 0 &&!AIdone){
 		//there is a problem, the hero is getting the shiznit beaten out of him!
 		//Options:
 		//0. Find number of enemies around the hero
@@ -812,7 +818,7 @@ function checkDangerStage(){
 		//3. Enemy should follow her
 		enemiesToGetRidOf = new Array();
 		selectedLadies = new Array();
-		manipulatedIndexes = new Array();
+		manipulatedIndexes = [];
 
 		for (var i= 0; i< enemies.length; i++){
 			if (enemies[i].moveTarget.selfType == 0){
@@ -842,7 +848,7 @@ function checkDangerStage(){
 				}
 			} while (selected == false);
 
-			var nearestFree = helperClass.findNearestFreeSpace(enemiesToGetRidOf[i].gridX, enemiesToGetRidOf[i].gridY, 3);
+			var nearestFree = helperClass.findNearestFreeSpace(enemiesToGetRidOf[i].gridX, enemiesToGetRidOf[i].gridY, 5);
 			selectedLady.targetGrid = nearestFree;
 		}
 
@@ -856,18 +862,48 @@ function checkDangerStage(){
 				continue;
 			}
 
-			if ((selectedLadies[i].targetGrid[0] == selectedLadies[i].gridX) 
-				&& (selectedLadies[i].targetGrid[1] == selectedLadies[i].gridY)){
+			if ((selectedLadies[i].targetGrid[0] == selectedLadies[i].gridX ||
+			 	selectedLadies[i].targetGrid[0] == selectedLadies[i].gridX - 1 || 
+				selectedLadies[i].targetGrid[0] == selectedLadies[i].gridX +1) 
+				&& (selectedLadies[i].targetGrid[1] == selectedLadies[i].gridY ||
+					selectedLadies[i].targetGrid[1] == selectedLadies[i].gridY - 1 ||
+					selectedLadies[i].targetGrid[1] == selectedLadies[i].gridY + 1)){
+				enemiesToGetRidOf[i].radialAwareness = false;
 				enemiesToGetRidOf[i].moveTarget = selectedLadies[i];
 				manipulatedIndexes.push(i);
 			}
 		}
 
-		if (manipulatedIndexes.length = selectedLadies.length){
-			//AI is done, send back to 0
-			AImanipulated = 0;
+		if (manipulatedIndexes.length == selectedLadies.length){
+			//The sending has been done. Now make sure the monkey reaches the lady and then toggle off the AI
+			AImanipulated = 2;
 		}
 	}
+	else if (AImanipulated == 2){
+		manipulatedIndexes = [];
+		//Waiting for enemies to reach targets
+		for (var i = 0; i < enemiesToGetRidOf.length; i++){
+			if (!enemiesToGetRidOf[i].radialAwareness){
+
+				if ((enemiesToGetRidOf[i].targetGrid[0] == enemiesToGetRidOf[i].gridX ||
+			 	enemiesToGetRidOf[i].targetGrid[0] == enemiesToGetRidOf[i].gridX - 1 || 
+				enemiesToGetRidOf[i].targetGrid[0] == enemiesToGetRidOf[i].gridX +1) 
+				&& (enemiesToGetRidOf[i].targetGrid[1] == enemiesToGetRidOf[i].gridY ||
+					enemiesToGetRidOf[i].targetGrid[1] == enemiesToGetRidOf[i].gridY - 1 ||
+					enemiesToGetRidOf[i].targetGrid[1] == enemiesToGetRidOf[i].gridY + 1)){
+
+					enemiesToGetRidOf[i].radialAwareness = true;
+				}
+			}
+		}
+
+		if (manipulatedIndexes.length == enemiesToGetRidOf.length){
+			//The sending has been done. Now make sure the monkey reaches the lady and then toggle off the AI
+			AImanipulated = 0;
+			AIdone = true;
+		}
+	}
+
 }
 
 
