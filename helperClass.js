@@ -72,13 +72,19 @@ helperClass.findNearestFreeSpace = function(pointX, pointY, jump){
 			if(helperClass.CheckArrayIndex(x, y) != null){
 				if (grid[x][y] == 0){
 					found = true;
-					nearestFree = new Array(x, y)
+					nearestFree = new Array(x, y);
 				} else {
 					position++;
 					if (position == 5){
 						position = 1;
 						jump++;
 					}
+				}
+			} else {
+				position++;
+				if (position == 5){
+					position = 1;
+					jump++;
 				}
 			}
 		} while (!found);
