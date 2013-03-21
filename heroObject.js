@@ -28,7 +28,7 @@
 	this.now;// = Date.now();
 	this.delta;// = this.now - this.parentRef.lastRender;
 	
-	this.defaultDamageDelivered = -100;
+	this.defaultDamageDelivered = -2;
 	this.damageDelivered = this.defaultDamageDelivered;
 
 	this.fightController  = new FightController(this);

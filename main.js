@@ -505,8 +505,8 @@ function gameLoop() {
 			// Update the player learning that enemy has been destroyed
 			if(enemies[curEnemy].targetBot.selfType == 0){
 				lionActivationRequirement--;
-			}
-			playerLearningObj.badNPCKilledUpdate(enemies[curEnemy]);
+				playerLearningObj.badNPCKilledUpdate(enemies[curEnemy]);
+			}			
 			predictor.updatePredictor();
 			enemies.splice(curEnemy, 1);
 			enemyWasDestroyed = true;			

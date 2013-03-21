@@ -90,6 +90,7 @@ function Controller(){
 		ladies[iter].HeroType.fightController.updateSurroundingEnemies(returnSurroundingArray(ladies[iter]))
 		if(	ladies[iter].selfType == 4 && ladies[iter].actionType == 1 && 
 			ladies[iter].keepMoving == false && ladies[iter].targetBot != null &&
+			ladies[iter].keepMoving == false && ladies[iter].targetBot != null &&
 			(ladies[iter].targetBot.selfType == 1 || ladies[iter].targetBot.selfType == 2)){
 			ladies[iter].targetGrid = new Array(ladies[iter].targetBot.gridX,ladies[iter].targetBot.gridY);
 			ladies[iter].HeroType.fightController.monitorHeroObjectSituation();
