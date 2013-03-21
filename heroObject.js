@@ -11,8 +11,8 @@
 
 
  var maximumHealthLife = 30;
- var constantMainCharcterHealthRecovery = 0.03;
- var constantGoodNPCRecoveryHealth = 0.01;
+ var constantMainCharcterHealthRecovery = 0.005;
+ var constantGoodNPCRecoveryHealth = 0.005;
   
  //------------------------ mainCharacter implementation -------------------------
  

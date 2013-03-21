@@ -826,9 +826,9 @@ function checkDangerStage(){
 	}
 	else if (hero.health <= 7 && AImanipulated == 0 &&!AIdone){
 		//there is a problem, the hero is getting the shiznit beaten out of him!
-		//if (currentPhase == "J") {	//make it hollywood like!
+		if (currentPhase == "J") {	//make it hollywood like!
 			hollywoodScenario = true;
-		//}
+		}
 
 		enemiesToGetRidOf = new Array();
 		selectedLadies = new Array();
@@ -877,7 +877,7 @@ function checkDangerStage(){
 				continue;
 			}
 
-			if ((hollywoodScenario && hero.health < 1.3) || !hollywoodScenario){
+			if ((hollywoodScenario && hero.health < 1) || !hollywoodScenario){
 				if ((selectedLadies[i].targetGrid[0] == selectedLadies[i].gridX ||
 				 	selectedLadies[i].targetGrid[0] == selectedLadies[i].gridX - 1 || 
 					selectedLadies[i].targetGrid[0] == selectedLadies[i].gridX +1) 
