@@ -1,43 +1,33 @@
-var playerLearningModels: 
+var playerLearningModels =
 {
-	"A": {
-		"modelTime": "100",
-		"bufferTime": "50"
+	"1": {
+		"modelTimeKill": "100",
+		"bufferTimeKill": "50",
+		"modelTimeRescue": "100",
+		"bufferTimeRescue": "50"
 	},
-	"B": {
-		"modelTime": "100",
-		"bufferTime": "50"
+	"2": {
+		"modelTimeKill": "100",
+		"bufferTimeKill": "50",
+		"modelTimeRescue": "100",
+		"bufferTimeRescue": "50"
 	},
-	"C": {
-		"modelTime": "100",
-		"bufferTime": "50"
+	"3": {
+		"modelTimeKill": "100",
+		"bufferTimeKill": "50",
+		"modelTimeRescue": "100",
+		"bufferTimeRescue": "50"
 	},
-	"D": {
-		"modelTime": "100",
-		"bufferTime": "50"
+	"4": {
+		"modelTimeKill": "100",
+		"bufferTimeKill": "50",
+		"modelTimeRescue": "100",
+		"bufferTimeRescue": "50"
 	},
-	"E": {
-		"modelTime": "100",
-		"bufferTime": "50"
-	},
-	"F": {
-		"modelTime": "100",
-		"bufferTime": "50"
-	},
-	"G": {
-		"modelTime": "100",
-		"bufferTime": "50"
-	},
-	"H": {
-		"modelTime": "100",
-		"bufferTime": "50"
-	},
-	"I": {
-		"modelTime": "100",
-		"bufferTime": "50"
-	},
-	"J": {
-		"modelTime": "100",
-		"bufferTime": "50"
+	"5": {
+		"modelTimeKill": "100",
+		"bufferTimeKill": "50",
+		"modelTimeRescue": "100",
+		"bufferTimeRescue": "50"
 	}
 };

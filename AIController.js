@@ -10,6 +10,15 @@ function AIController(){
 		this.currPhase.wave = this.phases[this.currentPhaseIndex].wave;
 		this.currPhase.scenarioRatio = this.phases[this.currentPhaseIndex].scenario;
 		this.currPhase.phaseType = this.phases[this.currentPhaseIndex].phaseType;
+		this.currPhase.modelKillTime = parseInt(playerLearningModels[currentWave].modelTimeKill);
+		this.currPhase.bufferKillTime = parseInt(playerLearningModels[currentWave].bufferTimeKill);
+		this.currPhase.modelRescueTime = parseInt(playerLearningModels[currentWave].modelTimeRescue);
+		this.currPhase.bufferRescueTime = parseInt(playerLearningModels[currentWave].bufferTimeRescue);
+
+		//Update player learning
+		playerLearningObj.updateWaveParameters(this.currPhase.modelKillTime, this.currPhase.bufferKillTime,
+									this.currPhase.modelRescueTime, this.currPhase.bufferRescueTime);
+
 
 		//console.log("Current Phase: " + currentPhase);
 		//console.log("Current Wave: " + currentWave);

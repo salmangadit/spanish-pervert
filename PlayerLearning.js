@@ -147,12 +147,12 @@ var PlayerLearning = function(thisReference){
 	};
 
 	// Update the model parameters when the wave changes (can change if we want to update wave parameters dynamically per se)
-	this.updateWaveParameters = function(){
+	this.updateWaveParameters = function(modelKillIn, bufferKillIn, modelRescueIn, bufferRescueIn ){
 		//this.noOfEnemiesThisWave = //get from AI controller
-		//this.modelTimeTakenToRescue = //get from AI Controller;
-		//this.modelTimeTakenToKill = //get from AI Controller;
-		//this.bufferTimeForKill = //get from AI controller
-		//this.bufferTimeForRescue = //get from AI controller
+		this.modelTimeTakenToRescue = modelRescueIn;
+		this.modelTimeTakenToKill = modelKillIn;    
+		this.bufferTimeForKill = bufferKillIn;      
+		this.bufferTimeForRescue = bufferRescueIn;  
 	};
 
 	// This function will compare the rescue and kill timing taken by the player against the model timing
