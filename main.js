@@ -9,6 +9,8 @@ var debugCanvas;
 var debugContext;
 var graphCanvas;
 var graphContext;
+var gameOverCanvas;
+var gameOverContext;
 var gameW = 800;
 var gameH = 600;
 var hero = null;
@@ -85,12 +87,9 @@ function init() {
 	xmlhttp = new XMLHttpRequest();
 	//http://www.salmangadit.me/spanish-pervert/data/data.xmlC:/Users/Salman/Documents/GitHub/spanish-pervert/data/data.xml
 	// /Users/TheGreatOne/Desktop/Sem_6/EE4702/Project/Project_2/spanish-pervert/data/data.xml
-	//xmlhttp.open("GET", "C:/Users/YuanIng/Documents/GitHub/spanish-pervert/data/data.xml", false);
+	xmlhttp.open("GET", "C:/Users/YuanIng/Documents/GitHub/spanish-pervert/data/data.xml", false);
 	//xmlhttp.open("GET", "/Users/TheGreatOne/Desktop/Sem_6/EE4702/Project/Project_2/spanish-pervert/data/data.xml", false);
 	//xmlhttp.open("GET", "C:/Users/Salman/Documents/GitHub/spanish-pervert/data/data.xml", false);
-	xmlhttp.open("GET", "/Users/TheGreatOne/Desktop/Sem_6/EE4702/Project/Project_2/spanish-pervert/data/data.xml", false);
-	//xmlhttp.open("GET", "C:/Users/Salman/Documents/GitHub/spanish-pervert/data/data.xml", false);
-	//xmlhttp.open("GET", "/Users/TheGreatOne/Desktop/Sem_6/EE4702/Project/Project_2/spanish-pervert/data/data.xml", false);
 	xmlhttp.send();
 	xmlDoc = xmlhttp.responseXML;
 
@@ -429,10 +428,15 @@ function initCanvas() {
 	// create a context object from our canvas
 	debugContext = debugCanvas.getContext("2d");
 	
-	// retrieve a reference to the debugCanvas object
+	// retrieve a reference to the graphCanvas object
 	graphCanvas = document.getElementById("graphCanvas");
 	// create a context object from our canvas
 	graphContext = graphCanvas.getContext("2d");
+	
+	// retrieve a reference to the gameOverCanvas object
+	gameOverCanvas = document.getElementById("gameOverCanvas");
+	// create a context object from our canvas
+	gameOverContext = gameOverCanvas.getContext("2d");
 	
 	// set the width and height of the canvas
 	canvas.width = gameW;
@@ -453,6 +457,10 @@ function initCanvas() {
 	// set the width and height of the graphCanvas
 	graphCanvas.width = 600;//gameW*2;
 	graphCanvas.height = 300;//gameH;
+	
+	// set the width and height of the graphCanvas
+	gameOverCanvas.width = gameW;//gameW*2;
+	gameOverCanvas.height = gameH;//gameH;
 	
 	baseContext.fillStyle = baseColor;
 	// fill the entire baseContext with the color
@@ -488,10 +496,7 @@ function gameLoop() {
 	// draw the player to the screen again
 	hero.render();
 	
-	//-----------------------Max code----------------------------------------
-	//for testing purposes, let's make the enemies swarm towards the heroes
-	//flocker(ladies[0], enemies, 3, 5);
-	
+	//-----------------------Max code----------------------------------------	
 	//setting the grid
 	lion.moveTarget = enemies[0];
 	Controller();
@@ -602,6 +607,11 @@ function gameLoop() {
 		if (ladies[curLady].destroyed) {
 			console.log('this lady ' + ladies[curLady].selfType + ' is dead');
 			ladies.splice(curLady, 1);
+			for(iter in enemies){
+				if(enemies[iter].moveTarget == null){
+					enemies[iter].moveTarget = ladies[0];
+				}
+			}
 		} else {
 			//testing out of the targetGrid system
 			var tempGrid = new Array();
