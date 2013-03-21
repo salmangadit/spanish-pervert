@@ -126,10 +126,12 @@ var PlayerLearning = function(thisReference){
 		
 		this.arrayOfRescueTime.push(this.timeTakenToRescueThisLady);
 		this.arrayOfHealthDamage.push(this.healthDamageIncurredByThisLady);
-		for(iter =0,this.averageRescueTime=0; iter<this.arrayOfRescueTime.length; iter++) {
+		// Dont use average
+		/*for(iter =0,this.averageRescueTime=0; iter<this.arrayOfRescueTime.length; iter++) {
 			this.averageRescueTime += this.arrayOfRescueTime[iter];
 		}
-		this.averageRescueTime = this.averageRescueTime  / this.arrayOfRescueTime.length;
+		this.averageRescueTime = this.averageRescueTime  / this.arrayOfRescueTime.length;*/
+		this.averageRescueTime = this.timeTakenToRescueThisLady;
 		console.log('the averageRescueTime is: ' + this.averageRescueTime);
 	};
 
@@ -139,10 +141,12 @@ var PlayerLearning = function(thisReference){
 		this.timeTakenToKillNPC = Date.now() - thisBadNPCReference.HeroType.spawnTime;
 		//console.log('time taken to kill badNPC type: ' + thisBadNPCReference.selfType + ' is: ' + this.timeTakenToKillNPC);
 		this.arrayOfKillTime.push(this.timeTakenToKillNPC);
-		for(iter=0, this.averageKillTime=0; iter<this.arrayOfKillTime.length; iter++){
+		// Dont use average
+		/*for(iter=0, this.averageKillTime=0; iter<this.arrayOfKillTime.length; iter++){
 			this.averageKillTime += this.arrayOfKillTime[iter];
 		}
-		this.averageKillTime = this.averageKillTime / this.arrayOfKillTime.length;
+		this.averageKillTime = this.averageKillTime / this.arrayOfKillTime.length;*/
+		this.averageKillTime = this.timeTakenToKillNPC;
 		console.log('the averageKillTime is: ' + this.averageKillTime);
 	};
 
@@ -153,6 +157,8 @@ var PlayerLearning = function(thisReference){
 		this.modelTimeTakenToKill = modelKillIn;    
 		this.bufferTimeForKill = bufferKillIn;      
 		this.bufferTimeForRescue = bufferRescueIn;
+		this.arrayOfRescueTime = [];
+		this.arrayOfKillTime = [];
 	};
 
 	// This function will compare the rescue and kill timing taken by the player against the model timing
