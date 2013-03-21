@@ -40,6 +40,7 @@ function Controller(){
 
 	
 	moveLion();
+	overallSafety();
 	setMaxOcc();
 	ladiesLoiterTimer();
 	for(iter in ladies){
@@ -357,13 +358,19 @@ function setMaxOcc(){
 	singleMO(hero);
 	singleMO(lion);
 	for(iter in collidables){
-		singleMO(collidables[iter]);
+		if(collidables[iter]!=null){
+			singleMO(collidables[iter]);
+		}
 	}
 	for(iter in ladies){
-		singleMO(ladies[iter]);
+		if(ladies[iter]!=null){
+			singleMO(ladies[iter]);
+		}
 	}
 	for(iter in enemies){
-		singleMO(enemies[iter]);
+		if(enemies[iter]!=null){
+			singleMO(enemies[iter]);
+		}
 	}
 	
 	//sets to limit the number of people targeting that grid
@@ -385,22 +392,51 @@ function setMaxOcc(){
 
 function singleMO(obj){
 	//top
-	if((obj.gridY - 1 >= 0 && VG[obj.gridX][obj.gridY-1].selfType != null) || obj.gridY-1 < 0){
+	if(obj.gridY-1>=0){
+		if(VG[obj.gridX][obj.gridY-1] != null){
+			if(obj.gridY - 1 >= 0 && VG[obj.gridX][obj.gridY-1].selfType != null){
+				obj.maxOccupants--;
+			}
+		}
+	}
+	if (obj.gridY - 1 < 0){
 		obj.maxOccupants--;
 	}
 	//down
-	if((obj.gridY + 1 <= 27 && VG[obj.gridX][obj.gridY+1].selfType != null) || obj.gridY + 1 > 27){
+	if(obj.gridY+1 <= 27){
+		if(VG[obj.gridX][obj.gridY+1] != null){
+			if(obj.gridY + 1 <= 27 && VG[obj.gridX][obj.gridY+1].selfType != null) {
+				obj.maxOccupants--;
+			}
+		}
+	}
+	if(obj.gridY + 1 > 27){
 		obj.maxOccupants--;
 	}
 	//left
-	if((obj.gridX - 1 >= 0 && VG[obj.gridX-1][obj.gridY].selfType != null) || obj.gridX - 1 < 0){
+	if(obj.gridX - 1 >= 0){
+		if(VG[obj.gridX-1][obj.gridY] != null){
+			if(obj.gridX - 1 >= 0 && VG[obj.gridX-1][obj.gridY].selfType != null){
+				obj.maxOccupants--;
+			}
+		}
+	}
+	if(obj.gridX - 1 < 0){
 		obj.maxOccupants--;
 	}
 	//right
-	if((obj.gridX + 1 <= 32 && VG[obj.gridX+1][obj.gridY].selfType != null) || obj.gridX + 1 > 32){
-		obj.maxOccupants--;
+	if(obj.gridX+1<=32){
+		if(VG[obj.gridX+1][obj.gridY] != null){
+			if(obj.gridX + 1 <= 32 && VG[obj.gridX+1][obj.gridY].selfType != null){
+				obj.maxOccupants--;
+			}
+		}
+	}
+	if(obj.gridX + 1 > 32){
+			obj.maxOccupants--;
 	}
 }
+
 
 
 //instantly breaks off from function if hero is detected
