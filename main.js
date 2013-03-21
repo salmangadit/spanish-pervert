@@ -484,19 +484,9 @@ function gameLoop() {
 	//flocker(ladies[0], enemies, 3, 5);
 	
 	//setting the grid
-	// Testing time
-	initialtime = Date.now();
 	Controller();
-	timeTaken = Date.now() - initialtime;
-	if(timeTaken > 50)
-		console.log('time taken for Controller() in gameLoop is: ' + timeTaken);
-	
 	//------------------------End of Max code------------------------------------
 	
-	
-	// Testing time for enemies ------------------------------------
-	initialtime = Date.now();
-
 
 	// Actual code
 	// Do a foreach type loop through the enemies
@@ -591,18 +581,6 @@ function gameLoop() {
 		index++;
 	}
 
-
-
-	// Output time taken to loop thru enemy -------------------------
-	enemyLoopTime = Date.now() - initialtime;
-	if(enemyLoopTime > 50)
-		console.log('enemyLoopTime in gameLoop is: ' + enemyLoopTime);
-
-
-	// Testing time for ladies *****************************
-	initialtime = Date.now();
-
-
 	// Actual code
 	// Do a for each loop for the ladies as well
 	var ladyIndex = 0;
@@ -689,13 +667,6 @@ function gameLoop() {
 		ladies[curLady].partIndex = ladyIndex;
 		ladyIndex++;
 	}
-
-
-
-	// Output time taken to loop thru lady **********************
-	ladyLoopTime = Date.now() - initialtime;
-	if(ladyLoopTime > 50)
-		console.log('ladyLoopTime in gameLoop is: ' + ladyLoopTime);
 	
 	//lion
 	//testing out of the targetGrid system
@@ -765,7 +736,7 @@ function gameLoop() {
 		lion.keys.splice(0, 1);
 	}
 
-// Update the lady based upon how long it took for the game loop
+	// Update the lady based upon how long it took for the game loop
 	lion.update(elapsed / screenUpdateTime);
 
 	// draw the lady to the screen again
@@ -773,19 +744,8 @@ function gameLoop() {
 
 	lionIndex++;
 
-	// Testing time for danger stage check ==========================
-	initialtime = Date.now();
-
-
 	// Actual code
 	checkDangerStage();
-
-
-	// Output time taken to check stage ==============================
-	stageCheckTime = Date.now() - initialtime;
-	if(stageCheckTime > 50)
-		console.log('checkDangerStage in gameLoop is: ' + stageCheckTime);
-
 
 	// update the lastUpdate variable
 	lastUpdate = now;
@@ -795,10 +755,6 @@ function gameLoop() {
 		displayFPS(lastUpdate);
 	}
 
-	// Testing time
-	gameTime = Date.now() - now;
-	if(gameTime > 50)
-		console.log('time taken for gameLoop is: ' + gameTime);
 }
 
 function updatePlayerLearning(){
