@@ -95,7 +95,7 @@
 				this.now = Date.now();
 				this.delta = this.now - this.parentRef.lastRender;
 				//console.log('delta is: ' + this.delta);
-			} while(this.delta < this.parentRef.animSpeed);
+			} while(this.delta < 15);
 
 			// Move the hand back
 			if(this.delta > this.parentRef.animSpeed){
@@ -171,7 +171,7 @@
 				this.now = Date.now();
 				this.delta = this.now - this.parentRef.lastRender;
 				//console.log('delta is: ' + this.delta);
-			} while(this.delta < this.parentRef.animSpeed);
+			} while(this.delta < 15);
 
 			// Move the leg back
 			if(this.delta > this.parentRef.animSpeed){
@@ -302,7 +302,7 @@
 				this.now = Date.now();
 				this.delta = this.now - this.parentRef.lastRender;
 				//console.log('delta is: ' + this.delta);
-			} while(this.delta < this.parentRef.animSpeed);
+			} while(this.delta < 15);
 
 			// Retreat the pulling action
 			if(this.delta > this.parentRef.animSpeed){
@@ -402,7 +402,7 @@
 				this.now = Date.now();
 				this.delta = this.now - this.parentRef.lastRender;
 				//console.log('delta is: ' + this.delta);
-			} while(this.delta < this.parentRef.animSpeed);
+			} while(this.delta < 15);
 
 			// Retreat the pulling action
 			if(this.delta > this.parentRef.animSpeed){
@@ -523,7 +523,7 @@
 				this.now = Date.now();
 				this.delta = this.now - this.parentRef.lastRender;
 				//console.log('delta is: ' + this.delta);
-			} while(this.delta < this.parentRef.animSpeed);
+			} while(this.delta < 15);
 
 
 			// Retreat the umbrella action
@@ -917,7 +917,7 @@
             	do {
             		now = Date.now();
             		delta = now - this.lastRender;
-            	} while(delta < this.animSpeed);
+            	} while(delta < 15);
             	
             	// Now we are ready to perform the action inline
             	if(delta > this.animSpeed){
@@ -931,7 +931,7 @@
         		do {
             		now = Date.now();
             		delta = now - this.lastRender;
-            	} while(delta < this.animSpeed);
+            	} while(delta < 15);
         		
         		// Now we are ready tp punch
         		if(delta > this.animSpeed){
