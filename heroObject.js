@@ -970,9 +970,10 @@
         		break;		
 			
 			case 67:
-				if(lionActivationRequirement <= 0){
+				if(lionActivationRequirement <= 0 || debugMode == true){
 					lionStatus = true;
 				}
+				
         }
 
         // This code handles wrapping the hero from the edge of the canvas

@@ -149,7 +149,7 @@ function moveLion(){
 		}
 	}
 	if(!lionStatus){
-		lion.targetGrid = new Array(20,20);
+		lion.targetGrid = new Array(17,14);
 	}
 }
 
