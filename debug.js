@@ -7,6 +7,16 @@ function Debug(){
 	displayParameters();
 }
 
+function gameOver(){
+	gameOverContext.fillStyle = "#000000";
+	gameOverContext.fillRect(0,0,gameW, gameH);
+	gameOverContext.fillStyle = "#FFFF00";
+	gameOverContext.font = "24px Helvetica";
+	
+	gameOverContext.fillText("Game Over" , 420, 400);
+	gameOverContext.fillText("Press F5 to restart", 380, 420);
+}
+
 function renderGrids(){
 	debugContext.clearRect(0,0,debugCanvas.width,debugCanvas.height);
 	var recImage = new Image();

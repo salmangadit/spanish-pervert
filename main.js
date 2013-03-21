@@ -56,7 +56,6 @@ var grid = new Array();
 
 var currentPhase = "A";
 var currentWave = "1";
-//var savedLadies = 0;
 
 var Spawner = new Spawner();
 var AI = new AIController();
@@ -485,7 +484,6 @@ function gameLoop() {
 
 	// To get the frame rate
 	requestAnimFrame(gameLoop);
-
 	var now = Date.now();
 	// calculate how long as passed since our last iteration
 	var elapsed = now - lastUpdate;
@@ -599,9 +597,10 @@ function gameLoop() {
 			
 		}
 		
-		
-		enemies[curEnemy].render();
-		enemies[curEnemy].partIndex = index;
+		if(enemies[curEnemy] != null){
+			enemies[curEnemy].render();
+			enemies[curEnemy].partIndex = index;
+		}
 		index++;
 	}
 
@@ -616,6 +615,9 @@ function gameLoop() {
 				if(enemies[iter].moveTarget == null){
 					enemies[iter].moveTarget = ladies[0];
 				}
+			}
+			if(debugMode == false && 10-savedLadiesCount != ladies.length){
+				gameOver();
 			}
 		} else {
 			//testing out of the targetGrid system
@@ -768,11 +770,15 @@ function gameLoop() {
 	// Update the lady based upon how long it took for the game loop
 	lion.update(elapsed / screenUpdateTime);
 
-	// draw the lady to the screen again
+	// draw the lion to the screen again
 	lion.render();
 
 	lionIndex++;
-
+	
+	if(hero.health<=0 && debugMode == false){
+		gameOver();
+	}
+	
 	// Actual code
 	checkDangerStage();
 

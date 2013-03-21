@@ -48,6 +48,7 @@ function Controller(){
 	}
 	heroBehaviour(hero,VG);
 	LadyAwareness(lion);
+	
 	if(lion.actionType == 1 && lion.keepMoving == false && lion.targetBot != null && lionStatus == true){
 		//alert("a");
 		lion.HeroType.strikeWithUmbrella(lion.targetBot);
@@ -377,14 +378,20 @@ function setMaxOcc(){
 	for(iter in ladies){
 		if(ladies[iter] != null && ladies[iter].targetGrid != null){
 			if(ladies[iter].targetGrid[0]!=null && ladies[iter].targetGrid[1]!=null){
-				VG[ladies[iter].targetGrid[0]][ladies[iter].targetGrid[1]].maxOccupants--;
+				if(VG[ladies[iter].targetGrid[0]][ladies[iter].targetGrid[1]]!=null){
+					if(VG[ladies[iter].targetGrid[0]][ladies[iter].targetGrid[1]].maxOccupants!=null){
+						VG[ladies[iter].targetGrid[0]][ladies[iter].targetGrid[1]].maxOccupants--;
+					}
+				}
 			}
 		}
 	}
 	for(iter in enemies){
 		if(enemies[iter].targetGrid != null){
-			if(VG[enemies[iter].targetGrid[0]][enemies[iter].targetGrid[1]].maxOccupants!=null){
-				VG[enemies[iter].targetGrid[0]][enemies[iter].targetGrid[1]].maxOccupants--;
+			if(VG[enemies[iter].targetGrid[0]][enemies[iter].targetGrid[1]]!=null){
+				if(VG[enemies[iter].targetGrid[0]][enemies[iter].targetGrid[1]].maxOccupants!=null){
+					VG[enemies[iter].targetGrid[0]][enemies[iter].targetGrid[1]].maxOccupants--;
+				}
 			}
 		}
 	}
