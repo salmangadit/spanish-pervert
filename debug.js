@@ -5,7 +5,15 @@ function Debug(){
 	renderGrids();
 	drawGraphs();
 	displayParameters();
+	//gameOver();
 }
+
+// function gameOver(){
+	// if(ladies.length<10){
+		
+	// }
+// }
+
 
 function renderGrids(){
 	debugContext.clearRect(0,0,debugCanvas.width,debugCanvas.height);

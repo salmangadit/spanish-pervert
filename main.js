@@ -9,6 +9,8 @@ var debugCanvas;
 var debugContext;
 var graphCanvas;
 var graphContext;
+var gameOverCanvas;
+var gameOverContext;
 var gameW = 800;
 var gameH = 600;
 var hero = null;
@@ -81,7 +83,7 @@ function init() {
 	xmlhttp = new XMLHttpRequest();
 	//http://www.salmangadit.me/spanish-pervert/data/data.xmlC:/Users/Salman/Documents/GitHub/spanish-pervert/data/data.xml
 	// /Users/TheGreatOne/Desktop/Sem_6/EE4702/Project/Project_2/spanish-pervert/data/data.xml
-	xmlhttp.open("GET", "C:/Users/YuanIng/Documents/GitHub/spanish-pervert/data/data.xml", false);
+	xmlhttp.open("GET", "C:/Users/YuanIng/Desktop/Game_2/v9/spanish-pervert/data/data.xml", false);
 	//xmlhttp.open("GET", "/Users/TheGreatOne/Desktop/Sem_6/EE4702/Project/Project_2/spanish-pervert/data/data.xml", false);
 	//xmlhttp.open("GET", "C:/Users/Salman/Documents/GitHub/spanish-pervert/data/data.xml", false);
 	//xmlhttp.open("GET", "/Users/TheGreatOne/Desktop/Sem_6/EE4702/Project/Project_2/spanish-pervert/data/data.xml", false);
@@ -425,6 +427,11 @@ function initCanvas() {
 	// create a context object from our canvas
 	graphContext = graphCanvas.getContext("2d");
 	
+	// retrieve a reference to the debugCanvas object
+	gameOverCanvas = document.getElementById("gameOverCanvas");
+	// create a context object from our canvas
+	gameOverContext = gameOverCanvas.getContext("2d");
+	
 	// set the width and height of the canvas
 	canvas.width = gameW;
 	canvas.height = gameH;
@@ -444,6 +451,9 @@ function initCanvas() {
 	// set the width and height of the graphCanvas
 	graphCanvas.width = 600;//gameW*2;
 	graphCanvas.height = 300;//gameH;
+	
+	gameOverCanvas.width = gameW;
+	gameOverCanvas.height = gameH;
 	
 	baseContext.fillStyle = baseColor;
 	// fill the entire baseContext with the color
@@ -484,6 +494,11 @@ function gameLoop() {
 	//flocker(ladies[0], enemies, 3, 5);
 	
 	//setting the grid
+
+
+	// Testing time
+	initialtime = Date.now();
+	lion.moveTarget = enemies[0];
 	Controller();
 	//------------------------End of Max code------------------------------------
 	
