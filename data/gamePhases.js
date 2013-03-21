@@ -13,7 +13,7 @@ var gamePhases = [
     },
     {
         "phaseName": "C",
-        "scenario": "2:1",
+        "scenario": "2:1:1",
         "wave": "2",
         "phaseType":"attack"
     },

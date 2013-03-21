@@ -48,11 +48,13 @@ function AIController(){
 						spawnLocation = helperClass.findNearestFreeSpace(parseInt(spawnLocation[0]), 
 							parseInt(spawnLocation[1]), 1)
 					}
+					var isHero = false;
 					if (currentPhase == "E" && targetingPlayer < 3){
 						chosenTarget = hero;
 						targetingPlayer++;
+						isHero = true;
 					}
-					this.enemyStrengthAI(monkeyGorillaRandomiser, chosenTarget, spawnLocation);
+					this.enemyStrengthAI(monkeyGorillaRandomiser, chosenTarget, spawnLocation, isHero);
 				}
 			}
 		}
@@ -148,7 +150,7 @@ function AIController(){
 		return spawnLocation;
 	}
 
-	this.enemyStrengthAI = function(monkeyGorillaRandomiser, chosenTarget, spawnLocation){
+	this.enemyStrengthAI = function(monkeyGorillaRandomiser, chosenTarget, spawnLocation, isHero){
 		var MGratio = monkeyGorillaRatio[this.playerLevel];
 		var MGparts = MGratio.split(":");
 		var MGpickerArray = new Array();
@@ -170,6 +172,10 @@ function AIController(){
 		//Set deciphered target
 		reference.moveTarget = chosenTarget;
 		reference.ladyTarget = chosenTarget;
+
+		if (isHero){
+			reference.moveSpeed = 8;
+		}
 
 		console.log("Spawned " + (MGpickerArray[chosenStrength] == 0 ? "monkey":"gorilla")+ " at "
 			+ spawnLocation[0] + "," + spawnLocation[1] + " . The target of this NPC is a " +
@@ -230,6 +236,7 @@ function AIController(){
 								spawnLocation = helperClass.findNearestFreeSpace(parseInt(spawnLocation[0]), 
 									parseInt(spawnLocation[1]), 1)
 							}
+							var isHero = false;
 							this.enemyStrengthAI(monkeyGorillaRandomiser, chosenTarget, spawnLocation);
 						}
 					}
