@@ -32,6 +32,7 @@
 	this.damageDelivered = this.defaultDamageDelivered;
 
 	this.fightController  = new FightController(this);
+	this.fightControlMonitor = true;
 
 	/* Measure of hit miss ratio: range from 0 to 1
 	 * the lesser the hit miss ratio, the lesser the chance of executing that move
@@ -481,6 +482,7 @@
 	this.parentRef = thisReference;
 //	console.log('health upon instantaiation is:  ' + this.parentRef.health);
 	this.fightController = new FightController(this);
+	this.fightControlMonitor = true;
 	this.now;
 	this.delta;
 	//Only the fiesty lady can attack
@@ -492,6 +494,7 @@
 		//this.miss = false;
 	}
 	
+	// For the lion combo
 	if (this.parentRef.goodNPC_Type == "combo"){
 		this.defaultAttackPower = -100;
 		this.attackPower = this.defaultAttackPower;

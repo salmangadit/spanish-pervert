@@ -452,8 +452,10 @@ function initCanvas() {
 	debugCanvas.height = gameH;
 	
 	// set the width and height of the graphCanvas
-	graphCanvas.width = 600;//gameW*2;
-	graphCanvas.height = 300;//gameH;
+	//graphCanvas.width = 600;//gameW*2;
+	//graphCanvas.height = 300;//gameH;
+	graphCanvas.width = window.innerWidth;
+	graphCanvas.height = window.innerHeight;
 	
 	// set the width and height of the graphCanvas
 	//gameOverCanvas.width = gameW;//gameW*2;

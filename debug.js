@@ -3,7 +3,7 @@ var lastCritUpdate = Date.now();
 
 function Debug(){
 	renderGrids();
-	drawGraphs();
+	//drawGraphs();
 	displayParameters();
 }
 

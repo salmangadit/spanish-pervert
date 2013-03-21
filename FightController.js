@@ -192,149 +192,153 @@ FightController.prototype.updateFightStatusOfEnemy = function(thisReference){
 // and make the necessary adjustments 
 FightController.prototype.monitorHeroObjectSituation = function(){
 
-	// Update the fight status of the heroObject
-	this.updateFightStatus();
-
-	//We have monitor the situation of both the mainCharacter and the fiesty lady
-	switch(this.owner.parentRef.selfType){
+	if(true == this.owner.fightControlMonitor){
 		
-		//Main character
-		case 0:
-			// Depending on the fight status 
-			switch(this.fightStatus) {
-				// I will need to update a global flag to indicate the hero is dying also.how..
+		// Update the fight status of the heroObject
+		this.updateFightStatus();
 
-				// Increase your hit ratio, decrease the surrounding enemies hit ratio
-				case 'critical': 
-					
+		//We have monitor the situation of both the mainCharacter and the fiesty lady
+		switch(this.owner.parentRef.selfType){
+			
+			//Main character
+			case 0:
+				// Depending on the fight status 
+				switch(this.fightStatus) {
+					// I will need to update a global flag to indicate the hero is dying also.how..
+
+					// Increase your hit ratio, decrease the surrounding enemies hit ratio
+					case 'critical': 
+
 					this.increaseHitRatioOfSelf(0.9);
 					if(this.surroundingArrayOfObjects.length != 0){
 						this.decreaseHitRatioOfEnemies(this.surroundingArrayOfObjects,
-														0.2);
+							0.2);
 					}
 					break;
 
-				// Increase your hit ratio, decrease the hit ratio of the surrounding enemies
-				case 'bad':  
+					// Increase your hit ratio, decrease the hit ratio of the surrounding enemies
+					case 'bad':  
 					this.increaseHitRatioOfSelf(0.5);
 					this.updateEnemiesToToggleHitMissRatio();
 					if(this.hitMissRatioEnemyArray.length != 0){
 						this.decreaseHitRatioOfEnemies(this.hitMissRatioEnemyArray,
-														0.3);
+							0.3);
 					}
 					break;
-				
-				/* What to do here?
-				case 'stable':
-					this.increaseHitRatioOfSelf(0);
-					break;
-				*/
+					
+					/* What to do here?
+					case 'stable':
+						this.increaseHitRatioOfSelf(0);
+						break;
+						*/
 
-				// Increase all the surrounding enemies hit miss ratio
-				case 'good':
+					// Increase all the surrounding enemies hit miss ratio
+					case 'good':
 					this.decreaseHitRatioOfSelf(0.3);
 					if(this.surroundingArrayOfObjects.length != 0){
 						this.increaseHitRatioOfEnemies(this.surroundingArrayOfObjects,
-														0.6);
+							0.6);
 					}
 					break;
 
-				default:
+					default:
 					console.log('the fight status is invalid');
 					break;
-			}//inner switch case statement
-			break;
+				}//inner switch case statement
+				break;
 
-		//Thin lady
-		case 3:
-			//Depending on the fight status
-			switch(this.fightStatus) {
-				
-				// For a thin lady with critical fight status, we need to make all the enemies
-				// surrounding her weak
-				case 'critical':
+			//Thin lady
+			case 3:
+				//Depending on the fight status
+				switch(this.fightStatus) {
+					
+					// For a thin lady with critical fight status, we need to make all the enemies
+					// surrounding her weak
+					case 'critical':
 					if(this.surroundingArrayOfObjects.length != 0){
 						this.decreaseHitRatioOfEnemies(this.surroundingArrayOfObjects,
-														0.1);
+							0.1);
 					}
 					break;
 
-				// Decrease the selected enemies' hit miss ratio surrounding her
-				case 'bad':
+					// Decrease the selected enemies' hit miss ratio surrounding her
+					case 'bad':
 					this.updateEnemiesToToggleHitMissRatio();
 					if(this.hitMissRatioEnemyArray.length != 0){
 						this.decreaseHitRatioOfEnemies(this.hitMissRatioEnemyArray,
-														0.3);
+							0.3);
 					}
 					break;
 
-				/*
-				case 'stable':
-					this.increaseHitRatioOfSelf(0);
-					break;
-				*/	
+					/*
+					case 'stable':
+						this.increaseHitRatioOfSelf(0);
+						break;
+						*/	
 
-				// Increase all the enemies surrounding hit miss ratio
-				case 'good':
+					// Increase all the enemies surrounding hit miss ratio
+					case 'good':
 					if(this.surroundingArrayOfObjects.length != 0){
 						this.increaseHitRatioOfEnemies(this.surroundingArrayOfObjects,
-														0.6);
+							0.6);
 					}
 					break;
 
-				default:	
+					default:	
 					console.log('the fight status is invalid');
 					break;
-			}//inner switch case statement
-			break;
-		
-		//Fiesty lady
-		case 4:
-			//Depending on the fight status
-			switch(this.fightStatus) {
-				case 'critical':
+				}//inner switch case statement
+				break;
+
+			//Fiesty lady
+			case 4:
+				//Depending on the fight status
+				switch(this.fightStatus) {
+					case 'critical':
 					this.increaseHitRatioOfSelf(0.7);
 					if(this.surroundingArrayOfObjects.length != 0){
 						this.decreaseHitRatioOfEnemies(this.surroundingArrayOfObjects,
-														0.2);
+							0.2);
 					}
 					break;
 
-				case 'bad':
+					case 'bad':
 					this.increaseHitRatioOfSelf(0.5);
 					this.updateEnemiesToToggleHitMissRatio();
 					if(this.hitMissRatioEnemyArray.length != 0){
 						this.decreaseHitRatioOfEnemies(this.hitMissRatioEnemyArray,
-														0.3);
+							0.3);
 					}
 					break;
 
-				/*
-				case 'stable':
-					this.increaseHitRatioOfSelf(0);
-					break;
-				*/
-				
-				case 'good':
-					this.decreaseHitRatioOfSelf(0.3);
-					if(this.surroundingArrayOfObjects.length != 0){
-						this.increaseHitRatioOfEnemies(this.surroundingArrayOfObjects,
-														0.6);
-					}
-					break;
+					/*
+					case 'stable':
+						this.increaseHitRatioOfSelf(0);
+						break;
+						*/
 
-				default:	
-					console.log('the fight status is invalid');
-					break;
-			}//inner switch case statement
-			break;
+						case 'good':
+						this.decreaseHitRatioOfSelf(0.3);
+						if(this.surroundingArrayOfObjects.length != 0){
+							this.increaseHitRatioOfEnemies(this.surroundingArrayOfObjects,
+								0.6);
+						}
+						break;
 
-		//The selfType is invalid
-		default:
+						default:	
+						console.log('the fight status is invalid');
+						break;
+				}//inner switch case statement
+				break;
+
+			//The selfType is invalid
+			default:
 			console.log('the selfType is invalid');
 			break;
+
+		}//outer swtch case statement
 	
-	}//outer swtch case statement
+	}//fightControlMonitor if statement
 	
 }
 

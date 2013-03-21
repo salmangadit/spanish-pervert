@@ -19,10 +19,6 @@ var messageOut;
 function displayHUD(){
 	// Display the hero's health
 	displayHeroHealth();
-
-	// Display message -- for now this is a manual case later it would be called directly
-	// by salman
-	//displayMessage("hiiiiiii Playaaaa");
 }
 
 function keepHeroReference(thisReference){
@@ -31,6 +27,8 @@ function keepHeroReference(thisReference){
 
 var healthImage = new Image();
 healthImage.src = "images/innerHealthMeter.png";
+var outerHealthImage = new Image();
+outerHealthImage.src = "images/outerHealthMeter.png";
 function displayHeroHealth(){
 	//healthOut = document.getElementById("hero_health");
 	//healthOut.innerHTML = "Your Health: " + (localHeroReference.health * 3.33333).toFixed(5);
@@ -38,6 +36,8 @@ function displayHeroHealth(){
 	// Draw the health bar also
 	gameOverCanvas.width = gameOverCanvas.width;
 	gameOverContext.drawImage(healthImage, 1060, 3.0, localHeroReference.health*20, 20);
+	//graphCanvas.width = graphCanvas.width;
+	graphContext.drawImage(outerHealthImage,1060,3.0,600,20);
 }
 
 function displayFPS(thisUpdate){
