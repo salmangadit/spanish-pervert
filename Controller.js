@@ -62,13 +62,16 @@ function Controller(){
 	
 	EnemiesRadialAwareness();
 	for(iter in enemies){
-		switch(enemies[iter].actionType){
-			case 1:	enemies[iter].HeroType.pullSkirt(enemies[iter].targetBot);
-					break;
-			case 2: enemies[iter].HeroType.attackPlayer(enemies[iter].targetBot);
-					break;
-			default: 
-					break;
+		if(enemies[iter].keepMoving == false){
+			switch(enemies[iter].actionType){
+				case 1:	
+						enemies[iter].HeroType.pullSkirt(enemies[iter].targetBot);
+						break;
+				case 2: enemies[iter].HeroType.attackPlayer(enemies[iter].targetBot);
+						break;
+				default: 
+						break;
+			}
 		}
 	}//for-each loop
 	
@@ -78,7 +81,9 @@ function Controller(){
 		//function for updating the surrounding enemies
 		//Habeeb, note here, uncomment the following function to test
 		ladies[iter].HeroType.fightController.updateSurroundingEnemies(returnSurroundingArray(ladies[iter]))
-		if(ladies[iter].selfType == 4 && ladies[iter].actionType == 1 && (ladies[iter].targetBot.selfType == 1 || ladies[iter].targetBot.selfType == 2)){
+		if(	ladies[iter].selfType == 4 && ladies[iter].actionType == 1 && 
+			ladies[iter].keepMoving == false &&
+			(ladies[iter].targetBot.selfType == 1 || ladies[iter].targetBot.selfType == 2)){
 			ladies[iter].targetGrid = new Array(ladies[iter].targetBot.gridX,ladies[iter].targetBot.gridY);
 			ladies[iter].HeroType.fightController.monitorHeroObjectSituation();
 			ladies[iter].HeroType.strikeWithUmbrella(ladies[iter].targetBot);
@@ -630,7 +635,7 @@ function safetyLock(bot){
 	if(bot.actionType == null){
 		bot.actionType = 0;
 	}
-	if(bot.targetBot == null){
+	if(bot.selfType!= 0 && bot.targetBot == null){
 		bot.targetBot = hero;
 	}
 	if(bot.moveTarget == null){
