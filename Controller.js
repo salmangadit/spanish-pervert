@@ -522,7 +522,8 @@ function LadyAwareness(bot){
 	//above
 	if(bot.gridY-1>=0){
 		if(VG[bot.gridX][bot.gridY-1] != null){
-			if( VG[bot.gridX][bot.gridY-1].moveTarget == bot &&
+			if( VG[bot.gridX][bot.gridY-1].moveTarget != null &&
+				VG[bot.gridX][bot.gridY-1].moveTarget.partIndex == bot.partIndex &&
 				(VG[bot.gridX][bot.gridY-1].selfType == 1 ||
 				VG[bot.gridX][bot.gridY-1].selfType == 2 )){		
 				bot.facingWhichDirection = "up";
@@ -550,7 +551,8 @@ function LadyAwareness(bot){
 	//below
 	if(bot.gridY+1<=27){
 		if(VG[bot.gridX][bot.gridY+1] != null){
-			if( VG[bot.gridX][bot.gridY+1].moveTarget == bot &&
+			if( VG[bot.gridX][bot.gridY+1].moveTarget != null &&
+				VG[bot.gridX][bot.gridY+1].moveTarget.partIndex == bot.partIndex &&
 				(VG[bot.gridX][bot.gridY+1].selfType == 1 ||
 				VG[bot.gridX][bot.gridY+1].selfType == 2 )){		
 				bot.facingWhichDirection = "down";
@@ -579,7 +581,8 @@ function LadyAwareness(bot){
 	//left
 	if(bot.gridX-1>=0){
 		if(VG[bot.gridX-1][bot.gridY] != null){
-			if( VG[bot.gridX-1][bot.gridY].moveTarget == bot &&
+			if( VG[bot.gridX-1][bot.gridY].moveTarget != null &&
+				VG[bot.gridX-1][bot.gridY].moveTarget.partIndex == bot.partIndex &&
 				(VG[bot.gridX-1][bot.gridY].selfType == 1 ||
 				VG[bot.gridX-1][bot.gridY].selfType == 2 )){		
 				bot.facingWhichDirection = "left";
@@ -607,7 +610,8 @@ function LadyAwareness(bot){
 	//right
 	if(bot.gridX+1<=32){
 		if(VG[bot.gridX+1][bot.gridY] != null){
-			if( VG[bot.gridX+1][bot.gridY].moveTarget == bot &&
+			if( VG[bot.gridX+1][bot.gridY].moveTarget != null &&
+				VG[bot.gridX+1][bot.gridY].moveTarget.partIndex == bot.partIndex &&
 				(VG[bot.gridX+1][bot.gridY].selfType == 1 ||
 				VG[bot.gridX+1][bot.gridY].selfType == 2 )){		
 				bot.facingWhichDirection = "right";
