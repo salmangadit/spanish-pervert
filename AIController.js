@@ -243,7 +243,7 @@ function AIController(){
 
 	this.updateForNextPhase = function(){
 		this.currentPhaseIndex++;
-		if (this.currentPhaseIndex < 10){
+		if (this.currentPhaseIndex < 6){
 			
 			for (var i=0; i< ladies.length; i++){
 				ladies[i].spawnTime = Date.now();

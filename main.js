@@ -828,7 +828,7 @@ function checkHeroDangerStage(){
 	}
 	else if (hero.health <= 7 && hero.AImanipulated == 0 && !hero.AIdone){
 		//there is a problem, the hero is getting the shiznit beaten out of him!
-		if (currentPhase == "I") {	//make it hollywood like!
+		if (currentPhase == "E") {	//make it hollywood like!
 			hollywoodScenario = true;
 		}
 

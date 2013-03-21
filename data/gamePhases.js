@@ -19,7 +19,7 @@ var gamePhases = [
     },
     {
         "phaseName": "D",
-        "scenario": "2",
+        "scenario": "3",
         "wave": "2",
         "phaseType":"defense"
     },
@@ -31,32 +31,32 @@ var gamePhases = [
     },
     {
         "phaseName": "F",
-        "scenario": "3",
+        "scenario": "6",
         "wave": "3",
         "phaseType":"defense"
-    },
-    {
-        "phaseName": "G",
-        "scenario": "2:1",
-        "wave": "4",
-        "phaseType":"attack"
-    },
-    {
-        "phaseName": "H",
-        "scenario": "4",
-        "wave": "4",
-        "phaseType":"defense"
-    },
-    {
-        "phaseName": "I",
-        "scenario": "4:2:2:1",
-        "wave": "5",
-        "phaseType":"attack"
-    },
-    {
-        "phaseName": "J",
-        "scenario": "6",
-        "wave": "5",
-        "phaseType":"defense"
-    }
+    }//,
+    // {
+    //     "phaseName": "G",
+    //     "scenario": "2:1",
+    //     "wave": "4",
+    //     "phaseType":"attack"
+    // },
+    // {
+    //     "phaseName": "H",
+    //     "scenario": "4",
+    //     "wave": "4",
+    //     "phaseType":"defense"
+    // },
+    // {
+    //     "phaseName": "I",
+    //     "scenario": "4:2:2:1",
+    //     "wave": "5",
+    //     "phaseType":"attack"
+    // },
+    // {
+    //     "phaseName": "J",
+    //     "scenario": "6",
+    //     "wave": "5",
+    //     "phaseType":"defense"
+    // }
 ];
