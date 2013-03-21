@@ -28,9 +28,9 @@
   </Objects>
 
   <Grid tileSize="32" width="33" height="28" baseColor="#CFB53B">
-    <GridRow>---T-----------F-------P--------</GridRow>
+    <GridRow>---T-----------F-------P-----T--</GridRow>
     <GridRow>--------------------------------</GridRow>
-    <GridRow>------PP----C-------------------</GridRow>
+    <GridRow>------PP----C---------------F---</GridRow>
     <GridRow>---F-----T----F----C---F---B--B-</GridRow>
     <GridRow>--------------------------------</GridRow>
     <GridRow>-PVVVVP----------------------B--</GridRow>

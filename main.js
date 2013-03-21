@@ -19,6 +19,7 @@ var critArray = new Array();
 //var lionStatus = true;
 var lionStatus = false;
 var lionMaxKills = 3;
+var lionActivationRequirement;
 
 
 // Variable to hold XML data
@@ -30,6 +31,7 @@ var lastUpdate = null;
 // holds the integer size value of each tile in the grid
 var tileSize = null;
 
+// array to hold all of the unique game objects from the XML
 // array to hold all of the unique game objects from the XML
 var gameObjects = null;
 
@@ -117,7 +119,9 @@ function init() {
 		
 		// check if the key being pressed is one of the arrow keys -- 
 		// 80 is the p key (punch), 75 is k (kick), 82 is r (rescue)
-		if ((event.keyCode < 41 && event.keyCode > 36) || event.keyCode == 80 || event.keyCode == 75 || event.keyCode == 82 || event.keyCode == 68 || event.keyCode == 79) {
+		if ((event.keyCode < 41 && event.keyCode > 36) || event.keyCode == 80 || 
+			event.keyCode == 75 || event.keyCode == 82 || event.keyCode == 68 || 
+			event.keyCode == 79	|| event.keyCode == 67) {
 			// block the default browser action for the arrow keys
 			event.preventDefault();
 
@@ -219,6 +223,8 @@ function initGameTiles() {
 	var collidableCount = 0;
 	var enemyCount = 0;
 	var sceneryCount = 0;
+	var lionRandom = new Randomiser();
+	lionActivationRequirement = lionRandom.randomise(3,5);
 	
 	
 	//Added in by beeb
@@ -497,11 +503,15 @@ function gameLoop() {
 	for (curEnemy in enemies) {
 		if (enemies[curEnemy].destroyed) {
 			// Update the player learning that enemy has been destroyed
+			if(enemies[curEnemy].targetBot.selfType == 0){
+				lionActivationRequirement--;
+			}
 			playerLearningObj.badNPCKilledUpdate(enemies[curEnemy]);
 			predictor.updatePredictor();
 			enemies.splice(curEnemy, 1);
 			enemyWasDestroyed = true;			
 			enemyDestroyCount +=1;
+			
 		} else {
 			//testing out of the targetGrid system
 			var tempGrid = new Array();

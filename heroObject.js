@@ -28,7 +28,7 @@
 	this.now;// = Date.now();
 	this.delta;// = this.now - this.parentRef.lastRender;
 	
-	this.defaultDamageDelivered = -2;
+	this.defaultDamageDelivered = -100;
 	this.damageDelivered = this.defaultDamageDelivered;
 
 	this.fightController  = new FightController(this);
@@ -493,7 +493,7 @@
 	}
 	
 	if (this.parentRef.goodNPC_Type == "combo"){
-		this.defaultAttackPower = -30;
+		this.defaultAttackPower = -100;
 		this.attackPower = this.defaultAttackPower;
 		this.hitMissRatio = 1;
 	}
@@ -968,6 +968,11 @@
         			this.lastRender = now;
         		}   
         		break;		
+			
+			case 67:
+				if(lionActivationRequirement <= 0){
+					lionStatus = true;
+				}
         }
 
         // This code handles wrapping the hero from the edge of the canvas

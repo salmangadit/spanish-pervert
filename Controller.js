@@ -38,18 +38,25 @@ function Controller(){
 		//can put the enemies punching inside here, based on the actionType
 	}
 
-	for(iter in ladies){
-		LadyAwareness(ladies[iter]);
-	}
+	
 	moveLion();
 	setMaxOcc();
 	ladiesLoiterTimer();
-	
+	for(iter in ladies){
+		LadyAwareness(ladies[iter]);
+	}
 	heroBehaviour(hero,VG);
 	LadyAwareness(lion);
-	if(lion.actionType == 1 && lion.keepMoving == false){
-		
-		lion.HeroType.strikeWithUmbrella(lion.targetBot);	
+	if(lion.actionType == 1 && lion.keepMoving == false && lion.targetBot != null && lionStatus == true){
+		//alert("a");
+		lion.HeroType.strikeWithUmbrella(lion.targetBot);
+		lionMaxKills--;
+		if(lionMaxKills <= 0){
+			lionStatus = false;
+			var lionRandom = new Randomiser();
+			lionActivationRequirement = lionRandom.randomise(3,5);
+			lionMaxKills = 3;
+		}
 	}
 	// Habeeb, uncomment the following to test -- max we should update only if action type is 1
 	// because only then he can attack and thats when we need to monitor
@@ -82,7 +89,7 @@ function Controller(){
 		//Habeeb, note here, uncomment the following function to test
 		ladies[iter].HeroType.fightController.updateSurroundingEnemies(returnSurroundingArray(ladies[iter]))
 		if(	ladies[iter].selfType == 4 && ladies[iter].actionType == 1 && 
-			ladies[iter].keepMoving == false &&
+			ladies[iter].keepMoving == false && ladies[iter].targetBot != null &&
 			(ladies[iter].targetBot.selfType == 1 || ladies[iter].targetBot.selfType == 2)){
 			ladies[iter].targetGrid = new Array(ladies[iter].targetBot.gridX,ladies[iter].targetBot.gridY);
 			ladies[iter].HeroType.fightController.monitorHeroObjectSituation();
@@ -112,6 +119,12 @@ function Controller(){
 	}
 	//console.log(ladies.length);
 	overallSafety();
+	if(lionActivationRequirement>0){
+		displayMessage("kill " + lionActivationRequirement + " more enemies to activate combo");
+	}
+	else{
+		displayMessage("press 'c' to activate lion");
+	}
 }
 
 function moveLion(){
@@ -298,6 +311,7 @@ hero.targetBot = null;
 
 //33X28 grid
 function setGrid(){
+	VG = [];
 	VG = new Array();
 	for (var i = 0; i < 33; i++){
 		VG[i] = new Array();
