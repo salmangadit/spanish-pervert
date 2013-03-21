@@ -97,7 +97,7 @@ function displayParameters(){
 
 	//Enemy, their health and target
 	for (var i =0; i < enemies.length; i++){
-		debugContext.fillText("Type: " + enemies[i].badNPC_Type + " , Health: " + enemies[i].health + " , AttackPower: " + enemies[i].HeroType.attackPower + 
+		debugContext.fillText("Type: " + enemies[i].badNPC_Type + " , Health: " + enemies[i].health + 
 			(enemies[i].moveTarget ? ", Target: " + enemies[i].moveTarget.goodNPC_Type : ""), textX, textY);
 		textY+=20;
 	}
@@ -106,7 +106,7 @@ function displayParameters(){
 	textY+=20;
 
 	for (var i =0; i < ladies.length; i++){
-		debugContext.fillText("Type: " + ladies[i].goodNPC_Type + " , Health: " + ladies[i].health + ", AttackPower: " + ladies[i].HeroType.attackPower, textX, textY);
+		debugContext.fillText("Type: " + ladies[i].goodNPC_Type + " , Health: " + ladies[i].health, textX, textY);
 		textY+=20;
 	}
 	

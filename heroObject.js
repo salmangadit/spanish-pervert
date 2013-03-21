@@ -1134,31 +1134,27 @@
     	// New implementation to toggleAttackPower
     	switch(this.selfType) {
     		case 0:
-    			//console.log('the previous damageDelivered for hero is: ' + this.HeroType.damageDelivered);
     			this.HeroType.damageDelivered = this.HeroType.defaultDamageDelivered;
     			this.HeroType.damageDelivered *= this.HeroType.hitMissRatio;
-    			//console.log('the updated damageDelivered for hero is: ' + this.HeroType.damageDelivered);
+    			//console.log('damageDelivered is: ' + this.HeroType.damageDelivered);
     			break;
     		case 1:
-    			//console.log('the previous attackPower for monkey is: ' + this.HeroType.attackPower);
     			this.HeroType.attackPower = this.HeroType.defaultAttackPower;
     			this.HeroType.attackPower *= this.HeroType.hitMissRatio;
-    			//console.log('the updated attackPower for monkey is: ' + this.HeroType.attackPower);
+    			//console.log('attackPower is: ' + this.HeroType.attackPower);
     			break;
     		case 2:
-    			//console.log('the previous attackPower for gorilla is: ' + this.HeroType.attackPower);
     			this.HeroType.attackPower = this.HeroType.defaultAttackPower;
     			this.HeroType.attackPower *= this.HeroType.hitMissRatio;
-    			//console.log('the updated attackPower for gorilla is: ' + this.HeroType.attackPower);
+    			//console.log('attackPower is: ' + this.HeroType.attackPower);
     			break;
     		case 3:
     			//console.log('the attack to update is non existence for thin lady');
     			break;
     		case 4:
-    			//console.log('the previous attackPower for fiesty lady is: ' + this.HeroType.attackPower);
     			this.HeroType.attackPower = this.HeroType.defaultAttackPower;
     			this.HeroType.attackPower *= this.HeroType.hitMissRatio;
-    			//console.log('the updated attackPower for fiesty lady is: ' + this.HeroType.attackPower);
+    			//console.log('attackPower is: ' + this.HeroType.attackPower);
     			break;
     		default:
     			console.log('the self type is invalid');
@@ -1166,6 +1162,24 @@
     	
     	}//switch case statement
 
+
+    	/* Toggle Hit Miss Ratio Implemnetation
+    	Generate a random number between 1 and 10
+    	var localRandomNumber = Math.floor((Math.random()*10)+1);
+    	Check the hit miss ratio for example if it is 0.3, 
+    	the heroObject has to hit 3 times and miss 7 times
+    	if((this.HeroType.hitMissRatio * 10) <= localRandomNumber) {
+    		//This implies a hit should occur
+    		//console.log('a hit was computed');
+    		this.HeroType.hit = true;
+    		this.HeroType.miss = false;
+    	} else {
+    		//This implies a miss should occur
+    		//console.log('a miss was computed');
+    		this.HeroType.hit = false;
+    		this.HeroType.miss = true;
+    	}
+    	*/
     };
 	  
 }//heroObject constructor
