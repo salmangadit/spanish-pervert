@@ -82,14 +82,19 @@ var selectedLadies;
 var AImanipulated = 0;
 var manipulatedIndexes;
 var AIdone = false;
+var hollywoodScenario = false;
 
 function init() {
 	xmlhttp = new XMLHttpRequest();
 	//http://www.salmangadit.me/spanish-pervert/data/data.xmlC:/Users/Salman/Documents/GitHub/spanish-pervert/data/data.xml
 	// /Users/TheGreatOne/Desktop/Sem_6/EE4702/Project/Project_2/spanish-pervert/data/data.xml
-	xmlhttp.open("GET", "C:/Users/YuanIng/Documents/GitHub/spanish-pervert/data/data.xml", false);
+	//xmlhttp.open("GET", "C:/Users/YuanIng/Documents/GitHub/spanish-pervert/data/data.xml", false);
 	//xmlhttp.open("GET", "/Users/TheGreatOne/Desktop/Sem_6/EE4702/Project/Project_2/spanish-pervert/data/data.xml", false);
 	//xmlhttp.open("GET", "C:/Users/Salman/Documents/GitHub/spanish-pervert/data/data.xml", false);
+	xmlhttp.open("GET", "C:/Users/Salman/Documents/GitHub/spanish-pervert/data/data.xml", false);
+	//xmlhttp.open("GET", "/Users/TheGreatOne/Desktop/Sem_6/EE4702/Project/Project_2/spanish-pervert/data/data.xml", false);
+	//xmlhttp.open("GET", "C:/Users/Salman/Documents/GitHub/spanish-pervert/data/data.xml", false);
+	//xmlhttp.open("GET", "/Users/TheGreatOne/Desktop/Sem_6/EE4702/Project/Project_2/spanish-pervert/data/data.xml", false);
 	xmlhttp.send();
 	xmlDoc = xmlhttp.responseXML;
 
@@ -821,11 +826,10 @@ function checkDangerStage(){
 	}
 	else if (hero.health <= 7 && AImanipulated == 0 &&!AIdone){
 		//there is a problem, the hero is getting the shiznit beaten out of him!
-		//Options:
-		//0. Find number of enemies around the hero
-		//1. Distract each enemy with a lady around
-		//2. She should come near the scene
-		//3. Enemy should follow her
+		//if (currentPhase == "J") {	//make it hollywood like!
+			hollywoodScenario = true;
+		//}
+
 		enemiesToGetRidOf = new Array();
 		selectedLadies = new Array();
 		manipulatedIndexes = [];
@@ -865,6 +869,7 @@ function checkDangerStage(){
 		AImanipulated = 1;
 
 		//COMBO becomes easier, as well
+		lionMaxKills = 2;
 	} else if (AImanipulated == 1){
 		//Waiting for lady to arrive
 		for (var i = 0; i < selectedLadies.length; i++){
@@ -872,15 +877,17 @@ function checkDangerStage(){
 				continue;
 			}
 
-			if ((selectedLadies[i].targetGrid[0] == selectedLadies[i].gridX ||
-			 	selectedLadies[i].targetGrid[0] == selectedLadies[i].gridX - 1 || 
-				selectedLadies[i].targetGrid[0] == selectedLadies[i].gridX +1) 
-				&& (selectedLadies[i].targetGrid[1] == selectedLadies[i].gridY ||
-					selectedLadies[i].targetGrid[1] == selectedLadies[i].gridY - 1 ||
-					selectedLadies[i].targetGrid[1] == selectedLadies[i].gridY + 1)){
-				enemiesToGetRidOf[i].radialAwareness = false;
-				enemiesToGetRidOf[i].moveTarget = selectedLadies[i];
-				manipulatedIndexes.push(i);
+			if ((hollywoodScenario && hero.health < 1.3) || !hollywoodScenario){
+				if ((selectedLadies[i].targetGrid[0] == selectedLadies[i].gridX ||
+				 	selectedLadies[i].targetGrid[0] == selectedLadies[i].gridX - 1 || 
+					selectedLadies[i].targetGrid[0] == selectedLadies[i].gridX +1) 
+					&& (selectedLadies[i].targetGrid[1] == selectedLadies[i].gridY ||
+						selectedLadies[i].targetGrid[1] == selectedLadies[i].gridY - 1 ||
+						selectedLadies[i].targetGrid[1] == selectedLadies[i].gridY + 1)){
+					enemiesToGetRidOf[i].radialAwareness = false;
+					enemiesToGetRidOf[i].moveTarget = selectedLadies[i];
+					manipulatedIndexes.push(i);
+				}
 			}
 		}
 
@@ -903,6 +910,7 @@ function checkDangerStage(){
 					enemiesToGetRidOf[i].targetGrid[1] == enemiesToGetRidOf[i].gridY + 1)){
 
 					enemiesToGetRidOf[i].radialAwareness = true;
+					manipulatedIndexes.push(i);
 				}
 			}
 		}
@@ -911,6 +919,12 @@ function checkDangerStage(){
 			//The sending has been done. Now make sure the monkey reaches the lady and then toggle off the AI
 			AImanipulated = 0;
 			AIdone = true;
+		}
+	}
+
+	if (hollywoodScenario){
+		if (hero.health <= 1){
+			lionStatus = true;
 		}
 	}
 
