@@ -669,7 +669,7 @@
 
 	this.playerSpeed = 2;
 	this.NPCSpeed = 6;
-	this.spawnTime = 0;
+	this.spawnTime = Date.now();
 	this.keepMoving = false;
 	this.lastMovedDirection = 0;
 	// For the randomly acquired number to toggle hit miss ratio

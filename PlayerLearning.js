@@ -126,7 +126,7 @@ var PlayerLearning = function(thisReference){
 		
 		this.arrayOfRescueTime.push(this.timeTakenToRescueThisLady);
 		this.arrayOfHealthDamage.push(this.healthDamageIncurredByThisLady);
-		for(iter =0,this.averageRescueTime=0; iter<this.arrayOfRescueTime.length;iter++) {
+		for(iter =0,this.averageRescueTime=0; iter<this.arrayOfRescueTime.length; iter++) {
 			this.averageRescueTime += this.arrayOfRescueTime[iter];
 		}
 		this.averageRescueTime = this.averageRescueTime  / this.arrayOfRescueTime.length;
@@ -152,7 +152,7 @@ var PlayerLearning = function(thisReference){
 		this.modelTimeTakenToRescue = modelRescueIn;
 		this.modelTimeTakenToKill = modelKillIn;    
 		this.bufferTimeForKill = bufferKillIn;      
-		this.bufferTimeForRescue = bufferRescueIn;  
+		this.bufferTimeForRescue = bufferRescueIn;
 	};
 
 	// This function will compare the rescue and kill timing taken by the player against the model timing
