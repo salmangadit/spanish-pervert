@@ -25,7 +25,7 @@ var gamePhases = [
     },
     {
         "phaseName": "E",
-        "scenario": "4:2:1",
+        "scenario": "3:1:1",
         "wave": "3",
         "phaseType":"attack"
     },
