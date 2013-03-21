@@ -47,7 +47,7 @@ function Controller(){
 	
 	heroBehaviour(hero,VG);
 	LadyAwareness(lion);
-	if(lion.actionType == 1){
+	if(lion.actionType == 1 && lion.keepMoving == false){
 		
 		lion.HeroType.strikeWithUmbrella(lion.targetBot);	
 	}
@@ -124,6 +124,9 @@ function moveLion(){
 				}
 			}
 			lion.moveTarget = strongestEnemy;
+		}
+		if(lion.moveTarget == null){
+			lion.moveTarget = enemies[0];
 		}
 		if(lion.moveTarget != null){
 			var tx = lion.moveTarget.gridX;

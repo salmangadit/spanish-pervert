@@ -479,7 +479,7 @@
 	}
 	
 	if (this.parentRef.goodNPC_Type == "combo"){
-		this.defaultAttackPower = 30;
+		this.defaultAttackPower = -30;
 		this.attackPower = this.defaultAttackPower;
 		this.hitMissRatio = 1;
 	}
@@ -514,7 +514,7 @@
     		this.parentRef.render();
 
     		//Update the target's health only for a fiesty lady
-    		if(this.parentRef.goodNPC_Type == "fiesty"){
+    		if(this.parentRef.goodNPC_Type == "fiesty" || this.parentRef.goodNPC_Type == "combo"){
 				targetReference.updateHealth(this.attackPower);
 			}
 			

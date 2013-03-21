@@ -16,7 +16,7 @@ var lion = null;
 var VG = null;
 var debugMode = false;
 var critArray = new Array();
-var lionStatus = false;
+var lionStatus = true;
 var lionMaxKills = 3;
 
 
@@ -484,6 +484,7 @@ function gameLoop() {
 	//flocker(ladies[0], enemies, 3, 5);
 	
 	//setting the grid
+	lion.moveTarget = enemies[0];
 	Controller();
 	//------------------------End of Max code------------------------------------
 	
