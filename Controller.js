@@ -47,8 +47,9 @@ function Controller(){
 	
 	heroBehaviour(hero,VG);
 	LadyAwareness(lion);
-	if(lion.actionType == 1 && lion.keepMoving == false){
-		lion.HeroType.strikeWithUmbrella(enemies[0]);	
+	if(lion.actionType == 1){
+		
+		lion.HeroType.strikeWithUmbrella(lion.targetBot);	
 	}
 	// Habeeb, uncomment the following to test -- max we should update only if action type is 1
 	// because only then he can attack and thats when we need to monitor
@@ -124,10 +125,7 @@ function moveLion(){
 			}
 			lion.moveTarget = strongestEnemy;
 		}
-		if(lion.moveTarget == null){
-			lion.moveTarget = enemies[0];
-		}
-		if(lion.moveTarget != null /*&& lion.moveTarget.selfType != 0*/){
+		if(lion.moveTarget != null){
 			var tx = lion.moveTarget.gridX;
 			var ty = lion.moveTarget.gridY;
 			lion.targetGrid = new Array(tx,ty);
@@ -637,11 +635,8 @@ function safetyLock(bot){
 	if(bot.actionType == null){
 		bot.actionType = 0;
 	}
-	if(bot.selfType!= 0 && bot.selfType != 5 && bot.targetBot == null){
+	if(bot.selfType!= 0 && bot.targetBot == null){
 		bot.targetBot = hero;
-	}
-	if(bot.selfType != 1 && bot.selfType != 2 && bot.targetBot == null){
-		bot.targetBot = enemies[0];
 	}
 	if(bot.moveTarget == null){
 		bot.moveTarget = hero;

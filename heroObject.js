@@ -234,10 +234,10 @@
 // 	console.log('health upon instantaiation is:  ' + this.parentRef.health);
  	this.attackPower = null;
  	if(this.parentRef.badNPC_Type == "monkey"){
- 		this.defaultAttackPower = -0.15;
+ 		this.defaultAttackPower = -0.0004;
  		this.attackPower = this.defaultAttackPower;
  	}else if(this.parentRef.badNPC_Type == "gorilla"){
- 		this.defaultAttackPower = -0.4;
+ 		this.defaultAttackPower = -0.0015;
  		this.attackPower = this.defaultAttackPower;
  	}
  	
@@ -617,7 +617,14 @@
     this.collision = false;
     
     //Maximum health life is 100
-    this.health = maximumHealthLife;
+    // Testing in such a way that the ladies dun die so fast
+    if(thisType == 3){
+    	this.health = 900;
+    } else {
+    	this.health = maximumHealthLife;
+    }
+
+
 	this.destroyed = false;
 	//For the grid thing
 	this.targetGrid = new Array();
@@ -1096,24 +1103,36 @@
 	this.updateHealth = function(thisHealth){
 		//console.log('the health passed in is: ' + thisHealth);
 		this.innerHealthMeterWidth += thisHealth;
-		this.health = this.innerHealthMeterWidth;
+		//this.health = this.innerHealthMeterWidth;
 		// 30 is the maximum width of the innerHealthMeter
-		if(this.innerHealthMeterWidth > 30){
+		
+		// Just to test out our game and make the thin ladies "immortal"
+		if(this.innerHealthMeterWidth > 30 && this.selfType == 3) {//this case is only to make thin ladies immortal for now..and test game
+			this.innerHealthMeterWidth = 30;
+			this.health = 900;
+
+		// For the thin lady -- her mapping for now is * 30 (max health is 900)
+		} else if(this.innerHealthMeterWidth > 0 && this.selfType == 3){
+			this.health = this.innerHealthMeterWidth * 30;
+		
+		// When the health bar increase beyond the normal
+		} else if(this.innerHealthMeterWidth > 30){
 			this.innerHealthMeterWidth = 30;	
 			this.health = maximumHealthLife;
 		
+		// When the health bar is below 0 - heroObject is deemed dead
 		} else if(this.innerHealthMeterWidth < 0) {
 			this.innerHealthMeterWidth = 0;
 			this.health = this.innerHealthMeterWidth;
 			// If the hero is dead..update the necessary parameters
 			this.destroyed = true;
 			console.log(this.selfType + ' is dead');
+		
+		// For all cases
+		} else {
+			this.health = this.innerHealthMeterWidth;
 		}
 
-		// For testing only
-		if(this.selfType == 1 || this.selfType == 2){
-//			console.log(this.HeroType.badNPC_Type + ' health is: ' + this.health);
-		}
 	}; 
     
     this.checkCollision = function(obj)
@@ -1134,27 +1153,31 @@
     	// New implementation to toggleAttackPower
     	switch(this.selfType) {
     		case 0:
+    			//console.log('the previous damageDelivered for hero is: ' + this.HeroType.damageDelivered);
     			this.HeroType.damageDelivered = this.HeroType.defaultDamageDelivered;
     			this.HeroType.damageDelivered *= this.HeroType.hitMissRatio;
-    			//console.log('damageDelivered is: ' + this.HeroType.damageDelivered);
+    			//console.log('the updated damageDelivered for hero is: ' + this.HeroType.damageDelivered);
     			break;
     		case 1:
+    			//console.log('the previous attackPower for monkey is: ' + this.HeroType.attackPower);
     			this.HeroType.attackPower = this.HeroType.defaultAttackPower;
     			this.HeroType.attackPower *= this.HeroType.hitMissRatio;
-    			//console.log('attackPower is: ' + this.HeroType.attackPower);
+    			//console.log('the updated attackPower for monkey is: ' + this.HeroType.attackPower);
     			break;
     		case 2:
+    			//console.log('the previous attackPower for gorilla is: ' + this.HeroType.attackPower);
     			this.HeroType.attackPower = this.HeroType.defaultAttackPower;
     			this.HeroType.attackPower *= this.HeroType.hitMissRatio;
-    			//console.log('attackPower is: ' + this.HeroType.attackPower);
+    			//console.log('the updated attackPower for gorilla is: ' + this.HeroType.attackPower);
     			break;
     		case 3:
     			//console.log('the attack to update is non existence for thin lady');
     			break;
     		case 4:
+    			//console.log('the previous attackPower for fiesty lady is: ' + this.HeroType.attackPower);
     			this.HeroType.attackPower = this.HeroType.defaultAttackPower;
     			this.HeroType.attackPower *= this.HeroType.hitMissRatio;
-    			//console.log('attackPower is: ' + this.HeroType.attackPower);
+    			//console.log('the updated attackPower for fiesty lady is: ' + this.HeroType.attackPower);
     			break;
     		default:
     			console.log('the self type is invalid');
@@ -1162,24 +1185,6 @@
     	
     	}//switch case statement
 
-
-    	/* Toggle Hit Miss Ratio Implemnetation
-    	Generate a random number between 1 and 10
-    	var localRandomNumber = Math.floor((Math.random()*10)+1);
-    	Check the hit miss ratio for example if it is 0.3, 
-    	the heroObject has to hit 3 times and miss 7 times
-    	if((this.HeroType.hitMissRatio * 10) <= localRandomNumber) {
-    		//This implies a hit should occur
-    		//console.log('a hit was computed');
-    		this.HeroType.hit = true;
-    		this.HeroType.miss = false;
-    	} else {
-    		//This implies a miss should occur
-    		//console.log('a miss was computed');
-    		this.HeroType.hit = false;
-    		this.HeroType.miss = true;
-    	}
-    	*/
     };
 	  
 }//heroObject constructor

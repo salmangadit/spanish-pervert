@@ -9,8 +9,6 @@ var debugCanvas;
 var debugContext;
 var graphCanvas;
 var graphContext;
-var gameOverCanvas;
-var gameOverContext;
 var gameW = 800;
 var gameH = 600;
 var hero = null;
@@ -83,10 +81,10 @@ function init() {
 	xmlhttp = new XMLHttpRequest();
 	//http://www.salmangadit.me/spanish-pervert/data/data.xmlC:/Users/Salman/Documents/GitHub/spanish-pervert/data/data.xml
 	// /Users/TheGreatOne/Desktop/Sem_6/EE4702/Project/Project_2/spanish-pervert/data/data.xml
-	xmlhttp.open("GET", "C:/Users/YuanIng/Desktop/Game_2/v9/spanish-pervert/data/data.xml", false);
+	xmlhttp.open("GET", "C:/Users/YuanIng/Documents/GitHub/spanish-pervert/data/data.xml", false);
 	//xmlhttp.open("GET", "/Users/TheGreatOne/Desktop/Sem_6/EE4702/Project/Project_2/spanish-pervert/data/data.xml", false);
 	//xmlhttp.open("GET", "C:/Users/Salman/Documents/GitHub/spanish-pervert/data/data.xml", false);
-	//xmlhttp.open("GET", "/Users/TheGreatOne/Desktop/Sem_6/EE4702/Project/Project_2/spanish-pervert/data/data.xml", false);
+	//xmlhttp.open("GET", "C:/Users/YuanIng/Desktop/Game_2/vw/spanish-pervert/data/data.xml", false);
 	//xmlhttp.open("GET", "C:/Users/Salman/Documents/GitHub/spanish-pervert/data/data.xml", false);
 	xmlhttp.send();
 	xmlDoc = xmlhttp.responseXML;
@@ -427,11 +425,6 @@ function initCanvas() {
 	// create a context object from our canvas
 	graphContext = graphCanvas.getContext("2d");
 	
-	// retrieve a reference to the debugCanvas object
-	gameOverCanvas = document.getElementById("gameOverCanvas");
-	// create a context object from our canvas
-	gameOverContext = gameOverCanvas.getContext("2d");
-	
 	// set the width and height of the canvas
 	canvas.width = gameW;
 	canvas.height = gameH;
@@ -451,9 +444,6 @@ function initCanvas() {
 	// set the width and height of the graphCanvas
 	graphCanvas.width = 600;//gameW*2;
 	graphCanvas.height = 300;//gameH;
-	
-	gameOverCanvas.width = gameW;
-	gameOverCanvas.height = gameH;
 	
 	baseContext.fillStyle = baseColor;
 	// fill the entire baseContext with the color
@@ -494,27 +484,9 @@ function gameLoop() {
 	//flocker(ladies[0], enemies, 3, 5);
 	
 	//setting the grid
-<<<<<<< HEAD
-
-
-	// Testing time
-	initialtime = Date.now();
-	lion.moveTarget = enemies[0];
-=======
-	// Testing time
-	initialtime = Date.now();
->>>>>>> parent of cdee4c2... added attackpower to check for npcs
 	Controller();
-	timeTaken = Date.now() - initialtime;
-	if(timeTaken > 50)
-		console.log('time taken for Controller() in gameLoop is: ' + timeTaken);
-	
 	//------------------------End of Max code------------------------------------
 	
-	
-	// Testing time for enemies ------------------------------------
-	initialtime = Date.now();
-
 
 	// Actual code
 	// Do a foreach type loop through the enemies
@@ -609,18 +581,6 @@ function gameLoop() {
 		index++;
 	}
 
-
-
-	// Output time taken to loop thru enemy -------------------------
-	enemyLoopTime = Date.now() - initialtime;
-	if(enemyLoopTime > 50)
-		console.log('enemyLoopTime in gameLoop is: ' + enemyLoopTime);
-
-
-	// Testing time for ladies *****************************
-	initialtime = Date.now();
-
-
 	// Actual code
 	// Do a for each loop for the ladies as well
 	var ladyIndex = 0;
@@ -707,13 +667,6 @@ function gameLoop() {
 		ladies[curLady].partIndex = ladyIndex;
 		ladyIndex++;
 	}
-
-
-
-	// Output time taken to loop thru lady **********************
-	ladyLoopTime = Date.now() - initialtime;
-	if(ladyLoopTime > 50)
-		console.log('ladyLoopTime in gameLoop is: ' + ladyLoopTime);
 	
 	//lion
 	//testing out of the targetGrid system
@@ -783,7 +736,7 @@ function gameLoop() {
 		lion.keys.splice(0, 1);
 	}
 
-// Update the lady based upon how long it took for the game loop
+	// Update the lady based upon how long it took for the game loop
 	lion.update(elapsed / screenUpdateTime);
 
 	// draw the lady to the screen again
@@ -791,19 +744,8 @@ function gameLoop() {
 
 	lionIndex++;
 
-	// Testing time for danger stage check ==========================
-	initialtime = Date.now();
-
-
 	// Actual code
 	checkDangerStage();
-
-
-	// Output time taken to check stage ==============================
-	stageCheckTime = Date.now() - initialtime;
-	if(stageCheckTime > 50)
-		console.log('checkDangerStage in gameLoop is: ' + stageCheckTime);
-
 
 	// update the lastUpdate variable
 	lastUpdate = now;
@@ -813,10 +755,6 @@ function gameLoop() {
 		displayFPS(lastUpdate);
 	}
 
-	// Testing time
-	gameTime = Date.now() - now;
-	if(gameTime > 50)
-		console.log('time taken for gameLoop is: ' + gameTime);
 }
 
 function updatePlayerLearning(){
