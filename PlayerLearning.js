@@ -137,8 +137,8 @@ var PlayerLearning = function(thisReference){
 
 	// Whenever a badNPC is killed, this function is invoked
 	this.badNPCKilledUpdate = function(thisBadNPCReference){
-		//console.log('the spawnTime is: ' + thisBadNPCReference.HeroType.spawnTime);
-		this.timeTakenToKillNPC = Date.now() - thisBadNPCReference.HeroType.spawnTime;
+		//console.log('the spawnTime is: ' + thisBadNPCReference.spawnTime);
+		this.timeTakenToKillNPC = Date.now() - thisBadNPCReference.spawnTime;
 		//console.log('time taken to kill badNPC type: ' + thisBadNPCReference.selfType + ' is: ' + this.timeTakenToKillNPC);
 		this.arrayOfKillTime.push(this.timeTakenToKillNPC);
 		// Dont use average

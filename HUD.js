@@ -29,9 +29,15 @@ function keepHeroReference(thisReference){
 	localHeroReference = thisReference;
 }
 
+var healthImage = new Image();
+healthImage.src = "images/innerHealthMeter.png";
 function displayHeroHealth(){
-	healthOut = document.getElementById("hero_health");
-	healthOut.innerHTML = "Your Health: " + (localHeroReference.health * 3.33333).toFixed(5);
+	//healthOut = document.getElementById("hero_health");
+	//healthOut.innerHTML = "Your Health: " + (localHeroReference.health * 3.33333).toFixed(5);
+
+	// Draw the health bar also
+	gameOverCanvas.width = gameOverCanvas.width;
+	gameOverContext.drawImage(healthImage, 1060, 3.0, localHeroReference.health*20, 20);
 }
 
 function displayFPS(thisUpdate){

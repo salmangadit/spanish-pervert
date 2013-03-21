@@ -130,7 +130,7 @@ FightController.prototype.updateEnemiesToToggleHitMissRatio = function(){
 		// SelfType 1 refers to a monkey
 		if(enemySelfType == 1) {
 			// If a monkey is not in bad or critical heath, we can toggle it's hit miss ratio
-			if(enemyFightStatus != "critical" || enemyFightStatus != "bad" ){
+			if(enemyFightStatus != "critical"){
 				this.hitMissRatioEnemyArray[iter] = this.surroundingArrayOfObjects[iter];
 				console.log('a monkey was added to the array to toggle hitMissRatio');
 			}
