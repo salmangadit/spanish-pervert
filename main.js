@@ -16,6 +16,7 @@ var lion = null;
 var VG = null;
 var debugMode = false;
 var critArray = new Array();
+//var lionStatus = true;
 var lionStatus = false;
 var lionMaxKills = 3;
 

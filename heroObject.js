@@ -241,10 +241,10 @@
 // 	console.log('health upon instantaiation is:  ' + this.parentRef.health);
  	this.attackPower = null;
  	if(this.parentRef.badNPC_Type == "monkey"){
- 		this.defaultAttackPower = -0.04;
+ 		this.defaultAttackPower = -0.2;
  		this.attackPower = this.defaultAttackPower;
  	}else if(this.parentRef.badNPC_Type == "gorilla"){
- 		this.defaultAttackPower = -0.15;
+ 		this.defaultAttackPower = -0.4;
  		this.attackPower = this.defaultAttackPower;
  	}
  	
@@ -751,7 +751,7 @@
         }
 
         this.elapseSum += elapsed;
-        console.log('elapseSum is for ' + this.selfType + ' is:' + this.elapseSum);
+//        console.log('elapseSum is for ' + this.selfType + ' is:' + this.elapseSum);
 
         if (this.internalX == -1)
         	this.internalX = this.x;
@@ -997,8 +997,32 @@
 		this.coordinateToClearY = this.innerHealthMeterY - 10;
 
 		//Update the new health and locations
-		this.innerHealthMeterX = this.x;
-		this.innerHealthMeterY = this.y - 10;
+		// If they are not fighting, the health bar remains at the normal place
+		if(this.actionType == 0 || this.actionType == 3) {
+			this.innerHealthMeterX = this.x;
+			this.innerHealthMeterY = this.y - 10;
+
+		// This means they are fighting, we need to know the direction and shift the healh bar accordingly
+		} else {
+			switch(this.facingWhichDirection){
+				// Right and left - shift x axis
+				case 'right':
+					this.innerHealthMeterX = this.x - 5;
+					this.innerHealthMeterY = this.y - 10;
+					break;
+				case 'left':
+					this.innerHealthMeterX = this.x + 5;
+					this.innerHealthMeterY = this.y - 10;
+					break;
+
+				// Up  - shift y axis
+				case 'up':
+					this.innerHealthMeterX = this.x;
+					this.innerHealthMeterY = this.y + 52;
+					break;
+			}
+		}
+
 		this.outerHealthMeterX = this.innerHealthMeterX;
 		this.outerHealthMeterY = this.innerHealthMeterY; 
 		

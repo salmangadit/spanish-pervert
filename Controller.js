@@ -100,7 +100,7 @@ function Controller(){
 			// Update global flag that a lady was saved
 			ladyWasSaved = true;
 			// Update the player learning also
-			playerLearningObj.ladyRescueUpdate(ladies[iter])//.spawnTime, ladies[iter].health);
+			playerLearningObj.ladyRescueUpdate(ladies[iter]);//.spawnTime, ladies[iter].health);
 			// To clear the health bar issue upon reaching safe zone
 			ladies[iter].HeroType.specialRender();
 			// I will update the destroyed in playerLearning
