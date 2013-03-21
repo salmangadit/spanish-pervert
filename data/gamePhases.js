@@ -7,7 +7,7 @@ var gamePhases = [
     },
     {
         "phaseName": "B",
-        "scenario": "2",
+        "scenario": "1",
         "wave": "1",
         "phaseType":"defense"
     },
@@ -19,7 +19,7 @@ var gamePhases = [
     },
     {
         "phaseName": "D",
-        "scenario": "3",
+        "scenario": "2",
         "wave": "2",
         "phaseType":"defense"
     },
@@ -31,7 +31,7 @@ var gamePhases = [
     },
     {
         "phaseName": "F",
-        "scenario": "4",
+        "scenario": "3",
         "wave": "3",
         "phaseType":"defense"
     },
@@ -43,7 +43,7 @@ var gamePhases = [
     },
     {
         "phaseName": "H",
-        "scenario": "6",
+        "scenario": "4",
         "wave": "4",
         "phaseType":"defense"
     },
@@ -55,7 +55,7 @@ var gamePhases = [
     },
     {
         "phaseName": "J",
-        "scenario": "10",
+        "scenario": "6",
         "wave": "5",
         "phaseType":"defense"
     }
