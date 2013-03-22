@@ -153,7 +153,10 @@ FightController.prototype.updateEnemiesToToggleHitMissRatio = function(){
 FightController.prototype.updateFightStatus = function(){
 	tempHealthValue = this.owner.parentRef.health;
 	//console.log(this.owner.parentRef.selfType + 'health during fight is: ' + tempHealthValue);
-	if(tempHealthValue < 10){
+	if(tempHealthValue < 2 && hollywoodScenario == true && this.owner.parentRef.selfType == 0){
+		this.fightStatus = "hollyWood";
+		console.log('hollywood for hero activated');
+	}else if(tempHealthValue < 10){
 		this.fightStatus = "critical";
 
 	} else if(tempHealthValue >= 10 && tempHealthValue <= 15) {
@@ -205,6 +208,13 @@ FightController.prototype.monitorHeroObjectSituation = function(){
 				// Depending on the fight status 
 				switch(this.fightStatus) {
 					// I will need to update a global flag to indicate the hero is dying also.how..
+					case 'hollyWood':
+						console.log('hollywood scenario triggered and gonna make the enemy ratio to 0');
+						if(this.surroundingArrayOfObjects.length != 0){
+							this.decreaseHitRatioOfEnemies(this.surroundingArrayOfObjects,
+								0);
+						}
+						break;
 
 					// Increase your hit ratio, decrease the surrounding enemies hit ratio
 					case 'critical': 
