@@ -242,10 +242,10 @@
 // 	console.log('health upon instantaiation is:  ' + this.parentRef.health);
  	this.attackPower = null;
  	if(this.parentRef.badNPC_Type == "monkey"){
- 		this.defaultAttackPower = -0.2;
+ 		this.defaultAttackPower = -0.1;
  		this.attackPower = this.defaultAttackPower;
  	}else if(this.parentRef.badNPC_Type == "gorilla"){
- 		this.defaultAttackPower = -0.4;
+ 		this.defaultAttackPower = -0.25;
  		this.attackPower = this.defaultAttackPower;
  	}
  	
