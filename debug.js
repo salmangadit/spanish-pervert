@@ -83,7 +83,7 @@ function maintainCritArray(){
 
 function displayParameters(){
 	var textX = gameW+30;
-	var textY = 320;
+	var textY = 20;
 	debugContext.fillStyle = "rgb(0,0,0)";
 	debugContext.font = "18px Helvetica";
 	
