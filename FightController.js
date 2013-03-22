@@ -153,7 +153,7 @@ FightController.prototype.updateEnemiesToToggleHitMissRatio = function(){
 FightController.prototype.updateFightStatus = function(){
 	tempHealthValue = this.owner.parentRef.health;
 	//console.log(this.owner.parentRef.selfType + 'health during fight is: ' + tempHealthValue);
-	if(tempHealthValue < 2 && hollywoodScenario == true && this.owner.parentRef.selfType == 0){
+	if(tempHealthValue < 1 && hollywoodScenario == true && this.owner.parentRef.selfType == 0){
 		this.fightStatus = "hollyWood";
 		console.log('hollywood for hero activated');
 	}else if(tempHealthValue < 10){
