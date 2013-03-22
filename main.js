@@ -77,6 +77,7 @@ var predictor = new Predictor();
 //1: lady has been called
 //2: lady has arrived, send your enemy to her now
 var hollywoodScenario = false;
+var hollywoodScenarioDone = false;
 
 function init() {
 	xmlhttp = new XMLHttpRequest();
@@ -822,14 +823,13 @@ function updatePlayerLearning(){
 	//arrayOfPlayerData = [];
 }
 
-var hollywoodScenarioDone = false;
 function checkHeroDangerStage(){
 	if (hero.health > 7){
 		if (hero.AIdone){
 			hero.AIdone = false;
 		}
 	}
-	else if (hero.health <= 7 && hero.AImanipulated == 0 && !hero.AIdone){
+	else if (hero.health <= 10 && hero.AImanipulated == 0 && !hero.AIdone){
 		//there is a problem, the hero is getting the shiznit beaten out of him!
 		if (currentPhase == "E") {	//make it hollywood like!
 			hollywoodScenario = true;
@@ -888,18 +888,16 @@ function checkHeroDangerStage(){
 				continue;
 			}
 
-			if ((hollywoodScenario && hero.health < 1) || !hollywoodScenario){
-				if ((hero.AIselectedLadies[i].targetGrid[0] == hero.AIselectedLadies[i].gridX ||
-				 	hero.AIselectedLadies[i].targetGrid[0] == hero.AIselectedLadies[i].gridX - 1 || 
-					hero.AIselectedLadies[i].targetGrid[0] == hero.AIselectedLadies[i].gridX +1) 
-					&& (hero.AIselectedLadies[i].targetGrid[1] == hero.AIselectedLadies[i].gridY ||
-						hero.AIselectedLadies[i].targetGrid[1] == hero.AIselectedLadies[i].gridY - 1 ||
-						hero.AIselectedLadies[i].targetGrid[1] == hero.AIselectedLadies[i].gridY + 1)){
-					hero.AIenemiesToGetRidOf[i].radialAwareness = false;
-					hero.AIenemiesToGetRidOf[i].moveTarget = hero.AIselectedLadies[i];
-					hero.AIselectedLadies[i].moveSpeed = 4;
-					hero.AImanipulatedIndexes.push(i);
-				}
+			if ((hero.AIselectedLadies[i].targetGrid[0] == hero.AIselectedLadies[i].gridX ||
+			 	hero.AIselectedLadies[i].targetGrid[0] == hero.AIselectedLadies[i].gridX - 1 || 
+				hero.AIselectedLadies[i].targetGrid[0] == hero.AIselectedLadies[i].gridX +1) 
+				&& (hero.AIselectedLadies[i].targetGrid[1] == hero.AIselectedLadies[i].gridY ||
+					hero.AIselectedLadies[i].targetGrid[1] == hero.AIselectedLadies[i].gridY - 1 ||
+					hero.AIselectedLadies[i].targetGrid[1] == hero.AIselectedLadies[i].gridY + 1)){
+				hero.AIenemiesToGetRidOf[i].radialAwareness = false;
+				hero.AIenemiesToGetRidOf[i].moveTarget = hero.AIselectedLadies[i];
+				hero.AIselectedLadies[i].moveSpeed = 4;
+				hero.AImanipulatedIndexes.push(i);
 			}
 		}
 
@@ -913,7 +911,6 @@ function checkHeroDangerStage(){
 		//Waiting for enemies to reach targets
 		for (var i = 0; i < hero.AIenemiesToGetRidOf.length; i++){
 			if (!hero.AIenemiesToGetRidOf[i].radialAwareness){
-
 				if ((hero.AIenemiesToGetRidOf[i].targetGrid[0] == hero.AIenemiesToGetRidOf[i].gridX ||
 			 	hero.AIenemiesToGetRidOf[i].targetGrid[0] == hero.AIenemiesToGetRidOf[i].gridX - 1 || 
 				hero.AIenemiesToGetRidOf[i].targetGrid[0] == hero.AIenemiesToGetRidOf[i].gridX +1) 
@@ -921,8 +918,10 @@ function checkHeroDangerStage(){
 					hero.AIenemiesToGetRidOf[i].targetGrid[1] == hero.AIenemiesToGetRidOf[i].gridY - 1 ||
 					hero.AIenemiesToGetRidOf[i].targetGrid[1] == hero.AIenemiesToGetRidOf[i].gridY + 1)){
 
-					hero.AIenemiesToGetRidOf[i].radialAwareness = true;
-					hero.AImanipulatedIndexes.push(i);
+					if ((hollywoodScenario && hero.health < 1) || !hollywoodScenario){
+						hero.AIenemiesToGetRidOf[i].radialAwareness = true;
+						hero.AImanipulatedIndexes.push(i);
+					}
 				}
 			}
 		}
