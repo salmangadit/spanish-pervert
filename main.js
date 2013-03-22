@@ -868,6 +868,7 @@ function checkHeroDangerStage(){
 
 			var nearestFree = helperClass.findNearestFreeSpace(hero.AIenemiesToGetRidOf[i].gridX, hero.AIenemiesToGetRidOf[i].gridY, 5);
 			selectedLady.targetGrid = nearestFree;
+			selectedLady.moveSpeed = 8;
 		}
 
 		hero.AImanipulated = 1;
@@ -890,6 +891,7 @@ function checkHeroDangerStage(){
 						hero.AIselectedLadies[i].targetGrid[1] == hero.AIselectedLadies[i].gridY + 1)){
 					hero.AIenemiesToGetRidOf[i].radialAwareness = false;
 					hero.AIenemiesToGetRidOf[i].moveTarget = hero.AIselectedLadies[i];
+					heroAI.selectedLadies[i].moveSpeed = 4;
 					hero.AImanipulatedIndexes.push(i);
 				}
 			}
