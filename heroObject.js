@@ -996,6 +996,9 @@
         {
             this.x = gameW-this.width;
             this.gridX = parseInt(this.x/this.width);
+            if (this.gridX > 32){
+            	this.gridX = 32;
+            }
         }
         if (this.y < 0)
         {
@@ -1006,8 +1009,15 @@
         {
             this.y = gameH-this.height;
             this.gridY = parseInt(this.y/this.height);
+            
         }
 		
+		if (this.gridX > 27){
+            this.gridX = 27;
+        }
+        if (this.gridX > 32){
+            this.gridX = 32;
+        }
 		//Get the current location of the health meter to clear
 		this.coordinateToClearX = this.innerHealthMeterX - 10;
 		this.coordinateToClearY = this.innerHealthMeterY - 10;
