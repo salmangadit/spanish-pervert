@@ -829,7 +829,7 @@ function checkHeroDangerStage(){
 			hero.AIdone = false;
 		}
 	}
-	else if (hero.health <= 10 && hero.AImanipulated == 0 && !hero.AIdone){
+	else if (hero.health <= 4 && hero.AImanipulated == 0 && !hero.AIdone){
 		//there is a problem, the hero is getting the shiznit beaten out of him!
 		if (currentPhase == "E") {	//make it hollywood like!
 			hollywoodScenario = true;
