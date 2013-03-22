@@ -822,6 +822,7 @@ function updatePlayerLearning(){
 	//arrayOfPlayerData = [];
 }
 
+var hollywoodScenarioDone = false;
 function checkHeroDangerStage(){
 	if (hero.health > 7){
 		if (hero.AIdone){
@@ -831,6 +832,8 @@ function checkHeroDangerStage(){
 	else if (hero.health <= 7 && hero.AImanipulated == 0 && !hero.AIdone){
 		//there is a problem, the hero is getting the shiznit beaten out of him!
 		if (currentPhase == "E") {	//make it hollywood like!
+			hollywoodScenario = true;
+		} else if (currentPhase == "F" && !hollywoodScenarioDone){
 			hollywoodScenario = true;
 		}
 
@@ -891,7 +894,7 @@ function checkHeroDangerStage(){
 						hero.AIselectedLadies[i].targetGrid[1] == hero.AIselectedLadies[i].gridY + 1)){
 					hero.AIenemiesToGetRidOf[i].radialAwareness = false;
 					hero.AIenemiesToGetRidOf[i].moveTarget = hero.AIselectedLadies[i];
-					heroAI.selectedLadies[i].moveSpeed = 4;
+					hero.AIselectedLadies[i].moveSpeed = 4;
 					hero.AImanipulatedIndexes.push(i);
 				}
 			}
@@ -931,6 +934,8 @@ function checkHeroDangerStage(){
 	if (hollywoodScenario){
 		if (hero.health <= 1){
 			lionStatus = true;
+			hollywoodScenarioDone = true;
+			hollywoodScenario = false;
 		}
 	}
 
