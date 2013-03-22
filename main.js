@@ -868,7 +868,10 @@ function checkHeroDangerStage(){
 					distances.splice(distances.indexOf(minDist), 1);
 				}
 			} while (selected == false);
-
+			
+			if (selectedLady === undefined){
+				selectedLady = ladies[0];
+			}
 			var nearestFree = helperClass.findNearestFreeSpace(hero.AIenemiesToGetRidOf[i].gridX, hero.AIenemiesToGetRidOf[i].gridY, 5);
 			selectedLady.targetGrid = nearestFree;
 			selectedLady.moveSpeed = 8;
