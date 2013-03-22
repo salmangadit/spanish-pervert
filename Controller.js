@@ -91,6 +91,9 @@ function Controller(){
 		//Habeeb, note here, uncomment the following function to test
 		if(ladies[iter]!=null){
 			ladies[iter].HeroType.fightController.updateSurroundingEnemies(returnSurroundingArray(ladies[iter]))
+			if(ladies[iter].actionType == 1){
+				ripple(ladies[iter]);
+			}
 			if(	ladies[iter].selfType == 4 && ladies[iter].actionType == 1 && 
 				ladies[iter].keepMoving == false && ladies[iter].targetBot != null &&
 				ladies[iter].keepMoving == false && ladies[iter].targetBot != null &&

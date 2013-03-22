@@ -617,6 +617,7 @@
 	this.partIndex;
 	this.ladyTarget;
 	this.radialAwareness = true;
+	this.rippleTimer = 100;
 	//--------------End of Max code----------------------
 
     this.keys = new Array();

@@ -479,7 +479,7 @@ var gameTime;
 var stageCheckTime;
 
 function gameLoop() {
-
+	//gameOverContext.clearRect(0,0,gameOverCanvas.width, gameOverCanvas.height);
 	// To get the frame rate
 	requestAnimFrame(gameLoop);
 	var now = Date.now();

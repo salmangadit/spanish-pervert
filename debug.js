@@ -17,6 +17,30 @@ function gameOver(){
 	gameOverContext.fillText("Press F5 to restart", 380, 420);
 }
 
+function ripple(bot){
+	var rippleImage = new Image();
+	rippleImage.src = "images/noripple.png";
+	if(bot.rippleTimer < 100){
+		rippleImage.src = "images/ripple1.png";
+	}
+	if(bot.rippleTimer < 60){
+		rippleImage.src = "images/ripple2.png";
+	}
+	if(bot.rippleTimer < 40){
+		rippleImage.src = "images/ripple3.png";
+	}
+	if(bot.rippleTimer < 20){
+		rippleImage.src = "images/ripple4.png";
+	}
+	if(bot.rippleTimer <= 0){
+		bot.rippleTimer = 120;
+	}
+	bot.rippleTimer --;
+	if(bot.rippleTimer<100){
+		context.drawImage(rippleImage, bot.gridX * 32, bot.gridY * 32, 32, 32);
+	}	
+}
+
 function renderGrids(){
 	debugContext.clearRect(0,0,debugCanvas.width,debugCanvas.height);
 	var recImage = new Image();
