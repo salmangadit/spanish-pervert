@@ -1,14 +1,3 @@
-spanish-pervert
-===============
-About
-------
-Spanish Perverts is an Artifical Intelligence based game for the module EE4702: Game World Mechanics for the National University of Singapore. 
-
-The game is set in a Spanish marketplace where monkeys and gorillas harass ladies doing their shopping, and the user plays the role of the Pervert Police
-
-
-How to load
------------
 Spanish Perverts uses an XML based loading. This access to local files is not allowed in the system and so we have to apply a small hack to the browser.
 
 To launch Spanish-Perverts locally in Chrome, do the following steps:
