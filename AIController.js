@@ -173,10 +173,6 @@ function AIController(){
 		reference.moveTarget = chosenTarget;
 		reference.ladyTarget = chosenTarget;
 
-		if (isHero){
-			reference.moveSpeed = 8;
-		}
-
 		console.log("Spawned " + (MGpickerArray[chosenStrength] == 0 ? "monkey":"gorilla")+ " at "
 			+ spawnLocation[0] + "," + spawnLocation[1] + " . The target of this NPC is a " +
 			chosenTarget.goodNPC_Type + " lady at location " + chosenTarget.gridX + "," + chosenTarget.gridY);
