@@ -56,7 +56,7 @@ function Controller(){
 		if(lionMaxKills <= 0){
 			lionStatus = false;
 			var lionRandom = new Randomiser();
-			lionActivationRequirement = lionRandom.randomise(2,3);
+			lionActivationRequirement = lionRandom.randomise(1,3);
 			lionMaxKills = 3;
 		}
 	}
