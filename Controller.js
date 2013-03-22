@@ -89,35 +89,37 @@ function Controller(){
 		//default targetGrid, the movement behaviour depending on AI will change the targetGrid
 		//function for updating the surrounding enemies
 		//Habeeb, note here, uncomment the following function to test
-		ladies[iter].HeroType.fightController.updateSurroundingEnemies(returnSurroundingArray(ladies[iter]))
-		if(	ladies[iter].selfType == 4 && ladies[iter].actionType == 1 && 
-			ladies[iter].keepMoving == false && ladies[iter].targetBot != null &&
-			ladies[iter].keepMoving == false && ladies[iter].targetBot != null &&
-			(ladies[iter].targetBot.selfType == 1 || ladies[iter].targetBot.selfType == 2)){
-			ladies[iter].targetGrid = new Array(ladies[iter].targetBot.gridX,ladies[iter].targetBot.gridY);
-			ladies[iter].HeroType.fightController.monitorHeroObjectSituation();
-			ladies[iter].HeroType.strikeWithUmbrella(ladies[iter].targetBot);
-		}
-		if(ladies[iter].selfType == 3 && ladies[iter].actionType == 1){
-			ladies[iter].targetGrid = new Array(ladies[iter].targetBot.gridX,ladies[iter].targetBot.gridY);
-			ladies[iter].HeroType.fightController.monitorHeroObjectSituation();
-		}
-		if(ladies[iter].actionType == 3){
-			ladies[iter].targetGrid = new Array(hero.gridX,hero.gridY);			
-		}
-		if(ladies[iter].gridX<=2 && ladies[iter].gridY>=25){
+		if(ladies[iter]!=null){
+			ladies[iter].HeroType.fightController.updateSurroundingEnemies(returnSurroundingArray(ladies[iter]))
+			if(	ladies[iter].selfType == 4 && ladies[iter].actionType == 1 && 
+				ladies[iter].keepMoving == false && ladies[iter].targetBot != null &&
+				ladies[iter].keepMoving == false && ladies[iter].targetBot != null &&
+				(ladies[iter].targetBot.selfType == 1 || ladies[iter].targetBot.selfType == 2)){
+				ladies[iter].targetGrid = new Array(ladies[iter].targetBot.gridX,ladies[iter].targetBot.gridY);
+				ladies[iter].HeroType.fightController.monitorHeroObjectSituation();
+				ladies[iter].HeroType.strikeWithUmbrella(ladies[iter].targetBot);
+			}
+			if(ladies[iter].selfType == 3 && ladies[iter].actionType == 1){
+				ladies[iter].targetGrid = new Array(ladies[iter].targetBot.gridX,ladies[iter].targetBot.gridY);
+				ladies[iter].HeroType.fightController.monitorHeroObjectSituation();
+			}
+			if(ladies[iter].actionType == 3){
+				ladies[iter].targetGrid = new Array(hero.gridX,hero.gridY);			
+			}
+			if(ladies[iter].gridX<=2 && ladies[iter].gridY>=25){
 
-			// Update global flag that a lady was saved
-			ladyWasSaved = true;
-			// Update the player learning also
-			playerLearningObj.ladyRescueUpdate(ladies[iter]);//.spawnTime, ladies[iter].health);
-			// To clear the health bar issue upon reaching safe zone
-			ladies[iter].HeroType.specialRender();
-			// I will update the destroyed in playerLearning
-			//ladies[iter].destroyed = true;
-			ladies[iter].targetGrid = (0,27);
-			savedLadiesCount++;
-			hero.targetBot = null;
+				// Update global flag that a lady was saved
+				ladyWasSaved = true;
+				// Update the player learning also
+				playerLearningObj.ladyRescueUpdate(ladies[iter]);//.spawnTime, ladies[iter].health);
+				// To clear the health bar issue upon reaching safe zone
+				ladies[iter].HeroType.specialRender();
+				// I will update the destroyed in playerLearning
+				//ladies[iter].destroyed = true;
+				ladies[iter].targetGrid = (0,27);
+				savedLadiesCount++;
+				hero.targetBot = null;
+			}
 		}
 	}
 	//console.log(ladies.length);
@@ -164,7 +166,7 @@ function ladiesLoiterTimer(){
 				(ladies[iter].gridX == ladies[iter].targetGrid[0]	&& ladies[iter].gridY - 1 == ladies[iter].targetGrid[1])){
 				ladies[iter].loiterTime++;
 			}
-			if(ladies[iter].loiterTime>=150){	
+			if(ladies[iter].loiterTime>=150 && ladies[iter].actionType == 0){	
 					while(1){
 						var random = new Randomiser();
 						var randomNo = random.randomise(0,23);
