@@ -1,3 +1,6 @@
+/************************************
+Done by Chow Yuan Ing (U094667E)
+************************************/
 //keeps track of all vendor positions in order for ladies to loiter
 // var vendorPosX = new Array(	2, 3, 4, 5, 2, 3, 4, 5,	9, 10, 22, 23, 23, 26, 24, 25,
 							// 9, 10, 11, 9, 10, 25, 26, 22, 23, 21, 22, 23, 16, 16, 16, 

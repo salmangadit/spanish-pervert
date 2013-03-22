@@ -1,3 +1,6 @@
+/************************************
+Done by Chow Yuan Ing (U094667E)
+************************************/
 //Number of flocker bots surrounding target type in order to activate flocking
 //Threshold for grids around target bots so as to be considered for flocking
 

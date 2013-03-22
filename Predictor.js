@@ -1,3 +1,6 @@
+/************************************
+Done by Salman Gadit (U095146E)
+************************************/
 function Predictor(){
 	var prevCriticality = 30;
 	var projectedCriticality = 30;

@@ -1,3 +1,6 @@
+/************************************
+Done by Salman Gadit (U095146E)
+************************************/
 function Spawner(){
 	//Objective - To spawn required NPC at target location
 	var TILE_SIZE = 32;

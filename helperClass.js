@@ -1,3 +1,7 @@
+/************************************
+Done by Habeeb Mohamed (A0067347X)
+************************************/
+
 /**
  * @author LOL
  * This class is used to declare methods that are generic and used throughout the project

@@ -1,3 +1,6 @@
+/************************************
+Done by Salman Gadit (U095146E)
+************************************/
 function gameObject()
 {
     // The width and height of the sprites for our game object

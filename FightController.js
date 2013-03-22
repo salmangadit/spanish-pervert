@@ -1,3 +1,6 @@
+/************************************
+Done by Habeeb Mohamed (A0067347X)
+************************************/
 /*
 * The FightController is a regular "class" and the implementation scope of this controller
 * is to facilitate the fight sequence betweeen heroObjects that are currently involved in a fight

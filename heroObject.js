@@ -1,3 +1,9 @@
+/**********************************************************************************************************************
+Done by Salman Gadit 	(U095146E)	- Provided infrastructure of HeroObject
+		Chow Yuan Ing	(U094667E)	- Added some heroObject parameters/functions for other parts of the game to use
+		Habeeb Mohamed 	(A0067347X)	- Added on specifics for good/bad NPCs & hero
+************************************************************************************************************************/
+
 // This js file realises the object creation of different heroObjects and implements their methods
 
 /*

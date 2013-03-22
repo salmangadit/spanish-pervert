@@ -1,3 +1,6 @@
+/************************************
+Done by Salman Gadit (U095146E)
+************************************/
 function staticObject()
 {
     this.width = 32;

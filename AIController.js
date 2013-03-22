@@ -1,3 +1,6 @@
+/************************************
+Done by Salman Gadit (U095146E)
+************************************/
 function AIController(){
 	this.phases = gamePhases;
 	this.currentPhaseIndex = 0;

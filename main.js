@@ -1,3 +1,9 @@
+/**********************************************************************************************************************
+Done by Salman Gadit 	(U095146E)	- Provided infrastructure for main.js & specifics for AI phases
+		Chow Yuan Ing	(U094667E)	- Controlling of game and combo activation, etc
+		Habeeb Mohamed 	(A0067347X)	- Fight mechanics
+************************************************************************************************************************/
+
 var FPS = 30;
 var screenUpdateTime = 1000/FPS;
 

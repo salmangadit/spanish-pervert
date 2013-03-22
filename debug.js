@@ -1,3 +1,6 @@
+/************************************
+Done by Chow Yuan Ing (U094667E)
+************************************/
 //Debug mode
 var lastCritUpdate = Date.now();
 

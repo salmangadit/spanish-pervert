@@ -1,3 +1,7 @@
+/**********************************************************************************************************************
+Done by	Habeeb Mohamed 	(A0067347X)
+************************************************************************************************************************/
+
 /* This PlayerLearning file realises the movements of the mainCharacter, analyses his/her actions,
  * and determines what is the players playing level i.e. easy, medium, or hard.
  * There are 2 process to learning a player's playing level: 
