@@ -28,6 +28,7 @@ var critArray = new Array();
 var lionStatus = false;
 var lionMaxKills = 3;
 var lionActivationRequirement;
+var initialReq;
 
 
 // Variable to hold XML data
@@ -229,6 +230,7 @@ function initGameTiles() {
 	var sceneryCount = 0;
 	var lionRandom = new Randomiser();
 	lionActivationRequirement = lionRandom.randomise(3,5);
+	initialReq = lionActivationRequirement;
 	
 	
 	//Added in by beeb

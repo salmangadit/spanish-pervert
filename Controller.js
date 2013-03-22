@@ -60,10 +60,10 @@ function Controller(){
 			lionStatus = false;
 			var lionRandom = new Randomiser();
 			lionActivationRequirement = lionRandom.randomise(1,3);
+			initialReq = lionActivationRequirement;
 			lionMaxKills = 3;
 		}
 	}
-	// Habeeb, uncomment the following to test -- max we should update only if action type is 1
 	// because only then he can attack and thats when we need to monitor
 	overallSafety();
 	if(hero.actionType == 1){
@@ -91,7 +91,6 @@ function Controller(){
 	for(iter in ladies){
 		//default targetGrid, the movement behaviour depending on AI will change the targetGrid
 		//function for updating the surrounding enemies
-		//Habeeb, note here, uncomment the following function to test
 		if(ladies[iter]!=null){
 			ladies[iter].HeroType.fightController.updateSurroundingEnemies(returnSurroundingArray(ladies[iter]))
 			if(ladies[iter].actionType == 1){
@@ -131,7 +130,8 @@ function Controller(){
 	//console.log(ladies.length);
 	overallSafety();
 	if(lionActivationRequirement>0){
-		displayMessage("kill " + lionActivationRequirement + " more enemies to activate combo");
+		//HABEEB - this is where i display the message
+		displayMessage("kill " + lionActivationRequirement + "/" + initialReq + " more enemies to activate combo");
 	}
 	else{
 		displayMessage("press 'c' to activate lion");
